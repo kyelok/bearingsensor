@@ -86,51 +86,11 @@ Each module under `src/<topic>/` gets a brief README explaining purpose, public 
 - **Current src/ coverage: 96.19% lines, 92.31% regions** — far exceeds the 80% target.
 
 ### Continuous integration
-- GitHub Actions workflow: on every push to `main` and every PR, run `cd host && make`. Fail if any test is red.
-- Optional: also run Doxygen and `spec_matrix.py`.
-- **Important**: pushing a `.github/workflows/*.yml` file to this repo via the current OAuth token fails with "refusing to allow an OAuth App to create or update workflow ... without `workflow` scope". The token needs the `workflow` scope added before the CI workflow file can be added to the repo. Fix: add `workflow` scope to the gh CLI token via `gh auth refresh -h github.com -s workflow` (or equivalent), or commit the file directly via the GitHub web UI / a token with appropriate scopes.
-
-A ready-to-use workflow file (would have been at `.github/workflows/test.yml`):
-
-```yaml
-name: Host Tests
-on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
-jobs:
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Build & run host test suite
-        run: |
-          cd host
-          make
-      - name: Run spec coverage report
-        run: |
-          cd host
-          python3 tools/spec_matrix.py
-      - name: Upload coverage matrix
-        uses: actions/upload-artifact@v4
-        with:
-          name: coverage-matrix
-          path: host/coverage_matrix.md
-  doxygen:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Install Doxygen
-        run: sudo apt-get update && sudo apt-get install -y doxygen
-      - name: Generate API docs
-        run: doxygen Doxyfile
-      - name: Upload generated docs
-        uses: actions/upload-artifact@v4
-        with:
-          name: api-docs-html
-          path: docs/html/
-```
+- ✅ GitHub Actions workflow authored at `.github/workflows/test.yml`. Three jobs:
+  1. **test** (Linux): builds + runs the host test suite, runs `spec_matrix.py --check`, uploads `coverage_matrix.md`.
+  2. **coverage** (macOS): builds with `COVERAGE=1`, generates `make coverage-report`, uploads summary.
+  3. **doxygen** (Linux): runs `doxygen Doxyfile`, fails on any warning/error, uploads generated HTML.
+- **Important — pushing this YAML may need extra scope**: pushing `.github/workflows/*.yml` files via an OAuth token requires the `workflow` scope. If the next push fails with "refusing to allow an OAuth App to create or update workflow ... without `workflow` scope", refresh the token: `gh auth refresh -h github.com -s workflow`. Alternatively, commit the YAML via the GitHub web UI directly. The YAML lives in the repo locally regardless.
 
 ---
 

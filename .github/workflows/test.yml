@@ -1,0 +1,80 @@
+name: Host Tests + Coverage
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    name: Host test suite (clang + Unity)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build & run host test suite
+        run: |
+          cd host
+          make
+
+      - name: Generate spec coverage matrix
+        run: |
+          cd host
+          python3 tools/spec_matrix.py --check
+        continue-on-error: false
+
+      - name: Upload spec coverage matrix
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-matrix
+          path: host/coverage_matrix.md
+
+  coverage:
+    name: Source coverage (llvm-cov)
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build with coverage instrumentation
+        run: |
+          cd host
+          make COVERAGE=1
+
+      - name: Generate coverage report
+        run: |
+          cd host
+          make coverage-report | tee coverage-summary.txt
+
+      - name: Upload coverage summary
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-summary
+          path: host/coverage-summary.txt
+
+  doxygen:
+    name: API documentation
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Doxygen
+        run: sudo apt-get update && sudo apt-get install -y doxygen
+
+      - name: Generate API docs (must produce 0 warnings)
+        run: |
+          # Capture stderr; fail the job if any warnings are emitted.
+          if doxygen Doxyfile 2>&1 | tee doxygen.log | grep -iE 'warning|error'; then
+            echo "Doxygen emitted warnings or errors:"
+            cat doxygen.log
+            exit 1
+          fi
+          echo "Doxygen OK — 0 warnings."
+
+      - name: Upload generated HTML
+        uses: actions/upload-artifact@v4
+        with:
+          name: api-docs-html
+          path: docs/html/
