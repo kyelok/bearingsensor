@@ -39,39 +39,48 @@ typedef struct {
 
 void speed_comp_init(speed_comp_table_t *t);
 
-/* @spec 8.5 §2.0 — convert engine RPM to a band index in
- * [0, BWM_SPEED_BANDS). Returns -1 if RPM is below the gate
- * (< SPEED_COMP_MIN_NOMINAL_PCT % nominal). */
+/**
+ * @spec 8.5 §2.0
+ * @brief Convert engine RPM to a band index in [0, BWM_SPEED_BANDS).
+ * @return -1 if RPM is below the gate (< SPEED_COMP_MIN_NOMINAL_PCT % nominal). */
 int speed_comp_rpm_to_band(Uint16 rpm, Uint16 nominal_rpm);
 
-/* Lookup the reference value for a (band, sensor) pair. Returns 0 if
- * out of range (caller should gate on speed_comp_rpm_to_band first). */
+/**
+ * @spec 8.5 §2.0
+ * @brief Lookup the reference value for a (band, sensor) pair.
+ * @return 0 if out of range. */
 Int16 speed_comp_lookup(const speed_comp_table_t *t,
                         int band,
                         bwm_sensor_id_t sensor);
 
-/* @spec 8.5 §2.2 — record one sample for a (band, sensor) pair during
- * fine learning. After SPEED_COMP_FINE_SAMPLES_REQUIRED samples, the
- * average becomes the reference value. */
+/**
+ * @spec 8.5 §2.2
+ * @brief Record one sample for a (band, sensor) pair during fine learning.
+ * After SPEED_COMP_FINE_SAMPLES_REQUIRED samples, the average becomes the reference. */
 void speed_comp_record_fine_sample(speed_comp_table_t *t,
                                    int band,
                                    bwm_sensor_id_t sensor,
                                    Int16 sample_mm_hundredths);
 
-/* @spec 8.5 §2.2 — after 1000 samples, freeze the average as
- * the reference value for that band. Returns 1 if the band became
- * valid as a result; 0 otherwise. */
+/**
+ * @spec 8.5 §2.2
+ * @brief Check if a band has accumulated enough samples to be valid.
+ * @return 1 if the band is valid; 0 otherwise. */
 int speed_comp_finalize_band_if_ready(speed_comp_table_t *t,
                                       int band,
                                       bwm_sensor_id_t sensor);
 
-/* @spec 8.5 §2.2 — linear interpolation between two anchor bands.
+/**
+ * @spec 8.5 §2.2
+ * @brief Linear interpolation between two anchor bands.
  * Used to fill bands that have not yet accumulated 1000 samples. */
 Int16 speed_comp_interpolate(Int16 ref_low, int band_low,
                              Int16 ref_high, int band_high,
                              int target_band);
 
-/* @spec 8.5 §2 — compute the speed-compensated value for a sample. */
+/**
+ * @spec 8.5 §2
+ * @brief Compute the speed-compensated value for a sample. */
 Int16 speed_comp_apply(const speed_comp_table_t *t,
                        bwm_sensor_id_t sensor,
                        Uint16 rpm,

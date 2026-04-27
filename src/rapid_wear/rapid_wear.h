@@ -44,9 +44,10 @@ void rapid_wear_init_sensor(rapid_wear_sensor_state_t *s);
 /* @spec 8.5 §4.1.2 — Rapid Fast update factor */
 #define RAPID_WEAR_X_FAST   0.2f
 
-/* Apply one sample (the speed-compensated sensor value) to a sensor's
- * rapid-wear state. Updates rapid_slow, rapid_fast, and rapid_wear.
- * @spec 8.5 §4.1 */
+/**
+ * @spec 8.5 §4.1
+ * @brief Apply one sample to a sensor's rapid-wear state.
+ * Updates rapid_slow, rapid_fast, and rapid_wear. */
 void rapid_wear_apply_sample(rapid_wear_sensor_state_t *s,
                              float speed_compensated_value);
 
@@ -63,14 +64,14 @@ void rapid_wear_reset_8_5(rapid_wear_sensor_state_t *s,
 
 /* ===== Combining values ===== */
 
-/* @spec 8.5 §4.4.1 — SingleRapid = abs(Rapid Wear) */
+/** @spec 8.5 §4.4.1 @brief SingleRapid = abs(Rapid Wear). */
 float rapid_wear_combine_single(float rapid_wear);
 
-/* @spec 8.5 §4.4.2 — CylRapid = abs(RW_fore + RW_aft) */
+/** @spec 8.5 §4.4.2 @brief CylRapid = abs(RW_fore + RW_aft). */
 float rapid_wear_combine_cyl(float rw_fore, float rw_aft);
 
-/* @spec 8.5 §4.4.3 — TwinCylRapid = abs(RW_aft_n + RW_fore_n+1)
- * (across the main bearing between cyl n and cyl n+1) */
+/** @spec 8.5 §4.4.3 @brief TwinCylRapid = abs(RW_aft_n + RW_fore_n+1).
+ * Across the main bearing between cyl n and cyl n+1. */
 float rapid_wear_combine_twin_cyl(float rw_cyl_n_aft, float rw_cyl_n_plus_1_fore);
 
 /* @vendor MB-Sum (no spec section; see host/docs/vendor_extensions/mb_sum.md)
