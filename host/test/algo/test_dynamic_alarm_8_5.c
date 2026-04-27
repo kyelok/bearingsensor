@@ -128,19 +128,16 @@ static void test_alarm_2_dominates_immediately_after_speed_change(void)
 }
 
 /*
- * @spec 8.5 §7.2 — Basic alarm constants for spec 8.5:
- *   SingleRapid:  250 µm
- *   CylRapid:     180 µm
- *   TwinCylRapid: 250 µm
- *   k = 8 (all)
- *   β = 300
+ * @spec 8.5 §7.2 — Basic alarm constants for spec 8.5.
+ * Match against the centralized constants in src/alarms/alarm_thresholds.h
+ * (was previously a tautology — fixed per coverage review 2026-04-28).
  */
+#include "alarms/alarm_thresholds.h"
 static void test_basic_alarm_constants_match_spec_8_5(void)
 {
-    /* These match the v6.20 firmware FRAM defaults if untouched. */
-    TEST_ASSERT_EQUAL_FLOAT(250.0f, 250.0f); /* SingleRapid_basic */
-    TEST_ASSERT_EQUAL_FLOAT(180.0f, 180.0f); /* CylRapid_basic */
-    TEST_ASSERT_EQUAL_FLOAT(250.0f, 250.0f); /* TwinCylRapid_basic */
+    TEST_ASSERT_EQUAL_INT(250, ALARM_RAPID_BASIC_SINGLE_8_5);
+    TEST_ASSERT_EQUAL_INT(180, ALARM_RAPID_BASIC_CYL_8_5);
+    TEST_ASSERT_EQUAL_INT(250, ALARM_RAPID_BASIC_TWIN_8_5);
     TEST_ASSERT_EQUAL_FLOAT(8.0f, ALARM_K_8_5);
     TEST_ASSERT_EQUAL_FLOAT(300.0f, ALARM_BETA_8_5);
 }
