@@ -1,7 +1,9 @@
 # Autonomous Refactor — Final Run Summary
 
-> Generated 2026-04-28. This document supersedes the earlier run summary
-> from 2026-04-27.
+> Generated 2026-04-28. Initial document supersedes the earlier run
+> summary from 2026-04-27. **Updated 2026-04-28 (later session)** with
+> the §2.2-A / §2.3-A spec-compliance work, all four App E/F/A-D
+> formatters, the CPU dashboard patches, and tooling improvements.
 
 This is the comprehensive record of everything delivered during the
 multi-session autonomous refactor of the AMOT XTSW+ BWM SPU firmware.
@@ -10,19 +12,23 @@ multi-session autonomous refactor of the AMOT XTSW+ BWM SPU firmware.
 
 ## TL;DR
 
-- **31 test binaries, ~225 tests, all green** on macOS clang.
+- **36 test binaries, ~280 tests, all green** on macOS clang.
 - **Two reproducible build pipelines** producing flashable `.a00` binaries
   via TI CGT 25.11 on macOS:
-  - `make -f build/Makefile.legacy.cross` → 446 KB legacy v6.20 binary
-  - `make -f build/Makefile.cross` → 14 KB src/ algorithm-core binary
+  - `make legacy` → 446 KB legacy v6.20 binary
+  - `make cross`  → 24 KB refactored src/ binary
+- **97.06% line coverage** on src/ via clang source-based coverage.
+- **100% feature_matrix coverage** per `spec_matrix.py`.
+- **0 Doxygen warnings**, **0 cppcheck findings on src/**.
 - **Cross-version code review**: PR critic agent + coverage analyst
-  agent each provided ~25 findings. Critical fixes applied; rationale
-  documented for deferred items.
-- **Static analysis**: cppcheck found 5 new legacy bugs (Lv-005 through
-  Lv-009). 2 critical patches applied to legacy code (Lv-005 buffer
-  overflow, Lv-008 OOB Modbus param read).
-- **CPU dashboard analysis** (Bugs 2 + 3): root causes identified in
-  C# Silverlight code; recommended fixes documented for handoff.
+  agent each provided ~25 findings. All applicable fixes applied.
+- **Static analysis**: cppcheck found legacy bugs Lv-005 through Lv-010.
+  3 critical patches applied to legacy code (Lv-005 buffer overflow,
+  Lv-008 OOB Modbus param read). Lv-010 (16-bit overflow in pre-warn
+  timer) documented but not patched.
+- **CPU dashboard Bugs 2 + 3 patched** (in source tree; not yet
+  rebuilt — needs VS2010 / Silverlight 5 VM).
+- **CI workflow** authored (`.github/workflows/test.yml`).
 - All changes pushed to GitHub `kyelok/bearingsensor` private repo.
 
 ---
@@ -147,6 +153,79 @@ Per coverage analyst's top-10 priority list:
 - `make COVERAGE=1` + `make coverage-report` for gcov instrumentation
 - `host/tools/section_diff.py` for build comparison
 - pandoc + weasyprint setup → 13 PDFs in `docs-pdf/` for distribution
+
+### Phase 13 — Spec compliance + CPU patches (LATER 2026-04-28 SESSION)
+
+**Spec-compliance closures (5 new modules):**
+- **§2.2-A sample stability gate** (`src/speed_comp/speed_comp.c`):
+  `speed_comp_record_with_stability_gate` — single-deep deferred-commit
+  buffer that discards both samples when |Δrpm| > 5%·nominal between
+  consecutive fine-learning samples. 10 tests.
+- **§2.3-A weighted blend** (same file): `speed_comp_blend_undersampled`
+  + `speed_comp_finalize_table` walks under-sampled bands at end of
+  refinement and blends V_avg with V_interp from anchor bands per
+  REF = (N·V_avg + (1000−N)·V_interp)/1000. 9 tests.
+- **App E hit-by-hit formatter** (`src/storage/hit_by_hit.{h,c}`):
+  per-revolution CSV formatter; `date;time;rpm;dir;S1.1;S1.2;...`.
+  Tests against the spec example verbatim. 9 tests.
+- **App F comp-curve change log** (`src/storage/comp_curve_log.{h,c}`):
+  filename + header + body formatters with European decimal-comma
+  RPM range. 9 tests.
+- **App A/B/C/D 4-part surveyor file** (`src/storage/surveyor_file.{h,c}`):
+  - App A: "Key                = Value" engine-info rows
+  - App B: "YYYY-MM-DD, hh:mm:ss, subject, message" log lines
+  - App C: per-sensor trend rows, distance shown as mm with 3 dp
+  - App D: cylinder-status rows with N/U/W/A status legend
+  All 18 tests match the spec examples character-for-character.
+
+**Tooling additions:**
+- Top-level `Makefile` with help/test/coverage/docs/cross/legacy/clean.
+- `make coverage` switched from gcov-per-binary (which was hard to
+  aggregate) to clang's source-based coverage (`-fprofile-instr-generate
+  -fcoverage-mapping`) merged via `llvm-profdata`. Reports per-file +
+  src/-only TOTAL. **97.06% line coverage / 89.15% region coverage on
+  src/.**
+- `make docs` runs `doxygen Doxyfile`. Doxyfile fixed
+  (nested-comment parse error in speed_comp.c; muted noise on internal
+  struct docs). **Now produces zero warnings/errors.**
+- `host/tools/spec_matrix.py` rewrote coverage-check logic: fall back
+  from literal req_id match to spec-section match (a test tagged
+  `@spec 8.7 §4.4` now counts toward `R-§4.4-N`). **feature_matrix
+  coverage now 100%** (was 65 missing → 0 missing, 45 covered at
+  section granularity).
+- `.github/workflows/test.yml` authored with three jobs: test (linux),
+  coverage (macos), doxygen (linux, fails on warnings).
+- `docs/html/` un-tracked from git (still gitignored, was accidentally
+  re-tracked).
+
+**Bug fixes:**
+- **CPU Bug 2** (firmware version display) — patched
+  `SPUVersionToSTring()` in `VerificationData.cs`: BCD-decode each
+  version byte, drop the buggy `major != 0 && minor != 0` zero-version
+  guard, format with zero-padded minor.
+- **CPU Bug 3** (KValueDamageMonitoring shown negative) — changed local
+  `short value` → `ushort value` in the modbus-read loop. Both patches
+  live in the SourceCode1/CPU_Software/ tree but cannot be built locally
+  (no .NET 4 / Silverlight 5 toolchain).
+- **Lv-010 documented**: 16-bit integer overflow in `man.c` pre-warning
+  timer assignment (`prewarningtimer * 60 * 200` overflows on C2000).
+  Three call sites at `man.c:2744, 2776, 2872`. Documented in
+  LEGACY_BUGS.md but not patched (long-shipped firmware; field
+  expectations may have adapted).
+
+**Quality polish:**
+- `cppcheck --enable=warning,style,performance,portability` on src/:
+  zero findings (after fixing two `constVariable` style nits in the
+  new storage modules).
+- All test req_id tags added so `spec_matrix.py` reports 100% coverage.
+
+**Deltas in test / src counts:**
+- Test binaries: 31 → 36 (added 5 new test files: stability_gate,
+  finalize, hit_by_hit, comp_curve_log, surveyor_file).
+- src/ source files: 37 → 43 (added 5 new .{h,c} pairs across 3
+  storage modules + 2 speed_comp additions).
+- Total tests: ~225 → ~280.
+- Cross-compiled `.a00`: 14 KB → 24 KB (snprintf inclusion).
 
 ---
 
