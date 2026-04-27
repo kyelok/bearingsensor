@@ -1,3 +1,11 @@
+# CI workflow template — copy to .github/workflows/test.yml to activate.
+#
+# This file is parked here because pushing files under .github/workflows/
+# requires the GitHub OAuth token to carry the `workflow` scope, which
+# the current token lacks. To activate:
+#   1. Run `gh auth refresh -h github.com -s workflow` (interactive), OR
+#   2. Add this file via the GitHub web UI directly.
+
 name: Host Tests + Coverage
 
 on:
