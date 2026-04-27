@@ -1,24 +1,51 @@
 # TI Toolchain Recommendation — F2811 Cross-Compile for v8.7-Refactored Firmware
 
-> **Decision (2026-04-27)**: Use **TI CGT-C2000 v22.6.3 LTS** (or latest 22.6.x patch) installed natively on macOS or Linux. Build via plain Makefile invoking `cl2000` and `hex2000`. Preserve the COFF ABI to minimize behavioral drift from the field-tested v6.20 binary.
+> **Decision (2026-04-27, REVISED)**: Two-stage approach.
+>
+> **Stage 1 — Proven baseline**: Stand up **CCS v4 in a Windows VM**. Reproduce the field-tested v6.20 `.a00` binary using the customer's known-working toolchain (cl2000 from CCS v4, **Hex2000 v4.13**). This establishes a rock-solid byte-for-byte baseline before any modernization.
+>
+> **Stage 2 — Modern build (after baseline succeeds)**: Layer **TI CGT-C2000 v22.6.3 LTS** (native macOS or Linux) as a parallel toolchain. When its `.a00` output structurally matches the CCS v4 build, switch to it for daily development. Keep the CCS v4 VM permanently as a regression oracle.
+>
+> Preserve the COFF ABI throughout. The customer-supplied evidence ("Another company successfully compiled with Hex2000 v4.13", and the current production deploy uses `C:\Program Files (x86)\Texas Instruments\ccsv4\tools\compiler\c2000\bin\hex2000.exe`) makes CCS v4 the empirically proven path. Modern CGT 22.6.x is the long-term destination but should be validated against, not adopted blind.
 
 ---
 
 ## Surprising findings (read this first)
 
-The research that drove this recommendation surfaced three things that change the project's outlook:
+Five things change the project's outlook from the original assumption that we'd just install modern tools and go:
 
-1. **The F2811 chip is still ACTIVE on TI.com.** Not NRND, not last-time-buy, not obsolete. Production continues. This means the platform is not on borrowed time and any toolchain investment has a long runway. (Source: https://www.ti.com/product/TMS320F2811/part-details/TMS320F2811PBKA)
+1. **The F2811 chip is still ACTIVE on TI.com.** Not NRND, not last-time-buy, not obsolete. Production continues. The platform is not on borrowed time and any toolchain investment has a long runway. (Source: https://www.ti.com/product/TMS320F2811/part-details/TMS320F2811PBKA)
 
-2. **Modern TI CGT-C2000 runs natively on macOS** — `_osx` installer variants exist for every recent version. **No VM is required for compilation.** The earlier VM-centric guidance was based on an outdated assumption.
+2. **Modern TI CGT-C2000 runs natively on macOS** — `_osx` installer variants exist for every recent version. **No VM is required for the modern compilation path.**
 
-3. **The COFF ABI (which the field-tested v6.20 binary uses) is still fully supported in modern CGT** via `--abi=coffabi`. The legacy runtime library `rts2800_ml.lib` still ships. The `#pragma DATA_SECTION` / `#pragma CODE_SECTION` / `interrupt` keyword / `EALLOW`/`EDIS` patterns in the v6.20 source code work unchanged. Risk of subtle behavioral divergence from CCS-3.3-era builds is low if we stay on COFF.
+3. **The COFF ABI (which the field-tested v6.20 binary uses) is still fully supported in modern CGT** via `--abi=coffabi`. The legacy runtime library `rts2800_ml.lib` still ships. The `#pragma DATA_SECTION` / `#pragma CODE_SECTION` / `interrupt` keyword / `EALLOW`/`EDIS` patterns in the v6.20 source code work unchanged. Risk of subtle behavioral divergence from CCS-3.3-era builds is low IF we stay on COFF.
+
+4. **There is a documented proven migration path: CCS v3.3 → CCS v4 (Hex2000 v4.13).** The customer's existing production builds are using `C:\Program Files (x86)\Texas Instruments\ccsv4\tools\compiler\c2000\bin\hex2000.exe` — not CCS v3.3. Another vendor has successfully built the firmware with this toolchain. **This makes CCS v4, not CCS v3.3, the genuine known-good baseline.** Modern CGT 22.6.x → field binary is still 13 years of compiler evolution removed from this proven point and must be validated against it.
+
+5. **The deploy pipeline has a Windows-only LabVIEW step.** The `.a00` file produced by hex2000 is fed into the **AMOT XTSW+ FR2 Generator** (already in our repo at `AMOT XTSW+ FR2 Generator/AMOT XTSW+ FR2 Generator.exe`) which produces a `.fr2` file consumed by the SPU bootloader. The FR2 Generator requires **LabVIEW Runtime Engine** to be installed. So even in the macOS-native build path, the final deploy step requires Windows or Wine. See `host/docs/DEPLOY_PIPELINE.md` for details.
 
 ---
 
-## Recommended toolchain
+## Recommended toolchain — two-stage adoption
 
-### Primary build (macOS or Linux, command-line, scriptable, CI-friendly)
+### Stage 1 — PROVEN baseline (Windows VM with CCS v4)
+
+Per the customer's evidence, this is the empirically known-good toolchain. Stand it up first, prove the build, lock down a baseline `.a00` for comparison.
+
+| Item | Choice | Rationale |
+|---|---|---|
+| Host platform | Windows 10/11 in a VM (UTM x86_64 on Apple Silicon, or VirtualBox / Parallels) | CCS v4 is Windows-only |
+| Compiler suite | **CCS v4** (Code Composer Studio v4) bundling **CGT 5.x** | The proven configuration — same compiler the current production binary was built with |
+| Hex tool | **Hex2000 v4.13** specifically | Customer message explicitly cites this version as known-working |
+| ABI | COFF (default in CCS v4 era) | Matches field binary |
+| Memory model | Large (`-ml`) | Matches v6.20's `BearingWear.pjt` |
+| Linker command file | `bearingwear.cmd` | Use as-is |
+
+**Goal of Stage 1**: Open the legacy `BearingWear.pjt` project in CCS v4. Build. Run hex2000 v4.13. Produce a `.a00`. Compare bit-for-bit to the field-shipped `xtsw_v6_20 firm(160920).a00`. They should match (or be very close — verify any differences are non-functional, e.g., timestamp metadata).
+
+**Time investment**: ~1 engineer-day for the VM and CCS v4 install, ~half-day for the build and comparison. Total ~1.5 engineer-days.
+
+### Stage 2 — Modern build (macOS or Linux, command-line, scriptable, CI-friendly)
 
 | Item | Choice | Rationale |
 |---|---|---|
@@ -40,19 +67,24 @@ The research that drove this recommendation surfaced three things that change th
 | Note | Same compiler under the hood as standalone CGT | Build outputs are equivalent. |
 | Don't | Make CCS the system of record | Project files become a maintenance burden. Use it interactively, but commit no `.ccsproject` files. CI uses the standalone CGT. |
 
-### Optional regression oracle (one-time use)
+### Optional deeper baseline (CCS 3.3 — original development environment)
 
 | Item | Choice | When to use |
 |---|---|---|
-| Original toolchain | **CCS 3.3 SR12** in a Windows 10/11 VM | Stand it up ONCE during initial bring-up. Build the legacy v6.20 sources to produce a known-good `.a00`. Compare byte-for-byte against the field binary. Compare structurally against the modern-CGT-built v6.20. |
-| Why bother | Establishes a "is the modern toolchain producing equivalent output?" baseline. | After the comparison succeeds, the VM can be archived. |
-| Alternative | Skip this if you're willing to trust the modern build directly | Higher risk; recommended only if VM setup is genuinely impractical. |
+| Original toolchain | **CCS 3.3 SR12** in a Windows VM | Use only if the Stage 1 (CCS v4) build does NOT match the field binary closely enough. Going one version older recovers the actual original development environment. |
+| Why bother | Some firmware versions in the AMOT history may have been built with CCS v3.3 not v4. The customer's note says "Development at the time is presumed to have been done with CCStudio_V3.3 C2000" — but the *current* production deploy uses CCS v4 hex2000. So either (a) the binaries got rebuilt with CCS v4 at some point, or (b) only the hex2000 step uses v4 while the cl2000 compile step uses v3.3. CCS 3.3 in VM lets us verify which. |
+| Alternative | Skip if Stage 1 produces a satisfactory baseline | Most projects won't need this. |
 
 ---
 
 ## What this changes vs. earlier guidance
 
-The `host/docs/VM_SETUP_GUIDE.md` was written assuming we needed a Linux VM for the build. That guide is **partially obsolete** — keep it as the option for engineers who prefer a Linux build environment, or for the optional CCS 3.3 regression-oracle VM. But the **primary path is now native macOS**:
+The `host/docs/VM_SETUP_GUIDE.md` was originally written for an Ubuntu Linux build environment. With the customer's input that CCS v4 is the proven path, we now have **two distinct VM use cases**:
+
+1. **Windows VM with CCS v4** — Stage 1, proven baseline. **Primary** initial action.
+2. **Linux VM with CGT 22.6** — alternative to native macOS for the Stage 2 modern build, if a team prefers a uniform Linux build environment for CI.
+
+The macOS-native path for Stage 2 is still the recommendation:
 
 ```bash
 # On macOS, the entire build setup:
@@ -145,15 +177,21 @@ If CI later auto-bumps the CGT version (apt upgrade, brew upgrade, etc.), the bu
 
 ## Why not the other options?
 
-### Why not just use CCS 3.3 in a Windows VM as the primary toolchain?
+### Why not just use CCS v4 in a Windows VM as the primary toolchain?
 
-- It runs only on Windows (no Linux/macOS native).
-- Unsupported since ~2010. No security patches, no new device support.
-- License is a node-locked file TI no longer issues; survival depends on the VM's MAC address staying stable.
-- No CI integration story (would require running a Windows runner).
-- Forces every developer to maintain a Windows VM.
+- Runs only on Windows. Forces every developer to maintain a Windows VM.
+- CCS v4 is end-of-life since ~2014. Increasing risk of license/install issues over time.
+- No CI integration story for daily development (would require running a Windows runner with the legacy IDE).
+- The `BearingWear.pjt` is a CCS v4 project file format; modern CCS Theia would re-import it but not edit it natively. Means the project file becomes a maintenance burden.
 
-Use only as the regression oracle; not as the system of record.
+Stage 1 (CCS v4 baseline) is one-and-done for proving correctness. Stage 2 (modern CGT) is the system of record for daily work.
+
+### Why not just use CCS 3.3 in a Windows VM at all?
+
+- Possible if Stage 1 (CCS v4) doesn't reproduce the field binary closely enough.
+- Same drawbacks as CCS v4 (Windows-only, EOL since 2010), worse: no security patches at all, license file even more fragile.
+- The customer's current production deploy already uses CCS v4 hex2000, so CCS v4 is more likely the genuine current baseline than CCS v3.3.
+- Reserve as a deeper baseline if Stage 1 surfaces unexpected discrepancies.
 
 ### Why not GCC / LLVM port?
 
@@ -169,15 +207,27 @@ Use only as the regression oracle; not as the system of record.
 
 ## Concrete next-action checklist
 
-1. **One engineer-day**: Install CGT 22.6.3 on macOS, write `build/Makefile.cross` and `build/Makefile.cross.legacy` (per skeleton in `VM_SETUP_GUIDE.md` Step 4), produce a `.a00` from the unmodified v6.20 sources. Compare structurally to the field binary.
+### Stage 1 — Proven baseline (FIRST)
 
-2. **Two engineer-days**: If structural comparison passes, build the refactored `src/` tree. Compare its output structurally to v6.20-built-with-modern-tools (NOT to the field binary directly — a step-removed comparison). Alarm-threshold defaults, FRAM offsets, Modbus map layout should all match.
+1. **One engineer-day**: Set up Windows 10/11 VM (UTM x86_64 on Apple Silicon, or VirtualBox/Parallels). Download CCS v4 from https://software-dl.ti.com/ccs/non-esd/releases/CCSv4/ (TI requires login; if not available there, contact TI support — engineers report the installer is still distributable on request).
+2. **Half engineer-day**: Open `SourceCode1/SPU_Firmware/FirmwareSource_6.20/BearingWear.pjt` in CCS v4. Build. Note any errors — the project file might need a license activation grace period to compile.
+3. **Half engineer-day**: Run `hex2000.exe` (the v4.13 one shipped with CCS v4) on the build output to produce `.a00`. Use the same flags as the legacy `CC3_3hexprogram.bat` script.
+4. **Half engineer-day**: Diff this `.a00` against `SourceCode1/SPU_Firmware/FirmwareSource_6.20/xtsw_v6_20 firm(160920).a00`. If they match (or differ only in metadata), the baseline is validated.
+5. **Total Stage 1 time**: ~2.5 engineer-days. Result: a known-good toolchain in a VM, byte-equivalent to production.
 
-3. **Optional, one engineer-day**: Set up the CCS 3.3 Windows VM as the regression oracle. Build the legacy v6.20 sources in CCS 3.3. Diff against the field binary (should be byte-identical or extremely close). This validates that the modern CGT's COFF output is "close enough" to what CCS 3.3 produced.
+### Stage 2 — Modern build (after Stage 1 baseline is established)
 
-4. **Two engineer-weeks**: Hardware bench validation. Flash both binaries to an F2811 dev board. Capture `sensor[].endresult` over UART under controlled stimulus. Compare to expected behavior.
+6. **One engineer-day**: Install CGT 22.6.3 natively on macOS. Download `ti_cgt_c2000_22.6.3.LTS_osx-x64_installer.dmg` from https://software-dl.ti.com/codegen/non-esd/downloads/download_archive.htm. Author `build/Makefile.cross.legacy` pointing at `SourceCode1/...` sources.
+7. **Half engineer-day**: Build legacy v6.20 with modern CGT. Compare `.a00` against the Stage 1 baseline (NOT the field binary directly). Differences are EXPECTED — different optimizer, different code-gen — what we want is *structural* equivalence (same `versionreg`, same Modbus parameter table, same FRAM offsets).
+8. **One engineer-day**: Author `build/Makefile.cross` for the refactored `src/` tree. Build. Verify symbol table is sensible, no FPU library accidentally linked, etc.
+9. **Two engineer-days**: Hardware bench validation. Flash all three binaries (Stage-1 build, modern-CGT-of-legacy build, modern-CGT-of-`src/` build) to an F2811 dev board. Capture `sensor[].endresult` over UART under controlled stimulus. Compare.
 
-5. **CI**: Add the cross-compile step to `.github/workflows/test.yml` (once the workflow scope is added — see `POST_AUTONOMOUS_TODO.md`). Use the Linux x64 CGT installer in CI, even though developers use macOS — keeps the artifact reproducible.
+### Stage 3 — Production deploy pipeline (separate task)
+
+10. **One engineer-day**: Document the `.a00` → `.fr2` step (LabVIEW Runtime + AMOT FR2 Generator). See `host/docs/DEPLOY_PIPELINE.md`.
+11. **CI**: Add the cross-compile step to `.github/workflows/test.yml` (once the workflow scope is added — see `POST_AUTONOMOUS_TODO.md`). Use the Linux x64 CGT installer in CI, even though developers use macOS — keeps the artifact reproducible. The `.fr2` step stays manual (LabVIEW dependency).
+
+**Total estimated time**: 8–10 engineer-days for Stages 1–2 (ignoring waiting on hardware). Stage 3 is mostly documentation.
 
 ---
 
