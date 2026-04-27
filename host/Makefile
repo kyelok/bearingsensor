@@ -7,11 +7,15 @@
 CC          := clang
 CFLAGS      := -std=c99 -Wall -Wextra -Wno-unknown-pragmas -Wno-macro-redefined -g -O0
 CFLAGS      += -Iplatform -Ithird_party/unity/src -Ihelpers -Ifakes
-# Once we start pulling in firmware sources, this is where the include path goes:
-CFLAGS      += -I../SourceCode1/SPU_Firmware/FirmwareSource_6.20
+# Refactored modules live in ../src/
+CFLAGS      += -I../src
+# Original v6.20 firmware is reference-only; not on the include path
+# during the refactor. (Add back when extracting & comparing functions.)
+# CFLAGS    += -I../SourceCode1/SPU_Firmware/FirmwareSource_6.20
 
 UNITY_SRC   := third_party/unity/src/unity.c
 FAKE_SRCS   := $(wildcard fakes/*.c)
+SRC_SRCS    := $(wildcard ../src/*/*.c)
 BUILD_DIR   := build
 
 TEST_SRCS   := $(wildcard test/algo/*.c test/protocol/*.c test/integration/*.c)
@@ -25,9 +29,9 @@ all: compile run
 
 compile: $(TEST_BINS)
 
-$(BUILD_DIR)/%: %.c $(UNITY_SRC) $(FAKE_SRCS)
+$(BUILD_DIR)/%: %.c $(UNITY_SRC) $(FAKE_SRCS) $(SRC_SRCS)
 	@mkdir -p $(BUILD_DIR)
-	@$(CC) $(CFLAGS) $< $(UNITY_SRC) $(FAKE_SRCS) -o $@
+	@$(CC) $(CFLAGS) $< $(UNITY_SRC) $(FAKE_SRCS) $(SRC_SRCS) -o $@
 
 run: compile
 	@echo ""
