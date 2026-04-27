@@ -5,6 +5,8 @@
  * threshold constants were exercised by any test, despite being the
  * substantive numeric delta from 8.5 to 8.7. This file mirrors
  * test_module_alarm_thresholds.c (which covers the 8.5 values).
+ *
+ * Covers feature_matrix req: R-§7.2-5
  */
 
 #include "unity.h"

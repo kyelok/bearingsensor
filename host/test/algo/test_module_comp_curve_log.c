@@ -3,6 +3,7 @@
  * snapshot CSV formatter.
  *
  * @spec 8.7 Appendix F.
+ * Covers feature_matrix req: R-§AppF
  */
 
 #include "unity.h"

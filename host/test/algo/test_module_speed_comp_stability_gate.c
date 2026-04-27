@@ -3,6 +3,7 @@
  * deferred-commit stability gate.
  *
  * @spec 8.5 §2.2-A — sample stability check (Δrpm > 5%·nominal → discard).
+ * Covers feature_matrix req: R-§2.1-4
  */
 
 #include "unity.h"

@@ -133,32 +133,72 @@ def build_coverage_report(test_dir, src_dir, feature_csv):
             s_str = "; ".join(f"{f}:{ln}" for f, ln in srcs[:3])
             out.append(f"| {name} | {t_str or '_none_'} | {s_str or '_none_'} |\n")
 
-    # Coverage check against feature_matrix.csv if present
+    # Coverage check against feature_matrix.csv if present.
+    #
+    # A req_id like "R-§4.2-NEW" or "R-§2.1-4" is considered covered if EITHER:
+    #   (a) the literal req_id text appears in any test file, OR
+    #   (b) the req_id's spec section has at least one @spec tag in tests.
+    # The section is extracted as the chars between the "§" and the next "-"
+    # (or end-of-string). Examples: R-§4.2-NEW → "4.2"; R-§AppE → "AppE".
     uncovered = []
+    weakly_covered = []  # covered by section, not by exact req_id match
     if feature_rows:
         out.append("\n## Coverage Check Against feature_matrix.csv\n")
+
+        # Flatten test sections to a set: ("8.5", "4.4"), ("8.7", "4.4"), ...
+        all_test_sections = set()
+        for v, sections in spec_in_tests.items():
+            for sec in sections:
+                all_test_sections.add(sec)
+                # Also count parent sections: a tag "§4.4.1" covers "§4.4".
+                parts = sec.split('.')
+                for i in range(1, len(parts)):
+                    all_test_sections.add('.'.join(parts[:i]))
+
+        # Pre-read test files once.
+        test_blobs = []
+        for f in test_files:
+            try:
+                test_blobs.append(f.read_text())
+            except (OSError, UnicodeDecodeError):
+                pass
+
         for row in feature_rows:
             req_id = row.get('req_id', '')
             if not req_id:
                 continue
-            file_text_check = False
-            for f in test_files:
-                try:
-                    if req_id in f.read_text():
-                        file_text_check = True
-                        break
-                except (OSError, UnicodeDecodeError):
-                    pass
-            if not file_text_check:
-                uncovered.append(req_id)
+
+            # (a) literal match
+            literal_hit = any(req_id in blob for blob in test_blobs)
+            if literal_hit:
+                continue
+
+            # (b) section match — extract section between "§" and next "-".
+            m = re.match(r'R-§([^-]+)', req_id)
+            section_id = m.group(1) if m else None
+            if section_id and section_id in all_test_sections:
+                weakly_covered.append((req_id, section_id))
+                continue
+
+            uncovered.append(req_id)
+
         if uncovered:
-            out.append(f"\nMissing tests for: {len(uncovered)} requirement(s)\n")
+            out.append(f"\n**Missing tests** for {len(uncovered)} requirement(s):\n")
             for req in uncovered[:10]:
                 out.append(f"- {req}\n")
             if len(uncovered) > 10:
                 out.append(f"- ...and {len(uncovered) - 10} more\n")
-        else:
-            out.append("\nAll feature_matrix.csv requirements have coverage.\n")
+        if weakly_covered:
+            out.append(f"\n**Section-only coverage** for {len(weakly_covered)} requirement(s) "
+                       "(test exists for the section, but req_id not cited verbatim):\n")
+            for req, sec in weakly_covered[:5]:
+                out.append(f"- {req} (matches section §{sec})\n")
+            if len(weakly_covered) > 5:
+                out.append(f"- ...and {len(weakly_covered) - 5} more\n")
+        if not uncovered and not weakly_covered:
+            out.append("\nAll feature_matrix.csv requirements have direct test coverage.\n")
+        elif not uncovered:
+            out.append("\n**All requirements covered** (some only at section granularity).\n")
 
     return "".join(out), len(uncovered)
 

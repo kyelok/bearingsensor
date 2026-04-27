@@ -3,6 +3,7 @@
  *
  * @spec 8.7 Appendix E — verifies the CSV format matches the spec example
  * exactly.
+ * Covers feature_matrix reqs: R-§6-5, R-§AppE
  */
 
 #include "unity.h"

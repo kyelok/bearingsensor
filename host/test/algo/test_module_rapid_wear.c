@@ -8,6 +8,9 @@
  * file verifies that src/rapid_wear/ produces the same answers via its
  * public API. Together these tests are the regression net guaranteeing
  * the refactor preserves spec behavior.
+ *
+ * Covers feature_matrix reqs: R-§4.0-1 (rapid_wear = fast - slow per sensor),
+ * R-§4.6-1 (8.5-only section alarm reporting; superseded in 8.6).
  */
 
 #include "unity.h"

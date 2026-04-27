@@ -1,6 +1,8 @@
 /*
  * test_module_rapid_wear_8_7.c — verifies the v8.7 rapid-wear module
  * implements the deltas from v8.5.
+ *
+ * Covers feature_matrix req: R-§4.2-NEW
  */
 
 #include "unity.h"

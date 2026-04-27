@@ -2,6 +2,9 @@
  * test_module_surveyor_file.c — App A/B/C/D 4-part surveyor file formatters.
  *
  * @spec 8.7 Appendices A-D.
+ * Covers feature_matrix reqs: R-§AppA, R-§AppB, R-§AppC, R-§AppD
+ * (Note: spec describes "4-part" plain-text reports, not XML — earlier
+ * matrix entries that say "XML appendix" reflect an older interpretation.)
  */
 
 #include "unity.h"

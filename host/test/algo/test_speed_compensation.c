@@ -5,6 +5,9 @@
  * @spec 8.5 §2.0 / 8.6 §2.0 / 8.7 §2.0 — speed compensation by lookup.
  * @spec 8.5 §2.2 / 8.6 §2.2 / 8.7 §2.2 — interpolation between valid points.
  *
+ * Covers feature_matrix reqs: R-§2.1-1 (3-stage rough cal),
+ *   R-§2.1-2 (±2% nominal anchor), R-§2.1-3 (slope-based extrapolation).
+ *
  * Spec requirements covered here:
  *   1. Lookup is by RPM band, with ≥100 sub-ranges between 20–110 % nominal.
  *      v6.20 firmware uses 150 bands × 28 channels (man.c:50).

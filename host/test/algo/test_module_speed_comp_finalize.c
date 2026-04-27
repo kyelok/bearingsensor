@@ -3,6 +3,7 @@
  * for under-sampled bands at end of refinement phase.
  *
  * @spec 8.5 §2.3-A — REF = (N·V_avg + (1000−N)·V_interp) / 1000.
+ * Covers feature_matrix req: R-§2.3-1
  */
 
 #include "unity.h"

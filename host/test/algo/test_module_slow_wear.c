@@ -1,5 +1,7 @@
 /*
  * test_module_slow_wear.c — exercises the refactored slow_wear module.
+ *
+ * Covers feature_matrix req: R-§3.0-1
  */
 
 #include "unity.h"

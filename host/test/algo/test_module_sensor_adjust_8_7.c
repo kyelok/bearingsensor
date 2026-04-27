@@ -1,6 +1,8 @@
 /*
  * test_module_sensor_adjust_8_7.c — verifies the v8.7 three-procedure
  * sensor adjustment logic.
+ *
+ * Covers feature_matrix req: R-§5-2
  */
 
 #include "unity.h"

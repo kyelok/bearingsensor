@@ -1,6 +1,9 @@
 /*
  * test_module_alarm_relays_8_7.c — verifies the v8.7 chapter 8
  * alarm-relay state machine.
+ *
+ * Covers feature_matrix reqs: R-§8-1 (XS8126 alarm), R-§8-2 (XS8127 slowdown),
+ * R-§8-3 (XS8129 system-fail).
  */
 
 #include "unity.h"
