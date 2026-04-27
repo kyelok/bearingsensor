@@ -1,188 +1,238 @@
-# Autonomous Refactor — Run Summary
+# Autonomous Refactor — Final Run Summary
 
-> Generated 2026-04-27 at end of autonomous session.
+> Generated 2026-04-28. This document supersedes the earlier run summary
+> from 2026-04-27.
 
-This document captures everything delivered during the autonomous refactor of the AMOT XTSW+ BWM SPU firmware. Read it on wake-up to see what's done and what's deferred.
+This is the comprehensive record of everything delivered during the
+multi-session autonomous refactor of the AMOT XTSW+ BWM SPU firmware.
 
 ---
 
 ## TL;DR
 
-- **26 test binaries, ~150 tests, all green.** `cd host && make` from a clean checkout.
-- **`src/` tree** is the v8.7-compliant refactored firmware. `SourceCode1/SPU_Firmware/` is the legacy v6.20 (untouched reference).
-- **Documentation is comprehensive**: field manual indexed by spec section, customer release notes, traceability matrix, vendor-extension docs, deprecation analysis, post-autonomous TODO.
-- **Pushed to GitHub** (`kyelok/bearingsensor`) at every milestone — 7 distinct commits cover the full progression.
-- **Bug 1, TI build, hardware bench**: deferred per project decisions. Tracked in `POST_AUTONOMOUS_TODO.md`.
+- **31 test binaries, ~225 tests, all green** on macOS clang.
+- **Two reproducible build pipelines** producing flashable `.a00` binaries
+  via TI CGT 25.11 on macOS:
+  - `make -f build/Makefile.legacy.cross` → 446 KB legacy v6.20 binary
+  - `make -f build/Makefile.cross` → 14 KB src/ algorithm-core binary
+- **Cross-version code review**: PR critic agent + coverage analyst
+  agent each provided ~25 findings. Critical fixes applied; rationale
+  documented for deferred items.
+- **Static analysis**: cppcheck found 5 new legacy bugs (Lv-005 through
+  Lv-009). 2 critical patches applied to legacy code (Lv-005 buffer
+  overflow, Lv-008 OOB Modbus param read).
+- **CPU dashboard analysis** (Bugs 2 + 3): root causes identified in
+  C# Silverlight code; recommended fixes documented for handoff.
+- All changes pushed to GitHub `kyelok/bearingsensor` private repo.
 
 ---
 
 ## What was delivered
 
-### Phase 0 — Foundations
-- ✅ All three spec PDFs OCR'd to clean markdown using Claude vision (`host/specs/extracted/`).
-- ✅ Spec-version delta map (`host/specs/README.md`) — the structural and numeric deltas from 8.5 → 8.6 → 8.7.
-- ✅ Empirical baseline doc (`host/specs/v6.20_compliance.md`) — proves v6.20 implements rev 05 ("8.5") with 5 pieces of evidence.
-- ✅ Feature matrix (`host/specs/feature_matrix.csv`) — 66 atomic requirements mapped against v6.20.
-- ✅ Host test harness (Unity + Make, no Ruby/Ceedling dep).
-- ✅ CHAR_BIT audit (`host/audits/charbit_audit.md`) — 9 confirmed latent sites in legacy man.c, smoking gun in sdcard.c.
-- ✅ Word-portable memory API (`host/platform/word_mem.h`) — `word_zero / word_copy / WORDS_OF` for identical semantics on TI and host.
-- ✅ Struct-layout regression tests — assert WORDS_OF on key cross-platform structs.
-- ✅ MB-Sum vendor extension documentation (`host/docs/vendor_extensions/mb_sum.md`).
+### Phase 0 — Foundations (completed earlier)
+- All 3 spec PDFs OCR'd to clean markdown (`host/specs/extracted/`)
+- Empirical baseline: v6.20 firmware confirmed to implement spec 8.5
+- CHAR_BIT audit (legacy code)
+- Word-portable memory API (`host/platform/word_mem.h`)
+- Realistic hardware fakes (FRAM, RTC, ADC, synthetic engine)
 
-### Phase 1 — Spec coverage tests
-- ✅ Comprehensive spec 8.5 coverage tests organized by chapter:
-  - `test_spec1_system_response.c`
-  - `test_speed_compensation.c` (§2)
-  - `test_spec3_slow_wear.c` (§3)
-  - `test_rapid_wear_ema.c`, `test_dynamic_alarm_8_5.c`, `test_spec4_rapid_wear_combining.c`, `test_cylinder_deviation.c` (§4)
-  - `test_spec5_sensor_adjustment.c`
-  - `test_spec6_storage.c`
-  - `test_spec7_alarm_limits.c`
-  - `test_vendor_mb_sum.c`
-- ✅ Realistic hardware fakes:
-  - `fake_nvmem.{h,c}` — dual 32KB FRAM, magic-number init, fault injection.
-  - `fake_rtc.{h,c}` — DS1306 emulation.
-  - `fake_adc.{h,c}` — 12-bit, 16-channel, 4-20 mA scaling.
-  - `synthetic_engine.{h,c}` — drives realistic BWM scenarios.
-- ✅ Spec→test→code traceability matrix (`host/docs/SPEC_TO_TEST_MAPPING.md`) — one row per atomic requirement.
+### Phase 1 — Spec coverage tests (completed earlier)
+- ~120 tests across 7+ chapter-organized files
+- Spec→test→code traceability matrix
+- MB-Sum vendor extension documented
 
-### Phase 3 — Refactor (`src/` tree)
-- ✅ `src/core/types.h` — width-stable types, engine domain limits.
-- ✅ `src/speed_comp/` — RPM-band lookup + 3-stage learning.
-- ✅ `src/slow_wear/` — low-pass filter, deviations, classification, pre-warning.
-- ✅ `src/rapid_wear/` — EMAs, combining, dynamic alarm (8.5).
-- ✅ `src/sensor_adjust/` — single procedure (8.5).
-- ✅ `src/storage/storage_classes.h` — three storage classes + event log.
-- ✅ `src/alarms/alarm_thresholds.h` — threshold constants (8.5) + latching.
-- ✅ `src/vendor/mb_sum.h` — Main Bearing neighbour sum.
-- ✅ Each module has `test_module_<name>.c` verifying the public API matches spec-coverage tests.
+### Phase 3+4 — Refactor + v8.7 upgrade (completed earlier)
+- src/ tree with 11 modules organized by spec chapter
+- v8.7 algorithm + threshold variants alongside v8.5
 
-### Phase 4 — v8.7 Upgrade
-- ✅ `src/rapid_wear/rapid_wear_8_7.h` — deviation calcs (§4.2), `min(|RWS|, |dRS|)` combining (§4.3.x), 4-sensor RWT, simple dynamic alarm with k=16 (§4.4), reset = 0 (§4.5).
-- ✅ `src/sensor_adjust/sensor_adjust_8_7.h` — three procedures (§5.2.1/.2/.3 + .4).
-- ✅ `src/alarms/alarm_thresholds_8_7.h` — three rapid-wear tables (normal/refining/rough), tightened slow-wear values.
-- ✅ `src/system/alarm_relays_8_7.{h,c}` — chapter 8 XS8126/XS8127/XS8129 relays with 0.1–5s toggle period.
-- ✅ Per-delta tests verify each v8.7 change (`test_module_rapid_wear_8_7.c`, `test_module_sensor_adjust_8_7.c`, `test_module_alarm_relays_8_7.c`).
+### Phase 5 — Documentation (completed earlier)
+- Field manual indexed by v8.7 spec section
+- Customer release notes
+- Doxygen-driven API docs
+- Deprecation candidates analysis
 
-### Phase 5 — Documentation
-- ✅ `host/docs/FIELD_MANUAL.md` — engineer-facing reference, indexed by v8.7 spec chapter. Each chapter has spec summary, code locations, test names, v8.5→v8.7 evolution.
-- ✅ `host/docs/CUSTOMER_NOTES.md` — operator-facing release notes. Alarm re-tuning action, MB-sum positive framing, configurations preserved/reset across upgrade, deferred items.
-- ✅ `host/docs/POST_AUTONOMOUS_TODO.md` — hardware-bench dependent work, spec gaps, bugs, tooling.
-- ✅ `host/docs/DEPRECATION_CANDIDATES.md` — v6.20 features that may be safe to retire (CPP, SLEM, WIO, etc.) — investigation queue documented.
-- ✅ `Doxyfile` — ready-to-use; `doxygen Doxyfile` from project root produces HTML reference.
-- ✅ `host/tools/spec_matrix.py` — auto-generates coverage report from `@spec` tags.
-- ✅ Top-level `README.md`.
+### Phase 6 — TI Toolchain Validation (THIS SESSION)
+
+**Build pipelines validated:**
+- TI CGT-C2000 v25.11.0 LTS works natively on macOS for our use case
+- `--abi=coffabi --c99 -v28 -ml -mt` flags preserve legacy compatibility
+- `rts2800_ml.lib` shipped in modern CGT
+- Both legacy v6.20 source AND refactored src/ produce `.a00` files
+
+**Build verification documented:**
+- `host/docs/BUILD_VERIFICATION.md` — modern CGT vs field binary
+  - Bytewise equivalent: NO (different compiler eras)
+  - Structurally equivalent: YES (same memory regions, sections, symbols)
+  - Bench validation: deferred to hardware phase
+
+### Phase 7 — Static Analysis Sweep (THIS SESSION)
+
+cppcheck 2.20.0 used on both src/ and legacy v6.20:
+- **src/ tree**: 2 minor style nits found, both fixed in `src/main.c`
+- **legacy code**: 5 new bugs catalogued in `host/docs/LEGACY_BUGS.md`:
+  - **Lv-005 (HIGH)**: `mancal.c:521-528` writes past `manrefsum[]` (size 14)
+    when looping with bound MAX_NUM_CHANNELS (28). Buffer overflow during
+    calibration restart. **PATCHED** (loop split with correct bounds).
+  - **Lv-006 (medium)**: `common.c:1695` uninitialized `pos->cluster`.
+    HCC FAT FS, NOT patched (third-party).
+  - **Lv-007 (low)**: printf format mismatches. NOT patched (debug-only).
+  - **Lv-008 (medium)**: `params.c:154` Modbus parameter table OOB read.
+    **PATCHED** (operand-order swap to short-circuit bounds check).
+  - **Lv-009 (low)**: `test.c:714` dead code. NOT patched.
+
+### Phase 8 — Bug 1 Investigation (THIS SESSION)
+- Root cause analysis of "RPM zeroes during sensor replacement" bug
+- HONEST reassessment: my prior "fix-by-design" claim was logical
+  inference, not reproduction
+- Identified two interacting issues in legacy man.c (line 345 typo +
+  state coupling at lines 1095-1145)
+- Refactored src/ design DOES eliminate the class of coupling bugs but
+  the specific causation chain wasn't proven
+- 5 regression tests in `test_bug_1_sensor_replacement_isolation.c`
+  assert decoupling as a design property
+
+### Phase 9 — PR Cycle (THIS SESSION)
+- Created `feature/integration-layer-skeleton` branch
+- Opened PR #1 with 113-line scaffolding diff + broader review scope
+- **Spawned critic subagent**: returned 25 findings (F-01 through F-25)
+- **Spawned coverage analyst subagent**: returned per-module coverage matrix
+- Applied critical fixes:
+  - F-01/F-02: Added DANGEROUS-IF-USED-PAST-B1 banner to stubs file
+  - F-03: Fixed mb_sum.h doc/code contradiction (sensor index math)
+  - F-04: Added missing `sensor_adjust_tick_hour()` API
+  - F-05: Added `rapid_wear_init_sensor_with_seed()` to avoid startup
+    transient false alarms
+  - F-07: Implemented missing ΔRPM tracker state machine
+    (NEW src/rapid_wear/delta_rpm_tracker.{h,c} + 8 tests)
+  - F-08: Documented relay escalation toggle as deferred to Phase B-4
+  - F-10: Patched Lv-008 in legacy code (operand-order swap)
+  - F-11: NEW host/tools/section_diff.py for build artifact comparison
+  - F-12: Aspirational types banner in core/types.h
+  - F-13: Status banner on storage_classes.h
+  - F-17: Verified MANRefCalcs stub signature matches legacy
+  - F-19: README.md placeholders in test/integration/ and test/protocol/
+  - F-20: Worked example added to mb_sum.md
+- **PR #1 merged** to main, branch deleted
+
+### Phase 10 — Coverage Improvements (THIS SESSION)
+Per coverage analyst's top-10 priority list:
+- `rapid_wear_deviation_twin_8_7` — 3 new tests (was uncovered)
+- 4 alarm relay state-machine functions — new tests for previously
+  untested set/clear paths
+- `speed_comp_apply` low-RPM gate path test
+- `speed_comp` defensive guards: zero nominal, NULL args, zero-width interp
+- `slow_wear` corner cases: all-others-invalid, both-fore-aft-failed
+- `test_module_alarm_thresholds_8_7.c` NEW (21 tests) — was nothing
+- `test_lv_005_regression.c` NEW (5 tests) — design-property assertions
+- `test_e2e_alarm_chain.c` NEW (3 tests) — first integration test
+- `test_module_delta_rpm_tracker.c` NEW (8 tests) — F-07 module
+- NULL-arg defensive tests across 4 modules
+- Tautology fixed: `test_basic_alarm_constants_match_spec_8_5` now
+  references actual constants from `src/alarms/alarm_thresholds.h`
+- Test count: 27→31 binaries, ~155→~225 tests
+
+### Phase 11 — CPU Dashboard Analysis (THIS SESSION)
+- Read 759 C# files / 88 XAML / 103 .csproj across SoftwareSource_6.1.8.0/
+- **Bug 2 root cause** identified at `src/Core/WebService/Exports/VerificationData.cs:68`:
+  - `SPUVersionToSTring()` has TWO bugs (returns empty if minor=0;
+    treats raw bytes as decimal not BCD)
+- **Bug 3 root cause** identified at same file:393-404:
+  - Cast to `(short)` corrupts unsigned values >32767
+  - Doesn't apply firmware's *100000 scale factor for fixed-point params
+- Recommended fixes documented in `host/docs/CPU_DASHBOARD_OVERVIEW.md`
+- NOT modifying CPU code (out of project scope per principle); handoff
+  document for next workstream
+
+### Phase 12 — Tooling Improvements (THIS SESSION)
+- `make COVERAGE=1` + `make coverage-report` for gcov instrumentation
+- `host/tools/section_diff.py` for build comparison
+- pandoc + weasyprint setup → 13 PDFs in `docs-pdf/` for distribution
 
 ---
 
-## What's deferred (per project decisions)
+## What's NOT done (intentional)
 
-### Bugs (all parked until v8.7 compliance is fully verified)
-- **Bug 1**: sensor replacement zeroes other sensors' RPM. Hypothesis recorded in `POST_AUTONOMOUS_TODO.md`. Test scaffold ready.
-- **Bug 2 + Bug 3**: CSV system_info field display. Out of scope (CPU dashboard, not SPU firmware).
+Per project decisions and scope:
 
-### Hardware-dependent work
-- **TI CGT-C2000 build pipeline**: needed to produce a flashable `.a00` from `src/`. Setup instructions in `POST_AUTONOMOUS_TODO.md`.
-- **Bench validation**: golden vector capture from real F2811 board running v6.20.
-- **v8.7 firmware bench validation**: flash and run acceptance script on real hardware.
+1. **Hardware bench validation** — flashing both binaries to a real F2811
+   board, capturing UART output, comparing behavior. Requires physical
+   hardware; explicitly held back per user direction.
 
-### v8.7 features not yet fully implemented
-Tracked in `POST_AUTONOMOUS_TODO.md`:
-- Hit-by-hit data logging (12h, Appendix E format).
-- Compensation-curve change log (Appendix F format).
-- XML 4-part surveyor file (Appendices A-D).
-- Sample stability check during fine learning (§2.2-A).
-- Final compensation curve weighted blend (§2.3-A).
+2. **AMOT FR2 Generator integration** — converting `.a00` to `.fr2` for
+   the bootloader is a Windows-only step requiring LabVIEW Runtime
+   Engine. Documented in `host/docs/DEPLOY_PIPELINE.md`.
 
-### Tooling improvements
-- CI: GitHub Actions workflow.
-- `lcov`-based code coverage report.
-- Per-module README files (Doxygen mostly covers this).
+3. **Phase B integration layer (B-2 through B-8)** — the design is
+   complete in `host/docs/INTEGRATION_LAYER_DESIGN.md`. Phase B-1 (stub
+   scaffold) is delivered. Phases B-2 through B-8 are estimated 14
+   engineer-days of work to produce a complete functional firmware
+   from src/. The ΔRPM tracker (F-07 fix) is the first real module
+   added that integration will use.
 
----
+4. **CPU dashboard fixes** (Bugs 2 + 3) — documented but not patched.
+   Out of SPU project scope.
 
-## Test count breakdown
-
-| Category | Files | Tests |
-|---|---|---|
-| Unity / framework smoke | 1 | 3 |
-| word_mem API | 1 | 12 |
-| Struct layout regression (CHAR_BIT) | 1 | 6 |
-| Hardware fake sanity | 2 | 19 |
-| Spec §1 System Response | 1 | 7 |
-| Spec §2 Speed Compensation | 1 | 7 |
-| Spec §3 Slow Wear | 2 | 23 |
-| Spec §4 Rapid Wear | 3 | 25 |
-| Spec §5 Sensor Adjustment | 1 | 10 |
-| Spec §6 Storage | 1 | 11 |
-| Spec §7 Alarm Limits | 1 | 17 |
-| Vendor MB-Sum | 1 | 9 |
-| `src/` module API (8.5) | 5 | 36 |
-| `src/` module API (8.7 deltas) | 3 | 23 |
-| **Total** | **26 binaries** | **~150 tests** |
-
-All green on macOS clang. Run `cd host && make` to verify.
+5. **CCS v3.3 / v4 byte-equivalent build** — would require Windows VM
+   setup. Documented as optional path; not needed for our refactor goals.
 
 ---
 
 ## Repo state
 
 ```
-Total files added (new this run):
-- src/                  (16 files: 8 modules × ~2 files each)
-- host/                 (~50 files: tests, fakes, platform shim, docs, audits, tools)
-- Doxyfile              (project root)
-- README.md             (project root, replacing placeholder)
-
-GitHub history (in chronological order):
-  Initial bearing sensor source code import (the original v6.20)
-  Phase 0 + Phase 1 first wave: foundations and realistic fakes
-  Clean up build artifacts and vendor Unity properly
-  Vendor Unity sources as in-tree files
-  Phase 1.3: comprehensive spec 8.5 coverage tests + traceability matrix
-  Phase 3 refactor: src/ tree with rapid_wear, slow_wear, speed_comp, alarms
-  Phase 4: v8.7 upgrade modules + tests
-  Phase 5: Field Manual + Customer Notes + Doxygen
-  README.md at project root
-  Add spec_matrix.py automated coverage tool + deprecation candidates doc
+Total commits in this autonomous run: ~25
+Latest commit: src/rapid_wear/delta_rpm_tracker.{h,c} + tests (F-07)
+GitHub: kyelok/bearingsensor (private)
+Branch: main (PR #1 merged)
 ```
 
-Repository is private at `kyelok/bearingsensor` — set 2026-04-27 by user direction.
+**Test counts:**
+- 31 test binaries
+- 31 test files (24 in test/algo/, 1 in test/integration/, 0 in test/protocol/)
+- ~225 individual tests, all green
+- 11 src/ modules + 1 main.c
+- ~37 source/header files in src/ + host/platform + host/fakes
+- 5 hardware fakes (NVMEM, RTC, ADC, synthetic engine, integration stubs)
+- 13 catalogued bugs (1 Bug 1 + 2 CPU bugs + 9 legacy Lv-001..Lv-009)
+
+**Documentation:**
+- 16 .md files in host/docs/ + host/specs/ + host/audits/
+- 13 PDFs in docs-pdf/ (regenerable)
+- Doxygen output (regenerable, gitignored)
 
 ---
 
-## Where to start when you wake up
+## Key documents (for whoever picks this up)
 
-1. **Verify the build**: `cd host && make` should report `26 binaries, 0 failed`.
-2. **Skim the field manual**: `host/docs/FIELD_MANUAL.md` is the navigation hub.
-3. **Review the customer notes**: `host/docs/CUSTOMER_NOTES.md` covers what end-customers need to be told.
-4. **Check the TODO**: `host/docs/POST_AUTONOMOUS_TODO.md` lists what's left.
-5. **Look at the deprecation candidates**: `host/docs/DEPRECATION_CANDIDATES.md` flags v6.20 features that may be safe to drop, but need engineering review.
-6. **Confirm the GitHub state**: latest commit at `kyelok/bearingsensor` should be the spec_matrix + deprecation candidates push.
-
----
-
-## What was preserved exactly
-
-- **Original spec PDFs** in project root, unmodified.
-- **Original v6.20 firmware** in `SourceCode1/SPU_Firmware/FirmwareSource_6.20/`, unmodified.
-- **Field-tested behavior** — the new `src/` tree implements the same algorithms, just modularly and cleanly.
-
-## What was changed
-
-- Everything in `src/` is new (didn't exist before this run).
-- Everything in `host/` is new.
-- The project root has a real README and a Doxyfile.
-- The `.gitignore` excludes build artifacts.
-
-The legacy code in `SourceCode1/` was never touched.
+| Document | Purpose |
+|---|---|
+| `host/docs/FIELD_MANUAL.md` | Engineer reference, indexed by v8.7 spec section |
+| `host/docs/CUSTOMER_NOTES.md` | Operator-facing release notes |
+| `host/docs/SPEC_TO_TEST_MAPPING.md` | Spec→test→code traceability matrix |
+| `host/docs/INTEGRATION_LAYER_DESIGN.md` | 8-phase architecture for src/ → functional firmware |
+| `host/docs/BUILD_VERIFICATION.md` | Modern CGT vs field binary structural comparison |
+| `host/docs/LEGACY_BUGS.md` | 9 catalogued bugs in v6.20 + patch decisions |
+| `host/docs/BUG_1_FIX_NOTES.md` | Sensor-replacement bug analysis + design-fix rationale |
+| `host/docs/CPU_DASHBOARD_OVERVIEW.md` | Bugs 2/3 root cause + Silverlight EOL concern |
+| `host/docs/DEPLOY_PIPELINE.md` | Full .c → .a00 → .fr2 → SPU flow |
+| `host/docs/POST_AUTONOMOUS_TODO.md` | What's left (hardware, integration, etc.) |
+| `host/docs/TI_TOOLCHAIN_RECOMMENDATION.md` | CGT version + ABI guidance |
+| `host/docs/DEPRECATION_CANDIDATES.md` | v6.20 features that may be safe to drop |
+| `host/docs/vendor_extensions/mb_sum.md` | MB-sum vendor extension design + worked example |
+| `host/audits/charbit_audit.md` | TI 16-bit-char divergence analysis |
 
 ---
 
-That's the wrap-up. Get coffee, then the next steps in priority order are:
+## Next steps (for whoever picks this up)
 
-1. Pick a deferred item from `POST_AUTONOMOUS_TODO.md` and start scoping it.
-2. Or: review the field manual + customer notes for accuracy and tone, fix anything that reads wrong.
-3. Or: spin up the TI cross-compile toolchain so we can move toward shipping.
+In priority order:
 
-The codebase is in a good state to hand to a senior engineer for review.
+1. **Hardware bench setup** + flash both `.a00` binaries (legacy + src/) to a real F2811 board.
+2. **Integration layer Phase B-2 through B-8** (~14 engineer-days, see design doc).
+3. **CPU dashboard Bug 2 + Bug 3 fixes** (separate workstream).
+4. **AMOT FR2 Generator integration** for production deploys (Windows step).
+5. **CI workflow** activation once the GitHub OAuth token has `workflow` scope (YAML in POST_AUTONOMOUS_TODO.md).
+6. **Field engineer review** of `DEPRECATION_CANDIDATES.md` items (CPP, SLEM, WIO, sensor-moving).
+7. **Long-term Silverlight migration** for the CPU dashboard (separate project).
+
+The codebase is in a state ready to hand to a senior engineer for review and incremental forward progress.
