@@ -1,6 +1,12 @@
 # Host test build artifacts
 host/build/
 
+# Generated PDF documentation
+docs-pdf/
+
+# Local coverage matrix output (regenerable)
+host/coverage_matrix.md
+
 # macOS
 .DS_Store
 ._*
