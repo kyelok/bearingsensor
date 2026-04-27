@@ -277,6 +277,53 @@ A future "polish the legacy code for handoff" pass could systematically address 
 
 ---
 
+## Bug Lv-010 — `man.c` 16-bit integer overflow in pre-warning timer setup
+
+**Severity**: medium (timer fires hours earlier than intended; non-safety)
+**Discovered**: 2026-04-28 (cppcheck `truncLongCastAssignment`)
+**File**: `SourceCode1/SPU_Firmware/FirmwareSource_6.20/man.c:2744, 2776, 2872`
+
+### The bug
+
+```c
+timers.prewarn = allsensors.prewarningtimer * 60 * SECS_TO_MS_MULTIPLIER;
+```
+
+Where:
+- `allsensors.prewarningtimer` is `unsigned int` (16-bit on C2000)
+- `SECS_TO_MS_MULTIPLIER` is `#define SECS_TO_MS_MULTIPLIER (unsigned int)(200)` — also 16-bit
+- The integer literal `60` is `int` (16-bit)
+- The result is assigned to `timers.prewarn`, which is `unsigned long` (32-bit)
+
+### Root cause
+
+C arithmetic on TI C2000 (16-bit `int`) computes the entire RHS in 16-bit unsigned before widening. With the production default `prewarningtimer = 360` (per `setup.c:552`):
+- `360 * 60 = 21600` (still fits in 16-bit, max 65535)
+- `21600 * 200 = 4,320,000` — **overflows 16-bit unsigned** (max 65535)
+- Modulo 65536: 4,320,000 % 65,536 = 60,160
+
+Then `timers.prewarn = 60160` (a valid 16-bit value, widened to 32-bit). **Intended** value: 4,320,000 ms.
+
+### Effect
+
+The pre-warning averaging window timer fires **far earlier than the operator-configured value**. With default 6 h = 360 min configured, the actual delay is 60,160 ms = ~5 minutes (set in 5 ms ticks since SECS_TO_MS_MULTIPLIER is the 5 ms-tick rate, so 60,160 ticks × 5 ms ≈ 5 min). Operator expects 6 h average, gets 5 min average instead → noisier, less accurate pre-warning level baseline.
+
+### Resolution
+- **Legacy code**: NOT patched. Behavioral change to a long-shipped firmware would require careful re-validation; the spec describes the *intent* as a 6 h averaging window but the firmware has been operating for years with the truncated value, so service expectations may have adapted to the actual behavior. Document and defer to the next intentional firmware revision.
+- **Refactored `src/`**: when the pre-warn module is added in `src/` (Phase 4 follow-up under §3.3 evaluation cadence), use explicit `(unsigned long)` casts:
+  ```c
+  state->prewarn_ticks = (unsigned long)config.prewarn_minutes * 60UL * SECS_TO_MS_MULTIPLIER;
+  ```
+
+### Three call sites
+- `man.c:2744` — `PreWarningInitOnRestart()`-style function (resets after a restart)
+- `man.c:2776` — `PreWarningInit()` (initial setup)
+- `man.c:2872` — `PreWarningStateMachine()` (resets after timer expiry)
+
+All three lines have the same overflow.
+
+---
+
 ## How to file a new legacy bug
 
 When you find another issue in `SourceCode1/SPU_Firmware/FirmwareSource_6.20/`, append a section here following this template:
