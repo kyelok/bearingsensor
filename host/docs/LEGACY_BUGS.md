@@ -281,7 +281,8 @@ A future "polish the legacy code for handoff" pass could systematically address 
 
 **Severity**: medium (timer fires hours earlier than intended; non-safety)
 **Discovered**: 2026-04-28 (cppcheck `truncLongCastAssignment`)
-**File**: `SourceCode1/SPU_Firmware/FirmwareSource_6.20/man.c:2744, 2776, 2872`
+**File**: `SourceCode1/SPU_Firmware/FirmwareSource_6.20/man.c:2744, 2780, 2880`
+**Status**: PATCHED in legacy code 2026-04-28.
 
 ### The bug
 
@@ -308,19 +309,37 @@ Then `timers.prewarn = 60160` (a valid 16-bit value, widened to 32-bit). **Inten
 
 The pre-warning averaging window timer fires **far earlier than the operator-configured value**. With default 6 h = 360 min configured, the actual delay is 60,160 ms = ~5 minutes (set in 5 ms ticks since SECS_TO_MS_MULTIPLIER is the 5 ms-tick rate, so 60,160 ticks × 5 ms ≈ 5 min). Operator expects 6 h average, gets 5 min average instead → noisier, less accurate pre-warning level baseline.
 
+### Patch applied
+
+```c
+// Original (3 sites):
+// timers.prewarn = allsensors.prewarningtimer * 60 * SECS_TO_MS_MULTIPLIER;
+// Patched:
+timers.prewarn = (unsigned long)allsensors.prewarningtimer * 60UL * SECS_TO_MS_MULTIPLIER;
+```
+
+The `(unsigned long)` cast on the first operand promotes the entire
+expression to 32-bit arithmetic, eliminating the 16-bit overflow.
+With the production default `prewarningtimer = 360`:
+  before patch: timers.prewarn = 60,160  (~5 min at 5 ms/tick)
+  after patch:  timers.prewarn = 4,320,000 (~6 h at 5 ms/tick — the spec'd intent)
+
 ### Resolution
-- **Legacy code**: NOT patched. Behavioral change to a long-shipped firmware would require careful re-validation; the spec describes the *intent* as a 6 h averaging window but the firmware has been operating for years with the truncated value, so service expectations may have adapted to the actual behavior. Document and defer to the next intentional firmware revision.
-- **Refactored `src/`**: when the pre-warn module is added in `src/` (Phase 4 follow-up under §3.3 evaluation cadence), use explicit `(unsigned long)` casts:
-  ```c
-  state->prewarn_ticks = (unsigned long)config.prewarn_minutes * 60UL * SECS_TO_MS_MULTIPLIER;
-  ```
+- **Legacy code**: PATCHED 2026-04-28 at all three sites. Verified the
+  legacy `.a00` still builds cleanly via `make legacy`; binary grew by
+  13 bytes (the wider arithmetic instructions).
+- **Customer-facing impact**: this is a **behavioural change**. Operators
+  who had implicitly tuned their workflows around the actual 5-minute
+  pre-warning averaging will see longer-window, smoother behaviour.
+  Document this prominently in release notes (`host/docs/CUSTOMER_NOTES.md`).
+- **Refactored `src/`**: pre-warn module is not yet ported to `src/`.
+  When it is, use explicit `(unsigned long)` casts to mirror the patched
+  legacy semantics.
 
 ### Three call sites
-- `man.c:2744` — `PreWarningInitOnRestart()`-style function (resets after a restart)
-- `man.c:2776` — `PreWarningInit()` (initial setup)
-- `man.c:2872` — `PreWarningStateMachine()` (resets after timer expiry)
-
-All three lines have the same overflow.
+- `man.c:2744` — function called after a restart to re-arm the timer.
+- `man.c:2780` — `PreWarningInit()` initial setup.
+- `man.c:2880` — `PreWarningStateMachine()` re-arm after timer expiry.
 
 ---
 

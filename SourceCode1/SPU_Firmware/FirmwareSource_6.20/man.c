@@ -2741,7 +2741,11 @@ void PreWarningPowerUpInit(void)
 
 	ReadPrewarnStructfromNVMEM();
 	//reset the timer and carry on
-	timers.prewarn = allsensors.prewarningtimer * 60 * SECS_TO_MS_MULTIPLIER;//set in minutes
+	/* Lv-010 fix: cast forces 32-bit arithmetic so the multiplication
+	 * doesn't overflow the 16-bit `int` on TI C2000. With prewarningtimer=360
+	 * the RHS evaluates to 4,320,000 ticks (~6 h at 5 ms/tick); the previous
+	 * unmodified expression overflowed mod 65,536 to 60,160 (~5 min). */
+	timers.prewarn = (unsigned long)allsensors.prewarningtimer * 60UL * SECS_TO_MS_MULTIPLIER;//set in minutes
 }
 
 //Used to reset all prewarning conditions.
@@ -2773,7 +2777,11 @@ void PreWarningInit(void)
 
 	prewarn.prewarncompleteflag = TRUE;	//pre warning 6 hour averaging completed when this flag is set to true
 	PrewarnReset();
-	timers.prewarn = allsensors.prewarningtimer * 60 * SECS_TO_MS_MULTIPLIER;//set in minutes
+	/* Lv-010 fix: cast forces 32-bit arithmetic so the multiplication
+	 * doesn't overflow the 16-bit `int` on TI C2000. With prewarningtimer=360
+	 * the RHS evaluates to 4,320,000 ticks (~6 h at 5 ms/tick); the previous
+	 * unmodified expression overflowed mod 65,536 to 60,160 (~5 min). */
+	timers.prewarn = (unsigned long)allsensors.prewarningtimer * 60UL * SECS_TO_MS_MULTIPLIER;//set in minutes
 	// PF Gen 2 - 07-Mar-12 Old alarm system backend removal - memset(eventstring,0,EVENTMSG_LEN_INBYTES_PART2);
 	// PF Gen 2 - 07-Mar-12 Old alarm system backend removal - LogEvent(PREWARN_INITIATED,HIGH_PRIORITY,NO,eventstring);	//no extra message to pass in for this event
 	SetBitEvent(PREWARN_INIT_EVENT); // PF Gen 2 - 07-Mar-12 Old alarm system backend removal - prewarn reset
@@ -2869,7 +2877,11 @@ int prewarnval;
 				prewarn.calcacc[i] = 0;	
 				prewarn.points[i] = 0;
 			}
-			timers.prewarn = allsensors.prewarningtimer * 60 * SECS_TO_MS_MULTIPLIER;//set in minutes
+			/* Lv-010 fix: cast forces 32-bit arithmetic so the multiplication
+	 * doesn't overflow the 16-bit `int` on TI C2000. With prewarningtimer=360
+	 * the RHS evaluates to 4,320,000 ticks (~6 h at 5 ms/tick); the previous
+	 * unmodified expression overflowed mod 65,536 to 60,160 (~5 min). */
+	timers.prewarn = (unsigned long)allsensors.prewarningtimer * 60UL * SECS_TO_MS_MULTIPLIER;//set in minutes
 			WritePrewarnStructtoNVMEM();
 		}
 	}
