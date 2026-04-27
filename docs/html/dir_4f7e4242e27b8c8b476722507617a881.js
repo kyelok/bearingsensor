@@ -1,4 +1,0 @@
-var dir_4f7e4242e27b8c8b476722507617a881 =
-[
-    [ "platform", "dir_846037931f07a38f7b50bdee14591f41.html", "dir_846037931f07a38f7b50bdee14591f41" ]
-];
