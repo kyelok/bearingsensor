@@ -77,6 +77,34 @@ If the running MB-Sum value (`manrefsum[k].mbnsum`, computed from `manref[].refv
 | Bitmask of enabled pairs for alarm purposes | `damagemon.mbneighbouralarms` | `man.h:132` |
 | Configuration "split point" between cylinder banks | `damagemon.ccsplit` (zero MB-Sum at this position) | `man.c:953` |
 
+### Worked example: `ccsplit` on a 6-cylinder dual-bank engine
+
+Per PR review F-20: a concrete worked example helps surveyors and integrators understand the bank-split semantics.
+
+**Scenario**: A 6-cylinder marine 2-stroke engine with a physical bank split between cylinder 3 and cylinder 4 (i.e., the structure between cyl 3 and cyl 4 doesn't share a common main bearing). Cylinders are zero-indexed (0..5).
+
+**Configuration**: set `damagemon.ccsplit = 4` via Modbus register or commissioning tool.
+
+**Effect**: at MB position k=3 (zero-indexed), the bitmask predicate evaluates `cc_split == k+1 → 4 == 4 → true`, so position 3 is permanently disabled. The 5 MB positions on this engine become:
+
+```
+MB position k=0  →  active (between cyl 0 and cyl 1)
+MB position k=1  →  active (between cyl 1 and cyl 2)
+MB position k=2  →  active (between cyl 2 and cyl 3)
+MB position k=3  →  DISABLED (between cyl 3 and cyl 4 — bank split)
+MB position k=4  →  active (between cyl 4 and cyl 5)
+```
+
+**Sensors involved at the disabled position** (per `mb_sum_left_sensor` / `mb_sum_right_sensor`):
+- left  = sensor 7 (aft of cyl 3)
+- right = sensor 8 (fore of cyl 4)
+
+These sensors continue to be measured and contribute to other algorithm pathways (SingleRapid, slow-wear) — they are NOT disabled overall. Only their MB-Sum *combination* is disabled.
+
+**Why**: In a dual-bank configuration, the apparent "main bearing" position is a structural division; sensors on either side respond to different mechanical loads and their sum has no physical meaning. Including the position would produce a noisy alarm signal not tied to actual main-bearing wear.
+
+**Default**: `ccsplit = 0` for single-bank engines (the typical case). All MB positions active.
+
 **Why two bitmasks** (`mbneighbour` and `mbneighbouralarms`)?
 
 `MBNeighbourRegSet()` (`man.c:920`) walks every potential MB-Sum pair and computes two predicates per pair:

@@ -73,12 +73,19 @@ typedef Uint16  bwm_mb_id_t;          /* 0 .. BWM_MAX_MB_POSITIONS-1 */
 #define BWM_CYL_FORE_SENSOR(cid) ((bwm_sensor_id_t)((cid) * BWM_SENSORS_PER_CYL))
 #define BWM_CYL_AFT_SENSOR(cid)  ((bwm_sensor_id_t)((cid) * BWM_SENSORS_PER_CYL + 1))
 
-/* ===== Direction & operational mode ===== */
+/* ===== Direction & operational mode =====
+ *
+ * Aspirational types — declared here because they will be needed by the
+ * Phase B-3 integration layer (per host/docs/INTEGRATION_LAYER_DESIGN.md)
+ * but not yet referenced by any src/ module. Per PR review F-12: keeping
+ * them with this banner so future code can find them without a separate
+ * design doc, and so the type names are stable when bridges are written.
+ */
 
 typedef enum {
     BWM_DIR_UNKNOWN = 0,
     BWM_DIR_FORWARD = 1,
-    BWM_DIR_ASTERN  = -1
+    BWM_DIR_ASTERN  = -1   /* Note: enum may be promoted to int on TI C28x */
 } bwm_direction_t;
 
 typedef enum {
