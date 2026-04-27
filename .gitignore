@@ -1,6 +1,9 @@
 # Host test build artifacts
 host/build/
 
+# TI CGT cross-compile artifacts
+build/
+
 # Generated PDF documentation
 docs-pdf/
 
