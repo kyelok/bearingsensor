@@ -148,6 +148,7 @@ Detects fast-developing failures (filter breakage, oil starvation) by comparing 
 | RWT = 4-sensor average | `rapid_wear_8_7.c` `rapid_wear_rwt_8_7` | `test_module_rapid_wear_8_7.c::test_rwt_8_7_is_four_sensor_average` |
 | Dynamic alarm simple formula k=16 | `rapid_wear_8_7.c` `rapid_wear_dynamic_alarm_8_7` | `test_module_rapid_wear_8_7.c::test_dynamic_alarm_8_7_*` |
 | 16-25% floor; pause above 25% | `rapid_wear_8_7.c` constants | `test_module_rapid_wear_8_7.c::test_dynamic_alarm_8_7_clamps_in_floor_range`; `test_should_pause_8_7_returns_correctly` |
+| **ΔRPM tracker (RPM_low / RPM_high EMAs)** | `src/rapid_wear/delta_rpm_tracker.c` (NEW) | `test_module_delta_rpm_tracker.c` (8 tests) |
 
 ### v8.5 → v8.7 changes
 This is the most-changed chapter. See `host/specs/README.md` for the full delta map. The `src/rapid_wear/` module deliberately keeps both the 8.5 and 8.7 implementations side-by-side; the active algorithm is selected at the system-orchestration layer (currently to be wired in Phase 4).
