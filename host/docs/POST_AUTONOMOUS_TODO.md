@@ -41,7 +41,7 @@ These are 8.7 spec requirements not yet implemented in `src/`. Tracked in `host/
 - ✅ **Hit-by-hit data record formatter** (Appendix E): `src/storage/hit_by_hit.{h,c}` produces a spec-exact CSV line per engine revolution. Tested against the spec example verbatim. The 12h ring-buffer and SD-card persistence belong to the integration layer (Phase B-6).
 - ✅ **Compensation-curve change formatter** (Appendix F): `src/storage/comp_curve_log.{h,c}` produces the snapshot file's filename + header + body lines (with European decimal-comma RPM formatting). Same comment: file emission belongs to Phase B-6.
 - **Frozen-copy retention**: ≥1 year retention; 65h hit-by-hit always available (5 alarm events). Policy code; depends on integration layer file rotation.
-- **XML 4-part surveyor file** (Appendices A-D format) — still to implement.
+- ✅ **4-part surveyor file** (Appendices A-D): `src/storage/surveyor_file.{h,c}` formats App-A engine-info key/value rows, App-B log lines, App-C per-sensor trend rows, App-D cylinder-status rows. (Note: spec calls this a "4-part surveyor file" of plain-text reports, not XML — the earlier TODO entry that mentioned XML was inaccurate.) 18 tests, all matching spec examples verbatim.
 
 ### Calibration enhancements
 - **§2.2-A Sample stability check** ✅ done. `speed_comp_record_with_stability_gate` is the deferred-commit gate; `speed_comp_stability_state_t` holds the buffered sample. Tests in `host/test/algo/test_module_speed_comp_stability_gate.c`.
