@@ -1,0 +1,54 @@
+# Doxyfile for AMOT XTSW+ BWM SPU firmware (refactored src/ tree)
+#
+# Run from project root: doxygen Doxyfile
+# Output lands in docs/html/
+#
+# Spec-tag aliases:
+#   @spec 8.7 §4.4 — references MAN BWM doc 3091686-8 rev 07 section 4.4
+#   @vendor-extension MB-Sum — non-spec vendor feature
+
+PROJECT_NAME           = "AMOT XTSW+ BWM SPU Firmware"
+PROJECT_NUMBER         = "v8.7-compliance refactor"
+PROJECT_BRIEF          = "Bearing Wear Monitoring per MAN spec 3091686-8 rev 07"
+
+OUTPUT_DIRECTORY       = docs
+GENERATE_HTML          = YES
+GENERATE_LATEX         = NO
+HTML_OUTPUT            = html
+
+INPUT                  = src host/platform
+RECURSIVE              = YES
+FILE_PATTERNS          = *.h *.c
+
+# Spec-tag and vendor-extension aliases — render as a "Spec requirement"
+# or "Vendor extension" paragraph in the generated docs.
+ALIASES                = "spec=@par Spec requirement:^^" \
+                         "vendor-extension=@par Vendor extension:^^"
+
+EXTRACT_ALL            = NO
+EXTRACT_STATIC         = YES
+EXTRACT_PRIVATE        = NO
+
+OPTIMIZE_OUTPUT_FOR_C  = YES
+JAVADOC_AUTOBRIEF      = YES
+QT_AUTOBRIEF           = YES
+
+WARNINGS               = YES
+WARN_IF_UNDOCUMENTED   = YES
+WARN_AS_ERROR          = NO
+
+# Treat clang-style attributes as no-ops when scanning sources.
+PREDEFINED             = __TMS320C2000__=0 \
+                         interrupt= \
+                         EALLOW=((void)0) \
+                         EDIS=((void)0)
+
+# Don't generate the call/caller graphs by default — too noisy for
+# embedded code. Generate the include graph and class diagrams.
+HAVE_DOT               = NO
+CALL_GRAPH             = NO
+CALLER_GRAPH           = NO
+INCLUDE_GRAPH          = YES
+
+GENERATE_TREEVIEW      = YES
+SEARCHENGINE           = YES
