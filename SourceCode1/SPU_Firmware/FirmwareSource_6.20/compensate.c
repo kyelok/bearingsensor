@@ -10,6 +10,7 @@
 #include "spi.h"
 #include "pccli.h"
 #include "PCModBus.h"
+#include "adc.h"  /* added 2026-04-27: extern declarations for `inputs`, `safe5`, `speedcomp` — see host/docs/LEGACY_BUGS.md */
 
 //DELTA_T contians the - for -K in calculation
 #define DELTA_T (double)-0.08	//80ms interval time for PRT reading
