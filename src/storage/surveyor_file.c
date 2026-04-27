@@ -208,7 +208,7 @@ int surveyor_app_d_row(char *buf, int buf_size,
     if (append_str(buf, buf_size, &pos, "Cylinder No. ") < 0) return -1;
     if (append_int_pad(buf, buf_size, &pos, (int)cyl_no_1based, 2) < 0) return -1;
     if (append_str(buf, buf_size, &pos, "    ") < 0) return -1;
-    char one[2] = { status_char, '\0' };
+    const char one[2] = { status_char, '\0' };
     if (append_str(buf, buf_size, &pos, one) < 0) return -1;
     return pos;
 }

@@ -42,7 +42,7 @@ static int append_rpm_tenths(char *buf, int buf_size, int *pos, Uint16 t)
     int frac    = t % 10;
     if (append_int(buf, buf_size, pos, integer) < 0) return -1;
     if (append_str(buf, buf_size, pos, ",") < 0) return -1;
-    char d[2] = { (char)('0' + frac), '\0' };
+    const char d[2] = { (char)('0' + frac), '\0' };
     return append_str(buf, buf_size, pos, d);
 }
 
