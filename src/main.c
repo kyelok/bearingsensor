@@ -96,16 +96,13 @@ static void main_loop_tick(Uint16 nominal_rpm,
                            Uint16 current_rpm,
                            const Int16 *raw_samples)
 {
-    Uint16 i;
-    Int16  speed_compensated;
-
     /* For each sensor: speed-compensate, feed slow- and rapid-wear pipelines. */
-    for (i = 0; i < BWM_MAX_SENSORS; i++) {
-        speed_compensated = speed_comp_apply(&g_speed_comp_table,
-                                             (bwm_sensor_id_t)i,
-                                             current_rpm,
-                                             nominal_rpm,
-                                             raw_samples[i]);
+    for (Uint16 i = 0; i < BWM_MAX_SENSORS; i++) {
+        Int16 speed_compensated = speed_comp_apply(&g_speed_comp_table,
+                                                   (bwm_sensor_id_t)i,
+                                                   current_rpm,
+                                                   nominal_rpm,
+                                                   raw_samples[i]);
 
         slow_wear_apply_sample(&g_slow_state[i], (float)speed_compensated);
         rapid_wear_apply_sample(&g_rapid_state[i], (float)speed_compensated);
@@ -119,9 +116,9 @@ int main(void)
     init_all_modules();
 
     /* Synthetic minimal main loop — replace with real ADC ISR drive. */
-    Int16 samples[BWM_MAX_SENSORS] = { 0 };
-    Uint16 nominal = 100;
-    Uint16 current = 80;
+    const Int16 samples[BWM_MAX_SENSORS] = { 0 };
+    const Uint16 nominal = 100;
+    const Uint16 current = 80;
     Uint32 tick = 0;
 
     while (1) {

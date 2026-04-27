@@ -514,6 +514,10 @@ void InitCal(void)
 		CalibrationtdUpdate(3);		// PF Gen 2 - 14-Nov-11 Zero calibration time and date
 
 		//12-14-2012 FF: Need to initialize these values every time when cal is restarted
+		// Patched 2026-04-28: split loop into two to fix Bug Lv-005 (manrefsum[]
+		// is only MAX_NUM_CYLINDERS=14 entries; the original loop wrote indices
+		// 14..27 past the end, corrupting adjacent BSS memory). See
+		// host/docs/LEGACY_BUGS.md.
 		for(i=0;i<MAX_NUM_CHANNELS;i++)
 		{
 			manref[i].reflevel = 0;
@@ -521,8 +525,10 @@ void InitCal(void)
 			manref[i].presentstate = 0;
 			manref[i].presentstate_int = 0;
 			manref[i].refvalue = 0;
-			manref[i].refvalue_int = 0;			
-
+			manref[i].refvalue_int = 0;
+		}
+		for(i=0;i<MAX_NUM_CYLINDERS;i++)
+		{
 			manrefsum[i].cylsum = 0;
 			manrefsum[i].mbnsum = 0;
 		}

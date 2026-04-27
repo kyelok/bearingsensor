@@ -94,7 +94,161 @@ The global `inputs` (of type `inputstruct`) is declared in `adc.h` because it re
 
 ---
 
-## Bug Lv-004 — Multiple suppress-able compiler warnings under modern CGT
+## Bug Lv-005 — `mancal.c` writes past end of `manrefsum[]` (buffer overflow)
+
+**Severity**: HIGH (memory corruption)
+**Discovered**: 2026-04-28 (cppcheck static analysis pass)
+**File**: `SourceCode1/SPU_Firmware/FirmwareSource_6.20/mancal.c`
+**Lines**: 517-528 (in `RestartCalibration()` or similar)
+**Status**: PATCHED in legacy code (this is one of the rare exceptions to the "legacy untouched" principle — buffer overflows have a higher priority than the principle).
+
+### The bug
+
+```c
+// Original mancal.c around line 517-528:
+for(i=0; i<MAX_NUM_CHANNELS; i++)    // MAX_NUM_CHANNELS = 28
+{
+    manref[i].reflevel = 0;
+    /* ... 5 more manref[i] field writes ... */
+
+    manrefsum[i].cylsum = 0;          // BUG: manrefsum is size 14, not 28
+    manrefsum[i].mbnsum = 0;          // BUG: same
+}
+```
+
+`manrefsum[]` is declared `manrefsum[MAX_NUM_CYLINDERS]` (= 14 entries, see `man.c:57`). The loop iterates from 0 to 27 (`MAX_NUM_CHANNELS`). When `i >= 14`, the writes go past the end of `manrefsum[]` and corrupt adjacent BSS memory.
+
+### Effect
+
+Calibration restart corrupts whatever variable happens to be allocated immediately after `manrefsum` in BSS. The exact corruption depends on linker layout and could cause:
+- Silent data corruption (hardest to debug — bad calibration values, alarm thresholds, etc.)
+- Watchdog reset if a critical timer/counter is overwritten
+- Subtle algorithm misbehavior after a calibration restart
+
+This bug is triggered every time the operator initiates a calibration restart, which happens at:
+- Initial commissioning
+- Sensor replacement
+- Manual recal request via Modbus
+
+So it's reliably exercised in the field but its symptoms are likely attributed to "calibration didn't complete cleanly, try again."
+
+### Patch applied
+
+Split the offending loop into two, each with the correct upper bound:
+
+```c
+for(i=0; i<MAX_NUM_CHANNELS; i++) {
+    /* manref[i] writes — these are correct since manref[] IS sized MAX_NUM_CHANNELS */
+    manref[i].reflevel = 0;
+    /* ... etc ... */
+}
+for(i=0; i<MAX_NUM_CYLINDERS; i++) {
+    /* manrefsum[i] writes — corrected bound */
+    manrefsum[i].cylsum = 0;
+    manrefsum[i].mbnsum = 0;
+}
+```
+
+This is the minimum surgical patch. Behavior of the SUCCESSFULLY-zeroed indices (0-13) is unchanged. The previously-corrupted memory beyond manrefsum[13] now stays untouched.
+
+### Customer notification
+
+Operators currently running v6.20 should be told: if they have observed unexplained alarm behavior or calibration failures after a sensor replacement workflow, this bug is a likely cause. The fix is included in the v8.7-compliance firmware update.
+
+### Prevention in `src/`
+
+Our refactored `src/` doesn't have a `manrefsum`-equivalent global. The MB-Sum extension lives in `src/vendor/mb_sum.{h,c}` with its own state per main-bearing position; the loop bound is `mb_sum_num_positions(num_cylinders) = num_cylinders - 1`, which is mathematically correct. The cylinder-sum is similarly per-cylinder with bounds tied to `num_cylinders`.
+
+No equivalent bug can exist in `src/` because:
+1. We use `BWM_MAX_CYLINDERS` (14) and `BWM_MAX_SENSORS` (28) as distinct names — the type system catches misuse.
+2. Bounds are derived from struct dimensions, not from a separate `MAX_NUM_*` macro.
+3. The struct-layout regression tests in `host/test/algo/test_struct_layout.c` would catch any size mismatch.
+
+### Static analysis
+
+cppcheck (`--enable=warning,style`) catches this with:
+```
+mancal.c:526:13: error: Array 'manrefsum[14]' accessed at index 27, which is out of bounds. [arrayIndexOutOfBounds]
+```
+
+Recommend running cppcheck as a CI gate on the legacy code (until it's retired) AND on `src/`.
+
+---
+
+## Bug Lv-006 — `common.c` uses uninitialized `pos->cluster`
+
+**Severity**: medium (HCC FAT FS — third-party, but worth noting)
+**Discovered**: 2026-04-28 (cppcheck)
+**File**: `SourceCode1/SPU_Firmware/FirmwareSource_6.20/common.c:1695`
+
+```c
+pos->prevcluster = pos->cluster;   // pos->cluster never initialized
+```
+
+When `_f_clustertopos` is called from common.c:2440, the `pos` struct hasn't been zeroed.
+
+### Resolution
+- Legacy code: NOT patched (this is HCC FAT FS, third-party). Document for future maintenance.
+- The legacy code has run for years with this and the FAT FS works in production, so the actual impact is bounded — likely just one stale value gets propagated, the next FAT operation overwrites it.
+
+---
+
+## Bug Lv-007 — Multiple printf format-string mismatches
+
+**Severity**: low (no functional impact unless the prints actually run)
+**Discovered**: 2026-04-28 (cppcheck)
+**Files**:
+- `chkdsk.c:927, 1490` — `%ld` vs `unsigned long`
+- `mancal.c:1464` — `%d` vs `unsigned int`
+- `sdcard.c:893` — `%u` vs `signed int`
+
+Most of these are in debug `sprintf` strings that may or may not execute depending on debug-output flags. Format-string mismatches on the C28x with these specific types typically still print readable values (signedness reinterpretation only matters for very large values), but it's poor hygiene.
+
+### Resolution
+- Legacy code: NOT patched. Low impact, debug-only.
+
+---
+
+## Bug Lv-008 — `params.c` Modbus parameter table off-by-one risk
+
+**Severity**: medium (potential out-of-bounds read)
+**Discovered**: 2026-04-28 (cppcheck)
+**File**: `SourceCode1/SPU_Firmware/FirmwareSource_6.20/params.c:154-155`
+
+```c
+while(reg != parameters[i].reg && i < NUM_PARAMETERS_IN_LIST) i++;
+if(i == NUM_PARAMETERS_IN_LIST) return(0);
+```
+
+The condition `reg != parameters[i].reg` is evaluated FIRST, then `i < NUM_PARAMETERS_IN_LIST`. If `i == NUM_PARAMETERS_IN_LIST` (just past the end), `parameters[i].reg` is read out of bounds. The subsequent check on the next line is too late.
+
+### Effect
+
+When a Modbus client requests an unrecognized register, the `parameters[i].reg` access at i=NUM_PARAMETERS_IN_LIST reads beyond the array. The value read is whatever lives in BSS after the `parameters[]` array; it might happen to match `reg`, in which case the function continues into garbage logic.
+
+In practice, the legacy build's parameter array is exactly 93 entries; reading parameters[93].reg gets whatever struct field happens to be next in memory. Could produce unexpected behavior on unrecognized Modbus register reads.
+
+### Resolution
+- **Legacy code**: NOT patched (per principle — this is in code we're replacing). The fix is to swap operand order: `while(i < NUM_PARAMETERS_IN_LIST && reg != parameters[i].reg) i++;`
+- **Refactored `src/`**: when `src/comms/modbus.c` is written (Phase B-5 of integration layer per `INTEGRATION_LAYER_DESIGN.md`), it must use the safe-order check. Test this explicitly.
+
+---
+
+## Bug Lv-009 — `test.c:714` always-false condition (dead code)
+
+**Severity**: low (dead code in test harness, not shipped to production)
+**File**: `SourceCode1/SPU_Firmware/FirmwareSource_6.20/test.c:714`
+
+```c
+if (ret) return _f_result(35,ret);  // line 697 — exits if ret != 0
+...
+if (ret) return _f_result(39,ret);  // line 714 — but ret can't be != 0 here
+```
+
+After the first early-return, `ret` is provably zero, so the second check is dead code.
+
+### Resolution
+- Legacy code: NOT patched (in test harness, never executes in production).
 
 **Severity**: low (warnings, not errors)
 **Files**: scattered
