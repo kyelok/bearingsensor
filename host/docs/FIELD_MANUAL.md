@@ -202,13 +202,16 @@ Plus an event log (alarm/slowdown/pre-warning, sensor replacement/adjust, ref ch
 | Long-term record layout | `src/storage/storage_classes.h` `long_term_record_t` | `test_module_storage.c::test_long_term_record_field_layout` |
 | Event log enum | `src/storage/storage_classes.h` `storage_event_type_t` | `test_module_storage.c::test_event_types_are_distinct` |
 | Post-alarm extension (5 min) | `src/storage/storage_classes.c` `storage_compute_post_alarm_extension_seconds` | `test_module_storage.c::test_post_alarm_extension_is_5_minutes` |
+| **App E hit-by-hit CSV formatter (8.7)** | `src/storage/hit_by_hit.{h,c}` | `test_module_hit_by_hit.c` (9 tests, spec-example match) |
+| **App F comp-curve CSV formatter (8.7)** | `src/storage/comp_curve_log.{h,c}` | `test_module_comp_curve_log.c` (9 tests, spec-example match) |
 | Non-volatile storage (FRAM) | `host/fakes/fake_nvmem.{h,c}` (test fake); production via SPI FRAM | `test_fake_nvmem.c::test_*_round_trip` |
 
-### v8.5 → v8.7 changes — STILL TO IMPLEMENT
-- Hit-by-hit logging at 12h × per-revolution rate.
-- Compensation-curve change snapshot files (Appendix F format).
-- XML serialization for 4-part surveyor file (Appendices A-D).
-- Frozen copy retention (≥1 year, 65h hit-by-hit guaranteed).
+### v8.5 → v8.7 changes — STATUS
+- ✅ Hit-by-hit CSV record formatter (App E) — pure formatter, integration to SD card pending Phase B-6.
+- ✅ Compensation-curve change snapshot formatter + filename (App F) — same.
+- ⏳ XML serialization for 4-part surveyor file (Appendices A-D) — still to implement.
+- ⏳ Frozen copy retention (≥1 year, 65h hit-by-hit guaranteed) — implementation depends on integration layer (file rotation policy).
+- ⏳ 12h × per-revolution rate hit-by-hit ring buffer — same; needs integration layer.
 
 These are tracked in `host/audits/v6.20_spec_divergences.md` and the post-autonomous TODO list.
 
