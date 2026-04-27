@@ -89,7 +89,50 @@ Each module under `src/<topic>/` gets a brief README explaining purpose, public 
 
 ### Continuous integration
 - GitHub Actions workflow: on every push to `main` and every PR, run `cd host && make`. Fail if any test is red.
-- Optional: also run Doxygen and `spec_matrix.py` (when both exist).
+- Optional: also run Doxygen and `spec_matrix.py`.
+- **Important**: pushing a `.github/workflows/*.yml` file to this repo via the current OAuth token fails with "refusing to allow an OAuth App to create or update workflow ... without `workflow` scope". The token needs the `workflow` scope added before the CI workflow file can be added to the repo. Fix: add `workflow` scope to the gh CLI token via `gh auth refresh -h github.com -s workflow` (or equivalent), or commit the file directly via the GitHub web UI / a token with appropriate scopes.
+
+A ready-to-use workflow file (would have been at `.github/workflows/test.yml`):
+
+```yaml
+name: Host Tests
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build & run host test suite
+        run: |
+          cd host
+          make
+      - name: Run spec coverage report
+        run: |
+          cd host
+          python3 tools/spec_matrix.py
+      - name: Upload coverage matrix
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-matrix
+          path: host/coverage_matrix.md
+  doxygen:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Doxygen
+        run: sudo apt-get update && sudo apt-get install -y doxygen
+      - name: Generate API docs
+        run: doxygen Doxyfile
+      - name: Upload generated docs
+        uses: actions/upload-artifact@v4
+        with:
+          name: api-docs-html
+          path: docs/html/
+```
 
 ---
 
