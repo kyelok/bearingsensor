@@ -31,10 +31,17 @@ static inline Uint16 mb_sum_num_positions(Uint16 num_cylinders)
     return (num_cylinders > 0) ? (Uint16)(num_cylinders - 1) : 0;
 }
 
-/* Sensor IDs for MB position k:
- *   sensor_aft  = aft sensor of cylinder k+1   = (k+1)*2 + 1 = 2k+3
- *   sensor_fore = fore sensor of cylinder k+2  = (k+2)*2     = 2k+4
- * (Zero-indexed cylinders.) */
+/* Sensor IDs for MB position k (zero-indexed):
+ *   left_sensor  = aft sensor of cylinder k     = k*2 + 1 = 2k+1
+ *   right_sensor = fore sensor of cylinder k+1  = (k+1)*2 = 2k+2
+ *
+ * Example: For k=0 (the main bearing between cylinders 0 and 1):
+ *   left  = sensor 1 (aft of cyl 0)
+ *   right = sensor 2 (fore of cyl 1)
+ *
+ * For k=12 on a 14-cyl engine (between cyls 12 and 13):
+ *   left  = sensor 25, right = sensor 26.
+ */
 static inline bwm_sensor_id_t mb_sum_left_sensor (bwm_mb_id_t k) { return (bwm_sensor_id_t)(2*k + 1); }
 static inline bwm_sensor_id_t mb_sum_right_sensor(bwm_mb_id_t k) { return (bwm_sensor_id_t)(2*k + 2); }
 

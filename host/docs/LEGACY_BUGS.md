@@ -214,6 +214,7 @@ Most of these are in debug `sprintf` strings that may or may not execute dependi
 **Severity**: medium (potential out-of-bounds read)
 **Discovered**: 2026-04-28 (cppcheck)
 **File**: `SourceCode1/SPU_Firmware/FirmwareSource_6.20/params.c:154-155`
+**Status**: PATCHED in legacy code 2026-04-28 (per PR review F-10 — same memory-safety class as Lv-005, internally consistent to patch both).
 
 ```c
 while(reg != parameters[i].reg && i < NUM_PARAMETERS_IN_LIST) i++;
@@ -228,8 +229,17 @@ When a Modbus client requests an unrecognized register, the `parameters[i].reg` 
 
 In practice, the legacy build's parameter array is exactly 93 entries; reading parameters[93].reg gets whatever struct field happens to be next in memory. Could produce unexpected behavior on unrecognized Modbus register reads.
 
+### Patch applied
+
+```c
+// Original:
+// while(reg != parameters[i].reg && i < NUM_PARAMETERS_IN_LIST) i++;
+// Patched (operand order swapped so bounds check short-circuits first):
+while(i < NUM_PARAMETERS_IN_LIST && reg != parameters[i].reg) i++;
+```
+
 ### Resolution
-- **Legacy code**: NOT patched (per principle — this is in code we're replacing). The fix is to swap operand order: `while(i < NUM_PARAMETERS_IN_LIST && reg != parameters[i].reg) i++;`
+- **Legacy code**: PATCHED (operand order swap). Defensible because (a) memory-safety class matches Lv-005 which we patched, (b) one-line surgical change, (c) no behavioral difference for known-good register lookups, (d) only changes behavior for previously-OOB-read paths.
 - **Refactored `src/`**: when `src/comms/modbus.c` is written (Phase B-5 of integration layer per `INTEGRATION_LAYER_DESIGN.md`), it must use the safe-order check. Test this explicitly.
 
 ---

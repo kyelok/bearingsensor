@@ -59,8 +59,22 @@ static void test_not_complete_before_50_hours(void)
 {
     sensor_adjust_state_t s; sensor_adjust_init(&s);
     sensor_adjust_begin(&s);
-    s.hours_in_adjustment = 49;
+    for (int h = 0; h < 49; h++) sensor_adjust_tick_hour(&s);
     TEST_ASSERT_FALSE(sensor_adjust_is_complete(&s));
+}
+
+/* @PR-review F-04 — tick_hour API replaces test-bypass struct poking. */
+static void test_tick_hour_only_advances_when_in_adjustment(void)
+{
+    sensor_adjust_state_t s; sensor_adjust_init(&s);
+    /* Not in adjustment — tick should not advance. */
+    sensor_adjust_tick_hour(&s);
+    TEST_ASSERT_EQUAL_UINT32(0, s.hours_in_adjustment);
+    /* Begin adjustment — now ticks count. */
+    sensor_adjust_begin(&s);
+    for (int h = 0; h < 50; h++) sensor_adjust_tick_hour(&s);
+    TEST_ASSERT_EQUAL_UINT32(50, s.hours_in_adjustment);
+    TEST_ASSERT_TRUE(sensor_adjust_is_complete(&s));
 }
 
 int main(void)
@@ -73,5 +87,6 @@ int main(void)
     RUN_TEST(test_offset_formula_with_zero_terms);
     RUN_TEST(test_complete_after_50_hours);
     RUN_TEST(test_not_complete_before_50_hours);
+    RUN_TEST(test_tick_hour_only_advances_when_in_adjustment);
     return UNITY_END();
 }

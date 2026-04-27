@@ -112,10 +112,26 @@ static void test_reset_8_5_uses_avg_minus_running_avg(void)
     TEST_ASSERT_FLOAT_WITHIN(1e-6f, 85.0f,  s.rapid_slow);
 }
 
+/* @PR-review F-05 — seeded init avoids startup transient. */
+static void test_init_with_seed_avoids_startup_transient(void)
+{
+    rapid_wear_sensor_state_t s;
+    rapid_wear_init_sensor_with_seed(&s, /*initial=*/100.0f);
+    /* Both EMAs equal initial value → rapid_wear is zero (no transient). */
+    TEST_ASSERT_FLOAT_WITHIN(1e-6f, 100.0f, s.rapid_slow);
+    TEST_ASSERT_FLOAT_WITHIN(1e-6f, 100.0f, s.rapid_fast);
+    TEST_ASSERT_FLOAT_WITHIN(1e-6f, 0.0f,   s.rapid_wear);
+
+    /* First sample at the seed value keeps rapid_wear near zero. */
+    rapid_wear_apply_sample(&s, 100.0f);
+    TEST_ASSERT_FLOAT_WITHIN(0.01f, 0.0f, s.rapid_wear);
+}
+
 int main(void)
 {
     UNITY_BEGIN();
     RUN_TEST(test_init_zeros_state);
+    RUN_TEST(test_init_with_seed_avoids_startup_transient);
     RUN_TEST(test_apply_sample_first_step_matches_spec);
     RUN_TEST(test_combine_single_is_abs);
     RUN_TEST(test_combine_cyl_sums_in_magnitude);

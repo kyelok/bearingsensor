@@ -35,6 +35,15 @@ void sensor_adjust_begin(sensor_adjust_state_t *s);
  * accumulation. Tracks the running average. */
 void sensor_adjust_apply_sample(sensor_adjust_state_t *s, float compensated_value);
 
+/* Advance the adjustment-hours timer by one hour. Called by the integration
+ * layer once per running hour. After SENSOR_ADJUSTMENT_DURATION_HOURS_8_5
+ * (=50) calls, sensor_adjust_is_complete() will return 1.
+ *
+ * (Per PR review F-04: previously hours_in_adjustment was declared but
+ * never incremented; tests bypassed the missing API by reaching into the
+ * struct directly.) */
+void sensor_adjust_tick_hour(sensor_adjust_state_t *s);
+
 /*
  * @spec 8.5 §5 — wear offset formula:
  *   O = O_1 + a_1 * t_b + 500 * a_3
