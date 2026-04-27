@@ -1,0 +1,119 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{9A6833B3-FE3B-47A6-A594-2CE446318974}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SPUAlarmMonitor</RootNamespace>
+    <AssemblyName>SPUAlarmMonitor</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\Framework\bin\Debug\plugins\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\Framework\bin\Release\plugins\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>..\Framework\bin\Debug\plugins\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>..\Framework\bin\Release\plugins\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="log4net, Version=1.2.11.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\lib\log4net\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="MonitorAlarms.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\lib\AMOTConstants\AMOTConstants.csproj">
+      <Project>{7433656A-252C-47A0-B8CC-C93B7915E17B}</Project>
+      <Name>AMOTConstants</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\lib\DataCollectionSDK\DataCollectionSDK.csproj">
+      <Project>{983919B1-6BAD-4199-8E84-89B3373995DF}</Project>
+      <Name>DataCollectionSDK</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\lib\EventLog\EventLog.csproj">
+      <Project>{A2AABD74-8007-4D10-909E-1539AC2BE7FC}</Project>
+      <Name>EventLog</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\lib\NModbus\source\src\Modbus\Modbus.csproj">
+      <Project>{FF96B252-2B24-44A1-A09C-6401B5D7ED23}</Project>
+      <Name>Modbus</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\lib\SPUSDK\SPUSDK.csproj">
+      <Project>{9C0BEBC8-980D-4401-B2CC-5CE182D7842E}</Project>
+      <Name>SPUSDK</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\FaultErrorIndicators\FaultErrorIndicators.csproj">
+      <Project>{5CDE2319-6B1B-4E1C-9CD1-0D7F04D3E7A9}</Project>
+      <Name>FaultErrorIndicators</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\HelperClasses\HelperClasses.csproj">
+      <Project>{885821AF-7896-4637-86D1-F76F5B0C12A3}</Project>
+      <Name>HelperClasses</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\WebServiceObjects\WebServiceObjects.csproj">
+      <Project>{84EF21B9-14C4-4FCD-8EAC-96A9EFBB166C}</Project>
+      <Name>WebServiceObjects</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\WebService\WebService.csproj">
+      <Project>{13F0E256-4877-4B5B-B027-DBE9632E01C4}</Project>
+      <Name>WebService</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Configuration\Configuration.csproj">
+      <Project>{D57F3ACB-8FC7-401F-9B60-AA68526CEA2A}</Project>
+      <Name>Configuration</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

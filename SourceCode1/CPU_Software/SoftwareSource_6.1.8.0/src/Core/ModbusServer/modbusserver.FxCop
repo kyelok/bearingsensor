@@ -1,0 +1,1816 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FxCopProject Version="10.0" Name="My FxCop Project">
+ <ProjectOptions>
+  <SharedProject>True</SharedProject>
+  <Stylesheet Apply="False">$(FxCopDir)\Xml\FxCopReport.xsl</Stylesheet>
+  <SaveMessages>
+   <Project Status="Active, Excluded, Good, Noise" NewOnly="False" />
+   <Report Status="Active, Good, Noise" NewOnly="False" />
+  </SaveMessages>
+  <ProjectFile Compress="True" DefaultTargetCheck="True" DefaultRuleCheck="True" SaveByRuleGroup="" Deterministic="True" />
+  <EnableMultithreadedLoad>True</EnableMultithreadedLoad>
+  <EnableMultithreadedAnalysis>True</EnableMultithreadedAnalysis>
+  <SourceLookup>True</SourceLookup>
+  <AnalysisExceptionsThreshold>10</AnalysisExceptionsThreshold>
+  <RuleExceptionsThreshold>1</RuleExceptionsThreshold>
+  <Spelling Locale="en-US" />
+  <OverrideRuleVisibilities>False</OverrideRuleVisibilities>
+  <CustomDictionaries SearchFxCopDir="True" SearchUserProfile="True" SearchProjectDir="True" />
+  <SearchGlobalAssemblyCache>False</SearchGlobalAssemblyCache>
+  <DeadlockDetectionTimeout>120</DeadlockDetectionTimeout>
+  <IgnoreGeneratedCode>False</IgnoreGeneratedCode>
+ </ProjectOptions>
+ <Targets>
+  <AssemblyReferenceDirectories>
+   <Directory>$(ProjectDir)/bin/Debug/</Directory>
+  </AssemblyReferenceDirectories>
+  <Target Name="$(ProjectDir)/ModbusServer/bin/Debug/DatabaseConnector.dll" Analyze="True" AnalyzeAllChildren="True" />
+  <Target Name="$(ProjectDir)/ModbusServer/bin/Debug/FaultErrorIndicators.dll" Analyze="True" AnalyzeAllChildren="True" />
+  <Target Name="$(ProjectDir)/ModbusServer/bin/Debug/HelperClasses.dll" Analyze="True" AnalyzeAllChildren="True" />
+  <Target Name="$(ProjectDir)/ModbusServer/bin/Debug/ModbusRegisters.dll" Analyze="True" AnalyzeAllChildren="True" />
+  <Target Name="$(ProjectDir)/ModbusServer/bin/Debug/ModbusRTUInterface.dll" Analyze="True" AnalyzeAllChildren="True" />
+  <Target Name="$(ProjectDir)/ModbusServer/bin/Debug/ModbusServer.exe" Analyze="True" AnalyzeAllChildren="True" />
+  <Target Name="$(ProjectDir)/ModbusServer/bin/Debug/Storage.dll" Analyze="True" AnalyzeAllChildren="True" />
+ </Targets>
+ <Rules>
+  <RuleFiles>
+   <RuleFile Name="$(FxCopDir)\Rules\DesignRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\GlobalizationRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\InteroperabilityRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\MobilityRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\NamingRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\PerformanceRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\PortabilityRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\SecurityRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\SecurityTransparencyRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\UsageRules.dll" Enabled="True" AllRulesEnabled="True" />
+  </RuleFiles>
+  <Groups />
+  <Settings />
+ </Rules>
+ <FxCopReport Version="10.0">
+  <Namespaces>
+   <Namespace Name="ModbusRegisters">
+    <Messages>
+     <Message Id="Modbus" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2012-03-09 13:35:31Z">
+      <Issue Name="Namespace">
+       <Item>Modbus</Item>
+       <Item>ModbusRegisters</Item>
+      </Issue>
+      <Notes>
+       <User Name="gsmith">
+        <Note Id="4" />
+       </User>
+      </Notes>
+     </Message>
+    </Messages>
+   </Namespace>
+   <Namespace Name="ModbusRTUInterface">
+    <Messages>
+     <Message Id="RTU" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Excluded" Created="2012-03-09 13:35:31Z">
+      <Issue Name="Namespace">
+       <Item>RTU</Item>
+       <Item>ModbusRTUInterface</Item>
+       <Item>Rtu</Item>
+      </Issue>
+     </Message>
+     <Message Id="Modbus" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2012-03-09 13:35:31Z">
+      <Issue Name="Namespace">
+       <Item>Modbus</Item>
+       <Item>ModbusRTUInterface</Item>
+      </Issue>
+     </Message>
+    </Messages>
+   </Namespace>
+  </Namespaces>
+  <Targets>
+   <Target Name="$(ProjectDir)/ModbusServer/bin/Debug/DatabaseConnector.dll">
+    <Modules>
+     <Module Name="databaseconnector.dll">
+      <Messages>
+       <Message TypeName="AssembliesShouldHaveValidStrongNames" Category="Microsoft.Design" CheckId="CA2210" Status="Excluded" Created="2012-03-09 13:35:31Z">
+        <Issue Name="NoStrongName">
+         <Item>'DatabaseConnector.dll'</Item>
+        </Issue>
+        <Notes>
+         <User Name="gsmith">
+          <Note Id="26" />
+         </User>
+        </Notes>
+       </Message>
+      </Messages>
+     </Module>
+    </Modules>
+   </Target>
+   <Target Name="$(ProjectDir)/ModbusServer/bin/Debug/FaultErrorIndicators.dll">
+    <Modules>
+     <Module Name="faulterrorindicators.dll">
+      <Messages>
+       <Message TypeName="AssembliesShouldHaveValidStrongNames" Category="Microsoft.Design" CheckId="CA2210" Status="Excluded" Created="2012-03-09 13:35:31Z">
+        <Issue Name="NoStrongName">
+         <Item>'FaultErrorIndicators.dll'</Item>
+        </Issue>
+        <Notes>
+         <User Name="gsmith">
+          <Note Id="26" />
+         </User>
+        </Notes>
+       </Message>
+       <Message TypeName="MarkAssembliesWithClsCompliant" Category="Microsoft.Design" CheckId="CA1014" Status="Excluded" Created="2012-03-09 13:35:31Z">
+        <Issue>
+         <Item>'FaultErrorIndicators.dll'</Item>
+        </Issue>
+        <Notes>
+         <User Name="gsmith">
+          <Note Id="24" />
+         </User>
+        </Notes>
+       </Message>
+      </Messages>
+      <Namespaces>
+       <Namespace Name="FaultErrorIndicators">
+        <Types>
+         <Type Name="FaultCodes">
+          <Members>
+           <Member Name="#CommsStatisticsFailure">
+            <Messages>
+             <Message Id="Comms" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2012-03-09 13:35:31Z">
+              <Issue Name="Member">
+               <Item>Comms</Item>
+               <Item>'FaultCodes.CommsStatisticsFailure'</Item>
+              </Issue>
+              <Notes>
+               <User Name="gsmith">
+                <Note Id="0" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#ExternalRTUFailure">
+            <Messages>
+             <Message Id="RTU" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Excluded" Created="2012-03-09 13:35:31Z">
+              <Issue Name="Member">
+               <Item>RTU</Item>
+               <Item>'FaultCodes.ExternalRTUFailure'</Item>
+               <Item>Rtu</Item>
+              </Issue>
+              <Notes>
+               <User Name="gsmith">
+                <Note Id="0" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#ExternalTCPIPFailure">
+            <Messages>
+             <Message Id="TCPIP" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Excluded" Created="2012-03-09 13:35:31Z">
+              <Issue Name="Member">
+               <Item>TCPIP</Item>
+               <Item>'FaultCodes.ExternalTCPIPFailure'</Item>
+               <Item>Tcpip</Item>
+              </Issue>
+              <Notes>
+               <User Name="gsmith">
+                <Note Id="0" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#ModbusConnectionFailure">
+            <Messages>
+             <Message Id="Modbus" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2012-03-09 13:35:31Z">
+              <Issue Name="Member">
+               <Item>Modbus</Item>
+               <Item>'FaultCodes.ModbusConnectionFailure'</Item>
+              </Issue>
+              <Notes>
+               <User Name="gsmith">
+                <Note Id="0" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#ModbusMapperFailure">
+            <Messages>
+             <Message Id="Modbus" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2012-03-09 13:35:31Z">
+              <Issue Name="Member">
+               <Item>Modbus</Item>
+               <Item>'FaultCodes.ModbusMapperFailure'</Item>
+              </Issue>
+              <Notes>
+               <User Name="gsmith">
+                <Note Id="0" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#ModbusReadFailure">
+            <Messages>
+             <Message Id="Modbus" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2012-03-09 14:41:27Z">
+              <Issue Name="Member">
+               <Item>Modbus</Item>
+               <Item>'FaultCodes.ModbusReadFailure'</Item>
+              </Issue>
+              <Notes>
+               <User Name="gsmith">
+                <Note Id="0" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#RTUNoRS485Comms">
+            <Messages>
+             <Message Id="RTU" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Excluded" Created="2012-03-09 13:35:31Z">
+              <Issue Name="Member">
+               <Item>RTU</Item>
+               <Item>'FaultCodes.RTUNoRS485Comms'</Item>
+               <Item>Rtu</Item>
+              </Issue>
+              <Notes>
+               <User Name="gsmith">
+                <Note Id="0" />
+               </User>
+              </Notes>
+             </Message>
+             <Message Id="Comms" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2012-03-09 13:35:31Z">
+              <Issue Name="Member">
+               <Item>Comms</Item>
+               <Item>'FaultCodes.RTUNoRS485Comms'</Item>
+              </Issue>
+              <Notes>
+               <User Name="gsmith">
+                <Note Id="0" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#RTUSerialPortFailure">
+            <Messages>
+             <Message Id="RTU" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Excluded" Created="2012-03-09 13:35:31Z">
+              <Issue Name="Member">
+               <Item>RTU</Item>
+               <Item>'FaultCodes.RTUSerialPortFailure'</Item>
+               <Item>Rtu</Item>
+              </Issue>
+              <Notes>
+               <User Name="gsmith">
+                <Note Id="0" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#RTUStartFailure">
+            <Messages>
+             <Message Id="RTU" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Excluded" Created="2012-03-09 13:35:31Z">
+              <Issue Name="Member">
+               <Item>RTU</Item>
+               <Item>'FaultCodes.RTUStartFailure'</Item>
+               <Item>Rtu</Item>
+              </Issue>
+              <Notes>
+               <User Name="gsmith">
+                <Note Id="0" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+        </Types>
+       </Namespace>
+      </Namespaces>
+     </Module>
+    </Modules>
+   </Target>
+   <Target Name="$(ProjectDir)/ModbusServer/bin/Debug/HelperClasses.dll">
+    <Modules>
+     <Module Name="helperclasses.dll">
+      <Messages>
+       <Message TypeName="AssembliesShouldHaveValidStrongNames" Category="Microsoft.Design" CheckId="CA2210" Status="Excluded" Created="2012-03-09 13:35:31Z">
+        <Issue Name="NoStrongName">
+         <Item>'HelperClasses.dll'</Item>
+        </Issue>
+        <Notes>
+         <User Name="gsmith">
+          <Note Id="26" />
+         </User>
+        </Notes>
+       </Message>
+       <Message TypeName="MarkAssembliesWithClsCompliant" Category="Microsoft.Design" CheckId="CA1014" Status="Excluded" Created="2012-03-09 13:35:31Z">
+        <Issue>
+         <Item>'HelperClasses.dll'</Item>
+        </Issue>
+        <Notes>
+         <User Name="gsmith">
+          <Note Id="22" />
+         </User>
+        </Notes>
+       </Message>
+      </Messages>
+      <Namespaces>
+       <Namespace Name="HelperClasses">
+        <Types>
+         <Type Name="ModuleConfiguration">
+          <Members>
+           <Member Name="#.ctor(System.Configuration.Configuration)">
+            <Messages>
+             <Message TypeName="DoNotRaiseReservedExceptionTypes" Category="Microsoft.Usage" CheckId="CA2201" Status="Excluded" Created="2012-03-09 13:35:31Z">
+              <Issue Name="Reserved">
+               <Item>'ModuleConfiguration.ModuleConfiguration(Configuration)'</Item>
+               <Item>'NullReferenceException'</Item>
+              </Issue>
+              <Notes>
+               <User Name="gsmith">
+                <Note Id="17" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#configuration">
+            <Messages>
+             <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Status="Excluded" Created="2012-03-09 13:35:31Z">
+              <Issue>
+               <Item>'ModuleConfiguration.configuration'</Item>
+              </Issue>
+              <Notes>
+               <User Name="gsmith">
+                <Note Id="18" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#fileSystemWatcher">
+            <Messages>
+             <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Status="Excluded" Created="2012-03-09 13:35:31Z">
+              <Issue>
+               <Item>'ModuleConfiguration.fileSystemWatcher'</Item>
+              </Issue>
+              <Notes>
+               <User Name="gsmith">
+                <Note Id="18" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#GetApplicationConfiguration()">
+            <Messages>
+             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Status="Excluded" Created="2012-03-09 13:35:31Z">
+              <Issue Certainty="50">
+               <Item>'ModuleConfiguration.GetApplicationConfiguration()'</Item>
+              </Issue>
+              <Notes>
+               <User Name="gsmith">
+                <Note Id="19" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#GetConfigurationDirectory()">
+            <Messages>
+             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Status="Excluded" Created="2012-03-09 13:35:31Z">
+              <Issue Certainty="50">
+               <Item>'ModuleConfiguration.GetConfigurationDirectory()'</Item>
+              </Issue>
+              <Notes>
+               <User Name="gsmith">
+                <Note Id="19" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Initialise(System.String)">
+            <Messages>
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Status="Excluded" Created="2012-03-09 13:35:31Z">
+              <Issue>
+               <Item>'ModuleConfiguration.Initialise(string)'</Item>
+               <Item>'FileSystemWatcher.Changed.add(FileSystemEventHandler)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'ModuleConfiguration.Initialise(string)'&#xD;&#xA;   -&gt;'ModuleConfiguration.Initialise(string)'&#xD;&#xA;   -&gt;'ModuleConfiguration.ModuleConfiguration(string)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'ModuleConfiguration.Initialise(string)'</Item>
+               <Item>'FileSystemWatcher.Created.add(FileSystemEventHandler)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'ModuleConfiguration.Initialise(string)'&#xD;&#xA;   -&gt;'ModuleConfiguration.Initialise(string)'&#xD;&#xA;   -&gt;'ModuleConfiguration.ModuleConfiguration(string)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'ModuleConfiguration.Initialise(string)'</Item>
+               <Item>'FileSystemWatcher.EnableRaisingEvents.set(bool)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'ModuleConfiguration.Initialise(string)'&#xD;&#xA;   -&gt;'ModuleConfiguration.Initialise(string)'&#xD;&#xA;   -&gt;'ModuleConfiguration.ModuleConfiguration(string)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'ModuleConfiguration.Initialise(string)'</Item>
+               <Item>'FileSystemWatcher.NotifyFilter.set(NotifyFilters)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'ModuleConfiguration.Initialise(string)'&#xD;&#xA;   -&gt;'ModuleConfiguration.Initialise(string)'&#xD;&#xA;   -&gt;'ModuleConfiguration.ModuleConfiguration(string)'</Item>
+              </Issue>
+              <Notes>
+               <User Name="gsmith">
+                <Note Id="16" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#OnConfigChanged">
+            <Messages>
+             <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Status="Excluded" Created="2012-03-09 13:35:31Z">
+              <Issue>
+               <Item>'ModuleConfiguration.OnConfigChanged'</Item>
+              </Issue>
+              <Notes>
+               <User Name="gsmith">
+                <Note Id="18" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="ModuleConfiguration+ConfigurationChanged">
+          <Messages>
+           <Message TypeName="NestedTypesShouldNotBeVisible" Category="Microsoft.Design" CheckId="CA1034" Status="Excluded" Created="2012-03-09 13:35:31Z">
+            <Issue>
+             <Item>'ModuleConfiguration.ConfigurationChanged'</Item>
+            </Issue>
+            <Notes>
+             <User Name="gsmith">
+              <Note Id="23" />
+             </User>
+            </Notes>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="SparseMatrix`1">
+          <Members>
+           <Member Name="#_rows">
+            <Messages>
+             <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Status="Excluded" Created="2012-03-09 13:35:31Z">
+              <Issue>
+               <Item>'SparseMatrix&lt;T&gt;._rows'</Item>
+              </Issue>
+              <Notes>
+               <User Name="gsmith">
+                <Note Id="18" />
+               </User>
+              </Notes>
+             </Message>
+             <Message TypeName="DoNotNestGenericTypesInMemberSignatures" Category="Microsoft.Design" CheckId="CA1006" Status="Excluded" Created="2012-03-09 13:35:31Z">
+              <Issue>
+               <Item>'SparseMatrix&lt;T&gt;._rows'</Item>
+               <Item>'Dictionary&lt;int, Dictionary&lt;int, T&gt;&gt;'</Item>
+              </Issue>
+              <Notes>
+               <User Name="gsmith">
+                <Note Id="21" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="VersionNumber">
+          <Members>
+           <Member Name="#op_Equality(HelperClasses.VersionNumber,HelperClasses.VersionNumber)">
+            <Messages>
+             <Message Id="x" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2012-03-09 13:35:31Z">
+              <Issue Name="MemberParameterMoreMeaningfulName">
+               <Item>'VersionNumber.operator ==(VersionNumber, VersionNumber)'</Item>
+               <Item>'x'</Item>
+              </Issue>
+             </Message>
+             <Message Id="y" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2012-03-09 13:35:31Z">
+              <Issue Name="MemberParameterMoreMeaningfulName">
+               <Item>'VersionNumber.operator ==(VersionNumber, VersionNumber)'</Item>
+               <Item>'y'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#op_GreaterThan(HelperClasses.VersionNumber,HelperClasses.VersionNumber)">
+            <Messages>
+             <Message Id="x" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2012-03-09 13:35:31Z">
+              <Issue Name="MemberParameterMoreMeaningfulName">
+               <Item>'VersionNumber.operator &gt;(VersionNumber, VersionNumber)'</Item>
+               <Item>'x'</Item>
+              </Issue>
+             </Message>
+             <Message Id="y" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2012-03-09 13:35:31Z">
+              <Issue Name="MemberParameterMoreMeaningfulName">
+               <Item>'VersionNumber.operator &gt;(VersionNumber, VersionNumber)'</Item>
+               <Item>'y'</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="OperatorOverloadsHaveNamedAlternates" Category="Microsoft.Usage" CheckId="CA2225" Status="Excluded" Created="2012-03-09 13:35:31Z">
+              <Issue>
+               <Item>Compare</Item>
+               <Item>'VersionNumber.operator &gt;(VersionNumber, VersionNumber)'</Item>
+              </Issue>
+              <Notes>
+               <User Name="gsmith">
+                <Note Id="20" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#op_GreaterThanOrEqual(HelperClasses.VersionNumber,HelperClasses.VersionNumber)">
+            <Messages>
+             <Message Id="x" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2012-03-09 13:35:31Z">
+              <Issue Name="MemberParameterMoreMeaningfulName">
+               <Item>'VersionNumber.operator &gt;=(VersionNumber, VersionNumber)'</Item>
+               <Item>'x'</Item>
+              </Issue>
+             </Message>
+             <Message Id="y" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2012-03-09 13:35:31Z">
+              <Issue Name="MemberParameterMoreMeaningfulName">
+               <Item>'VersionNumber.operator &gt;=(VersionNumber, VersionNumber)'</Item>
+               <Item>'y'</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="OperatorOverloadsHaveNamedAlternates" Category="Microsoft.Usage" CheckId="CA2225" Status="Excluded" Created="2012-03-09 13:35:31Z">
+              <Issue>
+               <Item>Compare</Item>
+               <Item>'VersionNumber.operator &gt;=(VersionNumber, VersionNumber)'</Item>
+              </Issue>
+              <Notes>
+               <User Name="gsmith">
+                <Note Id="20" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#op_Inequality(HelperClasses.VersionNumber,HelperClasses.VersionNumber)">
+            <Messages>
+             <Message Id="x" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2012-03-09 13:35:31Z">
+              <Issue Name="MemberParameterMoreMeaningfulName">
+               <Item>'VersionNumber.operator !=(VersionNumber, VersionNumber)'</Item>
+               <Item>'x'</Item>
+              </Issue>
+             </Message>
+             <Message Id="y" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2012-03-09 13:35:31Z">
+              <Issue Name="MemberParameterMoreMeaningfulName">
+               <Item>'VersionNumber.operator !=(VersionNumber, VersionNumber)'</Item>
+               <Item>'y'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#op_LessThan(HelperClasses.VersionNumber,HelperClasses.VersionNumber)">
+            <Messages>
+             <Message Id="x" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2012-03-09 13:35:31Z">
+              <Issue Name="MemberParameterMoreMeaningfulName">
+               <Item>'VersionNumber.operator &lt;(VersionNumber, VersionNumber)'</Item>
+               <Item>'x'</Item>
+              </Issue>
+             </Message>
+             <Message Id="y" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2012-03-09 13:35:31Z">
+              <Issue Name="MemberParameterMoreMeaningfulName">
+               <Item>'VersionNumber.operator &lt;(VersionNumber, VersionNumber)'</Item>
+               <Item>'y'</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="OperatorOverloadsHaveNamedAlternates" Category="Microsoft.Usage" CheckId="CA2225" Status="Excluded" Created="2012-03-09 13:35:31Z">
+              <Issue>
+               <Item>Compare</Item>
+               <Item>'VersionNumber.operator &lt;(VersionNumber, VersionNumber)'</Item>
+              </Issue>
+              <Notes>
+               <User Name="gsmith">
+                <Note Id="20" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#op_LessThanOrEqual(HelperClasses.VersionNumber,HelperClasses.VersionNumber)">
+            <Messages>
+             <Message Id="x" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2012-03-09 13:35:31Z">
+              <Issue Name="MemberParameterMoreMeaningfulName">
+               <Item>'VersionNumber.operator &lt;=(VersionNumber, VersionNumber)'</Item>
+               <Item>'x'</Item>
+              </Issue>
+             </Message>
+             <Message Id="y" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2012-03-09 13:35:31Z">
+              <Issue Name="MemberParameterMoreMeaningfulName">
+               <Item>'VersionNumber.operator &lt;=(VersionNumber, VersionNumber)'</Item>
+               <Item>'y'</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="OperatorOverloadsHaveNamedAlternates" Category="Microsoft.Usage" CheckId="CA2225" Status="Excluded" Created="2012-03-09 13:35:31Z">
+              <Issue>
+               <Item>Compare</Item>
+               <Item>'VersionNumber.operator &lt;=(VersionNumber, VersionNumber)'</Item>
+              </Issue>
+              <Notes>
+               <User Name="gsmith">
+                <Note Id="20" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+        </Types>
+       </Namespace>
+      </Namespaces>
+     </Module>
+    </Modules>
+   </Target>
+   <Target Name="$(ProjectDir)/ModbusServer/bin/Debug/ModbusRegisters.dll">
+    <Modules>
+     <Module Name="modbusregisters.dll">
+      <Messages>
+       <Message TypeName="AssembliesShouldHaveValidStrongNames" Category="Microsoft.Design" CheckId="CA2210" Status="Excluded" Created="2012-03-09 13:35:31Z">
+        <Issue Name="NoStrongName">
+         <Item>'ModbusRegisters.dll'</Item>
+        </Issue>
+        <Notes>
+         <User Name="gsmith">
+          <Note Id="26" />
+         </User>
+        </Notes>
+       </Message>
+       <Message Id="Modbus" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2012-03-09 13:35:31Z">
+        <Issue Name="Assembly">
+         <Item>Modbus</Item>
+         <Item>'ModbusRegisters.dll'</Item>
+        </Issue>
+        <Notes>
+         <User Name="gsmith">
+          <Note Id="4" />
+         </User>
+        </Notes>
+       </Message>
+       <Message TypeName="MarkAssembliesWithClsCompliant" Category="Microsoft.Design" CheckId="CA1014" Status="Excluded" Created="2012-03-09 13:35:31Z">
+        <Issue>
+         <Item>'ModbusRegisters.dll'</Item>
+        </Issue>
+        <Notes>
+         <User Name="gsmith">
+          <Note Id="15" />
+         </User>
+        </Notes>
+       </Message>
+      </Messages>
+      <Namespaces>
+       <Namespace Name="ModbusRegisters">
+        <Types>
+         <Type Name="CalculatedRegisterType">
+          <Members>
+           <Member Name="#Slem">
+            <Messages>
+             <Message Id="Slem" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2012-03-09 13:35:31Z">
+              <Issue Name="Member">
+               <Item>Slem</Item>
+               <Item>'CalculatedRegisterType.Slem'</Item>
+              </Issue>
+              <Notes>
+               <User Name="gsmith">
+                <Note Id="4" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Wio">
+            <Messages>
+             <Message Id="Wio" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2012-03-09 13:35:31Z">
+              <Issue Name="Member">
+               <Item>Wio</Item>
+               <Item>'CalculatedRegisterType.Wio'</Item>
+              </Issue>
+              <Notes>
+               <User Name="gsmith">
+                <Note Id="4" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="CalculatedSPURegister">
+          <Messages>
+           <Message Id="SPU" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Excluded" Created="2012-03-09 13:35:31Z">
+            <Issue Name="Type">
+             <Item>SPU</Item>
+             <Item>'CalculatedSPURegister'</Item>
+             <Item>Spu</Item>
+            </Issue>
+            <Notes>
+             <User Name="gsmith">
+              <Note Id="7" />
+             </User>
+            </Notes>
+           </Message>
+          </Messages>
+          <Members>
+           <Member Name="#Registers">
+            <Messages>
+             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Status="Excluded" Created="2012-03-09 13:35:31Z">
+              <Issue>
+               <Item>'CalculatedSPURegister.Registers'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="CalculatedSPURegister+CalculatedAlarmStatusWord">
+          <Messages>
+           <Message TypeName="EnumStorageShouldBeInt32" Category="Microsoft.Design" CheckId="CA1028" Status="Excluded" Created="2012-03-09 13:35:31Z">
+            <Issue Name="NotIntegral">
+             <Item>'CalculatedSPURegister.CalculatedAlarmStatusWord'</Item>
+             <Item>'ushort'</Item>
+            </Issue>
+            <Notes>
+             <User Name="gsmith">
+              <Note Id="3" />
+             </User>
+            </Notes>
+           </Message>
+           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Status="Excluded" Created="2012-03-09 13:35:31Z">
+            <Issue>
+             <Item>'CalculatedSPURegister.CalculatedAlarmStatusWord'</Item>
+            </Issue>
+            <Notes>
+             <User Name="gsmith">
+              <Note Id="5" />
+             </User>
+            </Notes>
+           </Message>
+           <Message TypeName="NestedTypesShouldNotBeVisible" Category="Microsoft.Design" CheckId="CA1034" Status="Excluded" Created="2012-03-09 13:35:31Z">
+            <Issue>
+             <Item>'CalculatedSPURegister.CalculatedAlarmStatusWord'</Item>
+            </Issue>
+            <Notes>
+             <User Name="gsmith">
+              <Note Id="1" />
+             </User>
+            </Notes>
+           </Message>
+          </Messages>
+          <Members>
+           <Member Name="#SensorFailureRpmOOR">
+            <Messages>
+             <Message Id="OOR" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Excluded" Created="2012-03-09 13:35:31Z">
+              <Issue Name="Member">
+               <Item>OOR</Item>
+               <Item>'CalculatedSPURegister.CalculatedAlarmStatusWord.SensorFailureRpmOOR'</Item>
+               <Item>Oor</Item>
+              </Issue>
+              <Notes>
+               <User Name="gsmith">
+                <Note Id="7" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="CalculatedSPURegister+CylinderStatus2">
+          <Messages>
+           <Message TypeName="EnumStorageShouldBeInt32" Category="Microsoft.Design" CheckId="CA1028" Status="Excluded" Created="2012-03-09 13:35:31Z">
+            <Issue Name="NotIntegral">
+             <Item>'CalculatedSPURegister.CylinderStatus2'</Item>
+             <Item>'ushort'</Item>
+            </Issue>
+            <Notes>
+             <User Name="gsmith">
+              <Note Id="3" />
+             </User>
+            </Notes>
+           </Message>
+           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Status="Excluded" Created="2012-03-09 13:35:31Z">
+            <Issue>
+             <Item>'CalculatedSPURegister.CylinderStatus2'</Item>
+            </Issue>
+            <Notes>
+             <User Name="gsmith">
+              <Note Id="5" />
+             </User>
+            </Notes>
+           </Message>
+           <Message TypeName="NestedTypesShouldNotBeVisible" Category="Microsoft.Design" CheckId="CA1034" Status="Excluded" Created="2012-03-09 13:35:31Z">
+            <Issue>
+             <Item>'CalculatedSPURegister.CylinderStatus2'</Item>
+            </Issue>
+            <Notes>
+             <User Name="gsmith">
+              <Note Id="1" />
+             </User>
+            </Notes>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="CalculatedSPURegister+SensorStatus1">
+          <Messages>
+           <Message TypeName="EnumStorageShouldBeInt32" Category="Microsoft.Design" CheckId="CA1028" Status="Excluded" Created="2012-03-09 13:35:31Z">
+            <Issue Name="NotIntegral">
+             <Item>'CalculatedSPURegister.SensorStatus1'</Item>
+             <Item>'ushort'</Item>
+            </Issue>
+            <Notes>
+             <User Name="gsmith">
+              <Note Id="3" />
+             </User>
+            </Notes>
+           </Message>
+           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Status="Excluded" Created="2012-03-09 13:35:31Z">
+            <Issue>
+             <Item>'CalculatedSPURegister.SensorStatus1'</Item>
+            </Issue>
+            <Notes>
+             <User Name="gsmith">
+              <Note Id="5" />
+             </User>
+            </Notes>
+           </Message>
+           <Message TypeName="NestedTypesShouldNotBeVisible" Category="Microsoft.Design" CheckId="CA1034" Status="Excluded" Created="2012-03-09 13:35:31Z">
+            <Issue>
+             <Item>'CalculatedSPURegister.SensorStatus1'</Item>
+            </Issue>
+            <Notes>
+             <User Name="gsmith">
+              <Note Id="1" />
+             </User>
+            </Notes>
+           </Message>
+          </Messages>
+          <Members>
+           <Member Name="#DcMode">
+            <Messages>
+             <Message Id="Dc" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Excluded" Created="2012-03-09 13:35:31Z">
+              <Issue Name="Member">
+               <Item>Dc</Item>
+               <Item>'CalculatedSPURegister.SensorStatus1.DcMode'</Item>
+               <Item>DC</Item>
+              </Issue>
+              <Notes>
+               <User Name="gsmith">
+                <Note Id="7" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="CalculatedSPURegister+SensorStatus2">
+          <Messages>
+           <Message TypeName="EnumStorageShouldBeInt32" Category="Microsoft.Design" CheckId="CA1028" Status="Excluded" Created="2012-03-09 13:35:31Z">
+            <Issue Name="NotIntegral">
+             <Item>'CalculatedSPURegister.SensorStatus2'</Item>
+             <Item>'ushort'</Item>
+            </Issue>
+            <Notes>
+             <User Name="gsmith">
+              <Note Id="3" />
+             </User>
+            </Notes>
+           </Message>
+           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Status="Excluded" Created="2012-03-09 13:35:31Z">
+            <Issue>
+             <Item>'CalculatedSPURegister.SensorStatus2'</Item>
+            </Issue>
+            <Notes>
+             <User Name="gsmith">
+              <Note Id="5" />
+             </User>
+            </Notes>
+           </Message>
+           <Message TypeName="NestedTypesShouldNotBeVisible" Category="Microsoft.Design" CheckId="CA1034" Status="Excluded" Created="2012-03-09 13:35:31Z">
+            <Issue>
+             <Item>'CalculatedSPURegister.SensorStatus2'</Item>
+            </Issue>
+            <Notes>
+             <User Name="gsmith">
+              <Note Id="1" />
+             </User>
+            </Notes>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="CalculatedSPURegister+SLEMAlarm">
+          <Messages>
+           <Message TypeName="EnumStorageShouldBeInt32" Category="Microsoft.Design" CheckId="CA1028" Status="Excluded" Created="2012-03-09 13:35:31Z">
+            <Issue Name="NotIntegral">
+             <Item>'CalculatedSPURegister.SLEMAlarm'</Item>
+             <Item>'ushort'</Item>
+            </Issue>
+            <Notes>
+             <User Name="gsmith">
+              <Note Id="3" />
+             </User>
+            </Notes>
+           </Message>
+           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Status="Excluded" Created="2012-03-09 13:35:31Z">
+            <Issue>
+             <Item>'CalculatedSPURegister.SLEMAlarm'</Item>
+            </Issue>
+            <Notes>
+             <User Name="gsmith">
+              <Note Id="5" />
+             </User>
+            </Notes>
+           </Message>
+           <Message Id="SLEM" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Excluded" Created="2012-03-09 13:35:31Z">
+            <Issue Name="Type">
+             <Item>SLEM</Item>
+             <Item>'CalculatedSPURegister.SLEMAlarm'</Item>
+             <Item>Slem</Item>
+            </Issue>
+            <Notes>
+             <User Name="gsmith">
+              <Note Id="7" />
+             </User>
+            </Notes>
+           </Message>
+           <Message TypeName="NestedTypesShouldNotBeVisible" Category="Microsoft.Design" CheckId="CA1034" Status="Excluded" Created="2012-03-09 13:35:31Z">
+            <Issue>
+             <Item>'CalculatedSPURegister.SLEMAlarm'</Item>
+            </Issue>
+            <Notes>
+             <User Name="gsmith">
+              <Note Id="6" />
+             </User>
+            </Notes>
+           </Message>
+          </Messages>
+          <Members>
+           <Member Name="#OOR">
+            <Messages>
+             <Message Id="OOR" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Excluded" Created="2012-03-09 13:35:31Z">
+              <Issue Name="Member">
+               <Item>OOR</Item>
+               <Item>'CalculatedSPURegister.SLEMAlarm.OOR'</Item>
+               <Item>Oor</Item>
+              </Issue>
+              <Notes>
+               <User Name="gsmith">
+                <Note Id="7" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="CalculatedSPURegister+WIOBitmap">
+          <Messages>
+           <Message TypeName="EnumStorageShouldBeInt32" Category="Microsoft.Design" CheckId="CA1028" Status="Excluded" Created="2012-03-09 13:35:31Z">
+            <Issue Name="NotIntegral">
+             <Item>'CalculatedSPURegister.WIOBitmap'</Item>
+             <Item>'ushort'</Item>
+            </Issue>
+            <Notes>
+             <User Name="gsmith">
+              <Note Id="3" />
+             </User>
+            </Notes>
+           </Message>
+           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Status="Excluded" Created="2012-03-09 13:35:31Z">
+            <Issue>
+             <Item>'CalculatedSPURegister.WIOBitmap'</Item>
+            </Issue>
+            <Notes>
+             <User Name="gsmith">
+              <Note Id="5" />
+             </User>
+            </Notes>
+           </Message>
+           <Message Id="WIO" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Excluded" Created="2012-03-09 13:35:31Z">
+            <Issue Name="Type">
+             <Item>WIO</Item>
+             <Item>'CalculatedSPURegister.WIOBitmap'</Item>
+             <Item>Wio</Item>
+            </Issue>
+            <Notes>
+             <User Name="gsmith">
+              <Note Id="7" />
+             </User>
+            </Notes>
+           </Message>
+           <Message TypeName="NestedTypesShouldNotBeVisible" Category="Microsoft.Design" CheckId="CA1034" Status="Excluded" Created="2012-03-09 13:35:31Z">
+            <Issue>
+             <Item>'CalculatedSPURegister.WIOBitmap'</Item>
+            </Issue>
+            <Notes>
+             <User Name="gsmith">
+              <Note Id="6" />
+             </User>
+            </Notes>
+           </Message>
+          </Messages>
+          <Members>
+           <Member Name="#Comms">
+            <Messages>
+             <Message Id="Comms" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2012-03-09 13:35:31Z">
+              <Issue Name="Member">
+               <Item>Comms</Item>
+               <Item>'CalculatedSPURegister.WIOBitmap.Comms'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#CommsLatched">
+            <Messages>
+             <Message Id="Comms" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2012-03-09 13:35:31Z">
+              <Issue Name="Member">
+               <Item>Comms</Item>
+               <Item>'CalculatedSPURegister.WIOBitmap.CommsLatched'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="ModbusRegister">
+          <Messages>
+           <Message Id="Modbus" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2012-03-09 13:35:31Z">
+            <Issue Name="Type">
+             <Item>Modbus</Item>
+             <Item>'ModbusRegister'</Item>
+            </Issue>
+            <Notes>
+             <User Name="gsmith">
+              <Note Id="4" />
+             </User>
+            </Notes>
+           </Message>
+           <Message TypeName="IdentifiersShouldDifferByMoreThanCase" Category="Microsoft.Naming" CheckId="CA1708" Status="Excluded" Created="2012-03-09 13:35:31Z">
+            <Issue Name="Member">
+             <Item>'InternalAddress'</Item>
+             <Item>internalAddress</Item>
+            </Issue>
+            <Issue Name="Member">
+             <Item>'internalId'</Item>
+             <Item>InternalId</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="SlemRegister">
+          <Messages>
+           <Message Id="Slem" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2012-03-09 13:35:31Z">
+            <Issue Name="Type">
+             <Item>Slem</Item>
+             <Item>'SlemRegister'</Item>
+            </Issue>
+            <Notes>
+             <User Name="gsmith">
+              <Note Id="4" />
+             </User>
+            </Notes>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="WioRegister">
+          <Messages>
+           <Message Id="Wio" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2012-03-09 13:35:31Z">
+            <Issue Name="Type">
+             <Item>Wio</Item>
+             <Item>'WioRegister'</Item>
+            </Issue>
+            <Notes>
+             <User Name="gsmith">
+              <Note Id="4" />
+             </User>
+            </Notes>
+           </Message>
+          </Messages>
+         </Type>
+        </Types>
+       </Namespace>
+      </Namespaces>
+     </Module>
+    </Modules>
+   </Target>
+   <Target Name="$(ProjectDir)/ModbusServer/bin/Debug/ModbusRTUInterface.dll">
+    <Modules>
+     <Module Name="modbusrtuinterface.dll">
+      <Messages>
+       <Message TypeName="AssembliesShouldHaveValidStrongNames" Category="Microsoft.Design" CheckId="CA2210" Status="Excluded" Created="2012-03-09 13:35:31Z">
+        <Issue Name="NoStrongName">
+         <Item>'ModbusRTUInterface.dll'</Item>
+        </Issue>
+        <Notes>
+         <User Name="gsmith">
+          <Note Id="26" />
+         </User>
+        </Notes>
+       </Message>
+       <Message Id="RTU" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Excluded" Created="2012-03-09 13:35:31Z">
+        <Issue Name="Assembly">
+         <Item>RTU</Item>
+         <Item>'ModbusRTUInterface.dll'</Item>
+         <Item>Rtu</Item>
+        </Issue>
+       </Message>
+       <Message Id="Modbus" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2012-03-09 13:35:31Z">
+        <Issue Name="Assembly">
+         <Item>Modbus</Item>
+         <Item>'ModbusRTUInterface.dll'</Item>
+        </Issue>
+       </Message>
+       <Message TypeName="MarkAssembliesWithClsCompliant" Category="Microsoft.Design" CheckId="CA1014" Status="Excluded" Created="2012-03-09 13:35:31Z">
+        <Issue>
+         <Item>'ModbusRTUInterface.dll'</Item>
+        </Issue>
+        <Notes>
+         <User Name="gsmith">
+          <Note Id="15" />
+         </User>
+        </Notes>
+       </Message>
+      </Messages>
+      <Namespaces>
+       <Namespace Name="ModbusRTUInterface">
+        <Types>
+         <Type Name="RTUInterface">
+          <Messages>
+           <Message Id="RTU" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Excluded" Created="2012-03-09 13:35:31Z">
+            <Issue Name="Type">
+             <Item>RTU</Item>
+             <Item>'RTUInterface'</Item>
+             <Item>Rtu</Item>
+            </Issue>
+           </Message>
+          </Messages>
+          <Members>
+           <Member Name="#.ctor(System.IO.Ports.SerialPort)">
+            <Messages>
+             <Message TypeName="DoNotCatchGeneralExceptionTypes" Category="Microsoft.Design" CheckId="CA1031" Status="Excluded" Created="2012-03-09 13:35:31Z">
+              <Issue>
+               <Item>'RTUInterface.RTUInterface(SerialPort)'</Item>
+               <Item>'Exception'</Item>
+              </Issue>
+              <Notes>
+               <User Name="gsmith">
+                <Note Id="2" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#HandleException(System.Exception,System.Boolean,System.Boolean)">
+            <Messages>
+             <Message TypeName="DoNotCatchGeneralExceptionTypes" Category="Microsoft.Design" CheckId="CA1031" Status="Excluded" Created="2012-03-09 13:35:31Z">
+              <Issue>
+               <Item>'RTUInterface.HandleException(Exception, bool, bool)'</Item>
+               <Item>'Exception'</Item>
+              </Issue>
+              <Notes>
+               <User Name="gsmith">
+                <Note Id="2" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#WriteDiagnostics(System.Byte,System.UInt16,System.UInt16[])">
+            <Messages>
+             <Message Id="subfunction" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2012-03-09 13:35:31Z">
+              <Issue Name="MemberParameter">
+               <Item>'RTUInterface.WriteDiagnostics(byte, ushort, ushort[])'</Item>
+               <Item>subfunction</Item>
+               <Item>'subfunctionCode'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+        </Types>
+       </Namespace>
+      </Namespaces>
+     </Module>
+    </Modules>
+   </Target>
+   <Target Name="$(ProjectDir)/ModbusServer/bin/Debug/ModbusServer.exe">
+    <Modules>
+     <Module Name="modbusserver.exe">
+      <Messages>
+       <Message TypeName="AssembliesShouldHaveValidStrongNames" Category="Microsoft.Design" CheckId="CA2210" Status="Excluded" Created="2012-03-09 13:35:31Z">
+        <Issue Name="NoStrongName">
+         <Item>'ModbusServer.exe'</Item>
+        </Issue>
+        <Notes>
+         <User Name="gsmith">
+          <Note Id="26" />
+         </User>
+        </Notes>
+       </Message>
+      </Messages>
+      <Namespaces>
+       <Namespace Name="ModbusServer">
+        <Types>
+         <Type Name="AMOTMappedProxyDataStore">
+          <Members>
+           <Member Name="#ReadHoldingRegisterInBlocksCompletedCallback(System.IAsyncResult)">
+            <Messages>
+             <Message TypeName="DoNotCatchGeneralExceptionTypes" Category="Microsoft.Design" CheckId="CA1031" Status="Excluded" Created="2012-03-09 13:35:31Z">
+              <Issue>
+               <Item>'AMOTMappedProxyDataStore.ReadHoldingRegisterInBlocksCompletedCallback(IAsyncResult)'</Item>
+               <Item>'Exception'</Item>
+              </Issue>
+              <Notes>
+               <User Name="gsmith">
+                <Note Id="9" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="ModbusMapper">
+          <Members>
+           <Member Name="#ParseLine(System.String,System.String&amp;)">
+            <Messages>
+             <Message TypeName="DoNotCatchGeneralExceptionTypes" Category="Microsoft.Design" CheckId="CA1031" Status="Excluded" Created="2012-03-09 13:35:31Z">
+              <Issue>
+               <Item>'ModbusMapper.ParseLine(string, out string)'</Item>
+               <Item>'Exception'</Item>
+              </Issue>
+              <Notes>
+               <User Name="gsmith">
+                <Note Id="9" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="Program">
+          <Members>
+           <Member Name="#CurrentDomain_UnhandledException(System.Object,System.UnhandledExceptionEventArgs)">
+            <Messages>
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2012-03-09 13:35:31Z">
+              <Issue>
+               <Item>'Program.CurrentDomain_UnhandledException(object, UnhandledExceptionEventArgs)'</Item>
+              </Issue>
+              <Notes>
+               <User Name="gsmith">
+                <Note Id="10" />
+               </User>
+              </Notes>
+             </Message>
+             <Message TypeName="DoNotCatchGeneralExceptionTypes" Category="Microsoft.Design" CheckId="CA1031" Status="Excluded" Created="2012-03-09 13:35:31Z">
+              <Issue>
+               <Item>'Program.CurrentDomain_UnhandledException(object, UnhandledExceptionEventArgs)'</Item>
+               <Item>'Exception'</Item>
+              </Issue>
+              <Notes>
+               <User Name="gsmith">
+                <Note Id="9" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Main(System.String[])">
+            <Messages>
+             <Message Id="args" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Status="Excluded" Created="2012-03-09 13:35:31Z" FixCategory="NonBreaking">
+              <Issue>
+               <Item>'args'</Item>
+               <Item>'Program.Main(string[])'</Item>
+              </Issue>
+              <Notes>
+               <User Name="gsmith">
+                <Note Id="8" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+        </Types>
+       </Namespace>
+      </Namespaces>
+     </Module>
+    </Modules>
+   </Target>
+   <Target Name="$(ProjectDir)/ModbusServer/bin/Debug/Storage.dll">
+    <Modules>
+     <Module Name="storage.dll">
+      <Messages>
+       <Message TypeName="AssembliesShouldHaveValidStrongNames" Category="Microsoft.Design" CheckId="CA2210" Status="Excluded" Created="2012-03-09 13:35:31Z">
+        <Issue Name="NoStrongName">
+         <Item>'Storage.dll'</Item>
+        </Issue>
+        <Notes>
+         <User Name="gsmith">
+          <Note Id="26" />
+         </User>
+        </Notes>
+       </Message>
+       <Message TypeName="MarkAssembliesWithClsCompliant" Category="Microsoft.Design" CheckId="CA1014" Status="Excluded" Created="2012-03-09 13:35:31Z">
+        <Issue>
+         <Item>'Storage.dll'</Item>
+        </Issue>
+        <Notes>
+         <User Name="gsmith">
+          <Note Id="15" />
+         </User>
+        </Notes>
+       </Message>
+      </Messages>
+      <Namespaces>
+       <Namespace Name="Storage">
+        <Types>
+         <Type Name="CommunicationStatistics">
+          <Members>
+           <Member Name="#CrcErrors">
+            <Messages>
+             <Message Id="Crc" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2012-03-09 13:35:31Z">
+              <Issue Name="Member">
+               <Item>Crc</Item>
+               <Item>'CommunicationStatistics.CrcErrors'</Item>
+              </Issue>
+              <Notes>
+               <User Name="gsmith">
+                <Note Id="14" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#HaveStatisticsBeenReset()">
+            <Messages>
+             <Message TypeName="DoNotCatchGeneralExceptionTypes" Category="Microsoft.Design" CheckId="CA1031" Status="Excluded" Created="2012-03-09 13:35:31Z">
+              <Issue>
+               <Item>'CommunicationStatistics.HaveStatisticsBeenReset()'</Item>
+               <Item>'Exception'</Item>
+              </Issue>
+              <Notes>
+               <User Name="gsmith">
+                <Note Id="25" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#InitialiseStatistics()">
+            <Messages>
+             <Message TypeName="DoNotCatchGeneralExceptionTypes" Category="Microsoft.Design" CheckId="CA1031" Status="Excluded" Created="2012-03-09 13:35:31Z">
+              <Issue>
+               <Item>'CommunicationStatistics.InitialiseStatistics()'</Item>
+               <Item>'Exception'</Item>
+              </Issue>
+              <Notes>
+               <User Name="gsmith">
+                <Note Id="25" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#ReadStat(System.String)">
+            <Messages>
+             <Message TypeName="DoNotCatchGeneralExceptionTypes" Category="Microsoft.Design" CheckId="CA1031" Status="Excluded" Created="2012-03-09 13:35:31Z">
+              <Issue>
+               <Item>'CommunicationStatistics.ReadStat(string)'</Item>
+               <Item>'Exception'</Item>
+              </Issue>
+              <Notes>
+               <User Name="gsmith">
+                <Note Id="25" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="ConfigurationData">
+          <Members>
+           <Member Name="#.cctor()">
+            <Messages>
+             <Message TypeName="InitializeReferenceTypeStaticFieldsInline" Category="Microsoft.Performance" CheckId="CA1810" Status="Excluded" Created="2012-03-09 13:35:31Z">
+              <Issue>
+               <Item>'ConfigurationData'</Item>
+              </Issue>
+              <Notes>
+               <User Name="gsmith">
+                <Note Id="27" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#ExternalBaudRate">
+            <Accessors>
+             <Accessor Name="#get_ExternalBaudRate()">
+              <Messages>
+               <Message TypeName="DoNotCatchGeneralExceptionTypes" Category="Microsoft.Design" CheckId="CA1031" Status="Excluded" Created="2012-03-09 13:35:31Z">
+                <Issue>
+                 <Item>'ConfigurationData.ExternalBaudRate.get()'</Item>
+                 <Item>'object'</Item>
+                </Issue>
+                <Notes>
+                 <User Name="gsmith">
+                  <Note Id="12" />
+                 </User>
+                </Notes>
+               </Message>
+              </Messages>
+             </Accessor>
+            </Accessors>
+           </Member>
+           <Member Name="#ExternalComPort">
+            <Messages>
+             <Message Id="ComPort" TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702" Status="Excluded" Created="2012-03-09 13:35:31Z">
+              <Issue Name="MemberShouldBeDiscreteTerm">
+               <Item>ComPort</Item>
+               <Item>'ConfigurationData.ExternalComPort'</Item>
+               <Item>Comport</Item>
+              </Issue>
+              <Notes>
+               <User Name="gsmith">
+                <Note Id="11" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#ExternalDataBits">
+            <Accessors>
+             <Accessor Name="#get_ExternalDataBits()">
+              <Messages>
+               <Message TypeName="DoNotCatchGeneralExceptionTypes" Category="Microsoft.Design" CheckId="CA1031" Status="Excluded" Created="2012-03-09 13:35:31Z">
+                <Issue>
+                 <Item>'ConfigurationData.ExternalDataBits.get()'</Item>
+                 <Item>'object'</Item>
+                </Issue>
+                <Notes>
+                 <User Name="gsmith">
+                  <Note Id="12" />
+                 </User>
+                </Notes>
+               </Message>
+              </Messages>
+             </Accessor>
+            </Accessors>
+           </Member>
+           <Member Name="#ExternalParity">
+            <Accessors>
+             <Accessor Name="#get_ExternalParity()">
+              <Messages>
+               <Message TypeName="DoNotCatchGeneralExceptionTypes" Category="Microsoft.Design" CheckId="CA1031" Status="Excluded" Created="2012-03-09 13:35:31Z">
+                <Issue>
+                 <Item>'ConfigurationData.ExternalParity.get()'</Item>
+                 <Item>'object'</Item>
+                </Issue>
+                <Notes>
+                 <User Name="gsmith">
+                  <Note Id="12" />
+                 </User>
+                </Notes>
+               </Message>
+              </Messages>
+             </Accessor>
+            </Accessors>
+           </Member>
+           <Member Name="#ExternalStopBits">
+            <Accessors>
+             <Accessor Name="#get_ExternalStopBits()">
+              <Messages>
+               <Message TypeName="DoNotCatchGeneralExceptionTypes" Category="Microsoft.Design" CheckId="CA1031" Status="Excluded" Created="2012-03-09 13:35:31Z">
+                <Issue>
+                 <Item>'ConfigurationData.ExternalStopBits.get()'</Item>
+                 <Item>'object'</Item>
+                </Issue>
+                <Notes>
+                 <User Name="gsmith">
+                  <Note Id="12" />
+                 </User>
+                </Notes>
+               </Message>
+              </Messages>
+             </Accessor>
+            </Accessors>
+           </Member>
+           <Member Name="#InternalBaudRate">
+            <Accessors>
+             <Accessor Name="#get_InternalBaudRate()">
+              <Messages>
+               <Message TypeName="DoNotCatchGeneralExceptionTypes" Category="Microsoft.Design" CheckId="CA1031" Status="Excluded" Created="2012-03-09 13:35:31Z">
+                <Issue>
+                 <Item>'ConfigurationData.InternalBaudRate.get()'</Item>
+                 <Item>'object'</Item>
+                </Issue>
+                <Notes>
+                 <User Name="gsmith">
+                  <Note Id="12" />
+                 </User>
+                </Notes>
+               </Message>
+              </Messages>
+             </Accessor>
+            </Accessors>
+           </Member>
+           <Member Name="#InternalComPort">
+            <Messages>
+             <Message Id="ComPort" TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702" Status="Excluded" Created="2012-03-09 13:35:31Z">
+              <Issue Name="MemberShouldBeDiscreteTerm">
+               <Item>ComPort</Item>
+               <Item>'ConfigurationData.InternalComPort'</Item>
+               <Item>Comport</Item>
+              </Issue>
+              <Notes>
+               <User Name="gsmith">
+                <Note Id="11" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#InternalDataBits">
+            <Accessors>
+             <Accessor Name="#get_InternalDataBits()">
+              <Messages>
+               <Message TypeName="DoNotCatchGeneralExceptionTypes" Category="Microsoft.Design" CheckId="CA1031" Status="Excluded" Created="2012-03-09 13:35:31Z">
+                <Issue>
+                 <Item>'ConfigurationData.InternalDataBits.get()'</Item>
+                 <Item>'object'</Item>
+                </Issue>
+                <Notes>
+                 <User Name="gsmith">
+                  <Note Id="12" />
+                 </User>
+                </Notes>
+               </Message>
+              </Messages>
+             </Accessor>
+            </Accessors>
+           </Member>
+           <Member Name="#InternalParity">
+            <Accessors>
+             <Accessor Name="#get_InternalParity()">
+              <Messages>
+               <Message TypeName="DoNotCatchGeneralExceptionTypes" Category="Microsoft.Design" CheckId="CA1031" Status="Excluded" Created="2012-03-09 13:35:31Z">
+                <Issue>
+                 <Item>'ConfigurationData.InternalParity.get()'</Item>
+                 <Item>'object'</Item>
+                </Issue>
+                <Notes>
+                 <User Name="gsmith">
+                  <Note Id="12" />
+                 </User>
+                </Notes>
+               </Message>
+              </Messages>
+             </Accessor>
+            </Accessors>
+           </Member>
+           <Member Name="#InternalStopBits">
+            <Accessors>
+             <Accessor Name="#get_InternalStopBits()">
+              <Messages>
+               <Message TypeName="DoNotCatchGeneralExceptionTypes" Category="Microsoft.Design" CheckId="CA1031" Status="Excluded" Created="2012-03-09 13:35:31Z">
+                <Issue>
+                 <Item>'ConfigurationData.InternalStopBits.get()'</Item>
+                 <Item>'object'</Item>
+                </Issue>
+                <Notes>
+                 <User Name="gsmith">
+                  <Note Id="12" />
+                 </User>
+                </Notes>
+               </Message>
+              </Messages>
+             </Accessor>
+            </Accessors>
+           </Member>
+           <Member Name="#RTUReadTimeout">
+            <Messages>
+             <Message Id="RTU" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Excluded" Created="2012-03-09 13:35:31Z">
+              <Issue Name="Member">
+               <Item>RTU</Item>
+               <Item>'ConfigurationData.RTUReadTimeout'</Item>
+               <Item>Rtu</Item>
+              </Issue>
+              <Notes>
+               <User Name="gsmith">
+                <Note Id="13" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+            <Accessors>
+             <Accessor Name="#get_RTUReadTimeout()">
+              <Messages>
+               <Message TypeName="DoNotCatchGeneralExceptionTypes" Category="Microsoft.Design" CheckId="CA1031" Status="Excluded" Created="2012-03-09 13:35:31Z">
+                <Issue>
+                 <Item>'ConfigurationData.RTUReadTimeout.get()'</Item>
+                 <Item>'object'</Item>
+                </Issue>
+                <Notes>
+                 <User Name="gsmith">
+                  <Note Id="12" />
+                 </User>
+                </Notes>
+               </Message>
+              </Messages>
+             </Accessor>
+            </Accessors>
+           </Member>
+           <Member Name="#RTURetry">
+            <Messages>
+             <Message Id="RTU" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Excluded" Created="2012-03-09 13:35:31Z">
+              <Issue Name="Member">
+               <Item>RTU</Item>
+               <Item>'ConfigurationData.RTURetry'</Item>
+               <Item>Rtu</Item>
+              </Issue>
+              <Notes>
+               <User Name="gsmith">
+                <Note Id="13" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+            <Accessors>
+             <Accessor Name="#get_RTURetry()">
+              <Messages>
+               <Message TypeName="DoNotCatchGeneralExceptionTypes" Category="Microsoft.Design" CheckId="CA1031" Status="Excluded" Created="2012-03-09 13:35:31Z">
+                <Issue>
+                 <Item>'ConfigurationData.RTURetry.get()'</Item>
+                 <Item>'object'</Item>
+                </Issue>
+                <Notes>
+                 <User Name="gsmith">
+                  <Note Id="12" />
+                 </User>
+                </Notes>
+               </Message>
+              </Messages>
+             </Accessor>
+            </Accessors>
+           </Member>
+           <Member Name="#RTUWriteTimeout">
+            <Messages>
+             <Message Id="RTU" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Excluded" Created="2012-03-09 13:35:31Z">
+              <Issue Name="Member">
+               <Item>RTU</Item>
+               <Item>'ConfigurationData.RTUWriteTimeout'</Item>
+               <Item>Rtu</Item>
+              </Issue>
+              <Notes>
+               <User Name="gsmith">
+                <Note Id="13" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+            <Accessors>
+             <Accessor Name="#get_RTUWriteTimeout()">
+              <Messages>
+               <Message TypeName="DoNotCatchGeneralExceptionTypes" Category="Microsoft.Design" CheckId="CA1031" Status="Excluded" Created="2012-03-09 13:35:31Z">
+                <Issue>
+                 <Item>'ConfigurationData.RTUWriteTimeout.get()'</Item>
+                 <Item>'object'</Item>
+                </Issue>
+                <Notes>
+                 <User Name="gsmith">
+                  <Note Id="12" />
+                 </User>
+                </Notes>
+               </Message>
+              </Messages>
+             </Accessor>
+            </Accessors>
+           </Member>
+          </Members>
+         </Type>
+        </Types>
+       </Namespace>
+      </Namespaces>
+     </Module>
+    </Modules>
+   </Target>
+  </Targets>
+  <Notes>
+   <User Name="gsmith">
+    <Note Id="0" Modified="2012-03-09 14:46:29Z">The identifers are named correctly.</Note>
+    <Note Id="1" Modified="2012-03-09 15:58:54Z">These are all enumerations</Note>
+    <Note Id="2" Modified="2012-03-09 16:06:07Z">These two catchs are OK in this context.</Note>
+    <Note Id="3" Modified="2012-03-09 16:07:17Z">Our enums represnt ushort Bit fields.  Int32 would create a bit field that is to large.</Note>
+    <Note Id="4" Modified="2012-03-09 16:07:57Z">Spelling is OK for these</Note>
+    <Note Id="5" Modified="2012-03-09 16:08:55Z">Giving these a plural name makes the code harder to read</Note>
+    <Note Id="6" Modified="2012-03-09 16:10:21Z">These are enumerations</Note>
+    <Note Id="7" Modified="2012-03-09 16:10:44Z">Case is correct for these identifiers</Note>
+    <Note Id="8" Modified="2012-03-09 16:17:53Z">This is the Main entry point of the program</Note>
+    <Note Id="9" Modified="2012-03-09 16:21:17Z">It is OK to catch these exceptions here.</Note>
+    <Note Id="10" Modified="2012-03-09 16:30:36Z">It is OK to ignore this in this function.  This is a global excepion hook handler and must declare these param types.</Note>
+    <Note Id="11" Modified="2012-03-12 08:05:30Z">Named correctly for this class</Note>
+    <Note Id="12" Modified="2012-03-12 08:06:21Z">These exceptions are caught and handled locally.  They will not impact on the running of the program.</Note>
+    <Note Id="13" Modified="2012-03-12 08:06:44Z">These are cased correctly.</Note>
+    <Note Id="14" Modified="2012-03-12 08:07:26Z">This is correct.</Note>
+    <Note Id="15" Modified="2012-03-12 08:13:58Z">These assmblies will not be used outside of this software.</Note>
+    <Note Id="16" Modified="2012-03-12 08:39:23Z">This is required so that we can support live updates of the configuration files on running systems.</Note>
+    <Note Id="17" Modified="2012-03-12 08:41:39Z">This is valid in this case.</Note>
+    <Note Id="18" Modified="2012-03-12 08:42:08Z">If we do not expose these internal members the data strucutre will not be usable.</Note>
+    <Note Id="19" Modified="2012-03-12 08:44:35Z">All the current code uses these funcitons.  Changing these will break current code.</Note>
+    <Note Id="20" Modified="2012-03-12 08:48:37Z">This is a simple class that will not be used outside of C#</Note>
+    <Note Id="21" Modified="2012-03-12 08:50:43Z">Nested types are need to implement this data structure.</Note>
+    <Note Id="22" Modified="2012-03-12 08:51:07Z">Assemblies will not be used outside of this product.</Note>
+    <Note Id="23" Modified="2012-03-12 08:58:41Z">The rest of the code uses this nested type.</Note>
+    <Note Id="24" Modified="2012-03-12 09:38:35Z">Assmblies will not be used outside of this product.</Note>
+    <Note Id="25" Modified="2012-03-12 09:39:36Z">These are handled locally so they donot stop the appliaction form functioning.  These funtctions are not critical to the execution to the application.</Note>
+    <Note Id="26" Modified="2012-03-12 09:47:24Z">Assemblies will not be signed.</Note>
+    <Note Id="27" Modified="2012-03-12 09:47:33Z">This is a singleton class.</Note>
+   </User>
+  </Notes>
+  <Rules>
+   <Rule TypeName="AssembliesShouldHaveValidStrongNames" Category="Microsoft.Design" CheckId="CA2210">
+    <Resolution Name="NoStrongName">Sign {0} with a strong name key.</Resolution>
+   </Rule>
+   <Rule TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811">
+    <Resolution Name="Default">{0} appears to have no upstream public or protected callers.</Resolution>
+   </Rule>
+   <Rule TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702">
+    <Resolution Name="MemberShouldBeDiscreteTerm">The compound word '{0}' in member name {1} exists as a discrete term. If your usage is intended to be single word, case it as '{2}' or strip the first token entirely if it represents any sort of Hungarian notation.</Resolution>
+   </Rule>
+   <Rule TypeName="DoNotCatchGeneralExceptionTypes" Category="Microsoft.Design" CheckId="CA1031">
+    <Resolution Name="Default">Modify {0} to catch a more specific exception than {1} or rethrow the exception.</Resolution>
+   </Rule>
+   <Rule TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051">
+    <Resolution Name="Default">Because field {0} is visible outside of its declaring type, change its accessibility to private and add a property, with the same accessibility as the field has currently, to provide access to it.</Resolution>
+   </Rule>
+   <Rule TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122">
+    <Resolution Name="Default">{0} calls into {1} which has a LinkDemand. By making this call, {1} is indirectly exposed to user code. Review the following call stack that might expose a way to circumvent security protection: {2}</Resolution>
+   </Rule>
+   <Rule TypeName="DoNotNestGenericTypesInMemberSignatures" Category="Microsoft.Design" CheckId="CA1006">
+    <Resolution Name="Default">Consider a design where {0} doesn't nest generic type {1}.</Resolution>
+   </Rule>
+   <Rule TypeName="DoNotRaiseReservedExceptionTypes" Category="Microsoft.Usage" CheckId="CA2201">
+    <Resolution Name="Reserved">{0} creates an exception of type {1}, an exception type that is reserved by the runtime and should never be raised by managed code. If this exception instance might be thrown, use a different exception type.</Resolution>
+   </Rule>
+   <Rule TypeName="EnumStorageShouldBeInt32" Category="Microsoft.Design" CheckId="CA1028">
+    <Resolution Name="NotIntegral">If possible, make the underlying type of {0} Int32 instead of {1}. Otherwise consider Byte, Int16, or Int64.</Resolution>
+   </Rule>
+   <Rule TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714">
+    <Resolution Name="Default">If enumeration name {0} is singular, change it to a plural form.</Resolution>
+   </Rule>
+   <Rule TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709">
+    <Resolution Name="Assembly">Correct the casing of '{0}' in assembly name {1} by changing it to '{2}'.</Resolution>
+    <Resolution Name="Member">Correct the casing of '{0}' in member name {1} by changing it to '{2}'.</Resolution>
+    <Resolution Name="Namespace">Correct the casing of '{0}' in namespace name '{1}' by changing it to '{2}'.</Resolution>
+    <Resolution Name="Type">Correct the casing of '{0}' in type name {1} by changing it to '{2}'.</Resolution>
+   </Rule>
+   <Rule TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704">
+    <Resolution Name="Assembly">Correct the spelling of '{0}' in assembly name {1}.</Resolution>
+    <Resolution Name="Member">Correct the spelling of '{0}' in member name {1} or remove it entirely if it represents any sort of Hungarian notation.</Resolution>
+    <Resolution Name="MemberParameter">In method {0}, correct the spelling of '{1}' in parameter name {2} or remove it entirely if it represents any sort of Hungarian notation.</Resolution>
+    <Resolution Name="MemberParameterMoreMeaningfulName">In method {0}, consider providing a more meaningful name than parameter name {1}.</Resolution>
+    <Resolution Name="Namespace">Correct the spelling of '{0}' in namespace name '{1}'.</Resolution>
+    <Resolution Name="Type">Correct the spelling of '{0}' in type name {1}.</Resolution>
+   </Rule>
+   <Rule TypeName="IdentifiersShouldDifferByMoreThanCase" Category="Microsoft.Naming" CheckId="CA1708">
+    <Resolution Name="Member">Change member names {0} and '{1}' so that they differ by more than case.</Resolution>
+   </Rule>
+   <Rule TypeName="InitializeReferenceTypeStaticFieldsInline" Category="Microsoft.Performance" CheckId="CA1810">
+    <Resolution Name="Default">Initialize all static fields in {0} when those fields are declared and remove the explicit static constructor.</Resolution>
+   </Rule>
+   <Rule TypeName="MarkAssembliesWithClsCompliant" Category="Microsoft.Design" CheckId="CA1014">
+    <Resolution Name="Default">Mark {0} with CLSCompliant(true) because it exposes externally visible types.</Resolution>
+   </Rule>
+   <Rule TypeName="NestedTypesShouldNotBeVisible" Category="Microsoft.Design" CheckId="CA1034">
+    <Resolution Name="Default">Do not nest type {0}. Alternatively, change its accessibility so that it is not externally visible.</Resolution>
+   </Rule>
+   <Rule TypeName="OperatorOverloadsHaveNamedAlternates" Category="Microsoft.Usage" CheckId="CA2225">
+    <Resolution Name="Default">Provide a method named '{0}' as a friendly alternate for operator {1}.</Resolution>
+   </Rule>
+   <Rule TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819">
+    <Resolution Name="Default">Change {0} to return a collection or make it a method.</Resolution>
+   </Rule>
+   <Rule TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801">
+    <Resolution Name="Default">Parameter {0} of {1} is never used. Remove the parameter or use it in the method body.</Resolution>
+   </Rule>
+   <Rule TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024">
+    <Resolution Name="Default">Change {0} to a property if appropriate.</Resolution>
+   </Rule>
+  </Rules>
+ </FxCopReport>
+</FxCopProject>

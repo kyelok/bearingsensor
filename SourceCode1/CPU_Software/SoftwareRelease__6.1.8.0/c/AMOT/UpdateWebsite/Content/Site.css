@@ -1,0 +1,356 @@
+﻿body
+{
+    background-color: #ffffff;
+    font-family: Segoe WP, Segoe UI, Arial, Helvetica, Sans-serif;
+    margin: 0px;
+    padding: 0px;
+    color: #000000;
+}
+
+header, #header
+{
+    padding:10px;
+}
+
+
+footer, #footer
+{ 
+    color: #aaaaaa;
+    text-align: center;
+    font-size: .9em;
+    clear:left;   
+    padding: 30px;
+}
+
+#menucontainer, #main
+{
+   float:left; 
+   margin-left: 15px;
+}
+
+ul.menu, ul.button, ul.scroll-item
+{
+    list-style-type:none;
+}
+
+.menu, .button
+{
+    padding:0px;
+    margin:0px;
+    color: #ffffff;
+}
+
+ul.menu li a, div#title, h1, h2, ul.button li a, input.button li a, .disabledButton
+{
+    display: block;
+    text-decoration: none;
+}
+
+ul.menu li a
+{
+    width: 200px;
+    height: 84px;
+    line-height: 144px;
+    text-indent: 4px;
+    font-size:16px;
+    clear:both;
+    text-align: left;
+    vertical-align:bottom;
+}
+
+ul.button li a, ul.scroll-item li a, input.button, input.disabledButton
+{
+    
+    float:left;
+    margin-right:4px;
+    
+    
+    font-size:12px;
+    text-align:center;   
+    
+}
+
+ul.button li, ul.scroll-item li 
+{  
+    display: inline  
+}
+
+ul.button li a
+{
+    width:84px;
+    height:44px;
+    padding:2px;
+    line-height:44px;
+}
+
+ul.scroll-item li a
+{
+    width:84px;
+    height:30px;
+    padding:2px;
+    line-height:30px;
+}
+
+input.button
+{
+    width:84px;
+    height:44px;
+}
+
+input.disabledButton, li.disabledButton a
+{
+    background-color: #cdcdcd;
+}
+
+ul.disabledmenu
+{
+    list-style-type:none;
+}
+
+.disabledmenu
+{
+    padding:0px;
+    margin:0px;
+    color: #ffffff;
+}
+
+.disabledmenu li a
+{
+    padding:0px;
+    margin:0px;
+    color: #ffffff;
+    display: block;
+    text-decoration: none;
+    width: 200px;
+    height: 84px;
+    line-height: 144px;
+    text-indent: 4px;
+    font-size:16px;
+    clear:both;
+    text-align: left;
+    vertical-align:bottom;
+    margin-bottom:4px;
+    font-weight: bold;
+    color: #ffffff;
+    margin-top:0px;    
+    border:none;
+    float:left;
+    background-color: #cdcdcd;
+}
+
+ul.menu li a, input.button, li.button a
+{
+    background-color: #00B0F0;
+}
+
+.grayText
+{
+    color:#ababab;   
+}
+
+ul.menu li a, input.button, ul.button li a, input.disabledButton, ul.disabledButton li a, ul.scroll-item li a
+{
+    
+    margin-bottom:4px;
+    font-weight: bold;
+    color: #ffffff;
+    margin-top:0px;    
+    border:none;
+    float:left;
+    
+}
+
+input[type=text] 
+{
+    max-width:150px;
+}
+
+div#title, h1, h2
+{
+    background-color:#ffffff;
+    color: #999999;
+    font-size: 24px !important;  
+    margin-bottom:16px;
+    margin-top: 16px;
+}
+
+ul#menu li a:active, ul.menu li a:active, li.button a:active, input.button[type=submit]:active
+{
+    background-color: #264C72;
+    text-decoration: none;
+}
+
+ul#menu li.selected a, ul.menu li.selected a, li.button a.selected a, input.button[type=submit]:selected
+{
+    background-color: #ffffff;
+    color: #000;
+}
+
+input[type="text"], input[type="password"]
+{
+    border: 1px solid #ccc;
+    padding: 2px;
+    font-size: 1.2em;
+    color: #444;
+    width: 200px;
+}
+
+table
+{
+    margin-bottom:10px;
+    border:none;
+}
+
+#spuTable, #spuHeaderTable
+{
+    font-size: 1em;
+    overflow: hidden;
+}
+
+#importPanel, #importPanel1, #importPanel2, #importPanel3, #importPanel4, #importPanel5, #importPanel6
+{
+    background-color:#ffffff;
+    width: 400px;
+    height: 180px;
+    border: 1px solid #ccc;
+    padding: 2px;
+    position: absolute;
+    left: 100px;
+    top: 150px;
+}
+
+td, th
+{
+    border-bottom: solid 4px white;
+    border-right: solid 4px white;
+    margin-top:0px;
+    padding:4px;
+}
+
+table th, td.th
+{
+    text-align: left;
+    background-color: #39ac39;
+    color: #ffffff;
+    margin-top:0px;
+}
+
+.noborder
+{
+    border: 0px;
+}
+
+.clear
+{
+    clear: both;
+}
+
+.error
+{
+    color: Red;
+}
+
+.Success
+{
+    font-weight: bold;
+    color: Green;
+}
+
+#logindisplay
+{
+    font-size: 1.1em;
+    text-align: right;
+    color: White;
+}
+
+#logindisplay a:link
+{
+    color: white;
+    text-decoration: underline;
+}
+
+#logindisplay a:visited
+{
+    color: white;
+    text-decoration: underline;
+}
+
+#logindisplay a:hover
+{
+    color: white;
+    text-decoration: none;
+}
+
+.field-validation-error
+{
+    color:Red;
+    font-weight: bold;
+}
+
+.True, .true 
+{ 
+    color:Green; 
+    font-weight: bold;
+    }
+.False, .false 
+{
+    color:Red; 
+    font-weight: bold;
+    }
+
+.Off
+{ 
+    background-color:Green; 
+    font-weight: bold;
+ }
+ 
+.On
+{
+    background-color:Red; 
+    font-weight: bold;
+}   
+
+
+ul.button li a.scrollButton
+{
+    font-size:32px;
+} 
+    
+.tall 
+{ 
+    height: 105px; 
+    }
+    
+input.wide
+{
+    width:320px;
+}
+
+#UploadFile
+{
+    min-width:400px;
+}
+
+#yourBtn{
+
+
+
+   width: 84px;
+
+   height: 84px;
+
+   background-color: #00B0F0;
+
+   cursor:pointer;
+
+  }
+  
+  .Failed
+{
+    background:red;
+    color:white;
+}
+
+.Unknown
+{
+}

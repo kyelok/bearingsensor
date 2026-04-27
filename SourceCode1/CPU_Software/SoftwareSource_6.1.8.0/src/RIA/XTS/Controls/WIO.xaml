@@ -1,0 +1,32 @@
+﻿<UserControl
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="clr-namespace:XTS"
+    xmlns:controls="clr-namespace:XTS.Controls"
+    xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk" x:Name="userControl" x:Class="XTS.Controls.WIO"
+    mc:Ignorable="d"
+    d:DesignHeight="300" d:DesignWidth="400">
+
+  <UserControl.Resources>
+    <local:MimicModel x:Key="MimicModelDataSource" />
+    <local:XTSSensorStatusConverter x:Key="StatusConverter" />
+    <controls:WIOStringConverter x:Key="WIOConverter" />
+  </UserControl.Resources>
+  <UserControl.Foreground>
+    <SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+  </UserControl.Foreground>
+  <UserControl.Background>
+    <SolidColorBrush Color="{StaticResource ColorAMOTButton}" />
+  </UserControl.Background>
+
+  <Grid x:Name="LayoutRoot" DataContext="{Binding Source={StaticResource MimicModelDataSource}}">
+    <Button x:Name="buttonWIO" Style="{StaticResource ButtonStyleAMOT}" Foreground="{Binding Foreground, ElementName=userControl}" Click="buttonWIO_Click" Background="{Binding Background, ElementName=userControl}" ContentTemplate="{StaticResource ContentTemplateAMOTButton}" Content="{Binding Path=ResourceStrings.XTSStringWIO, Source={StaticResource LocalizedResources}}" IsEnabled="{Binding IsEnabled, ElementName=userControl}" />
+    <TextBlock HorizontalAlignment="Stretch" VerticalAlignment="Center" TextAlignment="Center" TextWrapping="NoWrap" FontSize="12" Text="{Binding XTSDataSource.EngineData.WIO.Value, Converter={StaticResource WIOConverter}, Mode=OneWay}" FontFamily="{Binding FontFamily, ElementName=userControl}" FontWeight="{Binding FontWeight, ElementName=userControl}" Foreground="{Binding Foreground, ElementName=userControl}" Margin="0,10,0,0" IsHitTestVisible="False" />
+    <Path Stretch="Fill" Data="F1 M 13.687,28.5C 14.0203,27.5 14.687,26.5 15.3537,25.5C 16.0203,26.5 16.687,27.5 17.0203,28.5C 17.3537,29.5 17.3537,30.5 16.687,31C 16.0203,31.5 14.687,31.5 14.0203,31C 13.3537,30.5 13.3537,29.5 13.687,28.5 Z M 20.0203,30C 20.3537,29 21.0203,28 21.687,27C 22.3537,28 23.0203,29 23.3537,30C 23.687,31 23.687,32 23.0203,32.5C 22.3537,33 21.0203,33 20.3537,32.5C 19.687,32 19.687,31 20.0203,30 Z M 25.687,27.5C 26.0203,26.5 26.687,25.5 27.3537,24.5C 28.0203,25.5 28.687,26.5 29.0203,27.5C 29.3537,28.5 29.3537,29.5 28.687,30C 28.0203,30.5 26.687,30.5 26.0203,30C 25.3537,29.5 25.3537,28.5 25.687,27.5 Z " Height="15.708" Margin="4,10,0,0" UseLayoutRounding="False" VerticalAlignment="Top" HorizontalAlignment="Left" Width="22.438" Fill="{Binding Foreground, ElementName=userControl}" IsHitTestVisible="False" />
+    <Rectangle Fill="{Binding XTSDataSource.EngineData.WIO.Status, Converter={StaticResource StatusConverter}}" Height="8" VerticalAlignment="Top" />
+    <Rectangle Height="8" VerticalAlignment="Top" Stroke="Black" Opacity="0.35" />
+
+  </Grid>
+</UserControl>

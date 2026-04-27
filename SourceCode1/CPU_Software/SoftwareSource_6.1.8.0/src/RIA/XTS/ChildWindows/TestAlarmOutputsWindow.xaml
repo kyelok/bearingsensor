@@ -1,0 +1,210 @@
+﻿<controls:ChildWindow
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    x:Class="XTS.ChildWindows.TestAlarmOutputsWindow"
+    xmlns:local="clr-namespace:XTS"
+    Width="470" Height="300"
+    Title="{Binding Path=ResourceStrings.XTSStringAlarmOutputs, Source={StaticResource LocalizedResources}}"
+    Style="{StaticResource ChildWindowStyleAMOT}"
+    Loaded="TestAlarmOutputsWindow_Loaded"
+    Unloaded="TestAlarmOutputsWindow_Unloaded"
+    HasCloseButton="False">
+  <controls:ChildWindow.Resources>
+    <local:DiagnosticsModel x:Key="DiagnosticsModelDataSource" />
+    <local:XTSStatusConverter x:Key="StatusConverter" />
+    <local:XTSTestStatusConverter x:Key="TestStatusConverter" />
+    <local:XTSTestSlowdownStatusConverter x:Key="TestSlowdownStatusConverter" />
+    </controls:ChildWindow.Resources>
+  <Grid x:Name="LayoutRoot" DataContext="{Binding Source={StaticResource DiagnosticsModelDataSource}}" Margin="2">
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="Auto" />
+      <ColumnDefinition Width="100" />
+      <ColumnDefinition Width="4" />
+      <ColumnDefinition Width="100" />
+      <ColumnDefinition Width="4" />
+      <ColumnDefinition Width="100" />
+      <ColumnDefinition />
+    </Grid.ColumnDefinitions>
+    <Grid.RowDefinitions>
+      <RowDefinition />
+      <RowDefinition Height="22" />
+      <RowDefinition Height="52" />
+      <RowDefinition Height="52"/>
+      <RowDefinition />
+      <RowDefinition Height="48" />
+    </Grid.RowDefinitions>
+    <Path Stretch="Fill" Data="F1 M 24,14C 26,14 36,33 35,34C 34,35 14,35 13,34C 12,33 22,14 24,14 Z M 24,29C 23.1716,29 22.5,29.6716 22.5,30.5C 22.5,31.3284 23.1716,32 24,32C 24.8284,32 25.5,31.3284 25.5,30.5C 25.5,29.6716 24.8284,29 24,29 Z M 22.5,20L 23,28L 25,28L 25.5,20L 22.5,20 Z " UseLayoutRounding="False" Width="280" Height="250" Grid.ColumnSpan="3" Margin="-79.5,-21,-40.5,-16" Grid.RowSpan="5">
+      <Path.Fill>
+        <SolidColorBrush Color="{StaticResource ColorAMOTPopUpBG}" />
+      </Path.Fill>
+    </Path>
+    <TextBlock Margin="4,0,0,16" TextWrapping="Wrap" Text="{Binding ResourceStrings.XTSStringSPUStatusOutput1, Source={StaticResource LocalizedResources}}" VerticalAlignment="Bottom" HorizontalAlignment="Center" Grid.Column="1" />
+    <Grid Background ="{Binding XTSDataSource.Diagnostics.AlarmOutput0, Converter={StaticResource StatusConverter}}" Grid.Row="1" Grid.Column="1" Margin="6,0,7,0">
+            <TextBlock  TextWrapping="Wrap" Text="{Binding XTSDataSource.Diagnostics.AlarmOutput0, Converter={StaticResource TestStatusConverter}}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="12" FontWeight="Bold">
+            <TextBlock.Foreground>
+        	    <SolidColorBrush Color="{StaticResource ColorAMOTText}"/>
+            </TextBlock.Foreground>            
+        </TextBlock>
+    </Grid>            
+    <Button x:Name="OutputButton1" Height="44" Style="{StaticResource ButtonStyleAMOT}" Width="88" HorizontalAlignment="Center" VerticalAlignment="Center" Click="buttonOutput1_Click" Grid.Row="3" Grid.Column="1" IsEnabled="{Binding XTSDataSource.Diagnostics.OutputEnabled}">
+      <Button.Background>
+        <SolidColorBrush Color="{StaticResource ColorAMOTButton}" />
+      </Button.Background>
+      <Button.Foreground>
+        <SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+      </Button.Foreground>
+      <Grid>
+        <Path Stretch="Fill" Data="M -608,608C -643.346,608 -672,579.346 -672,544L -672,96C -672,60.6537 -643.346,32 -608,32L -160,32C -124.654,32 -96,60.6538 -96,96L -96,544C -96,579.346 -124.654,608 -160,608L -608,608 Z M -192,416C -221.437,406.686 -241.848,382.022 -256,352.298L -256,352L -256.142,352C -288,284.811 -288,192 -288,192C -288,156.654 -316.654,128 -352,128C -352,110.327 -366.327,96 -384,96C -401.673,96 -416,110.327 -416,128C -451.346,128 -480,156.654 -480,192C -480,192 -480,284.811 -511.858,352L -512,352L -512,352.298C -526.152,382.023 -546.562,406.687 -576,416L -576,480L -192,480L -192,416 Z M -348.329,506.542C -348.329,506.542 -381.792,480.837 -420.004,506.542C -421.405,509.927 -422.167,513.57 -422.167,517.365C -422.167,535.297 -405.153,549.833 -384.167,549.833C -363.18,549.833 -346.167,535.297 -346.167,517.365C -346.167,513.57 -346.929,509.927 -348.329,506.542 Z " HorizontalAlignment="Left" UseLayoutRounding="False" Width="28" Height="28" VerticalAlignment="Center" Margin="8,0,0,0">
+          <Path.Fill>
+            <SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+          </Path.Fill>
+        </Path>
+        <TextBlock Margin="0,0,8,0" TextWrapping="Wrap" Text="{Binding ResourceStrings.XTSStringOFF, Source={StaticResource LocalizedResources}}" VerticalAlignment="Center" d:LayoutOverrides="Width" HorizontalAlignment="Right" FontSize="16" FontWeight="Bold">
+        	<TextBlock.Foreground>
+        		<SolidColorBrush Color="{StaticResource ColorAMOTText}"/>
+        	</TextBlock.Foreground>
+        </TextBlock>
+      </Grid>
+    </Button>
+    <Button x:Name="OutputButton1Off" Height="44" Style="{StaticResource ButtonStyleAMOT}" Width="88" HorizontalAlignment="Center" VerticalAlignment="Center" Click="buttonOutput1Off_Click" Grid.Row="2" Grid.Column="1" IsEnabled="{Binding XTSDataSource.Diagnostics.OutputEnabled}">
+    	<Button.Background>
+    		<SolidColorBrush Color="{StaticResource ColorAMOTButton}" />
+    	</Button.Background>
+    	<Button.Foreground>
+    		<SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+    	</Button.Foreground>
+    	<Grid>
+    		<Path Stretch="Fill" Data="M -608,608C -643.346,608 -672,579.346 -672,544L -672,96C -672,60.6537 -643.346,32 -608,32L -160,32C -124.654,32 -96,60.6538 -96,96L -96,544C -96,579.346 -124.654,608 -160,608L -608,608 Z M -192,416C -221.437,406.686 -241.848,382.022 -256,352.298L -256,352L -256.142,352C -288,284.811 -288,192 -288,192C -288,156.654 -316.654,128 -352,128C -352,110.327 -366.327,96 -384,96C -401.673,96 -416,110.327 -416,128C -451.346,128 -480,156.654 -480,192C -480,192 -480,284.811 -511.858,352L -512,352L -512,352.298C -526.152,382.023 -546.562,406.687 -576,416L -576,480L -192,480L -192,416 Z M -348.329,506.542C -348.329,506.542 -381.792,480.837 -420.004,506.542C -421.405,509.927 -422.167,513.57 -422.167,517.365C -422.167,535.297 -405.153,549.833 -384.167,549.833C -363.18,549.833 -346.167,535.297 -346.167,517.365C -346.167,513.57 -346.929,509.927 -348.329,506.542 Z " HorizontalAlignment="Left" UseLayoutRounding="False" Width="28" Height="28" VerticalAlignment="Center" Margin="8,0,0,0" Opacity="0.3">
+    			<Path.Fill>
+    				<SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+    			</Path.Fill>
+    		</Path>
+    		<TextBlock Margin="0,0,8,0" TextWrapping="Wrap" Text="{Binding ResourceStrings.XTSStringON, Source={StaticResource LocalizedResources}}" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="16" FontWeight="Bold">
+    			<TextBlock.Foreground>
+    				<SolidColorBrush Color="{StaticResource ColorAMOTText}"/>
+    			</TextBlock.Foreground>
+    		</TextBlock>
+    	</Grid>
+    </Button>
+    <TextBlock Margin="4,0,0,16" TextWrapping="Wrap" Text="{Binding ResourceStrings.XTSStringAlarmOutput2, Source={StaticResource LocalizedResources}}" VerticalAlignment="Bottom" HorizontalAlignment="Center" Width="60" Grid.Column="3" />
+        <Grid Background ="{Binding XTSDataSource.Diagnostics.AlarmOutput1, Converter={StaticResource StatusConverter}}" Grid.Row="1" Grid.Column="3" Margin="6,0,7,0">
+            <TextBlock  TextWrapping="Wrap" Text="{Binding XTSDataSource.Diagnostics.AlarmOutput1, Converter={StaticResource TestStatusConverter}}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="12" FontWeight="Bold">
+            <TextBlock.Foreground>
+        	    <SolidColorBrush Color="{StaticResource ColorAMOTText}"/>
+            </TextBlock.Foreground>
+            </TextBlock>
+        </Grid>
+        
+    <Button x:Name="OutputButton2" Width="88" Height="44" Style="{StaticResource ButtonStyleAMOT}" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center" Click="buttonOutput2_Click" Grid.Row="3" IsEnabled="{Binding XTSDataSource.Diagnostics.OutputEnabled}">
+      <Button.Background>
+        <SolidColorBrush Color="{StaticResource ColorAMOTButton}" />
+      </Button.Background>
+      <Button.Foreground>
+        <SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+      </Button.Foreground>
+      <Grid>
+        		<Path Stretch="Fill" Data="F1 M 24,14C 26,14 36,33 35,34C 34,35 14,35 13,34C 12,33 22,14 24,14 Z M 24,29C 23.1716,29 22.5,29.6716 22.5,30.5C 22.5,31.3284 23.1716,32 24,32C 24.8284,32 25.5,31.3284 25.5,30.5C 25.5,29.6716 24.8284,29 24,29 Z M 22.5,20L 23,28L 25,28L 25.5,20L 22.5,20 Z "
+        			Margin="8,0,0,0" UseLayoutRounding="False" HorizontalAlignment="Left" VerticalAlignment="Center" Width="28" Height="25">
+          <Path.Fill>
+            <SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+          </Path.Fill>
+        </Path>
+        		<TextBlock Margin="0,0,8,0" TextWrapping="Wrap" Text="{Binding ResourceStrings.XTSStringOFF, Source={StaticResource LocalizedResources}}" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="16" FontWeight="Bold">
+        			<TextBlock.Foreground>
+        				<SolidColorBrush Color="{StaticResource ColorAMOTText}"/>
+        			</TextBlock.Foreground>
+        		</TextBlock>
+      </Grid>
+    </Button>
+    <Button x:Name="OutputButton2Off" Width="88" Height="44" Style="{StaticResource ButtonStyleAMOT}" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center" Click="buttonOutput2Off_Click" Grid.Row="2" IsEnabled="{Binding XTSDataSource.Diagnostics.OutputEnabled}">
+    	<Button.Background>
+    		<SolidColorBrush Color="{StaticResource ColorAMOTButton}" />
+    	</Button.Background>
+    	<Button.Foreground>
+    		<SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+    	</Button.Foreground>
+    	<Grid>
+    		<Path Stretch="Fill" Data="F1 M 24,14C 26,14 36,33 35,34C 34,35 14,35 13,34C 12,33 22,14 24,14 Z M 24,29C 23.1716,29 22.5,29.6716 22.5,30.5C 22.5,31.3284 23.1716,32 24,32C 24.8284,32 25.5,31.3284 25.5,30.5C 25.5,29.6716 24.8284,29 24,29 Z M 22.5,20L 23,28L 25,28L 25.5,20L 22.5,20 Z "
+    			Margin="8,0,0,0" UseLayoutRounding="False" HorizontalAlignment="Left" VerticalAlignment="Center" Width="28" Height="25" Opacity="0.3">
+    			<Path.Fill>
+    				<SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+    			</Path.Fill>
+    		</Path>
+    		<TextBlock Margin="0,0,8,0" TextWrapping="Wrap" Text="{Binding ResourceStrings.XTSStringON, Source={StaticResource LocalizedResources}}" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="16" FontWeight="Bold">
+    			<TextBlock.Foreground>
+    				<SolidColorBrush Color="{StaticResource ColorAMOTText}"/>
+    			</TextBlock.Foreground>
+    		</TextBlock>
+    	</Grid>
+    </Button>
+    <TextBlock Margin="4,0,0,16" TextWrapping="Wrap" Text="{Binding ResourceStrings.XTSStringSlowdownOutput3, Source={StaticResource LocalizedResources}}" VerticalAlignment="Bottom" HorizontalAlignment="Center" Grid.Column="5" />
+        <Grid Background ="{Binding XTSDataSource.Diagnostics.AlarmOutput2, Converter={StaticResource StatusConverter}}" Grid.Row="1" Grid.Column="5" Margin="6,0,7,0">
+            <TextBlock  TextWrapping="Wrap" Text="{Binding XTSDataSource.Diagnostics.AlarmOutput2, Converter={StaticResource TestSlowdownStatusConverter}}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="12" FontWeight="Bold">
+            <TextBlock.Foreground>
+        	    <SolidColorBrush Color="{StaticResource ColorAMOTText}"/>
+            </TextBlock.Foreground>
+            </TextBlock>
+        </Grid>
+        <Button x:Name="OutputButton3" Height="44" Style="{StaticResource ButtonStyleAMOT}" Grid.Column="5" Width="88" HorizontalAlignment="Center" VerticalAlignment="Center" Click="buttonOutput3_Click" Grid.Row="3" IsEnabled="{Binding XTSDataSource.Diagnostics.OutputEnabled}">
+      <Button.Background>
+        <SolidColorBrush Color="{StaticResource ColorAMOTButton}" />
+      </Button.Background>
+      <Button.Foreground>
+        <SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+      </Button.Foreground>
+      <Grid>
+        <Path Stretch="Fill" Data="F1 M 20,12L 28,12L 36,20L 36,28L 28,36L 20,36L 12,28L 12,20L 20,12 Z M 16.7218,28.4497L 19.5502,31.2782L 24,26.8284L 28.4497,31.2782L 31.2781,28.4497L 26.8284,24L 31.2782,19.5503L 28.4497,16.7218L 24,21.1716L 19.5502,16.7218L 16.7218,19.5503L 21.1716,24L 16.7218,28.4497 Z " HorizontalAlignment="Left" Height="28" Margin="8,0,0,0" UseLayoutRounding="False" VerticalAlignment="Center" Width="28">
+          <Path.Fill>
+            <SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+          </Path.Fill>
+        </Path>
+        <TextBlock Margin="0,0,8,0" TextWrapping="Wrap" Text="{Binding ResourceStrings.XTSStringON, Source={StaticResource LocalizedResources}}" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="16" FontWeight="Bold">
+        	<TextBlock.Foreground>
+        		<SolidColorBrush Color="{StaticResource ColorAMOTText}"/>
+        	</TextBlock.Foreground>
+        </TextBlock>
+      </Grid>
+    </Button>
+    <Button x:Name="OutputButton3Off" Height="44" Style="{StaticResource ButtonStyleAMOT}" Grid.Column="5" Width="88" HorizontalAlignment="Center" VerticalAlignment="Center" Click="buttonOutput3Off_Click" Grid.Row="2" IsEnabled="{Binding XTSDataSource.Diagnostics.OutputEnabled}">
+    	<Button.Background>
+    		<SolidColorBrush Color="{StaticResource ColorAMOTButton}" />
+    	</Button.Background>
+    	<Button.Foreground>
+    		<SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+    	</Button.Foreground>
+    	<Grid>
+    		<Path Stretch="Fill" Data="F1 M 20,12L 28,12L 36,20L 36,28L 28,36L 20,36L 12,28L 12,20L 20,12 Z M 16.7218,28.4497L 19.5502,31.2782L 24,26.8284L 28.4497,31.2782L 31.2781,28.4497L 26.8284,24L 31.2782,19.5503L 28.4497,16.7218L 24,21.1716L 19.5502,16.7218L 16.7218,19.5503L 21.1716,24L 16.7218,28.4497 Z " HorizontalAlignment="Left" Height="28" Margin="8,0,0,0" UseLayoutRounding="False" VerticalAlignment="Center" Width="28" Opacity="0.3">
+    			<Path.Fill>
+    				<SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+    			</Path.Fill>
+    		</Path>
+    		<TextBlock Margin="0,0,8,0" TextWrapping="Wrap" Text="{Binding ResourceStrings.XTSStringOFF, Source={StaticResource LocalizedResources}}" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="16" FontWeight="Bold">
+    			<TextBlock.Foreground>
+    				<SolidColorBrush Color="{StaticResource ColorAMOTText}"/>
+    			</TextBlock.Foreground>
+    		</TextBlock>
+    	</Grid>
+    </Button>
+    <Button x:Name="CancelButton" Click="CancelButton_Click" Height="44" Style="{StaticResource ButtonStyleAMOT}" VerticalAlignment="Bottom" Grid.Row="5" Grid.Column="5" Width="44" HorizontalAlignment="Right" Grid.ColumnSpan="2">
+      <Button.Foreground>
+        <SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+      </Button.Foreground>
+      <Button.Background>
+        <SolidColorBrush Color="{StaticResource ColorAMOTButton}" />
+      </Button.Background>
+      <Grid>
+        <TextBlock Margin="2,0,0,0" TextWrapping="Wrap" Text="{Binding Path=ResourceStrings.XTSStringClose, Source={StaticResource LocalizedResources}}" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontSize="8" />
+        <Path Stretch="Fill" Data="F1 M 400,224C 400,237.255 389.255,248 376,248L 280,248C 266.745,248 256,237.255 256,224L 256,128C 256,114.745 266.745,104 280,104L 376,104C 389.255,104 400,114.745 400,128L 400,224 Z M 272,136L 312,176L 272,216L 288,232L 328,192L 368,232L 384,216L 344,176L 384,136L 368,120L 328,160L 288,120L 272,136 Z " Margin="8,4,8,0" UseLayoutRounding="False" Fill="{Binding Foreground, ElementName=CancelButton}" Height="28" VerticalAlignment="Top" />
+      </Grid>
+    </Button>
+        <TextBlock TextWrapping="Wrap" Text="{Binding Path=ResourceStrings.XTSStringInterface, Source={StaticResource LocalizedResources}}" Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,16,6,0" />
+        <TextBlock TextWrapping="Wrap" Text="{Binding Path=ResourceStrings.XTSStringActualOutput, Source={StaticResource LocalizedResources}}" Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,6,0" />
+    <TextBlock TextWrapping="Wrap" Text="{Binding Path=ResourceStrings.XTSStringNormalOutputs, Source={StaticResource LocalizedResources}}" d:LayoutOverrides="Height" Grid.Row="2" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Right" TextAlignment="Right" Margin="0,16,6,10" />
+    <TextBlock TextWrapping="Wrap" Text="{Binding Path=ResourceStrings.XTSStringAbnormalOutputs, Source={StaticResource LocalizedResources}}" d:LayoutOverrides="Height" Grid.Row="3" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Right" TextAlignment="Right" Margin="0,16,6,10" />
+    <TextBlock Margin="0" TextWrapping="Wrap" Text="{Binding Path=ResourceStrings.XTSStringNoteAlarmTestModeAuto, Source={StaticResource LocalizedResources}}" VerticalAlignment="Center" Grid.Row="4" HorizontalAlignment="Center" Grid.ColumnSpan="7" />
+  </Grid>
+</controls:ChildWindow>

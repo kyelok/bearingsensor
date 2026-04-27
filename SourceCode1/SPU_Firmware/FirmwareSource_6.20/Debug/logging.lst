@@ -1,0 +1,1053 @@
+TMS320C2000 COFF Assembler PC v4.1.3 Thu Aug 18 12:16:17 2016
+
+Tools Copyright (c) 1996-2006 Texas Instruments Incorporated
+logging.asm                                                          PAGE    1
+
+       1              ;***************************************************************
+       2              ;* TMS320C2000 C/C++ Codegen                         PC v4.1.3 *
+       3              ;* Date/Time created: Thu Aug 18 12:16:17 2016                 *
+       4              ;***************************************************************
+       5                      .compiler_opts --mem_model:code=flat --mem_model:data=large --quiet --silicon_version=28 
+       6        0002  FP      .set    XAR2
+       7              
+       8              DW$CU   .dwtag  DW_TAG_compile_unit
+       9                      .dwattr DW$CU, DW_AT_name("logging.c")
+      10                      .dwattr DW$CU, DW_AT_producer("TMS320C2000 C/C++ Codegen PC v4.1.3 Copyright (c) 1996-2006 Texas Inst
+      11                      .dwattr DW$CU, DW_AT_stmt_list(0x00)
+      12                      .dwattr DW$CU, DW_AT_TI_VERSION(0x01)
+      13              
+      14              DW$1    .dwtag  DW_TAG_subprogram, DW_AT_name("SDEventLogDelete"), DW_AT_symbol_name("_SDEventLogDelete")
+      15                      .dwattr DW$1, DW_AT_type(*DW$T$10)
+      16                      .dwattr DW$1, DW_AT_declaration(0x01)
+      17                      .dwattr DW$1, DW_AT_external(0x01)
+      18              
+      19              DW$2    .dwtag  DW_TAG_subprogram, DW_AT_name("SDReadEvent"), DW_AT_symbol_name("_SDReadEvent")
+      20                      .dwattr DW$2, DW_AT_type(*DW$T$10)
+      21                      .dwattr DW$2, DW_AT_declaration(0x01)
+      22                      .dwattr DW$2, DW_AT_external(0x01)
+      23              DW$3    .dwtag  DW_TAG_formal_parameter, DW_AT_type(*DW$T$11)
+      24              DW$4    .dwtag  DW_TAG_formal_parameter, DW_AT_type(*DW$T$33)
+      25                      .dwendtag DW$2
+      26              
+      27              
+      28              DW$5    .dwtag  DW_TAG_subprogram, DW_AT_name("WriteNVMemory"), DW_AT_symbol_name("_WriteNVMemory")
+      29                      .dwattr DW$5, DW_AT_type(*DW$T$10)
+      30                      .dwattr DW$5, DW_AT_declaration(0x01)
+      31                      .dwattr DW$5, DW_AT_external(0x01)
+      32              
+      33              DW$6    .dwtag  DW_TAG_subprogram, DW_AT_name("ReadNVMemory"), DW_AT_symbol_name("_ReadNVMemory")
+      34                      .dwattr DW$6, DW_AT_type(*DW$T$10)
+      35                      .dwattr DW$6, DW_AT_declaration(0x01)
+      36                      .dwattr DW$6, DW_AT_external(0x01)
+      37              
+      38              DW$7    .dwtag  DW_TAG_subprogram, DW_AT_name("ClearEventCodeListArea"), DW_AT_symbol_name("_ClearEventCodeLi
+      39                      .dwattr DW$7, DW_AT_type(*DW$T$10)
+      40                      .dwattr DW$7, DW_AT_declaration(0x01)
+      41                      .dwattr DW$7, DW_AT_external(0x01)
+      42              DW$8    .dwtag  DW_TAG_variable, DW_AT_name("settings"), DW_AT_symbol_name("_settings")
+      43                      .dwattr DW$8, DW_AT_type(*DW$T$42)
+      44                      .dwattr DW$8, DW_AT_declaration(0x01)
+      45                      .dwattr DW$8, DW_AT_external(0x01)
+      46              DW$9    .dwtag  DW_TAG_variable, DW_AT_name("transferbuffer"), DW_AT_symbol_name("_transferbuffer")
+      47                      .dwattr DW$9, DW_AT_type(*DW$T$40)
+      48                      .dwattr DW$9, DW_AT_declaration(0x01)
+      49                      .dwattr DW$9, DW_AT_external(0x01)
+      50                      .global _logging
+      51 00000000       _logging:       .usect  ".ebss",1,1,0
+      52              DW$10   .dwtag  DW_TAG_variable, DW_AT_name("logging"), DW_AT_symbol_name("_logging")
+      53                      .dwattr DW$10, DW_AT_location[DW_OP_addr _logging]
+      54                      .dwattr DW$10, DW_AT_type(*DW$T$43)
+      55                      .dwattr DW$10, DW_AT_external(0x01)
+TMS320C2000 COFF Assembler PC v4.1.3 Thu Aug 18 12:16:17 2016
+
+Tools Copyright (c) 1996-2006 Texas Instruments Incorporated
+logging.asm                                                          PAGE    2
+
+      56                      .global _eventlogvars
+      57 00000001       _eventlogvars:  .usect  ".ebss",3,1,0
+      58              DW$11   .dwtag  DW_TAG_variable, DW_AT_name("eventlogvars"), DW_AT_symbol_name("_eventlogvars")
+      59                      .dwattr DW$11, DW_AT_location[DW_OP_addr _eventlogvars]
+      60                      .dwattr DW$11, DW_AT_type(*DW$T$44)
+      61                      .dwattr DW$11, DW_AT_external(0x01)
+      62                      .global _eventlogentry
+      63 00000040       _eventlogentry: .usect  ".ebss",68,1,0
+      64              DW$12   .dwtag  DW_TAG_variable, DW_AT_name("eventlogentry"), DW_AT_symbol_name("_eventlogentry")
+      65                      .dwattr DW$12, DW_AT_location[DW_OP_addr _eventlogentry]
+      66                      .dwattr DW$12, DW_AT_type(*DW$T$46)
+      67                      .dwattr DW$12, DW_AT_external(0x01)
+      68              ;       C:\CCStudio_v3.3\C2000\cgtools\bin\opt2000.exe C:\Users\Andrew\AppData\Local\Temp\TI1482 C:\Users\And
+      69              ;       C:\CCStudio_v3.3\C2000\cgtools\bin\ac2000.exe -q -D_INLINE -DLARGE_MODEL -IC:/CCStudio_v3.3/C2000/xda
+      70 00000000               .sect   ".text"
+      71                      .global _WriteEventLogVarsStructtoNVMEM
+      72              
+      73              DW$13   .dwtag  DW_TAG_subprogram, DW_AT_name("WriteEventLogVarsStructtoNVMEM"), DW_AT_symbol_name("_WriteEve
+      74                      .dwattr DW$13, DW_AT_low_pc(_WriteEventLogVarsStructtoNVMEM)
+      75                      .dwattr DW$13, DW_AT_high_pc(0x00)
+      76                      .dwattr DW$13, DW_AT_begin_file("logging.c")
+      77                      .dwattr DW$13, DW_AT_begin_line(0x2a)
+      78                      .dwattr DW$13, DW_AT_begin_column(0x06)
+      79                      .dwattr DW$13, DW_AT_frame_base[DW_OP_breg20 -2]
+      80                      .dwattr DW$13, DW_AT_skeletal(0x01)
+      81                      .dwpsn  "logging.c",43,1
+      82              
+      83              ;***************************************************************
+      84              ;* FNAME: _WriteEventLogVarsStructtoNVMEM FR SIZE:   0           *
+      85              ;*                                                             *
+      86              ;* FUNCTION ENVIRONMENT                                        *
+      87              ;*                                                             *
+      88              ;* FUNCTION PROPERTIES                                         *
+      89              ;*                            0 Parameter,  0 Auto,  0 SOE     *
+      90              ;***************************************************************
+      91              
+      92 00000000       _WriteEventLogVarsStructtoNVMEM:
+      93 00000000 9A00          MOVB      AL,#0
+      94 00000001 D503          MOVB      XAR5,#3               ; |53| 
+      95 00000002 8F00-         MOVL      XAR4,#_eventlogvars   ; |53| 
+         00000003 0001 
+      96 00000004 28A8          MOV       AH,#28208             ; |53| 
+         00000005 6E30 
+      97 00000006 7640!         LCR       #_WriteNVMemory       ; |53| 
+         00000007 0000 
+      98                      ; call occurs [#_WriteNVMemory] ; |53| 
+      99                      .dwpsn  "logging.c",54,1
+     100 00000008 0006          LRETR
+     101                      ; return occurs
+     102                      .dwattr DW$13, DW_AT_end_file("logging.c")
+     103                      .dwattr DW$13, DW_AT_end_line(0x36)
+     104                      .dwattr DW$13, DW_AT_end_column(0x01)
+     105                      .dwendtag DW$13
+     106              
+     107 00000009               .sect   ".text"
+TMS320C2000 COFF Assembler PC v4.1.3 Thu Aug 18 12:16:17 2016
+
+Tools Copyright (c) 1996-2006 Texas Instruments Incorporated
+logging.asm                                                          PAGE    3
+
+     108                      .global _ReadEventLogVarsStructfromNVMEM
+     109              
+     110              DW$14   .dwtag  DW_TAG_subprogram, DW_AT_name("ReadEventLogVarsStructfromNVMEM"), DW_AT_symbol_name("_ReadEve
+     111                      .dwattr DW$14, DW_AT_low_pc(_ReadEventLogVarsStructfromNVMEM)
+     112                      .dwattr DW$14, DW_AT_high_pc(0x00)
+     113                      .dwattr DW$14, DW_AT_begin_file("logging.c")
+     114                      .dwattr DW$14, DW_AT_begin_line(0x3a)
+     115                      .dwattr DW$14, DW_AT_begin_column(0x06)
+     116                      .dwattr DW$14, DW_AT_frame_base[DW_OP_breg20 -2]
+     117                      .dwattr DW$14, DW_AT_skeletal(0x01)
+     118                      .dwpsn  "logging.c",59,1
+     119              
+     120              ;***************************************************************
+     121              ;* FNAME: _ReadEventLogVarsStructfromNVMEM FR SIZE:   0           *
+     122              ;*                                                             *
+     123              ;* FUNCTION ENVIRONMENT                                        *
+     124              ;*                                                             *
+     125              ;* FUNCTION PROPERTIES                                         *
+     126              ;*                            0 Parameter,  0 Auto,  0 SOE     *
+     127              ;***************************************************************
+     128              
+     129 00000009       _ReadEventLogVarsStructfromNVMEM:
+     130 00000009 9A00          MOVB      AL,#0
+     131 0000000a D503          MOVB      XAR5,#3               ; |70| 
+     132 0000000b 8F00-         MOVL      XAR4,#_eventlogvars   ; |70| 
+         0000000c 0001 
+     133 0000000d 28A8          MOV       AH,#28208             ; |70| 
+         0000000e 6E30 
+     134 0000000f 7640!         LCR       #_ReadNVMemory        ; |70| 
+         00000010 0000 
+     135                      ; call occurs [#_ReadNVMemory] ; |70| 
+     136                      .dwpsn  "logging.c",71,1
+     137 00000011 0006          LRETR
+     138                      ; return occurs
+     139                      .dwattr DW$14, DW_AT_end_file("logging.c")
+     140                      .dwattr DW$14, DW_AT_end_line(0x47)
+     141                      .dwattr DW$14, DW_AT_end_column(0x01)
+     142                      .dwendtag DW$14
+     143              
+     144 00000012               .sect   ".text"
+     145                      .global _ClearMSGQueue
+     146              
+     147              DW$15   .dwtag  DW_TAG_subprogram, DW_AT_name("ClearMSGQueue"), DW_AT_symbol_name("_ClearMSGQueue")
+     148                      .dwattr DW$15, DW_AT_low_pc(_ClearMSGQueue)
+     149                      .dwattr DW$15, DW_AT_high_pc(0x00)
+     150                      .dwattr DW$15, DW_AT_begin_file("logging.c")
+     151                      .dwattr DW$15, DW_AT_begin_line(0x8c)
+     152                      .dwattr DW$15, DW_AT_begin_column(0x06)
+     153                      .dwattr DW$15, DW_AT_frame_base[DW_OP_breg20 -2]
+     154                      .dwattr DW$15, DW_AT_skeletal(0x01)
+     155                      .dwpsn  "logging.c",141,1
+     156              
+     157              ;***************************************************************
+     158              ;* FNAME: _ClearMSGQueue                FR SIZE:   0           *
+     159              ;*                                                             *
+TMS320C2000 COFF Assembler PC v4.1.3 Thu Aug 18 12:16:17 2016
+
+Tools Copyright (c) 1996-2006 Texas Instruments Incorporated
+logging.asm                                                          PAGE    4
+
+     160              ;* FUNCTION ENVIRONMENT                                        *
+     161              ;*                                                             *
+     162              ;* FUNCTION PROPERTIES                                         *
+     163              ;*                            0 Parameter,  0 Auto,  0 SOE     *
+     164              ;***************************************************************
+     165              
+     166 00000012       _ClearMSGQueue:
+     167 00000012 761F-         MOVW      DP,#_eventlogvars+1
+         00000013 0000 
+     168 00000014 2B02-         MOV       @_eventlogvars+1,#0   ; |142| 
+     169 00000015 7640'         LCR       #_WriteEventLogVarsStructtoNVMEM ; |143| 
+         00000016 0000 
+     170                      ; call occurs [#_WriteEventLogVarsStructtoNVMEM] ; |143| 
+     171                      .dwpsn  "logging.c",144,1
+     172 00000017 0006          LRETR
+     173                      ; return occurs
+     174                      .dwattr DW$15, DW_AT_end_file("logging.c")
+     175                      .dwattr DW$15, DW_AT_end_line(0x90)
+     176                      .dwattr DW$15, DW_AT_end_column(0x01)
+     177                      .dwendtag DW$15
+     178              
+     179 00000018               .sect   ".text"
+     180                      .global _MSGQueueNumfromPC
+     181              
+     182              DW$16   .dwtag  DW_TAG_subprogram, DW_AT_name("MSGQueueNumfromPC"), DW_AT_symbol_name("_MSGQueueNumfromPC")
+     183                      .dwattr DW$16, DW_AT_low_pc(_MSGQueueNumfromPC)
+     184                      .dwattr DW$16, DW_AT_high_pc(0x00)
+     185                      .dwattr DW$16, DW_AT_begin_file("logging.c")
+     186                      .dwattr DW$16, DW_AT_begin_line(0x94)
+     187                      .dwattr DW$16, DW_AT_begin_column(0x06)
+     188                      .dwattr DW$16, DW_AT_frame_base[DW_OP_breg20 -2]
+     189                      .dwattr DW$16, DW_AT_skeletal(0x01)
+     190                      .dwpsn  "logging.c",149,1
+     191              
+     192              ;***************************************************************
+     193              ;* FNAME: _MSGQueueNumfromPC            FR SIZE:   0           *
+     194              ;*                                                             *
+     195              ;* FUNCTION ENVIRONMENT                                        *
+     196              ;*                                                             *
+     197              ;* FUNCTION PROPERTIES                                         *
+     198              ;*                            0 Parameter,  0 Auto,  0 SOE     *
+     199              ;***************************************************************
+     200              
+     201              _MSGQueueNumfromPC:
+     202              ;* AL    assigned to _val
+     203              DW$17   .dwtag  DW_TAG_formal_parameter, DW_AT_name("val"), DW_AT_symbol_name("_val")
+     204                      .dwattr DW$17, DW_AT_type(*DW$T$11)
+     205                      .dwattr DW$17, DW_AT_location[DW_OP_reg0]
+     206 00000018 761F-         MOVW      DP,#_eventlogvars+1
+         00000019 0000 
+     207 0000001a 5402-         CMP       AL,@_eventlogvars+1   ; |150| 
+     208 0000001b 56C9          BF        L1,LOS                ; |150| 
+         0000001c 0007 
+     209                      ; branchcc occurs ; |150| 
+     210 0000001d 761F-         MOVW      DP,#_eventlogvars+1
+TMS320C2000 COFF Assembler PC v4.1.3 Thu Aug 18 12:16:17 2016
+
+Tools Copyright (c) 1996-2006 Texas Instruments Incorporated
+logging.asm                                                          PAGE    5
+
+         0000001e 0000 
+     211 0000001f 2B02-         MOV       @_eventlogvars+1,#0   ; |156| 
+     212 00000020 56CF          BF        L2,UNC                ; |156| 
+         00000021 0005 
+     213                      ; branch occurs ; |156| 
+     214 00000022       L1:    
+     215 00000022 761F-         MOVW      DP,#_eventlogvars+1
+         00000023 0000 
+     216 00000024 7402-         SUB       @_eventlogvars+1,AL   ; |152| 
+     217 00000025       L2:    
+     218 00000025 7640'         LCR       #_WriteEventLogVarsStructtoNVMEM ; |158| 
+         00000026 0000 
+     219                      ; call occurs [#_WriteEventLogVarsStructtoNVMEM] ; |158| 
+     220                      .dwpsn  "logging.c",160,1
+     221 00000027 0006          LRETR
+     222                      ; return occurs
+     223                      .dwattr DW$16, DW_AT_end_file("logging.c")
+     224                      .dwattr DW$16, DW_AT_end_line(0xa0)
+     225                      .dwattr DW$16, DW_AT_end_column(0x01)
+     226                      .dwendtag DW$16
+     227              
+     228 00000028               .sect   ".text"
+     229                      .global _ClearAlarmListandEventLog
+     230              
+     231              DW$18   .dwtag  DW_TAG_subprogram, DW_AT_name("ClearAlarmListandEventLog"), DW_AT_symbol_name("_ClearAlarmLis
+     232                      .dwattr DW$18, DW_AT_low_pc(_ClearAlarmListandEventLog)
+     233                      .dwattr DW$18, DW_AT_high_pc(0x00)
+     234                      .dwattr DW$18, DW_AT_begin_file("logging.c")
+     235                      .dwattr DW$18, DW_AT_begin_line(0xa3)
+     236                      .dwattr DW$18, DW_AT_begin_column(0x06)
+     237                      .dwattr DW$18, DW_AT_frame_base[DW_OP_breg20 -2]
+     238                      .dwattr DW$18, DW_AT_skeletal(0x01)
+     239                      .dwpsn  "logging.c",164,1
+     240              
+     241              ;***************************************************************
+     242              ;* FNAME: _ClearAlarmListandEventLog    FR SIZE:   0           *
+     243              ;*                                                             *
+     244              ;* FUNCTION ENVIRONMENT                                        *
+     245              ;*                                                             *
+     246              ;* FUNCTION PROPERTIES                                         *
+     247              ;*                            0 Parameter,  0 Auto,  0 SOE     *
+     248              ;***************************************************************
+     249              
+     250 00000028       _ClearAlarmListandEventLog:
+     251 00000028 7640!         LCR       #_ClearEventCodeListArea ; |167| 
+         00000029 0000 
+     252                      ; call occurs [#_ClearEventCodeListArea] ; |167| 
+     253 0000002a 761F-         MOVW      DP,#_eventlogvars
+         0000002b 0000 
+     254 0000002c 2B01-         MOV       @_eventlogvars,#0     ; |169| 
+     255 0000002d 761F-         MOVW      DP,#_eventlogvars+1
+         0000002e 0000 
+     256 0000002f 2B02-         MOV       @_eventlogvars+1,#0   ; |170| 
+     257 00000030 7640'         LCR       #_WriteEventLogVarsStructtoNVMEM ; |171| 
+         00000031 0000 
+TMS320C2000 COFF Assembler PC v4.1.3 Thu Aug 18 12:16:17 2016
+
+Tools Copyright (c) 1996-2006 Texas Instruments Incorporated
+logging.asm                                                          PAGE    6
+
+     258                      ; call occurs [#_WriteEventLogVarsStructtoNVMEM] ; |171| 
+     259 00000032 7640!         LCR       #_SDEventLogDelete    ; |172| 
+         00000033 0000 
+     260                      ; call occurs [#_SDEventLogDelete] ; |172| 
+     261                      .dwpsn  "logging.c",176,1
+     262 00000034 0006          LRETR
+     263                      ; return occurs
+     264                      .dwattr DW$18, DW_AT_end_file("logging.c")
+     265                      .dwattr DW$18, DW_AT_end_line(0xb0)
+     266                      .dwattr DW$18, DW_AT_end_column(0x01)
+     267                      .dwendtag DW$18
+     268              
+     269 00000035               .sect   ".text"
+     270                      .global _ReadEventLogID
+     271              
+     272              DW$19   .dwtag  DW_TAG_subprogram, DW_AT_name("ReadEventLogID"), DW_AT_symbol_name("_ReadEventLogID")
+     273                      .dwattr DW$19, DW_AT_low_pc(_ReadEventLogID)
+     274                      .dwattr DW$19, DW_AT_high_pc(0x00)
+     275                      .dwattr DW$19, DW_AT_begin_file("logging.c")
+     276                      .dwattr DW$19, DW_AT_begin_line(0xb3)
+     277                      .dwattr DW$19, DW_AT_begin_column(0x0e)
+     278                      .dwattr DW$19, DW_AT_frame_base[DW_OP_breg20 -2]
+     279                      .dwattr DW$19, DW_AT_skeletal(0x01)
+     280                      .dwpsn  "logging.c",180,1
+     281              
+     282              ;***************************************************************
+     283              ;* FNAME: _ReadEventLogID               FR SIZE:   0           *
+     284              ;*                                                             *
+     285              ;* FUNCTION ENVIRONMENT                                        *
+     286              ;*                                                             *
+     287              ;* FUNCTION PROPERTIES                                         *
+     288              ;*                            0 Parameter,  0 Auto,  0 SOE     *
+     289              ;***************************************************************
+     290              
+     291 00000035       _ReadEventLogID:
+     292 00000035 761F-         MOVW      DP,#_eventlogvars
+         00000036 0000 
+     293 00000037 9201-         MOV       AL,@_eventlogvars     ; |180| 
+     294                      .dwpsn  "logging.c",180,36
+     295 00000038 0006          LRETR
+     296                      ; return occurs
+     297                      .dwattr DW$19, DW_AT_end_file("logging.c")
+     298                      .dwattr DW$19, DW_AT_end_line(0xb4)
+     299                      .dwattr DW$19, DW_AT_end_column(0x24)
+     300                      .dwendtag DW$19
+     301              
+     302 00000039               .sect   ".text"
+     303                      .global _ReadMSGQueueNum
+     304              
+     305              DW$20   .dwtag  DW_TAG_subprogram, DW_AT_name("ReadMSGQueueNum"), DW_AT_symbol_name("_ReadMSGQueueNum")
+     306                      .dwattr DW$20, DW_AT_low_pc(_ReadMSGQueueNum)
+     307                      .dwattr DW$20, DW_AT_high_pc(0x00)
+     308                      .dwattr DW$20, DW_AT_begin_file("logging.c")
+     309                      .dwattr DW$20, DW_AT_begin_line(0xb7)
+     310                      .dwattr DW$20, DW_AT_begin_column(0x0e)
+TMS320C2000 COFF Assembler PC v4.1.3 Thu Aug 18 12:16:17 2016
+
+Tools Copyright (c) 1996-2006 Texas Instruments Incorporated
+logging.asm                                                          PAGE    7
+
+     311                      .dwattr DW$20, DW_AT_frame_base[DW_OP_breg20 -2]
+     312                      .dwattr DW$20, DW_AT_skeletal(0x01)
+     313                      .dwpsn  "logging.c",184,1
+     314              
+     315              ;***************************************************************
+     316              ;* FNAME: _ReadMSGQueueNum              FR SIZE:   0           *
+     317              ;*                                                             *
+     318              ;* FUNCTION ENVIRONMENT                                        *
+     319              ;*                                                             *
+     320              ;* FUNCTION PROPERTIES                                         *
+     321              ;*                            0 Parameter,  0 Auto,  0 SOE     *
+     322              ;***************************************************************
+     323              
+     324 00000039       _ReadMSGQueueNum:
+     325 00000039 761F-         MOVW      DP,#_eventlogvars+1
+         0000003a 0000 
+     326 0000003b 9202-         MOV       AL,@_eventlogvars+1   ; |184| 
+     327                      .dwpsn  "logging.c",184,33
+     328 0000003c 0006          LRETR
+     329                      ; return occurs
+     330                      .dwattr DW$20, DW_AT_end_file("logging.c")
+     331                      .dwattr DW$20, DW_AT_end_line(0xb8)
+     332                      .dwattr DW$20, DW_AT_end_column(0x21)
+     333                      .dwendtag DW$20
+     334              
+     335 0000003d               .sect   ".text"
+     336                      .global _ReadLastEventID
+     337              
+     338              DW$21   .dwtag  DW_TAG_subprogram, DW_AT_name("ReadLastEventID"), DW_AT_symbol_name("_ReadLastEventID")
+     339                      .dwattr DW$21, DW_AT_low_pc(_ReadLastEventID)
+     340                      .dwattr DW$21, DW_AT_high_pc(0x00)
+     341                      .dwattr DW$21, DW_AT_begin_file("logging.c")
+     342                      .dwattr DW$21, DW_AT_begin_line(0xbc)
+     343                      .dwattr DW$21, DW_AT_begin_column(0x0e)
+     344                      .dwattr DW$21, DW_AT_frame_base[DW_OP_breg20 -2]
+     345                      .dwattr DW$21, DW_AT_skeletal(0x01)
+     346                      .dwpsn  "logging.c",189,1
+     347              
+     348              ;***************************************************************
+     349              ;* FNAME: _ReadLastEventID              FR SIZE:   0           *
+     350              ;*                                                             *
+     351              ;* FUNCTION ENVIRONMENT                                        *
+     352              ;*                                                             *
+     353              ;* FUNCTION PROPERTIES                                         *
+     354              ;*                            0 Parameter,  0 Auto,  0 SOE     *
+     355              ;***************************************************************
+     356              
+     357 0000003d       _ReadLastEventID:
+     358 0000003d 761F-         MOVW      DP,#_eventlogvars
+         0000003e 0000 
+     359 0000003f 9201-         MOV       AL,@_eventlogvars     ; |189| 
+     360 00000040 9CFF          ADDB      AL,#-1
+     361                      .dwpsn  "logging.c",189,38
+     362 00000041 0006          LRETR
+     363                      ; return occurs
+TMS320C2000 COFF Assembler PC v4.1.3 Thu Aug 18 12:16:17 2016
+
+Tools Copyright (c) 1996-2006 Texas Instruments Incorporated
+logging.asm                                                          PAGE    8
+
+     364                      .dwattr DW$21, DW_AT_end_file("logging.c")
+     365                      .dwattr DW$21, DW_AT_end_line(0xbd)
+     366                      .dwattr DW$21, DW_AT_end_column(0x26)
+     367                      .dwendtag DW$21
+     368              
+     369 00000042               .sect   ".text"
+     370                      .global _SetupEventReadBack
+     371              
+     372              DW$22   .dwtag  DW_TAG_subprogram, DW_AT_name("SetupEventReadBack"), DW_AT_symbol_name("_SetupEventReadBack")
+     373                      .dwattr DW$22, DW_AT_low_pc(_SetupEventReadBack)
+     374                      .dwattr DW$22, DW_AT_high_pc(0x00)
+     375                      .dwattr DW$22, DW_AT_begin_file("logging.c")
+     376                      .dwattr DW$22, DW_AT_begin_line(0x119)
+     377                      .dwattr DW$22, DW_AT_begin_column(0x06)
+     378                      .dwattr DW$22, DW_AT_frame_base[DW_OP_breg20 -2]
+     379                      .dwattr DW$22, DW_AT_skeletal(0x01)
+     380                      .dwpsn  "logging.c",282,1
+     381              
+     382              ;***************************************************************
+     383              ;* FNAME: _SetupEventReadBack           FR SIZE:   0           *
+     384              ;*                                                             *
+     385              ;* FUNCTION ENVIRONMENT                                        *
+     386              ;*                                                             *
+     387              ;* FUNCTION PROPERTIES                                         *
+     388              ;*                            0 Parameter,  0 Auto,  0 SOE     *
+     389              ;***************************************************************
+     390              
+     391              _SetupEventReadBack:
+     392              ;* AL    assigned to _eventid
+     393              DW$23   .dwtag  DW_TAG_formal_parameter, DW_AT_name("eventid"), DW_AT_symbol_name("_eventid")
+     394                      .dwattr DW$23, DW_AT_type(*DW$T$11)
+     395                      .dwattr DW$23, DW_AT_location[DW_OP_reg0]
+     396 00000042 761F!         MOVW      DP,#_settings+7
+         00000043 0000 
+     397 00000044 9307!         MOV       AH,@_settings+7       ; |285| 
+     398 00000045 ED07          BF        L3,NEQ                ; |285| 
+     399                      ; branchcc occurs ; |285| 
+     400 00000046 8F00!         MOVL      XAR4,#_transferbuffer ; |287| 
+         00000047 0000 
+     401 00000048 7640!         LCR       #_SDReadEvent         ; |287| 
+         00000049 0000 
+     402                      ; call occurs [#_SDReadEvent] ; |287| 
+     403 0000004a 56CF          BF        L5,UNC                ; |288| 
+         0000004b 000F 
+     404                      ; branch occurs ; |288| 
+     405 0000004c       L3:    
+     406 0000004c 9A00          MOVB      AL,#0
+     407                      .dwpsn  "logging.c",291,0
+     408 0000004d 3B01          SETC      SXM
+     409 0000004e       L4:    
+     410 0000004e       DW$L$_SetupEventReadBack$4$B:
+     411 0000004e 85A9          MOV       ACC,AL                ; |291| 
+     412 0000004f 8F00!         MOVL      XAR4,#_transferbuffer ; |291| 
+         00000050 0000 
+     413 00000051 5601          ADDL      XAR4,ACC
+TMS320C2000 COFF Assembler PC v4.1.3 Thu Aug 18 12:16:17 2016
+
+Tools Copyright (c) 1996-2006 Texas Instruments Incorporated
+logging.asm                                                          PAGE    9
+
+         00000052 00A4 
+     414 00000053 9C01          ADDB      AL,#1                 ; |291| 
+     415 00000054 5280          CMPB      AL,#128               ; |291| 
+     416 00000055 28C4          MOV       *+XAR4[0],#45         ; |291| 
+         00000056 002D 
+     417 00000057 56C4          BF        L4,LT                 ; |291| 
+         00000058 FFF7 
+     418                      ; branchcc occurs ; |291| 
+     419              DW$L$_SetupEventReadBack$4$E:
+     420              L5:    
+     421                      .dwpsn  "logging.c",294,1
+     422 00000059 0006          LRETR
+     423                      ; return occurs
+     424              
+     425              DW$24   .dwtag  DW_TAG_loop
+     426                      .dwattr DW$24, DW_AT_name("D:\DEV\Amot\BearingWear\XTSW_V6_20\logging.asm:L4:1:1471518977")
+     427                      .dwattr DW$24, DW_AT_begin_file("logging.c")
+     428                      .dwattr DW$24, DW_AT_begin_line(0x123)
+     429                      .dwattr DW$24, DW_AT_end_line(0x123)
+     430              DW$25   .dwtag  DW_TAG_loop_range
+     431                      .dwattr DW$25, DW_AT_low_pc(DW$L$_SetupEventReadBack$4$B)
+     432                      .dwattr DW$25, DW_AT_high_pc(DW$L$_SetupEventReadBack$4$E)
+     433                      .dwendtag DW$24
+     434              
+     435                      .dwattr DW$22, DW_AT_end_file("logging.c")
+     436                      .dwattr DW$22, DW_AT_end_line(0x126)
+     437                      .dwattr DW$22, DW_AT_end_column(0x01)
+     438                      .dwendtag DW$22
+     439              
+     440 0000005a               .sect   ".text"
+     441                      .global _ReadEvent
+     442              
+     443              DW$26   .dwtag  DW_TAG_subprogram, DW_AT_name("ReadEvent"), DW_AT_symbol_name("_ReadEvent")
+     444                      .dwattr DW$26, DW_AT_low_pc(_ReadEvent)
+     445                      .dwattr DW$26, DW_AT_high_pc(0x00)
+     446                      .dwattr DW$26, DW_AT_begin_file("logging.c")
+     447                      .dwattr DW$26, DW_AT_begin_line(0x12a)
+     448                      .dwattr DW$26, DW_AT_begin_column(0x0e)
+     449                      .dwattr DW$26, DW_AT_frame_base[DW_OP_breg20 -2]
+     450                      .dwattr DW$26, DW_AT_skeletal(0x01)
+     451                      .dwpsn  "logging.c",299,1
+     452              
+     453              ;***************************************************************
+     454              ;* FNAME: _ReadEvent                    FR SIZE:   0           *
+     455              ;*                                                             *
+     456              ;* FUNCTION ENVIRONMENT                                        *
+     457              ;*                                                             *
+     458              ;* FUNCTION PROPERTIES                                         *
+     459              ;*                            0 Parameter,  0 Auto,  0 SOE     *
+     460              ;***************************************************************
+     461              
+     462              _ReadEvent:
+     463              ;* AL    assigned to _add
+     464              DW$27   .dwtag  DW_TAG_formal_parameter, DW_AT_name("add"), DW_AT_symbol_name("_add")
+     465                      .dwattr DW$27, DW_AT_type(*DW$T$11)
+TMS320C2000 COFF Assembler PC v4.1.3 Thu Aug 18 12:16:17 2016
+
+Tools Copyright (c) 1996-2006 Texas Instruments Incorporated
+logging.asm                                                          PAGE   10
+
+     466                      .dwattr DW$27, DW_AT_location[DW_OP_reg0]
+     467 0000005a 5240          CMPB      AL,#64                ; |300| 
+     468 0000005b 58A9          MOVZ      AR0,AL                ; |299| 
+     469 0000005c 56C9          BF        L6,LOS                ; |300| 
+         0000005d 0005 
+     470                      ; branchcc occurs ; |300| 
+     471 0000005e 9A00          MOVB      AL,#0
+     472 0000005f 56CF          BF        L7,UNC                ; |300| 
+         00000060 0005 
+     473                      ; branch occurs ; |300| 
+     474 00000061       L6:    
+     475 00000061 8F00!         MOVL      XAR4,#_transferbuffer ; |300| 
+         00000062 0000 
+     476 00000063 9294          MOV       AL,*+XAR4[AR0]        ; |300| 
+     477              L7:    
+     478                      .dwpsn  "logging.c",303,1
+     479 00000064 0006          LRETR
+     480                      ; return occurs
+     481                      .dwattr DW$26, DW_AT_end_file("logging.c")
+     482                      .dwattr DW$26, DW_AT_end_line(0x12f)
+     483                      .dwattr DW$26, DW_AT_end_column(0x01)
+     484                      .dwendtag DW$26
+     485              
+     486              ;***************************************************************
+     487              ;* UNDEFINED EXTERNAL REFERENCES                               *
+     488              ;***************************************************************
+     489                      .global _SDEventLogDelete
+     490                      .global _SDReadEvent
+     491                      .global _WriteNVMemory
+     492                      .global _ReadNVMemory
+     493                      .global _ClearEventCodeListArea
+     494                      .global _settings
+     495                      .global _transferbuffer
+     496              
+     497              ;***************************************************************
+     498              ;* TYPE INFORMATION                                            *
+     499              ;***************************************************************
+     500              
+     501              DW$T$28 .dwtag  DW_TAG_subroutine_type
+     502                      .dwattr DW$T$28, DW_AT_language(DW_LANG_C)
+     503              
+     504              DW$T$30 .dwtag  DW_TAG_subroutine_type
+     505                      .dwattr DW$T$30, DW_AT_language(DW_LANG_C)
+     506              DW$28   .dwtag  DW_TAG_formal_parameter, DW_AT_type(*DW$T$11)
+     507                      .dwendtag DW$T$30
+     508              
+     509              DW$T$10 .dwtag  DW_TAG_base_type, DW_AT_name("int")
+     510                      .dwattr DW$T$10, DW_AT_encoding(DW_ATE_signed)
+     511                      .dwattr DW$T$10, DW_AT_byte_size(0x01)
+     512              
+     513              DW$T$31 .dwtag  DW_TAG_subroutine_type, DW_AT_type(*DW$T$10)
+     514                      .dwattr DW$T$31, DW_AT_language(DW_LANG_C)
+     515              
+     516              DW$T$34 .dwtag  DW_TAG_subroutine_type, DW_AT_type(*DW$T$10)
+     517                      .dwattr DW$T$34, DW_AT_language(DW_LANG_C)
+TMS320C2000 COFF Assembler PC v4.1.3 Thu Aug 18 12:16:17 2016
+
+Tools Copyright (c) 1996-2006 Texas Instruments Incorporated
+logging.asm                                                          PAGE   11
+
+     518              DW$29   .dwtag  DW_TAG_formal_parameter, DW_AT_type(*DW$T$11)
+     519              DW$30   .dwtag  DW_TAG_formal_parameter, DW_AT_type(*DW$T$33)
+     520                      .dwendtag DW$T$34
+     521              
+     522              
+     523              DW$T$36 .dwtag  DW_TAG_subroutine_type, DW_AT_type(*DW$T$10)
+     524                      .dwattr DW$T$36, DW_AT_language(DW_LANG_C)
+     525              DW$T$11 .dwtag  DW_TAG_base_type, DW_AT_name("unsigned int")
+     526                      .dwattr DW$T$11, DW_AT_encoding(DW_ATE_unsigned)
+     527                      .dwattr DW$T$11, DW_AT_byte_size(0x01)
+     528              DW$T$33 .dwtag  DW_TAG_pointer_type, DW_AT_type(*DW$T$11)
+     529                      .dwattr DW$T$33, DW_AT_address_class(0x16)
+     530              
+     531              DW$T$38 .dwtag  DW_TAG_subroutine_type, DW_AT_type(*DW$T$11)
+     532                      .dwattr DW$T$38, DW_AT_language(DW_LANG_C)
+     533              
+     534              DW$T$39 .dwtag  DW_TAG_subroutine_type, DW_AT_type(*DW$T$11)
+     535                      .dwattr DW$T$39, DW_AT_language(DW_LANG_C)
+     536              DW$31   .dwtag  DW_TAG_formal_parameter, DW_AT_type(*DW$T$11)
+     537                      .dwendtag DW$T$39
+     538              
+     539              
+     540              DW$T$40 .dwtag  DW_TAG_array_type, DW_AT_type(*DW$T$11)
+     541                      .dwattr DW$T$40, DW_AT_language(DW_LANG_C)
+     542                      .dwattr DW$T$40, DW_AT_byte_size(0x80)
+     543              DW$32   .dwtag  DW_TAG_subrange_type
+     544                      .dwattr DW$32, DW_AT_upper_bound(0x7f)
+     545                      .dwendtag DW$T$40
+     546              
+     547              DW$T$42 .dwtag  DW_TAG_typedef, DW_AT_name("settingsstruct"), DW_AT_type(*DW$T$20)
+     548                      .dwattr DW$T$42, DW_AT_language(DW_LANG_C)
+     549              DW$T$43 .dwtag  DW_TAG_typedef, DW_AT_name("loggingstruct"), DW_AT_type(*DW$T$21)
+     550                      .dwattr DW$T$43, DW_AT_language(DW_LANG_C)
+     551              DW$T$44 .dwtag  DW_TAG_typedef, DW_AT_name("eventlogvarsstruct"), DW_AT_type(*DW$T$22)
+     552                      .dwattr DW$T$44, DW_AT_language(DW_LANG_C)
+     553              DW$T$46 .dwtag  DW_TAG_typedef, DW_AT_name("eventlogstruct"), DW_AT_type(*DW$T$27)
+     554                      .dwattr DW$T$46, DW_AT_language(DW_LANG_C)
+     555              
+     556              DW$T$20 .dwtag  DW_TAG_structure_type
+     557                      .dwattr DW$T$20, DW_AT_name("tag_settingsstruct")
+     558                      .dwattr DW$T$20, DW_AT_byte_size(0x24)
+     559              DW$33   .dwtag  DW_TAG_member, DW_AT_type(*DW$T$11)
+     560                      .dwattr DW$33, DW_AT_name("watchdog"), DW_AT_symbol_name("_watchdog")
+     561                      .dwattr DW$33, DW_AT_data_member_location[DW_OP_plus_uconst 0x0]
+     562                      .dwattr DW$33, DW_AT_accessibility(DW_ACCESS_public)
+     563              DW$34   .dwtag  DW_TAG_member, DW_AT_type(*DW$T$11)
+     564                      .dwattr DW$34, DW_AT_name("ledflashflag"), DW_AT_symbol_name("_ledflashflag")
+     565                      .dwattr DW$34, DW_AT_data_member_location[DW_OP_plus_uconst 0x1]
+     566                      .dwattr DW$34, DW_AT_accessibility(DW_ACCESS_public)
+     567              DW$35   .dwtag  DW_TAG_member, DW_AT_type(*DW$T$11)
+     568                      .dwattr DW$35, DW_AT_name("updatesafe"), DW_AT_symbol_name("_updatesafe")
+     569                      .dwattr DW$35, DW_AT_data_member_location[DW_OP_plus_uconst 0x2]
+     570                      .dwattr DW$35, DW_AT_accessibility(DW_ACCESS_public)
+     571              DW$36   .dwtag  DW_TAG_member, DW_AT_type(*DW$T$11)
+     572                      .dwattr DW$36, DW_AT_name("tableconfigtype"), DW_AT_symbol_name("_tableconfigtype")
+TMS320C2000 COFF Assembler PC v4.1.3 Thu Aug 18 12:16:17 2016
+
+Tools Copyright (c) 1996-2006 Texas Instruments Incorporated
+logging.asm                                                          PAGE   12
+
+     573                      .dwattr DW$36, DW_AT_data_member_location[DW_OP_plus_uconst 0x3]
+     574                      .dwattr DW$36, DW_AT_accessibility(DW_ACCESS_public)
+     575              DW$37   .dwtag  DW_TAG_member, DW_AT_type(*DW$T$11)
+     576                      .dwattr DW$37, DW_AT_name("caltableconfigtype"), DW_AT_symbol_name("_caltableconfigtype")
+     577                      .dwattr DW$37, DW_AT_data_member_location[DW_OP_plus_uconst 0x4]
+     578                      .dwattr DW$37, DW_AT_accessibility(DW_ACCESS_public)
+     579              DW$38   .dwtag  DW_TAG_member, DW_AT_type(*DW$T$11)
+     580                      .dwattr DW$38, DW_AT_name("eventmsgid"), DW_AT_symbol_name("_eventmsgid")
+     581                      .dwattr DW$38, DW_AT_data_member_location[DW_OP_plus_uconst 0x5]
+     582                      .dwattr DW$38, DW_AT_accessibility(DW_ACCESS_public)
+     583              DW$39   .dwtag  DW_TAG_member, DW_AT_type(*DW$T$11)
+     584                      .dwattr DW$39, DW_AT_name("configoperationcomplete"), DW_AT_symbol_name("_configoperationcomplete")
+     585                      .dwattr DW$39, DW_AT_data_member_location[DW_OP_plus_uconst 0x6]
+     586                      .dwattr DW$39, DW_AT_accessibility(DW_ACCESS_public)
+     587              DW$40   .dwtag  DW_TAG_member, DW_AT_type(*DW$T$11)
+     588                      .dwattr DW$40, DW_AT_name("sdcarderr"), DW_AT_symbol_name("_sdcarderr")
+     589                      .dwattr DW$40, DW_AT_data_member_location[DW_OP_plus_uconst 0x7]
+     590                      .dwattr DW$40, DW_AT_accessibility(DW_ACCESS_public)
+     591              DW$41   .dwtag  DW_TAG_member, DW_AT_type(*DW$T$11)
+     592                      .dwattr DW$41, DW_AT_name("sderase"), DW_AT_symbol_name("_sderase")
+     593                      .dwattr DW$41, DW_AT_data_member_location[DW_OP_plus_uconst 0x8]
+     594                      .dwattr DW$41, DW_AT_accessibility(DW_ACCESS_public)
+     595              DW$42   .dwtag  DW_TAG_member, DW_AT_type(*DW$T$11)
+     596                      .dwattr DW$42, DW_AT_name("sdreinit"), DW_AT_symbol_name("_sdreinit")
+     597                      .dwattr DW$42, DW_AT_data_member_location[DW_OP_plus_uconst 0x9]
+     598                      .dwattr DW$42, DW_AT_accessibility(DW_ACCESS_public)
+     599              DW$43   .dwtag  DW_TAG_member, DW_AT_type(*DW$T$11)
+     600                      .dwattr DW$43, DW_AT_name("sdcardupdate"), DW_AT_symbol_name("_sdcardupdate")
+     601                      .dwattr DW$43, DW_AT_data_member_location[DW_OP_plus_uconst 0xa]
+     602                      .dwattr DW$43, DW_AT_accessibility(DW_ACCESS_public)
+     603              DW$44   .dwtag  DW_TAG_member, DW_AT_type(*DW$T$11)
+     604                      .dwattr DW$44, DW_AT_name("cardreadflag"), DW_AT_symbol_name("_cardreadflag")
+     605                      .dwattr DW$44, DW_AT_data_member_location[DW_OP_plus_uconst 0xb]
+     606                      .dwattr DW$44, DW_AT_accessibility(DW_ACCESS_public)
+     607              DW$45   .dwtag  DW_TAG_member, DW_AT_type(*DW$T$11)
+     608                      .dwattr DW$45, DW_AT_name("ignore"), DW_AT_symbol_name("_ignore")
+     609                      .dwattr DW$45, DW_AT_data_member_location[DW_OP_plus_uconst 0xc]
+     610                      .dwattr DW$45, DW_AT_accessibility(DW_ACCESS_public)
+     611              DW$46   .dwtag  DW_TAG_member, DW_AT_type(*DW$T$11)
+     612                      .dwattr DW$46, DW_AT_name("dcmode"), DW_AT_symbol_name("_dcmode")
+     613                      .dwattr DW$46, DW_AT_data_member_location[DW_OP_plus_uconst 0xd]
+     614                      .dwattr DW$46, DW_AT_accessibility(DW_ACCESS_public)
+     615              DW$47   .dwtag  DW_TAG_member, DW_AT_type(*DW$T$11)
+     616                      .dwattr DW$47, DW_AT_name("spiinuse"), DW_AT_symbol_name("_spiinuse")
+     617                      .dwattr DW$47, DW_AT_data_member_location[DW_OP_plus_uconst 0xe]
+     618                      .dwattr DW$47, DW_AT_accessibility(DW_ACCESS_public)
+     619              DW$48   .dwtag  DW_TAG_member, DW_AT_type(*DW$T$11)
+     620                      .dwattr DW$48, DW_AT_name("dcpeakhold"), DW_AT_symbol_name("_dcpeakhold")
+     621                      .dwattr DW$48, DW_AT_data_member_location[DW_OP_plus_uconst 0xf]
+     622                      .dwattr DW$48, DW_AT_accessibility(DW_ACCESS_public)
+     623              DW$49   .dwtag  DW_TAG_member, DW_AT_type(*DW$T$11)
+     624                      .dwattr DW$49, DW_AT_name("dcpause"), DW_AT_symbol_name("_dcpause")
+     625                      .dwattr DW$49, DW_AT_data_member_location[DW_OP_plus_uconst 0x10]
+     626                      .dwattr DW$49, DW_AT_accessibility(DW_ACCESS_public)
+     627              DW$50   .dwtag  DW_TAG_member, DW_AT_type(*DW$T$11)
+TMS320C2000 COFF Assembler PC v4.1.3 Thu Aug 18 12:16:17 2016
+
+Tools Copyright (c) 1996-2006 Texas Instruments Incorporated
+logging.asm                                                          PAGE   13
+
+     628                      .dwattr DW$50, DW_AT_name("mastermode"), DW_AT_symbol_name("_mastermode")
+     629                      .dwattr DW$50, DW_AT_data_member_location[DW_OP_plus_uconst 0x11]
+     630                      .dwattr DW$50, DW_AT_accessibility(DW_ACCESS_public)
+     631              DW$51   .dwtag  DW_TAG_member, DW_AT_type(*DW$T$11)
+     632                      .dwattr DW$51, DW_AT_name("updatescaling"), DW_AT_symbol_name("_updatescaling")
+     633                      .dwattr DW$51, DW_AT_data_member_location[DW_OP_plus_uconst 0x12]
+     634                      .dwattr DW$51, DW_AT_accessibility(DW_ACCESS_public)
+     635              DW$52   .dwtag  DW_TAG_member, DW_AT_type(*DW$T$11)
+     636                      .dwattr DW$52, DW_AT_name("forwardasternflag"), DW_AT_symbol_name("_forwardasternflag")
+     637                      .dwattr DW$52, DW_AT_data_member_location[DW_OP_plus_uconst 0x13]
+     638                      .dwattr DW$52, DW_AT_accessibility(DW_ACCESS_public)
+     639              DW$53   .dwtag  DW_TAG_member, DW_AT_type(*DW$T$11)
+     640                      .dwattr DW$53, DW_AT_name("initprogress"), DW_AT_symbol_name("_initprogress")
+     641                      .dwattr DW$53, DW_AT_data_member_location[DW_OP_plus_uconst 0x14]
+     642                      .dwattr DW$53, DW_AT_accessibility(DW_ACCESS_public)
+     643              DW$54   .dwtag  DW_TAG_member, DW_AT_type(*DW$T$11)
+     644                      .dwattr DW$54, DW_AT_name("dircountdown"), DW_AT_symbol_name("_dircountdown")
+     645                      .dwattr DW$54, DW_AT_data_member_location[DW_OP_plus_uconst 0x15]
+     646                      .dwattr DW$54, DW_AT_accessibility(DW_ACCESS_public)
+     647              DW$55   .dwtag  DW_TAG_member, DW_AT_type(*DW$T$11)
+     648                      .dwattr DW$55, DW_AT_name("slowdowncounter"), DW_AT_symbol_name("_slowdowncounter")
+     649                      .dwattr DW$55, DW_AT_data_member_location[DW_OP_plus_uconst 0x16]
+     650                      .dwattr DW$55, DW_AT_accessibility(DW_ACCESS_public)
+     651              DW$56   .dwtag  DW_TAG_member, DW_AT_type(*DW$T$11)
+     652                      .dwattr DW$56, DW_AT_name("slowdowncondition"), DW_AT_symbol_name("_slowdowncondition")
+     653                      .dwattr DW$56, DW_AT_data_member_location[DW_OP_plus_uconst 0x17]
+     654                      .dwattr DW$56, DW_AT_accessibility(DW_ACCESS_public)
+     655              DW$57   .dwtag  DW_TAG_member, DW_AT_type(*DW$T$11)
+     656                      .dwattr DW$57, DW_AT_name("slowdownlevel"), DW_AT_symbol_name("_slowdownlevel")
+     657                      .dwattr DW$57, DW_AT_data_member_location[DW_OP_plus_uconst 0x18]
+     658                      .dwattr DW$57, DW_AT_accessibility(DW_ACCESS_public)
+     659              DW$58   .dwtag  DW_TAG_member, DW_AT_type(*DW$T$11)
+     660                      .dwattr DW$58, DW_AT_name("alarmlevel"), DW_AT_symbol_name("_alarmlevel")
+     661                      .dwattr DW$58, DW_AT_data_member_location[DW_OP_plus_uconst 0x19]
+     662                      .dwattr DW$58, DW_AT_accessibility(DW_ACCESS_public)
+     663              DW$59   .dwtag  DW_TAG_member, DW_AT_type(*DW$T$11)
+     664                      .dwattr DW$59, DW_AT_name("slowdowndevlevel"), DW_AT_symbol_name("_slowdowndevlevel")
+     665                      .dwattr DW$59, DW_AT_data_member_location[DW_OP_plus_uconst 0x1a]
+     666                      .dwattr DW$59, DW_AT_accessibility(DW_ACCESS_public)
+     667              DW$60   .dwtag  DW_TAG_member, DW_AT_type(*DW$T$11)
+     668                      .dwattr DW$60, DW_AT_name("alarmdevlevel"), DW_AT_symbol_name("_alarmdevlevel")
+     669                      .dwattr DW$60, DW_AT_data_member_location[DW_OP_plus_uconst 0x1b]
+     670                      .dwattr DW$60, DW_AT_accessibility(DW_ACCESS_public)
+     671              DW$61   .dwtag  DW_TAG_member, DW_AT_type(*DW$T$11)
+     672                      .dwattr DW$61, DW_AT_name("cylinderalarmlevel"), DW_AT_symbol_name("_cylinderalarmlevel")
+     673                      .dwattr DW$61, DW_AT_data_member_location[DW_OP_plus_uconst 0x1c]
+     674                      .dwattr DW$61, DW_AT_accessibility(DW_ACCESS_public)
+     675              DW$62   .dwtag  DW_TAG_member, DW_AT_type(*DW$T$11)
+     676                      .dwattr DW$62, DW_AT_name("temperaturealarm"), DW_AT_symbol_name("_temperaturealarm")
+     677                      .dwattr DW$62, DW_AT_data_member_location[DW_OP_plus_uconst 0x1d]
+     678                      .dwattr DW$62, DW_AT_accessibility(DW_ACCESS_public)
+     679              DW$63   .dwtag  DW_TAG_member, DW_AT_type(*DW$T$11)
+     680                      .dwattr DW$63, DW_AT_name("temperatureslowdown"), DW_AT_symbol_name("_temperatureslowdown")
+     681                      .dwattr DW$63, DW_AT_data_member_location[DW_OP_plus_uconst 0x1e]
+     682                      .dwattr DW$63, DW_AT_accessibility(DW_ACCESS_public)
+TMS320C2000 COFF Assembler PC v4.1.3 Thu Aug 18 12:16:17 2016
+
+Tools Copyright (c) 1996-2006 Texas Instruments Incorporated
+logging.asm                                                          PAGE   14
+
+     683              DW$64   .dwtag  DW_TAG_member, DW_AT_type(*DW$T$19)
+     684                      .dwattr DW$64, DW_AT_name("anadebug"), DW_AT_symbol_name("_anadebug")
+     685                      .dwattr DW$64, DW_AT_data_member_location[DW_OP_plus_uconst 0x1f]
+     686                      .dwattr DW$64, DW_AT_accessibility(DW_ACCESS_public)
+     687              DW$65   .dwtag  DW_TAG_member, DW_AT_type(*DW$T$11)
+     688                      .dwattr DW$65, DW_AT_name("serialdebug"), DW_AT_symbol_name("_serialdebug")
+     689                      .dwattr DW$65, DW_AT_data_member_location[DW_OP_plus_uconst 0x21]
+     690                      .dwattr DW$65, DW_AT_accessibility(DW_ACCESS_public)
+     691              DW$66   .dwtag  DW_TAG_member, DW_AT_type(*DW$T$11)
+     692                      .dwattr DW$66, DW_AT_name("timerrunning"), DW_AT_symbol_name("_timerrunning")
+     693                      .dwattr DW$66, DW_AT_data_member_location[DW_OP_plus_uconst 0x22]
+     694                      .dwattr DW$66, DW_AT_accessibility(DW_ACCESS_public)
+     695              DW$67   .dwtag  DW_TAG_member, DW_AT_type(*DW$T$11)
+     696                      .dwattr DW$67, DW_AT_name("rpm"), DW_AT_symbol_name("_rpm")
+     697                      .dwattr DW$67, DW_AT_data_member_location[DW_OP_plus_uconst 0x23]
+     698                      .dwattr DW$67, DW_AT_accessibility(DW_ACCESS_public)
+     699                      .dwendtag DW$T$20
+     700              
+     701              
+     702              DW$T$21 .dwtag  DW_TAG_structure_type
+     703                      .dwattr DW$T$21, DW_AT_name("tag_loggingstruct")
+     704                      .dwattr DW$T$21, DW_AT_byte_size(0x01)
+     705              DW$68   .dwtag  DW_TAG_member, DW_AT_type(*DW$T$11)
+     706                      .dwattr DW$68, DW_AT_name("nothing"), DW_AT_symbol_name("_nothing")
+     707                      .dwattr DW$68, DW_AT_data_member_location[DW_OP_plus_uconst 0x0]
+     708                      .dwattr DW$68, DW_AT_accessibility(DW_ACCESS_public)
+     709                      .dwendtag DW$T$21
+     710              
+     711              
+     712              DW$T$22 .dwtag  DW_TAG_structure_type
+     713                      .dwattr DW$T$22, DW_AT_name("tag_eventlogvarsstruct")
+     714                      .dwattr DW$T$22, DW_AT_byte_size(0x03)
+     715              DW$69   .dwtag  DW_TAG_member, DW_AT_type(*DW$T$11)
+     716                      .dwattr DW$69, DW_AT_name("eventlogid"), DW_AT_symbol_name("_eventlogid")
+     717                      .dwattr DW$69, DW_AT_data_member_location[DW_OP_plus_uconst 0x0]
+     718                      .dwattr DW$69, DW_AT_accessibility(DW_ACCESS_public)
+     719              DW$70   .dwtag  DW_TAG_member, DW_AT_type(*DW$T$11)
+     720                      .dwattr DW$70, DW_AT_name("msgqueue"), DW_AT_symbol_name("_msgqueue")
+     721                      .dwattr DW$70, DW_AT_data_member_location[DW_OP_plus_uconst 0x1]
+     722                      .dwattr DW$70, DW_AT_accessibility(DW_ACCESS_public)
+     723              DW$71   .dwtag  DW_TAG_member, DW_AT_type(*DW$T$11)
+     724                      .dwattr DW$71, DW_AT_name("eventlogwrapflag"), DW_AT_symbol_name("_eventlogwrapflag")
+     725                      .dwattr DW$71, DW_AT_data_member_location[DW_OP_plus_uconst 0x2]
+     726                      .dwattr DW$71, DW_AT_accessibility(DW_ACCESS_public)
+     727                      .dwendtag DW$T$22
+     728              
+     729              
+     730              DW$T$27 .dwtag  DW_TAG_structure_type
+     731                      .dwattr DW$T$27, DW_AT_name("tag_eventlogstruct")
+     732                      .dwattr DW$T$27, DW_AT_byte_size(0x44)
+     733              DW$72   .dwtag  DW_TAG_member, DW_AT_type(*DW$T$11)
+     734                      .dwattr DW$72, DW_AT_name("eventid"), DW_AT_symbol_name("_eventid")
+     735                      .dwattr DW$72, DW_AT_data_member_location[DW_OP_plus_uconst 0x0]
+     736                      .dwattr DW$72, DW_AT_accessibility(DW_ACCESS_public)
+     737              DW$73   .dwtag  DW_TAG_member, DW_AT_type(*DW$T$23)
+TMS320C2000 COFF Assembler PC v4.1.3 Thu Aug 18 12:16:17 2016
+
+Tools Copyright (c) 1996-2006 Texas Instruments Incorporated
+logging.asm                                                          PAGE   15
+
+     738                      .dwattr DW$73, DW_AT_name("datetime"), DW_AT_symbol_name("_datetime")
+     739                      .dwattr DW$73, DW_AT_data_member_location[DW_OP_plus_uconst 0x1]
+     740                      .dwattr DW$73, DW_AT_accessibility(DW_ACCESS_public)
+     741              DW$74   .dwtag  DW_TAG_member, DW_AT_type(*DW$T$24)
+     742                      .dwattr DW$74, DW_AT_name("msgstring"), DW_AT_symbol_name("_msgstring")
+     743                      .dwattr DW$74, DW_AT_data_member_location[DW_OP_plus_uconst 0xa]
+     744                      .dwattr DW$74, DW_AT_accessibility(DW_ACCESS_public)
+     745              DW$75   .dwtag  DW_TAG_member, DW_AT_type(*DW$T$25)
+     746                      .dwattr DW$75, DW_AT_name("msgstring2"), DW_AT_symbol_name("_msgstring2")
+     747                      .dwattr DW$75, DW_AT_data_member_location[DW_OP_plus_uconst 0x22]
+     748                      .dwattr DW$75, DW_AT_accessibility(DW_ACCESS_public)
+     749              DW$76   .dwtag  DW_TAG_member, DW_AT_type(*DW$T$23)
+     750                      .dwattr DW$76, DW_AT_name("ackdatetime"), DW_AT_symbol_name("_ackdatetime")
+     751                      .dwattr DW$76, DW_AT_data_member_location[DW_OP_plus_uconst 0x31]
+     752                      .dwattr DW$76, DW_AT_accessibility(DW_ACCESS_public)
+     753              DW$77   .dwtag  DW_TAG_member, DW_AT_type(*DW$T$26)
+     754                      .dwattr DW$77, DW_AT_name("ackstring"), DW_AT_symbol_name("_ackstring")
+     755                      .dwattr DW$77, DW_AT_data_member_location[DW_OP_plus_uconst 0x3a]
+     756                      .dwattr DW$77, DW_AT_accessibility(DW_ACCESS_public)
+     757              DW$78   .dwtag  DW_TAG_member, DW_AT_type(*DW$T$11)
+     758                      .dwattr DW$78, DW_AT_name("newalarmeventflag"), DW_AT_symbol_name("_newalarmeventflag")
+     759                      .dwattr DW$78, DW_AT_data_member_location[DW_OP_plus_uconst 0x3f]
+     760                      .dwattr DW$78, DW_AT_accessibility(DW_ACCESS_public)
+     761              DW$79   .dwtag  DW_TAG_member, DW_AT_type(*DW$T$11)
+     762                      .dwattr DW$79, DW_AT_name("eventcodestatus"), DW_AT_symbol_name("_eventcodestatus")
+     763                      .dwattr DW$79, DW_AT_data_member_location[DW_OP_plus_uconst 0x40]
+     764                      .dwattr DW$79, DW_AT_accessibility(DW_ACCESS_public)
+     765              DW$80   .dwtag  DW_TAG_member, DW_AT_type(*DW$T$11)
+     766                      .dwattr DW$80, DW_AT_name("eventcode"), DW_AT_symbol_name("_eventcode")
+     767                      .dwattr DW$80, DW_AT_data_member_location[DW_OP_plus_uconst 0x41]
+     768                      .dwattr DW$80, DW_AT_accessibility(DW_ACCESS_public)
+     769              DW$81   .dwtag  DW_TAG_member, DW_AT_type(*DW$T$11)
+     770                      .dwattr DW$81, DW_AT_name("currentindex"), DW_AT_symbol_name("_currentindex")
+     771                      .dwattr DW$81, DW_AT_data_member_location[DW_OP_plus_uconst 0x42]
+     772                      .dwattr DW$81, DW_AT_accessibility(DW_ACCESS_public)
+     773              DW$82   .dwtag  DW_TAG_member, DW_AT_type(*DW$T$11)
+     774                      .dwattr DW$82, DW_AT_name("txalarmevents"), DW_AT_symbol_name("_txalarmevents")
+     775                      .dwattr DW$82, DW_AT_data_member_location[DW_OP_plus_uconst 0x43]
+     776                      .dwattr DW$82, DW_AT_accessibility(DW_ACCESS_public)
+     777                      .dwendtag DW$T$27
+     778              
+     779              
+     780              DW$T$23 .dwtag  DW_TAG_array_type, DW_AT_type(*DW$T$11)
+     781                      .dwattr DW$T$23, DW_AT_language(DW_LANG_C)
+     782                      .dwattr DW$T$23, DW_AT_byte_size(0x09)
+     783              DW$83   .dwtag  DW_TAG_subrange_type
+     784                      .dwattr DW$83, DW_AT_upper_bound(0x08)
+     785                      .dwendtag DW$T$23
+     786              
+     787              
+     788              DW$T$24 .dwtag  DW_TAG_array_type, DW_AT_type(*DW$T$11)
+     789                      .dwattr DW$T$24, DW_AT_language(DW_LANG_C)
+     790                      .dwattr DW$T$24, DW_AT_byte_size(0x18)
+     791              DW$84   .dwtag  DW_TAG_subrange_type
+     792                      .dwattr DW$84, DW_AT_upper_bound(0x17)
+TMS320C2000 COFF Assembler PC v4.1.3 Thu Aug 18 12:16:17 2016
+
+Tools Copyright (c) 1996-2006 Texas Instruments Incorporated
+logging.asm                                                          PAGE   16
+
+     793                      .dwendtag DW$T$24
+     794              
+     795              
+     796              DW$T$25 .dwtag  DW_TAG_array_type, DW_AT_type(*DW$T$11)
+     797                      .dwattr DW$T$25, DW_AT_language(DW_LANG_C)
+     798                      .dwattr DW$T$25, DW_AT_byte_size(0x0f)
+     799              DW$85   .dwtag  DW_TAG_subrange_type
+     800                      .dwattr DW$85, DW_AT_upper_bound(0x0e)
+     801                      .dwendtag DW$T$25
+     802              
+     803              
+     804              DW$T$26 .dwtag  DW_TAG_array_type, DW_AT_type(*DW$T$11)
+     805                      .dwattr DW$T$26, DW_AT_language(DW_LANG_C)
+     806                      .dwattr DW$T$26, DW_AT_byte_size(0x05)
+     807              DW$86   .dwtag  DW_TAG_subrange_type
+     808                      .dwattr DW$86, DW_AT_upper_bound(0x04)
+     809                      .dwendtag DW$T$26
+     810              
+     811              
+     812              DW$T$19 .dwtag  DW_TAG_structure_type
+     813                      .dwattr DW$T$19, DW_AT_byte_size(0x02)
+     814              DW$87   .dwtag  DW_TAG_member, DW_AT_type(*DW$T$11)
+     815                      .dwattr DW$87, DW_AT_name("enb"), DW_AT_symbol_name("_enb")
+     816                      .dwattr DW$87, DW_AT_data_member_location[DW_OP_plus_uconst 0x0]
+     817                      .dwattr DW$87, DW_AT_accessibility(DW_ACCESS_public)
+     818              DW$88   .dwtag  DW_TAG_member, DW_AT_type(*DW$T$11)
+     819                      .dwattr DW$88, DW_AT_name("chan"), DW_AT_symbol_name("_chan")
+     820                      .dwattr DW$88, DW_AT_data_member_location[DW_OP_plus_uconst 0x1]
+     821                      .dwattr DW$88, DW_AT_accessibility(DW_ACCESS_public)
+     822                      .dwendtag DW$T$19
+     823              
+     824              
+     825                      .dwattr DW$18, DW_AT_external(0x01)
+     826                      .dwattr DW$15, DW_AT_external(0x01)
+     827                      .dwattr DW$16, DW_AT_external(0x01)
+     828                      .dwattr DW$26, DW_AT_external(0x01)
+     829                      .dwattr DW$26, DW_AT_type(*DW$T$11)
+     830                      .dwattr DW$19, DW_AT_external(0x01)
+     831                      .dwattr DW$19, DW_AT_type(*DW$T$11)
+     832                      .dwattr DW$14, DW_AT_external(0x01)
+     833                      .dwattr DW$21, DW_AT_external(0x01)
+     834                      .dwattr DW$21, DW_AT_type(*DW$T$11)
+     835                      .dwattr DW$20, DW_AT_external(0x01)
+     836                      .dwattr DW$20, DW_AT_type(*DW$T$11)
+     837                      .dwattr DW$22, DW_AT_external(0x01)
+     838                      .dwattr DW$13, DW_AT_external(0x01)
+     839                      .dwattr DW$CU, DW_AT_language(DW_LANG_C)
+     840              
+     841              ;***************************************************************
+     842              ;* DWARF REGISTER MAP                                          *
+     843              ;***************************************************************
+     844              
+     845              DW$89   .dwtag  DW_TAG_assign_register, DW_AT_name("AL")
+     846                      .dwattr DW$89, DW_AT_location[DW_OP_reg0]
+     847              DW$90   .dwtag  DW_TAG_assign_register, DW_AT_name("AH")
+TMS320C2000 COFF Assembler PC v4.1.3 Thu Aug 18 12:16:17 2016
+
+Tools Copyright (c) 1996-2006 Texas Instruments Incorporated
+logging.asm                                                          PAGE   17
+
+     848                      .dwattr DW$90, DW_AT_location[DW_OP_reg1]
+     849              DW$91   .dwtag  DW_TAG_assign_register, DW_AT_name("PL")
+     850                      .dwattr DW$91, DW_AT_location[DW_OP_reg2]
+     851              DW$92   .dwtag  DW_TAG_assign_register, DW_AT_name("PH")
+     852                      .dwattr DW$92, DW_AT_location[DW_OP_reg3]
+     853              DW$93   .dwtag  DW_TAG_assign_register, DW_AT_name("AR0")
+     854                      .dwattr DW$93, DW_AT_location[DW_OP_reg4]
+     855              DW$94   .dwtag  DW_TAG_assign_register, DW_AT_name("XAR0")
+     856                      .dwattr DW$94, DW_AT_location[DW_OP_reg5]
+     857              DW$95   .dwtag  DW_TAG_assign_register, DW_AT_name("AR1")
+     858                      .dwattr DW$95, DW_AT_location[DW_OP_reg6]
+     859              DW$96   .dwtag  DW_TAG_assign_register, DW_AT_name("XAR1")
+     860                      .dwattr DW$96, DW_AT_location[DW_OP_reg7]
+     861              DW$97   .dwtag  DW_TAG_assign_register, DW_AT_name("AR2")
+     862                      .dwattr DW$97, DW_AT_location[DW_OP_reg8]
+     863              DW$98   .dwtag  DW_TAG_assign_register, DW_AT_name("XAR2")
+     864                      .dwattr DW$98, DW_AT_location[DW_OP_reg9]
+     865              DW$99   .dwtag  DW_TAG_assign_register, DW_AT_name("AR3")
+     866                      .dwattr DW$99, DW_AT_location[DW_OP_reg10]
+     867              DW$100  .dwtag  DW_TAG_assign_register, DW_AT_name("XAR3")
+     868                      .dwattr DW$100, DW_AT_location[DW_OP_reg11]
+     869              DW$101  .dwtag  DW_TAG_assign_register, DW_AT_name("AR4")
+     870                      .dwattr DW$101, DW_AT_location[DW_OP_reg12]
+     871              DW$102  .dwtag  DW_TAG_assign_register, DW_AT_name("XAR4")
+     872                      .dwattr DW$102, DW_AT_location[DW_OP_reg13]
+     873              DW$103  .dwtag  DW_TAG_assign_register, DW_AT_name("AR5")
+     874                      .dwattr DW$103, DW_AT_location[DW_OP_reg14]
+     875              DW$104  .dwtag  DW_TAG_assign_register, DW_AT_name("XAR5")
+     876                      .dwattr DW$104, DW_AT_location[DW_OP_reg15]
+     877              DW$105  .dwtag  DW_TAG_assign_register, DW_AT_name("AR6")
+     878                      .dwattr DW$105, DW_AT_location[DW_OP_reg16]
+     879              DW$106  .dwtag  DW_TAG_assign_register, DW_AT_name("XAR6")
+     880                      .dwattr DW$106, DW_AT_location[DW_OP_reg17]
+     881              DW$107  .dwtag  DW_TAG_assign_register, DW_AT_name("AR7")
+     882                      .dwattr DW$107, DW_AT_location[DW_OP_reg18]
+     883              DW$108  .dwtag  DW_TAG_assign_register, DW_AT_name("XAR7")
+     884                      .dwattr DW$108, DW_AT_location[DW_OP_reg19]
+     885              DW$109  .dwtag  DW_TAG_assign_register, DW_AT_name("SP")
+     886                      .dwattr DW$109, DW_AT_location[DW_OP_reg20]
+     887              DW$110  .dwtag  DW_TAG_assign_register, DW_AT_name("XT")
+     888                      .dwattr DW$110, DW_AT_location[DW_OP_reg21]
+     889              DW$111  .dwtag  DW_TAG_assign_register, DW_AT_name("T")
+     890                      .dwattr DW$111, DW_AT_location[DW_OP_reg22]
+     891              DW$112  .dwtag  DW_TAG_assign_register, DW_AT_name("ST0")
+     892                      .dwattr DW$112, DW_AT_location[DW_OP_reg23]
+     893              DW$113  .dwtag  DW_TAG_assign_register, DW_AT_name("ST1")
+     894                      .dwattr DW$113, DW_AT_location[DW_OP_reg24]
+     895              DW$114  .dwtag  DW_TAG_assign_register, DW_AT_name("PC")
+     896                      .dwattr DW$114, DW_AT_location[DW_OP_reg25]
+     897              DW$115  .dwtag  DW_TAG_assign_register, DW_AT_name("RPC")
+     898                      .dwattr DW$115, DW_AT_location[DW_OP_reg26]
+     899              DW$116  .dwtag  DW_TAG_assign_register, DW_AT_name("FP")
+     900                      .dwattr DW$116, DW_AT_location[DW_OP_reg27]
+     901              DW$117  .dwtag  DW_TAG_assign_register, DW_AT_name("DP")
+     902                      .dwattr DW$117, DW_AT_location[DW_OP_reg28]
+TMS320C2000 COFF Assembler PC v4.1.3 Thu Aug 18 12:16:17 2016
+
+Tools Copyright (c) 1996-2006 Texas Instruments Incorporated
+logging.asm                                                          PAGE   18
+
+     903              DW$118  .dwtag  DW_TAG_assign_register, DW_AT_name("SXM")
+     904                      .dwattr DW$118, DW_AT_location[DW_OP_reg29]
+     905              DW$119  .dwtag  DW_TAG_assign_register, DW_AT_name("PM")
+     906                      .dwattr DW$119, DW_AT_location[DW_OP_reg30]
+     907              DW$120  .dwtag  DW_TAG_assign_register, DW_AT_name("OVM")
+     908                      .dwattr DW$120, DW_AT_location[DW_OP_reg31]
+     909              DW$121  .dwtag  DW_TAG_assign_register, DW_AT_name("PAGE0")
+     910                      .dwattr DW$121, DW_AT_location[DW_OP_regx 0x20]
+     911              DW$122  .dwtag  DW_TAG_assign_register, DW_AT_name("AMODE")
+     912                      .dwattr DW$122, DW_AT_location[DW_OP_regx 0x21]
+     913              DW$123  .dwtag  DW_TAG_assign_register, DW_AT_name("IFR")
+     914                      .dwattr DW$123, DW_AT_location[DW_OP_regx 0x22]
+     915              DW$124  .dwtag  DW_TAG_assign_register, DW_AT_name("IER")
+     916                      .dwattr DW$124, DW_AT_location[DW_OP_regx 0x23]
+     917              DW$125  .dwtag  DW_TAG_assign_register, DW_AT_name("IER")
+     918                      .dwattr DW$125, DW_AT_location[DW_OP_regx 0x24]
+     919              DW$126  .dwtag  DW_TAG_assign_register, DW_AT_name("PSEUDO")
+     920                      .dwattr DW$126, DW_AT_location[DW_OP_regx 0x25]
+     921              DW$127  .dwtag  DW_TAG_assign_register, DW_AT_name("PSEUDOH")
+     922                      .dwattr DW$127, DW_AT_location[DW_OP_regx 0x26]
+     923              DW$128  .dwtag  DW_TAG_assign_register, DW_AT_name("VOL")
+     924                      .dwattr DW$128, DW_AT_location[DW_OP_regx 0x27]
+     925              DW$129  .dwtag  DW_TAG_assign_register, DW_AT_name("CIE_RETA")
+     926                      .dwattr DW$129, DW_AT_location[DW_OP_regx 0x28]
+     927                      .dwendtag DW$CU
+     928              
+
+No Assembly Errors, No Assembly Warnings

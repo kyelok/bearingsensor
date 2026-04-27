@@ -1,0 +1,65 @@
+; Code Composer Project File, Version 2.0 (do not modify or remove this line)
+
+[Project Settings]
+ProjectDir="D:\DEV\Amot\BearingWear\XTSW_V6_20\"
+ProjectType=Executable
+CPUFamily=TMS320C28XX
+Tool="Compiler"
+Tool="CustomBuilder"
+Tool="DspBiosBuilder"
+Tool="Linker"
+Config="Debug"
+Config="Release"
+
+[Source Files]
+Source="adc.c"
+Source="alarms.c"
+Source="common.c"
+Source="core.c"
+Source="crctable.c"
+Source="digout.c"
+Source="DSP281x_CodeStartBranch.asm"
+Source="fat.c"
+Source="fat_m.c"
+Source="globals.c"
+Source="logging.c"
+Source="man.c"
+Source="mancal.c"
+Source="mmc_mcf.c"
+Source="params.c"
+Source="pccli.c"
+Source="PCModBus.c"
+Source="port.c"
+Source="reprog.c"
+Source="sci.c"
+Source="sdcard.c"
+Source="setup.c"
+Source="slave485.c"
+Source="spi.c"
+Source="utils.c"
+Source="version.c"
+Source="wio.c"
+Source="wioprim.c"
+Source="bearingwear.cmd"
+
+["Debug" Settings]
+FinalBuildCmd=D:\DEV\Amot\BearingWear\XTSW_V6_20\CC3_3hexprogram.bat
+
+["Compiler" Settings: "Debug"]
+Options=-k -q -al -o1 -fr"D:\DEV\Amot\BearingWear\XTSW_V6_20\Debug" -d"LARGE_MODEL" -md -mf -ml -mn -mv2 -v28
+
+["Compiler" Settings: "Release"]
+Options=-q -o3 -fr"D:\DEV\Amot\BearingWear\XTSW_V6_20\Release" -d"LARGE_MODEL" -ml -v28
+
+["DspBiosBuilder" Settings: "Debug"]
+Options=-v28
+
+["DspBiosBuilder" Settings: "Release"]
+Options=-v28
+
+["Linker" Settings: "Debug"]
+Options=-q -c -heap400 -m".\Debug\BearingWear.map" -o".\Debug\BearingWear.out" -stack450 -w -x
+
+["Linker" Settings: "Release"]
+Options=-q -c -m".\Release\BearingWear.map" -o".\Release\BearingWear.out" -w -x
+

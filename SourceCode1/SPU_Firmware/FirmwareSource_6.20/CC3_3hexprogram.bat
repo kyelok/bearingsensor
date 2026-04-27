@@ -1,0 +1,1 @@
+C:\CCStudio_v3.3\C2000\cgtools\bin\hex2000 D:\DEV\Amot\BearingWear\XTSW_V6_20\debug\bearingwear.out -sci8 -a -boot

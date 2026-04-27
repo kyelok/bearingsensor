@@ -1,0 +1,33 @@
+﻿<UserControl x:Class="XTS.Controls.NavigationButton"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="88" d:DesignWidth="88">
+    
+    <Grid x:Name="LayoutRoot" Background="Transparent" Width="88" Height="88">
+        <Button x:Name="navButton" Height="88" Style="{StaticResource ButtonStyleAMOT75Opacity}" Width="88" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top">
+            <Button.Background>
+                <SolidColorBrush Color="{Binding ButtonBackground}"/>
+            </Button.Background>
+            <Button.Foreground>
+                <SolidColorBrush Color="{StaticResource ColorAMOTText}"/>
+            </Button.Foreground>
+            
+            <Grid>
+
+                <Path x:Name="Image" Data="{Binding Icon}" Margin="12,8,12,24" Stretch="Fill" UseLayoutRounding="False" HorizontalAlignment="Center" VerticalAlignment="Center" StrokeThickness="3">
+                    <Path.Fill>
+                        <SolidColorBrush Color="{Binding IconFillColor}" />
+                    </Path.Fill>
+                    <Path.Stroke>
+                        <SolidColorBrush Color="{Binding IconStrokeColor}" />
+                    </Path.Stroke>
+                </Path>
+
+                <TextBlock Text="{Binding Text}" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontSize="10.667" Margin="2,0,0,0" d:LayoutOverrides="HorizontalAlignment"/>
+            </Grid>
+        </Button>
+    </Grid>
+</UserControl>

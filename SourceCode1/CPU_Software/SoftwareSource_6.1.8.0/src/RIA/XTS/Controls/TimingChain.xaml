@@ -1,0 +1,46 @@
+﻿<UserControl
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
+	mc:Ignorable="d"
+	x:Class="XTS.Controls.TimingChain"
+	d:DesignWidth="70" d:DesignHeight="706" Height="706">
+
+  <Grid x:Name="LayoutRoot">
+        <Grid.RowDefinitions>
+    		<RowDefinition Height="88"/>
+    		<RowDefinition Height="100"/>
+    		<RowDefinition/>
+    		<RowDefinition Height="22"/>
+    	</Grid.RowDefinitions>
+    <Rectangle Grid.Row="2" Grid.RowSpan="2" Margin="-0.5,0">
+  		<Rectangle.Fill>
+  			<SolidColorBrush Color="{StaticResource ColorAMOTEngineBlock}"/>
+  		</Rectangle.Fill>
+  	</Rectangle>
+  	<Grid Grid.Row="2">
+  		<Rectangle Margin="0,0,0,107" StrokeThickness="0.5" Height="20" VerticalAlignment="Bottom" Grid.Row="1">
+  			<Rectangle.Fill>
+  				<LinearGradientBrush EndPoint="0.5,0" StartPoint="0.5,1">
+  					<GradientStop Color="#FF606060" />
+  					<GradientStop Color="White" Offset="0.65" />
+  				</LinearGradientBrush>
+  			</Rectangle.Fill>
+  		</Rectangle>
+  		<Grid HorizontalAlignment="Center" Width="30" Grid.RowSpan="3">
+  			<Rectangle Margin="6,0,6,40" Stroke="#FF888A85" StrokeThickness="0.5" Height="160" VerticalAlignment="Bottom">
+  				<Rectangle.Fill>
+  					<ImageBrush Stretch="None" ImageSource="/XTS;component/Resources/BrushedMetalBack.png" />
+  				</Rectangle.Fill>
+  			</Rectangle>
+  			<sdk:Label Content="{Binding ResourceStrings.XTSStringTimingChainBox, Source={StaticResource LocalizedResources}}" FontWeight="Bold" Margin="-80,0,-80,110" RenderTransformOrigin="0.5,0.5" UseLayoutRounding="False" d:LayoutRounding="Auto" VerticalAlignment="Bottom" HorizontalAlignment="Center" Width="130">
+  				<sdk:Label.RenderTransform>
+  					<CompositeTransform Rotation="-90" />
+  				</sdk:Label.RenderTransform>
+  			</sdk:Label>
+  		</Grid>
+  	</Grid>
+  </Grid>
+</UserControl>

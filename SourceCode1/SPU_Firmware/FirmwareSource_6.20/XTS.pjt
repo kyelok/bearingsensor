@@ -1,0 +1,155 @@
+;Codewright Project File (do not remove or modify this line)
+[State]
+SysSetCwd='C:\Dev\Amot\BearingWear\DSPV1_5'
+SrchSetFlags=0x0606684b
+SrchSetAgainFlags=0x00066043,0
+SrchSetAgainFlags=0x0206604b,1
+FileSortMode=0x0
+_StateHistory=FILELIST,'C:\Dev\Amot\BearingWear\DSPV1_5\man.c','C:\Dev\Amot\BearingWear\DSPV1_5\adc.c','C:\Dev\Amot\BearingWear\DSPV1_5\logging.c','C:\Dev\Amot\BearingWear\DSPV1_5\wio.c','C:\Dev\Amot\BearingWear\DSPV1_5\setup.c','C:\Dev\Amot\BearingWear\DSPV1_5\pccli.c','C:\Dev\Amot\BearingWear\DSPV1_5\reprog.c','C:\Dev\Amot\BearingWear\DSPV1_5\mancal.c','C:\Dev\Amot\BearingWear\DSPV1_5\version.c'
+_StateHistory=SEARCH,'PAGEPROGRAM_OPCODE','8402','29-Oct','Oct','calibration.roughnumpoints','oct','finecur','FineCurveCal(','finecurvecal(','!= 0)'
+_StateHistory=REPLACE,'DeselectSPI','noisefilterLOAD','ClearAlarmListandEventLog','.','','//currently not ignoring the next pulse train due to upddating the sd card','deltarpmprev','//AJB 19-Aug-10','AJB 19-Aug-10','tempval'
+_StateHistory=EDITFILE,'C:\Dev\Amot\BearingWear\DSPV1_5\Debug\BearingWear.map','C:\Dev\Amot\BearingWear\DSPV1_5\Debug\pccli.lst','C:\Dev\Amot\BearingWear\DSPV1_5\Debug\reprog.lst','C:\Dev\Amot\BearingWear\DSPBoot\DSPBoot.psp','C:\Dev\Amot\BearingWear\DSPV1_5\Debug\BearingWear.map','C:\Dev\EECPLC\BMS\DSP\EECPLC.psp','C:\Dev\PriorClave\TactrolDSP\Tactrol.psp','C:\Dev\Amot\BearingWear\DSPV1_5\Debug\BearingWear.map','C:\Dev\Amot\BearingWear\DSPV1_5\pcmodbus.bak','C:\Dev\Amot\BearingWear\DSPV1_5\utils.asm'
+_StateHistory=FFIND,'oor('
+_StateHistory=FGREP,'alarmlevelsingle','event','LogEvent','wiosettings','wiosettings.hysteresis','EraseSPIFlash','CheckEraseProgError','ProgramCheckFunc','CheckSPIBusy','PAGEPROGRAM_OPCODE'
+_StateHistory=GREPSCOPE,'*.h','*.*','*.c,*.h','*.c','*.c;*.h'
+_StateHistory=FFINDDIR,'C:\Dev\Amot\BearingWear\DSPV1_5\Debug'
+_StateHistory=FGREPDIR,'C:\Dev\Amot\BearingWear\DSP\Debug','C:\Documents and Settings\ANDREW\Desktop','C:\Dev\AQF\Monitor\DSP','C:\Dev\Amot\BearingWear\DSP','C:\Dev\Amot\BearingWear\DSPV1_5\\','C:\Dev\Amot\BearingWear\DSPBoot','C:\Dev\EECPLC\BMS\DSP','C:\Dev\PriorClave\TactrolDSP','C:\Dev\Amot\BearingWear\DSPV1_5\Debug','C:\Dev\Amot\BearingWear\DSPV1_5'
+
+[ProjInit]
+ConfigSetExtMode=2
+ProjSetConfigFlags=0x04110940
+
+[Compiler]
+TagSetFile=''
+BrowseSetFile=''
+CompilerNewExt=.htm
+CompilerNewExt=.pas
+CompilerNewExt=.ini
+CompilerNewExt=.html
+CompilerNewExt=.txt
+CompilerNewExt=.java
+TagSetCmd='"${HOME}${WTAGS}" -oc -d -t"${TAGFILE}.tag" -p"${TAGFILE}.ptg"',0x8000060
+
+[VersionControl:PVCS]
+VCSSetCmd=VCS_CHECKIN_ID,'put -n -T@"%Q" -M@"%Q" "%b%e"',0x8000040
+VCSSetCmd=VCS_CHECKINLOCK_ID,'put -n -T@"%Q" -M@"%Q" -l "%b%e"',0x8000040
+VCSSetCmd=VCS_CHECKOUT_ID,'get -y "%b%e"',0x8000040
+VCSSetCmd=VCS_CHECKOUTLOCK_ID,'SysSetCwd='C:\Dev\Amot\BearingWear\DSPV1_5'
+SrchSetFlags=0x0606684b
+SrchSetAgainFlags=0x00066043,0
+SrchSetAgainFlags=0x02066047,1
+FileSortMode=0x0
+_StateHistory=FILELIST,'C:\Dev\Amot\BearingWear\DSPV1_5\pccli.c','C:\Dev\Amot\BearingWear\DSPV1_5\common.c','C:\Dev\Amot\BearingWear\DSPV1_5\fat_m.c','C:\Dev\Amot\BearingWear\DSPV1_5\mmc_mcf.c','C:\Dev\Amot\BearingWear\DSPV1_5\mancal.c','C:\Dev\Amot\BearingWear\DSPV1_5\compensate.c','C:\Dev\Amot\BearingWear\DSPV1_5\spi.c','C:\Dev\Amot\BearingWear\DSPV1_5\Debug\BearingWear.map','C:\Dev\Amot\BearingWear\DSPV1_5\PCModBus.c'
+_StateHistory=SEARCH,'modbuscmdbufptr','ModbusParseCmd','SendResponse','NormaliseandFilter','inputs.scale.chan','inputs.scale.peakoffset','inputs.flags.failure','ProximityScaling','DCMode','FAT32_CS'
+_StateHistory=REPLACE,'/'
+_StateHistory=EDITFILE,'C:\Dev\Amot\BearingWear\DSPV1_5\Debug\BearingWear.map'
+_StateHistory=FGREP,'inputstruct','inputs.scaledrawresults.chan','inputs.scaledrawresults','currentcharcount','modbuscmdbuf','NormaliseandFilter','inputs.scale.chan','inputs.scale.peakoffset','inputs.flags.failure','FAT32_CS'
+_StateHistory=GREPSCOPE,'*.*','*.h','*.c,*.h','*.c;*.h'
+_StateHistory=FGREPDIR,'C:\Dev\Amot\BearingWear\DSPV1_5\Debug'
+
+get -y -l "%b%e"',0x8000040
+VCSSetCmd=VCS_CHECKLOCK_ID,'vcs -y -l "%b%e"',0x8000040
+VCSSetCmd=VCS_CHECKUNLOCK_ID,'vcs -y -u "%b%e"',0x8000040
+VCSSetCmd=VCS_CHECKLABEL_ID,'vcs -y -v"${VCSLABEL}" "%b%e"',0x8000040
+VCSSetCmd=VCS_CHECKLOG_ID,'vlog "%b%e"',0x8000040
+VCSSetCmd=VCS_CHECKPROP_ID,'vlog -b "%b%e"',0x8000040
+VCSSetCmd=VCS_CHECKDIFF_ID,'vdiff -r "%b%e"',0x8000040
+VCSSetCmd=VCS_CHECKMENU_ID,'pvcsvmwn',0x8000000
+VCSSetCmd=VCS_ADD_ID,'vcs -i -t@"%Q" "%b%e"',0x8000040
+VCSSetCmd=VCS_REMOVE_ID,'del /f "%b%{??v|___}e"',0x8000040
+
+[Files]
+.\reprog.h
+.\utils.c
+.\setup.c
+.\mmc_mcf.h
+.\PCModBus.c
+.\alarms.c
+.\mancal.h
+.\chkdsk.c
+.\define.h
+.\wio.h
+.\version.h
+.\common.c
+.\utils.h
+.\core.c
+.\alarms.h
+.\man.h
+.\port.c
+.\test.h
+.\fat_m.h
+.\globals.h
+.\digout.h
+.\crctable.h
+.\crctable.c
+.\version.c
+.\pccli.c
+.\man.c
+.\pcmodbus.h
+.\spi.c
+.\params.c
+.\common.h
+.\test.c
+.\adc.c
+.\sdcard.h
+.\slave485.c
+.\fat_lfn.c
+.\fat.h
+.\logging.h
+.\wioprim.h
+.\slave485.h
+.\flashprim.h
+.\digout.c
+.\globals.c
+.\filter.h
+.\modbusmap.h
+.\chkdsk.h
+.\spi.h
+.\wioprim.c
+.\reprog.c
+.\params.h
+.\compensate.h
+.\core.h
+.\fat.c
+.\pccli.h
+.\mancal.c
+.\mmc_mcf.c
+.\fwerr.h
+.\wio.c
+.\port.h
+.\sci.h
+.\logging.c
+.\adc.h
+.\bearingwear.cmd
+.\sdcard.c
+.\flashprim.c
+.\fat_m.c
+.\setup.h
+.\udefs.h
+.\sci.c
+CWSYNC.INI, KmapAssign_AppBasic, FALSE )
+
+[LibPreLoad]
+
+[Editor]
+TipOfDay=0,6
+_RestoreSysFlags=0x00010001, 0xffffffff, 1
+;Use for multiple MVB files -->HelpSetDefault=0,1,'iv2tool /k ${KEYWORD}','MSIN','$(MVBFILE)','KeywordLookup(`${KEYWORD}\')'
+HelpSetDefault=0,1,'','MSIN','vcbks40.mvb','KeywordLookup(`${KEYWORD}\')'
+EditSetPath=
+_StateHistory=XVCS,RCS,TLIB,PVCS,SourceSafe
+
+[Colors]
+_RestoreViewSetup='Plum (16-bit)',0,'Fixedsys',-13,0,49,400,0,6,8,8,16,16,40,16,1048584,6,8,10,0,80,0,0,182,167,187,46,164,126,176,8224,0,8388608,8421376,32768,128,8388736,13543111,8421504,4210752,16711808,13160665,65280,255,12632256,65535,16777215,0,8388608,8421376,32768,128,8388736,13543111,9078936,4210752,4073022,13160665,65280,255,12632256,65535,16777215,160,4208,419,677,172,162,93,93,224,93,167,4192,157,169,172,172,172,172,172,0,0,164,161,169,172,673,673,672,674,673,673,673,167,167,167,167,167,167,167,167,208,208,212,79,0,159,209,220,217,112,14,15,249,252,240,0
+
+[Tools]
+ToolDeleteList 
+ToolAddCmd='$_custom_tool_$_1','API Database Editor',1342177312,'cwtedit.exe',0,'',0,'',0,'',0,'',0,'','','','',''
+T			oolAddCmd='$_custom_tool_$_2','Paint',1342177312,'pbrush.exe',0,'',0,'',0,'',0,'',0,'','','','',''
+_RestoreView		Setup='Gray Day',0,'Fixedsys',-13,0,49,400,0,6,8,8,16,16,40,16,1048584,6,8,10,0,80,0,0,182,167,187,46,164,126,176,8224,0,8388608,8421376,32768,128,8388736,328
+									
+											
+
+													
+
+														

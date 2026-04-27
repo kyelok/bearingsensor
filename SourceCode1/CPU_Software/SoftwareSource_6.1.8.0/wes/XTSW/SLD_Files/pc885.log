@@ -1,0 +1,236 @@
+Target Analyzer Probe v2.00.1500.0
+
+Copyright (C) Microsoft Corporation 2001. All rights reserved.
+
+Category: ACPI
+
+	Device: ACPI Fixed Feature Button
+	Device: Intel Processor
+	Device: Intel(R) 82802 Firmware Hub Device
+	Device: Programmable interrupt controller
+	Device: System timer
+	Device: Direct memory access controller
+	Device: Standard 101/102-Key or Microsoft Natural PS/2 Keyboard
+	Device: Printer Port
+	Device: Communications Port
+	Device: Communications Port
+	Device: Communications Port
+	Device: Communications Port
+	Device: System speaker
+	Device: PCI bus
+	Device: System CMOS/real time clock
+	Device: System board
+	Device: Motherboard resources
+	Device: Motherboard resources
+	Device: Motherboard resources
+	Device: Motherboard resources
+	Device: Motherboard resources
+	Device: Numeric data processor
+	Device: ACPI Power Button
+	Device: Microsoft PS/2 Mouse
+
+Category: ACPI_HAL
+
+	Device: Microsoft ACPI-Compliant System
+
+Category: DISPLAY
+
+	Device: Default Monitor
+	Device: Default Monitor
+	Device: Default Monitor
+	Device: Digital Flat Panel (1024x768)
+	Device: Digital Flat Panel (1024x768)
+	Device: Digital Flat Panel (1024x768)
+
+Category: FTDIBUS
+
+	Device: USB Serial Port
+	Device: USB Serial Port
+
+Category: HID
+
+	Device: Microsoft USB Wheel Mouse Optical
+	Device: HID-compliant mouse
+	Device: Sejin USB Keyboard
+	Device: APC Battery BackUP
+	Device: HID Keyboard Device
+	Device: HID-compliant device
+	Device: HID-compliant consumer control device
+	Device: HID-compliant device
+	Device: HID-compliant device
+
+Category: HTREE
+
+
+Category: IDE
+
+	Device: Disk drive
+	Device: Disk drive
+
+Category: ISAPNP
+
+	Device: ISAPNP Read Data Port
+
+Category: LPTENUM
+
+	Device: Printer Port Logical Interface
+
+Category: PCI
+
+	Device: Realtek RTL8169/8110 Family Gigabit Ethernet NIC
+	Device: Realtek RTL8169/8110 Family Gigabit Ethernet NIC
+	Device: Realtek RTL8169/8110 Family Gigabit Ethernet NIC
+	Device: Intel(R) 82801 PCI Bridge - 244E
+	Device: Intel(R) 6300ESB LPC Interface Controller - 25A1
+	Device: Intel(R) 6300ESB Ultra ATA Storage Controller - 25A2
+	Device: Intel(R) 6300ESB Ultra ATA Storage/SATA Controller - 25A3
+	Device: Intel(R) 6300ESB SMBus Controller - 25A4
+	Device: Realtek AC'97 Audio
+	Device: Intel(R) 6300ESB USB Universal Host Controller - 25A9
+	Device: Intel(R) 6300ESB USB Universal Host Controller - 25AA
+	Device: Intel(R) 6300ESB Watchdog Timer - 25AB
+	Device: Intel(R) 6300ESB I/O Advanced Programmable Interrupt Controller - 25AC
+	Device: Intel(R) 6300ESB USB2 Enhanced Host Controller - 25AD
+	Device: Intel(R) 6300ESB 64-bit PCI-X Bridge - 25AE
+	Device: Intel(R) 82852/82855 GM/GME/PM/GMV to Processor I/O Controller - 3580
+	Device: Intel(R) 82852/82855 GM/GME/PM/GMV Processor to AGP Controller - 3581
+	Device: Intel(R) 82852/82855 GM/GME Graphics Controller
+	Device: Intel(R) 82852/82855 GM/GME Graphics Controller
+	Device: Intel(R) 82852/82855 GM/GME/PM/GMV to Processor I/O Controller - 3584
+	Device: Intel(R) 82852/82855 GM/GME/PM/GMV to Processor I/O Controller - 3585
+
+Category: PCIIDE
+
+	Device: Primary IDE Channel
+	Device: Secondary IDE Channel
+	Device: Primary IDE Channel
+	Device: Secondary IDE Channel
+
+Category: PnP
+
+	Device: MicroTouch Serial Touch Screen
+	Device: MicroTouch Serial Touch Screen
+	Device: 3M_Touch_Systems_MicroTouch_03
+	Device: MicroTouch Serial Touch Screen
+	Device: MicroTouch Serial Touch Screen
+	Device: MicroTouch Serial Touch Screen
+
+Category: Root
+
+	Device: COM1
+	Device: COM2
+	Device: COM3
+	Device: COM4
+	Device: ACPI Uniprocessor PC
+	Device: Microsoft Composite Battery
+	Device: Logical Disk Manager
+	Device: Volume Manager
+	Device: Audio Codecs
+	Device: Legacy Audio Drivers
+	Device: Media Control Devices
+	Device: Legacy Video Capture Devices
+	Device: Video Codecs
+	Device: WAN Miniport (L2TP)
+	Device: WAN Miniport (IP)
+	Device: WAN Miniport (PPPOE)
+	Device: WAN Miniport (PPTP)
+	Device: Packet Scheduler Miniport
+	Device: Packet Scheduler Miniport
+	Device: Packet Scheduler Miniport
+	Device: Packet Scheduler Miniport
+	Device: Direct Parallel
+	Device: Terminal Server Device Redirector
+	Device: Terminal Server Keyboard Driver
+	Device: Terminal Server Mouse Driver
+	Device: Plug and Play Software Device Enumerator
+	Device: Microcode Update Device
+	Device: Microsoft System Management BIOS Driver
+	Device: MicroTouch Serial Bus Enumerator
+
+Category: Serenum
+
+	Device: Microsoft Serial Mouse
+
+Category: STORAGE
+
+	Device: Generic volume
+	Device: Generic volume
+	Device: Generic volume
+	Device: Generic volume
+	Device: Generic volume
+	Device: Generic volume
+	Device: Generic volume
+	Device: Generic volume
+	Device: Generic volume
+	Device: Generic volume
+	Device: STORAGE\Volume
+	Device: STORAGE\Volume
+	Device: Generic volume
+	Device: Generic volume
+	Device: Generic volume
+	Device: Generic volume
+
+Category: SW
+
+	Device: Microsoft Kernel Audio Splitter
+	Device: Microsoft Kernel Acoustic Echo Canceller
+	Device: Microsoft Kernel GS Wavetable Synthesizer
+	Device: Microsoft Kernel DLS Synthesizer
+	Device: Microsoft Streaming Service Proxy
+	Device: Microsoft Streaming Clock Proxy
+	Device: Microsoft Kernel System Audio Device
+	Device: Microsoft Kernel Wave Audio Mixer
+	Device: Microsoft WINMM WDM Audio Compatibility Driver
+	Device: Microsoft Streaming Quality Manager Proxy
+	Device: RAS Async Adapter
+	Device: Microsoft Kernel DRM Audio Descrambler
+
+Category: USB
+
+	Device: USB Root Hub
+	Device: USB Root Hub
+	Device: USB Root Hub
+	Device: Unknown Device
+	Device: Unknown Device
+	Device: USB Mass Storage Device
+	Device: USB Mass Storage Device
+	Device: USB Serial Converter
+	Device: USB Serial Converter
+	Device: USB Mass Storage Device
+	Device: Microsoft USB Wheel Mouse Optical
+	Device: USB Human Interface Device
+	Device: Sejin USB Keyboard
+	Device: American Power Conversion USB UPS
+	Device: USB Mass Storage Device
+	Device: USB Mass Storage Device
+	Device: USB Mass Storage Device
+	Device: USB Composite Device
+	Device: USB Human Interface Device
+	Device: USB Human Interface Device
+	Device: USB Composite Device
+	Device: USB Mass Storage Device
+	Device: USB Human Interface Device
+	Device: USB Mass Storage Device
+	Device: USB Mass Storage Device
+	Device: USB Mass Storage Device
+	Device: USB Mass Storage Device
+	Device: USB Mass Storage Device
+	Device: USB Mass Storage Device
+
+Category: USBSTOR
+
+	Device: CD-ROM Drive
+	Device: CD-ROM Drive
+	Device: Disk drive
+	Device: Disk drive
+	Device: Disk drive
+	Device: Disk drive
+	Device: Disk drive
+	Device: Disk drive
+	Device: Disk drive
+	Device: Disk drive
+	Device: Disk drive
+	Device: Disk drive
+	Device: Disk drive
+
+PMQ file successfully created.

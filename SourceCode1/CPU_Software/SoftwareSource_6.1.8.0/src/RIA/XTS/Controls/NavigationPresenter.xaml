@@ -1,0 +1,40 @@
+﻿<UserControl x:Class="XTS.Controls.NavigationPresenter"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="453" Width="96" Loaded="NavigationPresenter_Loaded">
+    
+    <Grid x:Name="LayoutRoot" Background="Transparent">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="35" />
+            <RowDefinition Height="380"/>
+            <RowDefinition Height="35"/>
+        </Grid.RowDefinitions>
+
+        <Button Name="Up" Grid.Row="0" Height="27" Style="{StaticResource ButtonStyleAMOTNavigationUp}" Click="Up_Click" Margin="8,0">
+        	<Button.Background>
+        		<SolidColorBrush Color="{StaticResource ColorAMOTButton}"/>
+        	</Button.Background>
+        	<Button.Foreground>
+        		<SolidColorBrush Color="{StaticResource ColorAMOTText}"/>
+        	</Button.Foreground>
+        </Button>
+
+        <ListBox Grid.Row="1" Height="384" Name="ItemList" Background="Transparent" ItemsSource="{Binding MenuItems, Mode=OneWay}" ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Hidden" BorderBrush="Transparent"/>
+
+
+        <Button Name="Down" Grid.Row="2" Height="27" Style="{StaticResource ButtonStyleAMOTNavigationDown}" Click="Down_Click" Margin="8,0" >
+        	<Button.Background>
+        		<SolidColorBrush Color="{StaticResource ColorAMOTButton}"/>
+        	</Button.Background>
+        	<Button.Foreground>
+        		<SolidColorBrush Color="{StaticResource ColorAMOTText}"/>
+        	</Button.Foreground>
+        </Button>
+        
+        
+
+    </Grid>
+</UserControl>

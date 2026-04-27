@@ -1,0 +1,67 @@
+﻿<UserControl x:Class="RadCartesianChartDemo.MainPage"
+		xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+		xmlns:chartView="clr-namespace:Telerik.Windows.Controls.ChartView;assembly=Telerik.Windows.Controls.Chart"
+		mc:Ignorable="d" d:DesignWidth="811" d:DesignHeight="566">
+	<Grid x:Name="LayoutRoot">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="200" />
+        </Grid.ColumnDefinitions>
+        <telerik:RadCartesianChart x:Name="xCartesianChart" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0,0,0,100">
+
+          <telerik:RadCartesianChart.Grid>
+            <telerik:CartesianChartGrid MajorLinesVisibility="XY" MajorXLineDashArray="10,5" MajorXLinesRenderMode="All" />
+          </telerik:RadCartesianChart.Grid>
+
+          <telerik:RadCartesianChart.VerticalAxis>
+            <telerik:LinearAxis x:Name="YAxis1" Title="Actual" RangeExtendDirection="None" Minimum="0" Maximum="10" MajorStep="5" />
+          </telerik:RadCartesianChart.VerticalAxis>
+
+          <telerik:RadCartesianChart.HorizontalAxis>
+					<telerik:DateTimeContinuousAxis x:Name="DateCategory" LabelFitMode="MultiLine" Title="Date/Time" LabelFormat="HH:mm:ss&#x0a;dd MMM yyyy"
+												   MajorStepUnit="Minute"  MajorStep="1440" PlotMode="OnTicks" Maximum="01/10/2012 00:00:00" Minimum="01/01/2012 00:00:00" />
+          </telerik:RadCartesianChart.HorizontalAxis>
+
+        </telerik:RadCartesianChart>
+        <StackPanel VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,4,4,0">
+            <TextBlock TextWrapping="Wrap" Text="Axis Bounds:" VerticalAlignment="Center"/>
+            <StackPanel HorizontalAlignment="Left" Height="32" Orientation="Horizontal">
+        		<TextBlock TextWrapping="Wrap" Text="x1:" VerticalAlignment="Center"/>
+        		<TextBox x:Name="TextBoxXMin" HorizontalAlignment="Left" Margin="4" TextWrapping="Wrap" Text="01/01/2012" Width="128"/>
+        		<TextBlock TextWrapping="Wrap" Text="x2:" VerticalAlignment="Center"/>
+        		<TextBox x:Name="TextBoxXMax" Margin="4" TextWrapping="Wrap" Text="10/01/2012" HorizontalAlignment="Left" Width="128"/>
+        	</StackPanel>
+        	<StackPanel HorizontalAlignment="Left" Height="32" Orientation="Horizontal">
+        		<TextBlock TextWrapping="Wrap" Text="y1:" VerticalAlignment="Center"/>
+        		<TextBox x:Name="TextBoxYMin" HorizontalAlignment="Left" Margin="4" TextWrapping="Wrap" Text="0" Width="128"/>
+        		<TextBlock TextWrapping="Wrap" Text="y2:" VerticalAlignment="Center"/>
+        		<TextBox x:Name="TextBoxYMax" Margin="4" TextWrapping="Wrap" Text="10" HorizontalAlignment="Left" Width="128"/>
+        	</StackPanel>
+            <Button Content="Set" HorizontalAlignment="Right" Width="128" Height="24" Margin="4" Click="ButtonSet_Click"/>
+        </StackPanel>
+        <StackPanel VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,4,4,0" Grid.Column="1">
+            <TextBlock TextWrapping="Wrap" Text="Data:" VerticalAlignment="Center"/>
+            <ListBox Height="360" x:Name="ListBoxData" Margin="4"/>
+            <Button Content="Remove" HorizontalAlignment="Right" Width="128" Height="24" Margin="4" Click="ButtonRemove_Click"/>
+            <StackPanel HorizontalAlignment="Right" Height="32" Orientation="Horizontal">
+                <TextBlock TextWrapping="Wrap" Text="x:" VerticalAlignment="Center" Margin="4"/>
+                <TextBox x:Name="TextBoxX" HorizontalAlignment="Left" Margin="4" TextWrapping="Wrap" Text="05/01/2012" Width="100"/>
+                <TextBlock TextWrapping="Wrap" Text="y:" VerticalAlignment="Center" Margin="4"/>
+                <TextBox x:Name="TextBoxY" Margin="4" TextWrapping="Wrap" Text="5" HorizontalAlignment="Left" Width="40"/>
+            </StackPanel>
+            <Button Content="Add" HorizontalAlignment="Right" Width="128" Height="24" Margin="4" Click="ButtonAdd_Click"/>
+            <StackPanel HorizontalAlignment="Right" Height="32" Orientation="Horizontal">
+                <TextBlock TextWrapping="Wrap" Text="Index:" VerticalAlignment="Center" Margin="4"/>
+                <TextBox x:Name="TextBoxIndex" Margin="4" TextWrapping="Wrap" Text="5" HorizontalAlignment="Left" Width="40"/>
+            </StackPanel>
+            <Button Content="Insert" HorizontalAlignment="Right" Width="128" Height="24" Margin="4" Click="ButtonInsert_Click"/>
+            <Button Content="Clear" HorizontalAlignment="Right" Width="128" Height="24" Margin="4" Click="ButtonClear_Click"/>
+            <Button Content="Sort" HorizontalAlignment="Right" Width="128" Height="24" Margin="4" Click="ButtonSort_Click"/>
+        </StackPanel>
+
+	</Grid>
+</UserControl>

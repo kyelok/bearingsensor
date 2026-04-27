@@ -1,0 +1,73 @@
+<html>
+ <head>
+  <title id="CONFIGTESTID">XTS-W2 Simulator Settings Page</title>
+  <script type="text/javascript">
+      var textInputId = '';
+      function TextInputFocus(control, numeric) {
+          textInputId = control;
+          if (numeric) {
+              parent.ShowNumericKeyboard(true);
+          }
+          else {
+              parent.ShowKeyboard(true);
+          }
+      }
+
+      function GetCurrentText() {
+          var textInputControl = document.getElementById(textInputId);
+          if (textInputControl) {
+              return textInputControl.value;
+          }
+      }
+
+      function AddText(text) {
+          if (textInputId.length > 0) {
+              var textInputControl = document.getElementById(textInputId);
+              if (textInputControl) {
+                  textInputControl.value += text;
+              }
+          }
+      }
+
+      function SetText(text) {
+          if (textInputId.length > 0) {
+              var textInputControl = document.getElementById(textInputId);
+              if (textInputControl) {
+                  textInputControl.value = text;
+              }
+          }
+      }
+
+      function OnLoad() {
+          var guid = document.getElementsByTagName("title")[0].getAttribute("id");
+          parent.ChildLoadedHandler(guid);
+      }
+
+      function LogIn(username, password) {
+          alert("Logged in as " + username + ", password: " + password);
+      }
+
+      function OnUpdateInProgress(uip) {
+          parent.UpdateInProgress(uip);
+      }
+
+      function OnClose() {
+          parent.close();
+      }
+  </script>
+ </head>
+ <body onload="OnLoad()">
+ <h3>XTS-W2 Simulator Settings Page</h3>
+ This page is a placeholder for HTML content to be hosted on the XTS-W2 web server.<p />
+  <form>
+   Test Text Entry 1: <input type="text" name="test1" id="test1" onfocus="TextInputFocus('test1', false)" /><br />
+   Test Text Entry 2: <input type="text" name="test2" id="test2" onfocus="TextInputFocus('test2', true)" /><br />
+   <input type="submit" value="Submit" />
+  </form>
+   <p />
+   <input type="button" value="Set UpdateInProgress" onclick="OnUpdateInProgress(true);" /><br />
+   <input type="button" value="Clear UpdateInProgress" onclick="OnUpdateInProgress(false);" />
+   <p />
+   <input type="button" value="Close" onclick="OnClose();" /><br />
+ </body>
+</html>

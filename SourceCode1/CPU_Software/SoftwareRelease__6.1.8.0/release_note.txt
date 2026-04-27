@@ -1,0 +1,96 @@
+-------------------------------------------------------------
+Version:   6.1.8.0
+-------------------------------------------------------------
+
+
+Default Passwords
+-------------------------------------------------------------
+The system is configured with the following default passwords:
+
+User		Password
+
+Admin		xtsw2admin
+Setup		setupxts
+--------------------------------------------------------------
+
+
+Issue resolved and feature supported:
+--------------------------------------------------------------
+[6.1.4.1120]
+1.	BTM add on
+2.	Magic number in report
+3.	Trend selection screen in 1024x768 resolution
+4.	Recurred SPU alarm off in event log
+5.	Software version setup
+6.	Bearing status change in MMIC screen in response of temperature alarm
+7.	Move modbus configuration file from d:\config to c:\amot\config
+8.	Move modbus configuration file back to d:\config
+9.	Remove blank data entry in GL report
+10.	Allow temperature sensor to be set to 0 from Settings
+11.	Software update package modification
+
+[6.1.5.206]
+12.	GL report compliance (#437, #578, #616)
+13.	Record software version update in event log (#571)
+14.	UI: GL REPORTING can produce empty tags which is undesirable (#437)
+
+[6.1.6.0]
+15.	UI: General UI design to improve the Settings screen (#518)
+16.	UI: Help documentation is missing when clicking the HELP button (#526)
+17.	UI: 3 Issues with the trending screen and functionality (#560)
+18.	UI: Test Alarm output screen - improve graphical representation of buttons when toggled (#563)
+19.	UI: Test Alarms screen required additional text to clarify which output is which (#564)
+20.	UI: Software version update is not recorded in the event log (#571)
+21.	UI: Digital Output Test Mode ON/OFF status does not reflect actual output status (#573)
+22.	UI: Incorrect display of RPM and WIO trends after upgrading RIA (#574)
+23.	GL Reporting - Empty Fields in XML file (#578)
+24.	To meet MAN specification 3093804-3 for CPP/LOAD compensation (#609)
+25.	WIO status indication incorrect (#611)
+26.	UI: Ability to close the browser window required (#474)
+27.	UI: Inconsistent results when reading register from SPU (#513)
+28.	UI: RPM displayed value is blank when the engine is stationary - should read zero (#559)
+29.	UI: Test Alarms Screen does not update if the Test Mode is cancelled due to lack of activity (#565)
+30.	UI: Screen Capture button does not work on Trend screen (#575)	
+31.	UI: Problems with AMOT reporting (#605)
+32.	UI: Need to be able to autorecover config after D drive failure (#607)
+33.	UI: Prevent the ability to change the Trend Description (#497)
+34.	UI: Change the labeling on the Import/Export Settings button (#523)
+35.	UI: Scrabble lines appear on the Sensor Setup screen (#524)
+36.	UI: Screen capture does not capture the bottom of scrolled screens - Always the top (#527)
+37.	UI: Settings synchronization check should only check value. Sync Time error (1970?) (#538)
+38.	Incorrect SPU firmware version detailed in exported system information file (#614)
+39.	Larger text required on parts of mimic screen for customer (#620)
+40.	When the Event log is viewed negative offset values are incorrectly displayed, also different channels? (#619)
+41.	Event log for DC peak calibration – does not register all sensors (#623/624)
+42.	Event log shows wrong date format when viewed (#617)
+43.	User manual cannot be viewed in IE9 (#622)
+
+44.	AMOT report issue (#626)
+45.	Trend screen text overflow (#627)
+46.	GL reporting issues with WIO (#628)
+47.	Enhancements to user feedback during XLM GL report creation and download (#618)
+48.	Trend Scale Axis label 2 "RPM" text can be changed but is forgotten on reboot, for SEDM "RPM / mV" is requried (#631)
+49.	Accelerate report generation (#633)
+50.	Temperature trend scale (#590)
+51.	GL Reporting: Firmware and Engine Run time reporting incorrectly in XTS-W+ (#579, inside of #629)
+52.	XTSW+PC running XTSW2 S/W hangs on startup 100% processor (#634)
+
+[6.1.7.1]
+53.	XTSW2 IP protection (#637)
+54.	Sensor set-up bar colours during engine running (#640)
+55.	Offsets incorrectly stored in event log (#641)
+56.	WIO text overflow in mimic screen (#642)
+57.	Text overlap on alarm list on all screens (#643)
+58.	Can no longer export the CPU Diagnostic log files (#646)
+59.	Trend engine load in software (#636)
+60.	Add modbus register to firmware for alarm threshold for sensor move during engine learning (#635)
+61.	Disable external Modbus COM port by default
+62.	Correct registration issue when network is disconnected
+
+[6.1.8.0]
+63.	Desolve user role issue when importing SPU setting
+64.	Disable external TCP modbus when system is not registered
+--------------------------------------------------------------
+
+
+- END OF RELEASE NOTE - 

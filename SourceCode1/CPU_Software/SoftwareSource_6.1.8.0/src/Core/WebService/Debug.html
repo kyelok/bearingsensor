@@ -1,0 +1,121 @@
+<html>
+<head>
+    <title>Modbus debug</title>
+    <style type="text/css">
+        body {
+        font-family:Arial,Georgia,Serif;
+        }
+    </style>
+</head>
+<body>
+    <p>This webpage is for SPU debugging purposes only.</p>
+
+    <h1>General</h1>
+    <table id="modbus" border=1>
+    </table>
+    
+    <script>
+        var modbusRegisters = [
+            ["Time", 0, 3],
+            ["RPM Modal", 382, 1],
+            ["RPM Limit", 1034, 1],
+            ["RPM Checked", 383, 1],
+            ["DC Peak Hold", 1042, 1],
+            ["DC Mode", 1043, 1],
+            ["Alarm Output", 1025, 1],
+            ["Slowdown Output", 1026, 1],
+            ["Output Test", 1044, 1],
+            ["SPUDigital Outputn", 1024, 3],
+            ["Raw uA", 203, 14],
+            ["Scaled Values", 312, 14],
+            ["Pre comp", 3, 14],
+            ["Post Comp", 31, 14],
+            ["Sensor Deviation", 88, 14],
+            ["Sensor Status 1", 117, 14],
+            ["Sensor Status 2", 146, 14],
+            ["Sensor Status 3", 175, 14],
+            ["Cylinder Av", 256, 7],
+            ["Cylinder Deviation", 270, 7],
+            ["Cylinder Status 1", 284, 7],
+            ["Cylinder Status 2", 298, 7],
+            ["RPM", 384, 7],
+            ["Firing Order", 2028, 7],
+            ["Calibration stage", 3000, 1],
+            ["Learning mode total timer", 3010, 1],
+            ["Learning mode interval timer", 3011, 1],
+            ["Learning time left", 3013, 1],
+            ["Interval time left", 3014, 1],
+            ["Current stage percentage remaining", 3015, 1],
+            ];
+
+        for (var i in modbusRegisters) {
+            var modbusElement = modbusRegisters[i];
+            var name = modbusElement[0];
+            var start = modbusElement[1];
+            var end = modbusElement[2];
+
+            var modbusTable = document.getElementById("modbus");
+
+            var tr = document.createElement("tr");
+            tr.setAttribute("id", name);
+            modbusTable.appendChild(tr);
+        }
+
+        var currentElement = -1;
+        var lastStart = new Date();
+        
+        function queueNext() {
+            currentElement++;
+            if (currentElement >= modbusRegisters.length) {
+                currentElement = 0;
+                lastStart = new Date();
+            }
+
+            var modbusElement = document.getElementById(modbusRegisters[currentElement][0]);
+            modbusElement.setAttribute("style", "background-color:#DDDDDD;");
+
+            var http_request = new XMLHttpRequest();
+            http_request.open("GET", "/modbus/" + modbusRegisters[currentElement][1] + "/" + modbusRegisters[currentElement][2], true);
+            http_request.onreadystatechange = function () {
+                var done = 4, ok = 200;
+                if (http_request.readyState == done && http_request.status == ok) {
+                    var data = JSON.parse(http_request.responseText);
+                    var modbusElement = document.getElementById(modbusRegisters[currentElement][0]);
+
+                    modbusElement.setAttribute("style", "background-color:white;");
+
+                    while (modbusElement.childNodes.length > 0) {
+                        modbusElement.removeChild(modbusElement.firstChild);
+                    }
+
+                    var child = document.createElement("td");
+                    var text = document.createTextNode(modbusRegisters[currentElement][0] + " (" + modbusRegisters[currentElement][1] + "-" + (modbusRegisters[currentElement][1] + modbusRegisters[currentElement][2] - 1) + "):");
+                    child.setAttribute("style", "font-weight: bold; text-align:right;");
+                    child.appendChild(text);
+                    modbusElement.appendChild(child);
+
+                    for (var element in data) {
+                        var child = document.createElement("td");
+                        var text = document.createTextNode(data[element]);
+                        child.appendChild(text);
+                        modbusElement.appendChild(child);
+                    }
+                }
+                if (http_request.readyState == done) {
+                    if (currentElement >= modbusRegisters.length - 1) {
+                        var duration = new Date() - lastStart;
+
+                        setTimeout("queueNext();", duration < 1000 ? 1000 - duration : 0);
+                    }
+                    else {
+                        queueNext();
+                    }
+                }
+            };
+            http_request.send(null);
+        }
+
+        queueNext();
+    </script>
+</body>
+</html>

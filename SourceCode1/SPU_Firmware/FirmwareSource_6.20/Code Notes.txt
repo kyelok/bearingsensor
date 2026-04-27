@@ -1,0 +1,24 @@
+Change Notes:
+
+Notes started from V2.2 03/11/05
+
+V2.2 3rd November 2005
+
+(1) Added to adc.c, settings.ignore.  This flag will be set if the next collected peak is to be ignored
+This is used in order to stop erroneous peaks being detected after spending a long period within a function.
+Used in utils.c when storing data to non-vol memory.  This can take a few ms but generally does not cause
+an issue.  However, just to be sure, the flag is set after writing to non-vol
+Also used after an sd card failure.  If the sd card fails, a considerable period could pass during
+the retries.  Therefore the integrity of the peak cannot be guaranteed and should be ignored.
+
+(2) ReadPRT.  Altered to set-up the first value for averaging.  This is useful on power-up when the
+previous value will be < 10.0 degC.  Set-up if less than 10.0, set to current incoming value.
+
+(3) Temp compensation now calculated continuously.  This cures any spikes seen when coming through
+the RPMLIMIT.  Previously a code error would cause a shift (or spike) due to incorrect temps.
+
+(4) Added modbus reg, in order to disable temperature compensation.
+
+(5) SDCardInitfromModbus().  Added safe6.sdcard.present = 1, without this the sdcardinit will not take place.
+
+(6) Altered the speed compensation tables from modbus.  Now each channel table will cause a write to non-vol, however, does not cause all tables to be written on every update causing an unnecessary timing delay.

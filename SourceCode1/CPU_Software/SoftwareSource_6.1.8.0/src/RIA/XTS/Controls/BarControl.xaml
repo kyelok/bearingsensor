@@ -1,0 +1,123 @@
+﻿<UserControl
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ee="http://schemas.microsoft.com/expression/2010/effects"
+    xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
+    mc:Ignorable="d"
+    x:Class="XTS.Controls.BarControl" d:DesignHeight="481" d:DesignWidth="90" Width="Auto" Height="Auto" LayoutUpdated="OnLayoutUpdated">
+
+  <Grid x:Name="LayoutRoot">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="14" />
+      <RowDefinition Height="*" />
+      <RowDefinition Height="14" />
+      <RowDefinition Height="14" />
+    </Grid.RowDefinitions>
+    <Viewbox MaxHeight="18" Margin="-20,0">
+      <sdk:Label x:Name="LabelTitle" Margin="12,0" VerticalAlignment="Center" Height="16" Foreground="Black" HorizontalContentAlignment="Center" FontWeight="Bold" />
+    </Viewbox>
+    <Grid x:Name="GridChart" Grid.Row="1">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="4" />
+        <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="4" />
+      </Grid.ColumnDefinitions>
+      <Rectangle StrokeThickness="1" Grid.Column="1">
+        <Rectangle.Fill>
+          <SolidColorBrush Color="{StaticResource ColorAMOTBackground}" />
+        </Rectangle.Fill>
+      </Rectangle>
+      <Path x:Name="PathAlarm0" Data="M8,243 L72,243" Margin="-1,30,-1,0" Stretch="Fill" UseLayoutRounding="False" VerticalAlignment="Center" Grid.ColumnSpan="3" StrokeEndLineCap="Square" StrokeStartLineCap="Square" Height="1">
+        <Path.Stroke>
+          <SolidColorBrush Color="{StaticResource ColorAMOTSensorAlarm}" />
+        </Path.Stroke>
+      </Path>
+      <Path x:Name="PathAlarm1" Data="M8,243 L72,243" Margin="-1,0,-1,30" Stretch="Fill" UseLayoutRounding="False" VerticalAlignment="Center" Grid.ColumnSpan="3" StrokeEndLineCap="Square" StrokeStartLineCap="Square" Height="1">
+        <Path.Stroke>
+          <SolidColorBrush Color="{StaticResource ColorAMOTSensorAlarm}" />
+        </Path.Stroke>
+      </Path>
+      <Path x:Name="PathSlowdown0" Data="M8,243 L72,243" Margin="-1,60,-1,0" Stretch="Fill" UseLayoutRounding="False" VerticalAlignment="Center" Grid.ColumnSpan="3" StrokeEndLineCap="Square" StrokeStartLineCap="Square" Height="1">
+        <Path.Stroke>
+          <SolidColorBrush Color="{StaticResource ColorAMOTSensorSlowdown}" />
+        </Path.Stroke>
+      </Path>
+      <Path x:Name="PathSlowdown1" Data="M8,243 L72,243" Margin="-1,0,-1,60" Stretch="Fill" UseLayoutRounding="False" VerticalAlignment="Center" Grid.ColumnSpan="3" StrokeEndLineCap="Square" StrokeStartLineCap="Square" Height="1">
+        <Path.Stroke>
+          <SolidColorBrush Color="{StaticResource ColorAMOTSensorSlowdown}" />
+        </Path.Stroke>
+      </Path>
+      <Rectangle StrokeThickness="1" Fill="#7FFFFFFF" Grid.Row="1" Grid.Column="1" />
+      <Rectangle StrokeThickness="1" Grid.Column="1" Opacity="0.35">
+        <Rectangle.Fill>
+          <LinearGradientBrush EndPoint="0,0.5" StartPoint="1,0.5">
+            <GradientStop Color="#FFB0B6BC" Offset="0.75" />
+            <GradientStop Color="#FF05111D" Offset="0.25" />
+          </LinearGradientBrush>
+        </Rectangle.Fill>
+      </Rectangle>
+      <Rectangle Margin="3,60,3,0" x:Name="bar_graph" StrokeThickness="1" VerticalAlignment="Center" Height="60" Grid.Column="1" Opacity="0.985">
+        <Rectangle.Fill>
+          <SolidColorBrush Color="{StaticResource ColorAMOTSensorNormal}" />
+        </Rectangle.Fill>
+      </Rectangle>
+      <Path x:Name="PathZeroPoint" Data="M8,243 L72,243" Stretch="Fill" UseLayoutRounding="False" VerticalAlignment="Center" Grid.ColumnSpan="3" Opacity="0.8" StrokeStartLineCap="Square" StrokeEndLineCap="Square" Height="1">
+        <Path.Stroke>
+          <SolidColorBrush Color="{StaticResource ColorAMOTDarkGrey}" />
+        </Path.Stroke>
+      </Path>
+      <Grid Grid.Column="1" Opacity="0.5">
+        <Rectangle Fill="Black" StrokeMiterLimit="2.75" HorizontalAlignment="Left" Width="2" />
+        <Rectangle Fill="Black" Height="2" StrokeMiterLimit="2.75" VerticalAlignment="Top" />
+        <Rectangle Fill="White" StrokeMiterLimit="2.75" Width="2" HorizontalAlignment="Right" />
+        <Rectangle Fill="White" Height="2" StrokeMiterLimit="2.75" VerticalAlignment="Bottom" />
+        <Path Stretch="Fill" StrokeMiterLimit="2.75" Data="F1 M 192,64L 224,96L 224,64L 192,64 Z " Height="2" UseLayoutRounding="False" Width="2" HorizontalAlignment="Right" VerticalAlignment="Top" d:LayoutOverrides="VerticalAlignment" RenderTransformOrigin="0.5,0.5" Fill="Black">
+          <Path.RenderTransform>
+            <CompositeTransform ScaleX="-1" />
+          </Path.RenderTransform>
+        </Path>
+        <Path Stretch="Fill" StrokeMiterLimit="2.75" Data="F1 M 192,64L 224,96L 224,64L 192,64 Z " Height="2" UseLayoutRounding="False" Width="2" HorizontalAlignment="Left" VerticalAlignment="Bottom" d:LayoutOverrides="HorizontalAlignment" Fill="Black" RenderTransformOrigin="0.5,0.5">
+          <Path.RenderTransform>
+            <CompositeTransform ScaleX="-1" />
+          </Path.RenderTransform>
+        </Path>
+      </Grid>
+      <Viewbox VerticalAlignment="Top" Margin="0,4,0,0" MaxHeight="30" Grid.Column="1">
+        <Path x:Name="PathFailureHighLevel" Stretch="Fill" StrokeLineJoin="Round" Data="F1 M 448,256L 384,320L 416,320L 416,416L 480,416L 480,320L 512,320L 448,256 Z " UseLayoutRounding="False" StrokeThickness="12" Margin="30,30,30,0">
+          <Path.Stroke>
+            <SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+          </Path.Stroke>
+        </Path>
+      </Viewbox>
+      <Viewbox Margin="0,0,0,4" VerticalAlignment="Bottom" MaxHeight="30" Grid.Column="1">
+        <Path x:Name="PathFailureLowLevel" Stretch="Fill" StrokeLineJoin="Round" Data="F1 M 839.116,313.689L 903.116,249.689L 871.116,249.689L 871.116,153.689L 807.116,153.689L 807.116,249.689L 775.116,249.689L 839.116,313.689 Z " UseLayoutRounding="False" StrokeThickness="12" Margin="30,0,30,30">
+          <Path.Stroke>
+            <SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+          </Path.Stroke>
+        </Path>
+      </Viewbox>
+      <Viewbox Margin="4,0,4,4" MaxHeight="20" Grid.Column="1" VerticalAlignment="Bottom">
+        <sdk:Label x:Name="LabelFailureOOR" Content="{Binding Path=ResourceStrings.XTSStringOOR, Source={StaticResource LocalizedResources}}" FontSize="12" FontWeight="Bold" HorizontalContentAlignment="Center" Margin="1,0,1,4">
+          <sdk:Label.Foreground>
+            <SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+          </sdk:Label.Foreground>
+        </sdk:Label>
+      </Viewbox>
+      <Viewbox UseLayoutRounding="True" Margin="0,0,0,4" VerticalAlignment="Bottom" MaxHeight="24" Grid.Column="1">
+        <Path x:Name="PathFailureNoPulse" Stretch="Fill" StrokeLineJoin="Round" Data="F1 M 64,96L 96,96L 96,64L 128,64L 128,96L 160,96" Margin="12,0,12,25" UseLayoutRounding="False" StrokeThickness="6">
+          <Path.Stroke>
+            <SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+          </Path.Stroke>
+        </Path>
+      </Viewbox>
+    </Grid>
+    <Viewbox Grid.Row="2" MaxHeight="18" Margin="-40,0">
+      <sdk:Label x:Name="LabelValueTop" Margin="12,0" VerticalAlignment="Center" Height="16" Foreground="Black" HorizontalContentAlignment="Center" />
+    </Viewbox>
+    <Viewbox Grid.Row="3" MaxHeight="18" Margin="-40,0">
+      <sdk:Label x:Name="LabelValueBottom" Margin="12,0" VerticalAlignment="Center" Height="16" Foreground="Black" HorizontalContentAlignment="Center" />
+    </Viewbox>
+  </Grid>
+</UserControl>

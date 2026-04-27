@@ -1,0 +1,118 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{F1248A84-D193-4B7D-B208-49C864360DF7}</ProjectGuid>
+    <ProjectTypeGuids>{A1591282-1198-4647-A2B1-27E5FF5F6F3B};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>XTS</RootNamespace>
+    <AssemblyName>XTSDataProviderWeb</AssemblyName>
+    <TargetFrameworkIdentifier>Silverlight</TargetFrameworkIdentifier>
+    <TargetFrameworkVersion>v5.0</TargetFrameworkVersion>
+    <SilverlightVersion>$(TargetFrameworkVersion)</SilverlightVersion>
+    <SilverlightApplication>false</SilverlightApplication>
+    <ValidateXaml>true</ValidateXaml>
+    <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <!-- This property group is only here to support building this project using the 
+       MSBuild 3.5 toolset. In order to work correctly with this older toolset, it needs 
+       to set the TargetFrameworkVersion to v3.5 -->
+  <PropertyGroup Condition="'$(MSBuildToolsVersion)' == '3.5'">
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>Bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;TRACE;SILVERLIGHT</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>Bin\Release</OutputPath>
+    <DefineConstants>TRACE;SILVERLIGHT</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="mscorlib" />
+    <Reference Include="System.Data.Services.Client, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceModel.Web" />
+    <Reference Include="System.Windows" />
+    <Reference Include="system" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Windows.Browser" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Mappings\MapColor.cs" />
+    <Compile Include="Mappings\MapTemperatureData.cs" />
+    <Compile Include="TrendRequest.cs" />
+    <Compile Include="XTSDataProviderWeb\AlarmMonitoringStateMachine.cs" />
+    <Compile Include="XTSDataProviderWeb\DataUpdateStateMachine.cs" />
+    <Compile Include="XTSDataProviderWeb\EngineLearning.cs" />
+    <Compile Include="XTSDataProviderWeb\EngineTrends.cs" />
+    <Compile Include="XTSDataProviderWeb\FileOperations.cs" />
+    <Compile Include="XTSDataProviderWeb\Reporting.cs" />
+    <Compile Include="XTSDataProviderWeb\SensorReplacement.cs" />
+    <Compile Include="XTSDataProviderWeb\SensorSetup.cs" />
+    <Compile Include="XTSDataProviderWeb\SurveyorTest.cs" />
+    <Compile Include="XTSDataProviderWeb\Temperature.cs" />
+    <Compile Include="XTSDataProviderWeb\UserAccess.cs" />
+    <Compile Include="XTSWebResultDelegate.cs" />
+    <Compile Include="Mappings\MapDiagnosticData.cs" />
+    <Compile Include="Mappings\MapEngineData.cs" />
+    <Compile Include="Mappings\MapLearningData.cs" />
+    <Compile Include="Mappings\MapSensorReplacementData.cs" />
+    <Compile Include="Mappings\MapSensorSetupData.cs" />
+    <Compile Include="XTSDataProviderWeb\XTSDataProviderWeb.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AMOTConstants\AMOTConstants.csproj">
+      <Project>{9F0BD6F7-1094-4579-BD8D-704E8DA86277}</Project>
+      <Name>AMOTConstants</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\XTSData\XTSData.csproj">
+      <Project>{ED3EC7FA-935D-4FF3-A42F-6D5C67D8CD97}</Project>
+      <Name>XTSData</Name>
+    </ProjectReference>
+    <ProjectReference Include="WebServiceObjects\WebServiceObjects.csproj">
+      <Project>{1B758E6D-D121-4890-AD0C-B9D23732427C}</Project>
+      <Name>WebServiceObjects</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{A1591282-1198-4647-A2B1-27E5FF5F6F3B}">
+        <SilverlightProjectProperties />
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

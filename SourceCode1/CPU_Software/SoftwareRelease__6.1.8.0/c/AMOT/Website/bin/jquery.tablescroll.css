@@ -1,0 +1,11 @@
+.tablescroll
+.tablescroll_wrapper
+.tablescroll_head
+.tablescroll_foot
+{ overflow: hidden; 
+  position:relative;}
+  
+.spuTable
+{
+    position:relative;
+}

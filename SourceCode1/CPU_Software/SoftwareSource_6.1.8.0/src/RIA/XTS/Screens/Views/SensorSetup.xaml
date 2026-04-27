@@ -1,0 +1,159 @@
+﻿<UserControl
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:local="clr-namespace:XTS"
+	xmlns:xtscontrols="clr-namespace:XTS.Controls"
+	xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
+	mc:Ignorable="d"
+	x:Class="XTS.SensorSetup"
+	d:DesignWidth="1024" d:DesignHeight="546" Width="Auto" Height="Auto" Loaded="SensorSetup_Loaded" Unloaded="SensorSetup_Unloaded">
+  <UserControl.Resources>
+    <local:XTSPeakEnableSensorModeConverter x:Key="SensorModeConverter" />
+    <local:SensorSetupModel x:Key="SensorSetupModelDataSource" />
+  </UserControl.Resources>
+
+  <Grid x:Name="LayoutRoot" DataContext="{Binding Source={StaticResource SensorSetupModelDataSource}}">
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="8" />
+      <ColumnDefinition Width="66" />
+      <ColumnDefinition Width="*" />
+      <ColumnDefinition Width="44" />
+      <ColumnDefinition Width="8" />
+    </Grid.ColumnDefinitions>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="8" />
+      <RowDefinition Height="40" />
+      <RowDefinition Height="*" />
+      <RowDefinition Height="16" />
+      <RowDefinition Height="92" />
+      <RowDefinition Height="8" />
+    </Grid.RowDefinitions>
+    <Rectangle Grid.ColumnSpan="3" Grid.Column="1" Height="52" Margin="16,0,-4,-4" Grid.Row="2" VerticalAlignment="Bottom">
+      <Rectangle.Fill>
+        <SolidColorBrush Color="{StaticResource ColorAMOTBackgroundOverlay}" />
+      </Rectangle.Fill>
+    </Rectangle>
+    <xtscontrols:FitStackPanel x:Name="StackPanelPercent" Margin="0,4,0,0" Grid.Row="1" Grid.Column="2" />
+    <xtscontrols:FitStackPanel x:Name="StackPanelCharts" Margin="0" Grid.Row="2" Grid.Column="2" />
+    <RadioButton x:Name="buttonMilliAmps" Content="{Binding Path=ResourceStrings.XTSStringmA, Source={StaticResource LocalizedResources}}" HorizontalAlignment="Right" Width="44" Grid.Row="2" Grid.Column="3" Style="{StaticResource ToggleButtonStyleAMOT}" Checked="buttonMilliAmps_checked" GroupName="GroupSetupMode" Height="44" VerticalAlignment="Top" Margin="0" Background="#FF00B0F0" ContentTemplate="{StaticResource ContentTemplateAMOTButton}">
+      <RadioButton.Foreground>
+        <SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+      </RadioButton.Foreground>
+    </RadioButton>
+    <RadioButton x:Name="buttonMicrons" Content="{Binding Path=ResourceStrings.XTSStringmuM, Source={StaticResource LocalizedResources}}" Margin="0,48,0,0" HorizontalAlignment="Right" Grid.Row="2" Grid.Column="3" Width="44" Style="{StaticResource ToggleButtonStyleAMOT}" Checked="buttonMicrons_checked" GroupName="GroupSetupMode" VerticalAlignment="Top" Height="44" ContentTemplate="{StaticResource ContentTemplateAMOTButton}">
+      <RadioButton.Background>
+        <SolidColorBrush Color="{StaticResource ColorAMOTButton}" />
+      </RadioButton.Background>
+      <RadioButton.Foreground>
+        <SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+      </RadioButton.Foreground>
+    </RadioButton>
+    <RadioButton x:Name="buttonDCMode" Grid.Column="2" HorizontalAlignment="Left" Margin="92,0,0,0" Grid.Row="4" Width="88" Style="{StaticResource ToggleButtonStyleAMOT}" GroupName="GroupDCMode" IsChecked="True" Height="44" VerticalAlignment="Top" IsHitTestVisible="False">
+      <RadioButton.Foreground>
+        <SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+      </RadioButton.Foreground>
+      <RadioButton.Background>
+        <SolidColorBrush Color="{StaticResource ColorAMOTBlue}" />
+      </RadioButton.Background>
+      <Grid>
+        <TextBlock Margin="2,0" TextWrapping="Wrap" Text="{Binding Path=ResourceStrings.XTSStringDCMode, Source={StaticResource LocalizedResources}}" VerticalAlignment="Bottom" d:LayoutOverrides="Width" />
+        <Path Stretch="Fill" StrokeThickness="2" StrokeMiterLimit="2.75" Data="F1 M 160,384L 256,384L 256,224L 352,224L 352,384L 448,384L 448,224L 544,224L 544,384L 640,384" HorizontalAlignment="Left" Height="17" UseLayoutRounding="False" VerticalAlignment="Top" Width="49" Margin="2,4,0,0">
+          <Path.Stroke>
+            <SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+          </Path.Stroke>
+        </Path>
+      </Grid>
+    </RadioButton>
+    <RadioButton x:Name="buttonPulseMode" Grid.Column="2" HorizontalAlignment="Left" Margin="184,0,0,0" Grid.Row="4" Width="88" Style="{StaticResource ToggleButtonStyleAMOT}" GroupName="GroupDCMode" Height="44" VerticalAlignment="Top" IsHitTestVisible="False">
+      <RadioButton.Foreground>
+        <SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+      </RadioButton.Foreground>
+      <RadioButton.Background>
+        <SolidColorBrush Color="{StaticResource ColorAMOTBlue}" />
+      </RadioButton.Background>
+      <Grid Height="44" Width="88">
+        <TextBlock Margin="2,0" TextWrapping="Wrap" Text="{Binding Path=ResourceStrings.XTSStringPulseMode, Source={StaticResource LocalizedResources}}" VerticalAlignment="Bottom" d:LayoutOverrides="Width" />
+        <Path Stretch="Fill" StrokeThickness="2" StrokeMiterLimit="2.75" Data="M 160,192L 256,192L 256,32.0001L 288,32.0001L 288,192L 448,192L 448,32.0001L 480,32.0001L 480,192L 640,192" HorizontalAlignment="Left" Height="17" UseLayoutRounding="False" VerticalAlignment="Top" Width="49" Margin="2,4,0,0">
+          <Path.Stroke>
+            <SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+          </Path.Stroke>
+        </Path>
+      </Grid>
+    </RadioButton>
+    <ToggleButton x:Name="buttonDCPeakHold" Grid.Column="2" HorizontalAlignment="Left" Grid.Row="4" Width="88" Style="{StaticResource ToggleButtonStyleAMOT}" VerticalAlignment="Bottom" Height="44" Margin="92,0,0,0" IsHitTestVisible="False">
+      <ToggleButton.Foreground>
+        <SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+      </ToggleButton.Foreground>
+      <ToggleButton.Background>
+        <SolidColorBrush Color="{StaticResource ColorAMOTBlue}" />
+      </ToggleButton.Background>
+      <Grid Height="44" Width="88">
+        <TextBlock Margin="2,0" TextWrapping="Wrap" Text="{Binding Path=ResourceStrings.XTSStringDCPeakHold, Source={StaticResource LocalizedResources}}" VerticalAlignment="Bottom" d:LayoutOverrides="Width" />
+        <Path Stretch="Fill" StrokeThickness="2" StrokeMiterLimit="2.75" Data="F1 M 160,576L 256,576L 256,416L 640,416" HorizontalAlignment="Left" Height="17" UseLayoutRounding="False" VerticalAlignment="Top" Width="49" Margin="2,4,0,0">
+          <Path.Stroke>
+            <SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+          </Path.Stroke>
+        </Path>
+      </Grid>
+    </ToggleButton>
+    <Button x:Name="button" Margin="0" Grid.Column="3" Grid.Row="2" Height="44" VerticalAlignment="Bottom" Style="{StaticResource ButtonStyleAMOT}" Width="44" HorizontalAlignment="Left" Click="buttonResetPeak_clicked">
+      <Button.Background>
+        <SolidColorBrush Color="{StaticResource ColorAMOTButton}" />
+      </Button.Background>
+      <Button.Foreground>
+        <SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+      </Button.Foreground>
+      <Grid>
+        <Path Stretch="Fill" Fill="{Binding Foreground, ElementName=button}" Data="F1 M 24,13C 27.1521,13 29.9945,14.3258 32,16.4501L 32,11L 35,14L 35,22L 27,22L 24,19L 29.5903,19C 28.217,17.4656 26.2212,16.5 24,16.5C 20.1969,16.5 17.055,19.3306 16.5661,23L 13.0448,23C 13.5501,17.3935 18.262,13 24,13 Z M 24,31.5C 27.8031,31.5 30.945,28.6694 31.4339,25L 34.9552,25C 34.4499,30.6065 29.738,35 24,35C 20.8479,35 18.0055,33.6742 16,31.5499L 16,37L 13,34L 13,26L 21,26L 24,29L 18.4097,29C 19.783,30.5344 21.7787,31.5 24,31.5 Z " HorizontalAlignment="Center" Height="35" UseLayoutRounding="False" VerticalAlignment="Center" Width="28" Margin="0" Opacity="0.15" />
+        <TextBlock TextWrapping="Wrap" Text="{Binding Path=ResourceStrings.XTSStringResetAll, Source={StaticResource LocalizedResources}}" d:LayoutOverrides="Width, Height" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" TextAlignment="Center" />
+      </Grid>
+    </Button>
+    <xtscontrols:Scale x:Name="ScaleLeft" d:LayoutOverrides="Width, Height, GridBox" Grid.Row="2" Margin="3,22,0,78" Grid.Column="1" />
+    <sdk:Label Margin="0,0,4,56" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Right" Content="{Binding Path=ResourceStrings.XTSStringActual, Source={StaticResource LocalizedResources}}" Height="22" VerticalAlignment="Bottom" />
+    <sdk:Label Margin="0,0,4,16" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Right" Content="{Binding Path=ResourceStrings.XTSStringPeak, Source={StaticResource LocalizedResources}}" VerticalAlignment="Bottom" Height="22" />
+    <Button x:Name="buttonPeakCalibration" Margin="0" Grid.Row="4" Grid.Column="2" HorizontalAlignment="Left" Style="{StaticResource ButtonStyleAMOT}" Width="88" Click="buttonPeakCalibration_clicked" IsEnabled="{Binding XTSDataSource.EngineData.SensorMode, Converter={StaticResource SensorModeConverter}}">
+      <Button.Background>
+        <SolidColorBrush Color="{StaticResource ColorAMOTButton}" />
+      </Button.Background>
+      <Button.Foreground>
+        <SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+      </Button.Foreground>
+      <Grid>
+        <TextBlock TextWrapping="Wrap" Text="{Binding Path=ResourceStrings.XTSStringPeakCalibration, Source={StaticResource LocalizedResources}}" d:LayoutOverrides="Width, Height" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="2,0,0,0" />
+        <Path Stretch="Fill" Fill="{Binding Foreground, ElementName=buttonPeakCalibration}" Data="F1 M 36.5054,34.5045L 34.5051,34.5045L 34.5051,18.5022L 36.5053,18.5022L 36.5054,34.5045 Z M 32.5048,34.5045L 30.5045,34.5045L 30.5045,15.5022L 32.5048,15.5022L 32.5048,34.5045 Z M 28.5043,34.5045L 26.504,34.5045L 26.5039,19.5022L 28.5042,19.5022L 28.5043,34.5045 Z M 24.5037,34.5045L 22.5034,34.5045L 22.5034,13.5022L 24.5037,13.5022L 24.5037,34.5045 Z M 20.5032,34.5045L 18.5029,34.5045L 18.5028,17.5022L 20.5031,17.5022L 20.5032,34.5045 Z M 16.5026,34.5045L 14.5023,34.5045L 14.5023,14.5022L 16.5026,14.5022L 16.5026,34.5045 Z " HorizontalAlignment="Left" Height="30" Margin="6,3,0,0" UseLayoutRounding="False" VerticalAlignment="Top" Width="30" />
+      </Grid>
+    </Button>
+    <sdk:Label Margin="0,4,4,4" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Right" Content="{Binding Path=ResourceStrings.XTSStringBraceResetBrace, Source={StaticResource LocalizedResources}}" VerticalAlignment="Bottom" Height="22" FontSize="8" />
+    <Grid Grid.ColumnSpan="2" HorizontalAlignment="Right" Grid.Row="4" Grid.Column="2" Width="500" Margin="0,0,-4,0">
+      <xtscontrols:FiringOrder Margin="92,0,0,0">
+        <xtscontrols:FiringOrder.Background>
+          <SolidColorBrush Color="{StaticResource ColorAMOTBackgroundOverlay}" />
+        </xtscontrols:FiringOrder.Background>
+        <xtscontrols:FiringOrder.Foreground>
+          <SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+        </xtscontrols:FiringOrder.Foreground>
+      </xtscontrols:FiringOrder>
+      <Button x:Name="buttonFiring" Width="88" Style="{StaticResource ButtonStyleAMOT}" Click="buttonFiring_clicked" HorizontalAlignment="Left">
+        <Button.Background>
+          <SolidColorBrush Color="{StaticResource ColorAMOTButton}" />
+        </Button.Background>
+        <Button.Foreground>
+          <SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+        </Button.Foreground>
+        <Grid>
+          <TextBlock TextWrapping="Wrap" Text="{Binding Path=ResourceStrings.XTSStringCalibrateFiringOrder, Source={StaticResource LocalizedResources}}" d:LayoutOverrides="Width, Height" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="2,0,0,0" />
+          <Grid Width="66" Height="24" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="4,4,0,0">
+            <Path Stretch="Fill" Fill="{Binding Foreground, ElementName=buttonFiring}" Data="F1 M 32,128L 640,128L 640,352L 32,352L 32,128 Z M 64,160L 64,320L 608,320L 608,160L 64,160 Z " UseLayoutRounding="False" />
+            <Ellipse Stretch="Fill" Fill="{Binding Foreground, ElementName=buttonFiring}" HorizontalAlignment="Center" Height="12" VerticalAlignment="Center" Width="12" Margin="0,0,42,0" Opacity="0.25" />
+            <Ellipse Stretch="Fill" Fill="{Binding Foreground, ElementName=buttonFiring}" HorizontalAlignment="Center" Height="12" VerticalAlignment="Center" Width="12" Margin="0,0,14,0" />
+            <Ellipse Stretch="Fill" Fill="{Binding Foreground, ElementName=buttonFiring}" HorizontalAlignment="Center" Height="12" VerticalAlignment="Center" Width="12" Margin="14,0,0,0" Opacity="0.5" />
+            <Ellipse Stretch="Fill" Fill="{Binding Foreground, ElementName=buttonFiring}" HorizontalAlignment="Center" Height="12" VerticalAlignment="Center" Width="12" Margin="42,0,0,0" Opacity="0.75" />
+          </Grid>
+        </Grid>
+      </Button>
+    </Grid>
+  </Grid>
+</UserControl>

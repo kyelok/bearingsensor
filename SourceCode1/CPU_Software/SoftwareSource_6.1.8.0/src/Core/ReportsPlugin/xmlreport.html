@@ -1,0 +1,46 @@
+<html>
+<head>
+<title>XML Report Specified</title>
+<link href="/config/Content/Site.css" rel="stylesheet" type="text/css" /><script type="text/javascript">
+function qs(search_for) {
+	var query = window.location.search.substring(1);
+	var parms = query.split('&');
+	for (var i=0; i<parms.length; i++) {
+		var pos = parms[i].indexOf('=');
+		if (pos > 0  && search_for == parms[i].substring(0,pos)) {
+			return parms[i].substring(pos+1);;
+		}
+	}
+	return "";
+}
+
+function OnLoad() {
+    var reportName = unescape(qs("report"));
+    UpdateElementText("MainTitle", reportName);
+    UpdateElementText("ReportName", reportName);
+}
+
+function UpdateElementText(id, text) {
+    var element = document.getElementById(id);
+    if (element.innerText)
+    {
+        element.innerText = text;
+    }
+    else if (element.textContent)
+    {
+        element.textContent = text;
+    }
+}
+</script>
+</head>
+<body onload="OnLoad()">
+<center>
+<p>
+<h1 id="MainTitle">MainTitle</h1>
+<p>
+The report <i><span id="ReportName">ReportName</span></i> can not be displayed due to its content type.
+<p>
+Please download using the button below.
+</center>
+</body>
+</html>

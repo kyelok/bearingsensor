@@ -1,0 +1,280 @@
+Windows Embedded Standard Image
+===============================
+
+Prerequisites
+-------------
+
+Microsoft Windows Embedded Studio 2009 for Windows Embedded Standard 2009.
+
+Instructions
+-------------
+
+Please refer to AMOT WES2009 Build Instructions.txt.
+
+
+Application
+===========
+
+Prerequisites
+-------------
+
+Microsoft Visual Studio 2010 Professional
+Microsoft Visual Studio Service Pack 1
+Microsoft .NET 4 Framework
+Microsoft Silverlight 5 SDK
+Telerik RadControls for Silverlight5 v2012.1.326.1050
+ASP.NET MVC 3 for Visual Studio 2010 SP1
+
+
+Building Additional Tools
+-------------------------
+
+Certain build scripts use custom tools that need to be built before the script
+can be run.
+
+Open the required Solution in Visual Studio.  These have the exension .sln
+within the project directory.
+
+Choose the Release build;
+  Select Build->Configuration Manager
+  Select 'Release' from Active Solution Configuration.
+  Select the platform from Active Solution Platform (typically 'X86').
+  Click the 'Close' button.
+
+These options can also be chosen from the Standard toolbar.
+
+Build the project and it's dependencies by selecting Build->Rebuild Solution.
+
+These instructions can also be used for buiding any of the other utilities or
+test tools within \src\utils or \src\tests.
+
+
+Build Instructions
+------------------
+
+All build scripts should be run from within their directory location,
+i.e. src.
+
+
+*** Updating the software Version ***
+
+The software version of the software modules is set within the Assembly Info
+file for the Visual Studio project for the module.  This is typically found
+in \Properties\AssemblyInfo.cs within the project directory.
+
+The AssemblyVersion and AssemblyFileVersion information can be updated manually
+for each project if required.  However, a script has been written to aid in
+updating the main software modules used in a build for release or udpate.
+
+The following tool is required for updating the software versions automatically:
+src\utils\AssemblyInfoUtil
+
+Script name-
+versionupdate.bat
+
+Usage-
+versionupdate [minorversion] [buildnumber]
+
+This will update the modules to have software version
+6.0.[minorversion].[buildnumber]
+
+
+*** Building the source code ***
+
+The source code script will build all of the required software modules for the
+system.  It will not build the settings or update websites.
+
+Script name-
+buildall.bat
+
+Usage-
+This script has no parameters.
+
+The build binaries shall be copied to the folder src\archive.  This is for
+backup purposes only and can be ignored.
+
+
+*** Creating a release ***
+
+The create_release.bat script will build the settings and update websites and
+copy required files into a folder structure suitable for copying to an AMOT
+XTS-W II file system or for creating standard udpate packages.
+
+The following tool is required to be built before running this script:
+src\utils\UpgradeSPU
+
+Script name-
+create_release.bat
+
+Usage-
+This script has no parameters.
+
+All required files shall be copied into the src\release folder, into two folders
+named by drive for installing on the XTS-W II.
+
+i.e. src\release\c and src\release\d.
+
+A third folder src\release\utils will contain additional applications used by
+the system.
+
+
+*** Creating update packages ***
+
+The create_updates.bat script will create .pkg files based on the output from
+the buildall and create_release scripts with the files within their original
+build folders and the release directory.
+
+The following tool is required to be built before running this script:
+src\Update\CreateUpdatePkg
+
+Script name-
+create_updates.bat
+
+Usage-
+This script has no parameters.
+
+Running the script will try to create 3 packages;
+
+  server_update.pkg - This contains the modbus server software only, based on
+                      the binaries within the ModBusServer project build folder.
+  logger_update.pkg - This contains the XTS-W II logging framework software
+                      only, based on the binaries within the Framework project
+                      build folder.
+    xtsw_update.pkg - This contains the files within the src\release\c\amot
+                      folder, so is useful for complete system updates.
+
+Typical use shall not warrant using a full size xtsw_update.pkg.  It is a good
+idea to delete any files from the release folder that you do not want to include
+before running the create_updates script.
+
+A good example of this is to remove the Silverlight runtime installer from
+src\release\c\amot\website\files.
+
+Alternatively, the CreateUpdatePkg tool can be used independantly of the script
+for packaging any folder into an update file for the XTS-W II system.
+
+Usage-
+CreateUpdatePkg [src] [dest] [output]
+
+     src - The folder containing the files to include in the update.
+    dest - The folder to install the files to on the target system.
+  output - The output filename of the update pkg file.
+
+
+Customising Runtime Options
+---------------------------
+The modbus server and logging framework can be customised to run locally which
+can aid in debugging of these services.  Each project defines a configuration
+file defines various settings.  Typically during debugging, it is the use of
+filepaths or network addresses that will differ, e.g. setting up a local
+database on your C drive, rather than the D: drive of the real system (as you
+may not have a D drive locally).
+
+Note that not all settings are defined below, just those that are commonly used.
+
+*** Modbus Server ***
+This file defines the settings the modebus server application itself.
+
+Configuration File-
+src\Core\ModbusServer\ModbusServer\app.config
+
+Useful settings-
+
+configuration/appSettings
+
+Keys:
+           ConfigFile - Full path of Modbus port configuration file
+            ConfigDir - Path to configuration files
+        commsdatabase - SQLite database full path for storing comm statistics
+ ServerVersionNumbers - Destination full path for where modbus version number
+                        information is written to.
+
+configuration/log4net/appender/file
+
+Attributes:
+ Value - Location of output log file
+
+
+*** Modbus Port Configuration ***
+This additional modbus configuration file allows configuration of the ports used
+for sending/receiving modbus data.
+
+Configuration File-
+src\Core\ModbusServer\ModbusServer\ModbusServer.config
+
+configuration/modbusServer
+
+Keys:
+ InternalComPort  - Port number for internal modbus (e.g. COM2)
+ InternalBaudRate - Baud rate (e.g. 38400)
+ InternalParity   - Parity (0 - none, 1 - odd, 2 - even, 3 - mark, 4 - space)
+ InternalDataBits - Number of data bits (e.g. 8)
+ InternalStopBits - Number of stop bits (e.g. 1)
+
+ ExternalComPort  - Port number for internal modbus (e.g. COM1)
+ ExternalBaudRate - Baud rate (e.g. 38400)
+ ExternalParity   - Parity (0 - none, 1 - odd, 2 - even, 3 - mark, 4 - space)
+ ExternalDataBits - Number of data bits (e.g. 8)
+ ExternalStopBits - Number of stop bits (e.g. 1)
+
+ RTUReadTimeout   - Timeout for reading data from the SPU
+ RTUWriteTimeout  - Timeout for writing data to the SPU 
+ RTURetry         - Number of times to retry reading/writing data
+
+
+*** Data Logging Framework ***
+Configuration File-
+src\Core\DataCollectionFramework\Framework\app.config
+
+Useful settings-
+configuration/appSettings
+
+Keys:
+ PluginVersionNumbers - Destination full path for where plugin version numbers
+                        information is written to.
+ ServerVersionNumbers - Destination full path for where data logger version
+                        number information is written to.
+              reports - Destination path for generated reports
+
+configuration/SPUDataCollectionPlugin/settings
+
+Attributes:
+ ModbusAddress - The network address to access remote modbus data
+    ModbusPort - The TCP/IP port for reading modbus data
+
+configuration/EngineLearnPlugin/settings
+
+Attributes:
+ SpeedCompDirectory - Destination path for storing generated speed compensation
+                      table files.
+
+configuration/DataCollectionSDK/Database
+ TrendConfiguration - Full path to database file for trend settings
+         DataLogger - Full path to database file for storing all logged data
+           EventLog - Full path to database file for events
+            UsersDb - Full path to database file for user settings
+  SensorReplacement - Full path to database file for sensor replacement data
+          CommStats - Full path to database file for communication statistics
+    ConfigurationDb - Full path to database file for system configuration
+         TempFolder - Path for storing temporary files
+        RIALocation - Location of the Silverlight application
+
+configuration/DataCollectionSDK/Modbus
+
+Attributes:
+           ModbushostIP - The network address to access remote modbus data
+ ModbusExternalHostPort - The TCP/IP port for reading the mapped modbus data
+ ModbusInternalHostPort - The TCP/IP port for reading modbus data
+
+configuration/GLMachineMeasurementPlugin/settings
+
+Attributes:
+ TempPath - Path for storing temporary files
+
+configuration/log4net/appender/file
+
+Attributes:
+ Value - Location of output log file
+
+
+EOF

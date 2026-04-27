@@ -1,0 +1,80 @@
+﻿<sdk:ChildWindow
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls"
+    xmlns:local="clr-namespace:XTS"
+    xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    x:Class="XTS.ChildWindows.SPUCommsWindow"
+    Width="400" Height="300"
+    Title="{Binding Path=ResourceStrings.XTSStringDetailedCommunicationsStatistics, Source={StaticResource LocalizedResources}}"
+    HasCloseButton="False" Loaded="SPUCommsWindow_Loaded" Unloaded="SPUCommsWindow_Unloaded">
+  <sdk:ChildWindow.Resources>
+    <local:MimicModel x:Key="MimicModelDataSource" />
+    <local:XTSStatusConverter x:Key="StatusConverter" />
+  </sdk:ChildWindow.Resources>
+  <sdk:ChildWindow.Style>
+    <StaticResource ResourceKey="ChildWindowStyleAMOT" />
+  </sdk:ChildWindow.Style>
+  <Grid x:Name="LayoutRoot" Margin="2" DataContext="{Binding Source={StaticResource MimicModelDataSource}}">
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="1*" />
+      <ColumnDefinition Width="12" />
+      <ColumnDefinition Width="2*" />
+    </Grid.ColumnDefinitions>
+    <Grid.RowDefinitions>
+      <RowDefinition />
+      <RowDefinition />
+      <RowDefinition />
+      <RowDefinition />
+      <RowDefinition />
+      <RowDefinition />
+      <RowDefinition Height="48" />
+    </Grid.RowDefinitions>
+
+		<Path Stretch="Fill" Data="F1 M 21.7009,23.5869L 16.9189,18.805C 16.3981,18.2842 16.3981,17.4397 16.9189,16.9189C 17.4397,16.3981 18.2841,16.3981 18.805,16.9189L 23.5869,21.7009C 27.2435,18.9595 32.4538,19.2515 35.7794,22.5771L 22.5771,35.7794C 19.2515,32.4539 18.9594,27.2435 21.7009,23.5869 Z M 41.4375,28.2352C 44.7631,31.5608 45.0551,36.7711 42.3137,40.4277L 47.0956,45.2096C 47.6165,45.7304 47.6165,46.5749 47.0956,47.0957C 46.5748,47.6165 45.7304,47.6165 45.2096,47.0957L 40.4276,42.3137C 36.771,45.0551 31.5607,44.7631 28.2352,41.4375L 31.0643,38.6085L 28.7067,36.2509C 27.9255,35.4697 27.9255,34.2031 28.7067,33.4218C 29.4879,32.6406 30.7545,32.6406 31.5358,33.4218L 33.8933,35.7794L 35.7794,33.8933L 33.4218,31.5358C 32.6406,30.7546 32.6406,29.4879 33.4218,28.7067C 34.203,27.9255 35.4697,27.9255 36.2509,28.7067L 38.6084,31.0643L 41.4375,28.2352 Z "
+			UseLayoutRounding="False" Margin="0,-40,0,21" HorizontalAlignment="Left" Width="280" Height="280" Grid.RowSpan="7" Grid.Column="2">
+      <Path.Fill>
+        <SolidColorBrush Color="{StaticResource ColorAMOTBGIcon}" />
+      </Path.Fill>
+    </Path>
+    <Button x:Name="CancelButton" Click="CancelButton_Click" Width="44" Height="44" HorizontalAlignment="Right" Grid.Row="6" Style="{StaticResource ButtonStyleAMOT}" Grid.Column="2" VerticalAlignment="Bottom">
+      <Button.Foreground>
+        <SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+      </Button.Foreground>
+      <Button.Background>
+        <SolidColorBrush Color="{StaticResource ColorAMOTButton}" />
+      </Button.Background>
+      <Grid>
+        <TextBlock Margin="2,0,0,0" TextWrapping="Wrap" Text="{Binding Path=ResourceStrings.XTSStringClose, Source={StaticResource LocalizedResources}}" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontSize="8" />
+        <Path Stretch="Fill" Data="F1 M 400,224C 400,237.255 389.255,248 376,248L 280,248C 266.745,248 256,237.255 256,224L 256,128C 256,114.745 266.745,104 280,104L 376,104C 389.255,104 400,114.745 400,128L 400,224 Z M 272,136L 312,176L 272,216L 288,232L 328,192L 368,232L 384,216L 344,176L 384,136L 368,120L 328,160L 288,120L 272,136 Z " Margin="8,4,8,0" UseLayoutRounding="False" Fill="{Binding Foreground, ElementName=CancelButton}" Height="28" VerticalAlignment="Top" />
+      </Grid>
+    </Button>
+    <sdk:Label HorizontalAlignment="Right" VerticalAlignment="Center" Content="{Binding Path=ResourceStrings.XTSStringPacketsReceivedC, Source={StaticResource LocalizedResources}}" />
+    <sdk:Label HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="2" Content="{Binding XTSDataSource.Diagnostics.CommunicationStatistics.SPUPacketsReceived}" />
+    <sdk:Label HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Row="2" Content="{Binding Path=ResourceStrings.XTSStringPacketsSentC, Source={StaticResource LocalizedResources}}" />
+    <sdk:Label HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="2" Grid.Column="2" Content="{Binding XTSDataSource.Diagnostics.CommunicationStatistics.SPUPacketsSent}" />
+    <sdk:Label HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Row="1" Content="{Binding Path=ResourceStrings.XTSStringReadPacketsLostC, Source={StaticResource LocalizedResources}}" />
+    <sdk:Label HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="1" Grid.Column="2" Content="{Binding XTSDataSource.Diagnostics.CommunicationStatistics.SPUReadPacketsLost}" />
+    <sdk:Label HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Row="3" Content="{Binding Path=ResourceStrings.XTSStringWritePacketsLostC, Source={StaticResource LocalizedResources}}" />
+    <sdk:Label HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="3" Grid.Column="2" Content="{Binding XTSDataSource.Diagnostics.CommunicationStatistics.SPUWritePacketsLost}" />
+    <sdk:Label HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Row="4" Content="{Binding Path=ResourceStrings.XTSStringRetriesC, Source={StaticResource LocalizedResources}}" />
+    <sdk:Label HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="4" Grid.Column="2" Content="{Binding XTSDataSource.Diagnostics.CommunicationStatistics.SPURetries}" />
+    <sdk:Label HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Row="5" Content="{Binding Path=ResourceStrings.XTSStringCRCErrorsC, Source={StaticResource LocalizedResources}}" />
+    <sdk:Label HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="5" Grid.Column="2" Content="{Binding XTSDataSource.Diagnostics.CommunicationStatistics.SPUCRCErrors}" />
+    <Button x:Name="buttonReset" Grid.Row="6" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="44" Height="44" Style="{StaticResource ButtonStyleAMOT}" Click="buttonReset_Click">
+      <Button.Foreground>
+        <SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+      </Button.Foreground>
+      <Button.Background>
+        <SolidColorBrush Color="{StaticResource ColorAMOTButton}" />
+      </Button.Background>
+      <Grid Margin="0">
+        <Path Stretch="Fill" Fill="{Binding Foreground, ElementName=buttonReset}" Data="F1 M 16.0018,13.0019L 13.0018,16.002L 13.0018,24.0019L 21.0018,24.002L 24.0018,21.0019L 18.4108,21.0014C 19.7843,19.4668 21.7803,18.501 24.0019,18.501C 28.1446,18.501 31.5029,21.8593 31.5029,26.002C 31.5029,28.0734 30.6633,29.9486 29.3059,31.3061L 31.7811,33.7812C 33.772,31.7903 35.0033,29.0399 35.0033,26.0019C 35.0033,19.926 30.0778,15.0004 24.0018,15.0004C 20.8494,15.0004 18.0067,16.3263 16.0009,18.4508L 16.0018,13.0019 Z " UseLayoutRounding="False" Margin="7,2,7,15" />
+        <TextBlock Margin="2,0,0,0" TextWrapping="Wrap" Text="{Binding Path=ResourceStrings.XTSStringReset, Source={StaticResource LocalizedResources}}" VerticalAlignment="Bottom" d:LayoutOverrides="Width" HorizontalAlignment="Left" />
+      </Grid>
+    </Button>
+  </Grid>
+</sdk:ChildWindow>

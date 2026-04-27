@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type='text/xsl' href='_UpgradeReport_Files/UpgradeReport.xslt'?><UpgradeLog>
+<Properties><Property Name="Solution" Value="NModbus">
+</Property><Property Name="Solution File" Value="E:\projects\amot\xts-w-gen-ii\repository\trunk\src\Core\NModbus\source\src\NModbus.sln">
+</Property><Property Name="Date" Value="05 January 2012">
+</Property><Property Name="Time" Value="13:03">
+</Property></Properties><Event ErrorLevel="0" Project="Modbus" Source="Modbus\Modbus.csproj" Description="Project converted successfully">
+</Event><Event ErrorLevel="3" Project="Modbus" Source="Modbus\Modbus.csproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="Modbus.IntegrationTests" Source="Modbus.IntegrationTests\Modbus.IntegrationTests.csproj" Description="Project converted successfully">
+</Event><Event ErrorLevel="3" Project="Modbus.IntegrationTests" Source="Modbus.IntegrationTests\Modbus.IntegrationTests.csproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="Modbus.UnitTests" Source="Modbus.UnitTests\Modbus.UnitTests.csproj" Description="Project converted successfully">
+</Event><Event ErrorLevel="3" Project="Modbus.UnitTests" Source="Modbus.UnitTests\Modbus.UnitTests.csproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="MySample" Source="MySample\MySample.csproj" Description="Project converted successfully">
+</Event><Event ErrorLevel="3" Project="MySample" Source="MySample\MySample.csproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="FtdAdapter" Source="FtdAdapter\FtdAdapter.csproj" Description="Project converted successfully">
+</Event><Event ErrorLevel="3" Project="FtdAdapter" Source="FtdAdapter\FtdAdapter.csproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="Modbus.Extensions" Source="Modbus.Extensions\Modbus.Extensions.csproj" Description="Project converted successfully">
+</Event><Event ErrorLevel="3" Project="Modbus.Extensions" Source="Modbus.Extensions\Modbus.Extensions.csproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="Modbus - Compact" Source="Modbus\Modbus - Compact.csproj" Description="Project converted successfully">
+</Event><Event ErrorLevel="3" Project="Modbus - Compact" Source="Modbus\Modbus - Compact.csproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="Modbus.Extensions - Compact" Source="Modbus.Extensions\Modbus.Extensions - Compact.csproj" Description="Project converted successfully">
+</Event><Event ErrorLevel="3" Project="Modbus.Extensions - Compact" Source="Modbus.Extensions\Modbus.Extensions - Compact.csproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="Test Compact Framework" Source="Test Compact Framework\Test Compact Framework.csproj" Description="Project converted successfully">
+</Event><Event ErrorLevel="3" Project="Test Compact Framework" Source="Test Compact Framework\Test Compact Framework.csproj" Description="Converted">
+</Event><Event ErrorLevel="2" Project="Modbus - Compact" Source="Modbus\Modbus - Compact.csproj" Description="The project file 'E:\projects\amot\xts-w-gen-ii\repository\trunk\src\Core\NModbus\source\src\Modbus\Modbus - Compact.csproj' cannot be opened.&#xA;&#xA;The project type is not supported by this installation.">
+</Event><Event ErrorLevel="2" Project="Modbus.Extensions - Compact" Source="Modbus.Extensions\Modbus.Extensions - Compact.csproj" Description="The project file 'E:\projects\amot\xts-w-gen-ii\repository\trunk\src\Core\NModbus\source\src\Modbus.Extensions\Modbus.Extensions - Compact.csproj' cannot be opened.&#xA;&#xA;The project type is not supported by this installation.">
+</Event><Event ErrorLevel="2" Project="Test Compact Framework" Source="Test Compact Framework\Test Compact Framework.csproj" Description="The project file 'E:\projects\amot\xts-w-gen-ii\repository\trunk\src\Core\NModbus\source\src\Test Compact Framework\Test Compact Framework.csproj' cannot be opened.&#xA;&#xA;The project type is not supported by this installation.">
+</Event><Event ErrorLevel="0" Project="" Source="NModbus.sln" Description="Solution converted successfully">
+</Event><Event ErrorLevel="3" Project="" Source="NModbus.sln" Description="Converted">
+</Event><Event ErrorLevel="0" Project="Modbus" Source="Modbus\Modbus.csproj" Description="Scan complete: Upgrade not required for project files.">
+</Event><Event ErrorLevel="0" Project="Modbus.IntegrationTests" Source="Modbus.IntegrationTests\Modbus.IntegrationTests.csproj" Description="Scan complete: Upgrade not required for project files.">
+</Event><Event ErrorLevel="0" Project="Modbus.UnitTests" Source="Modbus.UnitTests\Modbus.UnitTests.csproj" Description="Scan complete: Upgrade not required for project files.">
+</Event><Event ErrorLevel="0" Project="MySample" Source="MySample\MySample.csproj" Description="Scan complete: Upgrade not required for project files.">
+</Event><Event ErrorLevel="0" Project="FtdAdapter" Source="FtdAdapter\FtdAdapter.csproj" Description="Scan complete: Upgrade not required for project files.">
+</Event><Event ErrorLevel="0" Project="Modbus.Extensions" Source="Modbus.Extensions\Modbus.Extensions.csproj" Description="Scan complete: Upgrade not required for project files.">
+</Event></UpgradeLog>

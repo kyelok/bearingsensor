@@ -1,0 +1,798 @@
+﻿<UserControl
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:local="clr-namespace:XTS"
+	xmlns:localControl="clr-namespace:XTS.Controls"
+	xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+	xmlns:chartView="clr-namespace:Telerik.Windows.Controls.ChartView;assembly=Telerik.Windows.Controls.Chart"
+	xmlns:telerikChart="clr-namespace:Telerik.Windows.Controls;assembly=Telerik.Windows.Controls.Charting"
+	xmlns:treeView="clr-namespace:Telerik.Windows.Controls.TreeView;assembly=Telerik.Windows.Controls.Navigation" 
+	xmlns:dragAndDrop="clr-namespace:Telerik.Windows.Controls.DragDrop;assembly=Telerik.Windows.Controls"
+	xmlns:rowReorder="clr-namespace:Util.GridView.RowReorder"
+	xmlns:autoScroll="clr-namespace:SL.RowReorder"
+    xmlns:charting="clr-namespace:Telerik.Windows.Controls.Charting;assembly=Telerik.Windows.Controls.Charting"
+    
+    xmlns:collection="clr-namespace:XTS.Util"
+	xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+  
+	xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
+	mc:Ignorable="d"
+	x:Class="XTS.Trends"
+	d:DesignWidth="1024" d:DesignHeight="546" Width="Auto" Height="Auto" Unloaded="Trends_Unloaded" Loaded="Trends_Loaded">
+  <UserControl.Resources>
+    <local:TrendsModel x:Key="TrendsModelDataSource" />
+    <local:ActualValueErrorConverter x:Key="ActualValueErrorConverter" />
+    <local:ActualValueErrorConverter x:Key="BlankZeroConverter" />
+    <localControl:XTSDateTimeVisibilityConverter x:Key="DTVisibilityConverter" />
+		
+    <DataTemplate x:Key="ItemTemplate">
+      <StackPanel>
+        <TextBlock Text="{Binding High}" />
+      </StackPanel>
+    </DataTemplate>
+
+    <Style x:Key="DataGridColumnHeaderStyle" TargetType="sdk:DataGridColumnHeader">
+			
+      <Setter Property="HorizontalContentAlignment" Value="Left" />
+      <Setter Property="VerticalContentAlignment" Value="Center" />
+      <Setter Property="IsTabStop" Value="False" />
+      <Setter Property="SeparatorBrush" Value="#FFC9CACA" />
+      <Setter Property="Padding" Value="4" />
+      <Setter Property="Template">
+        <Setter.Value>
+          <ControlTemplate TargetType="sdk:DataGridColumnHeader">
+            <Grid x:Name="Root">
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="Auto" />
+              </Grid.ColumnDefinitions>
+              <VisualStateManager.VisualStateGroups>
+                <VisualStateGroup x:Name="CommonStates">
+                  <VisualState x:Name="Normal" />
+                  <VisualState x:Name="MouseOver">
+                    <Storyboard>
+                      <ColorAnimation Duration="0" To="#FF448DCA" Storyboard.TargetProperty="(Fill).Color" Storyboard.TargetName="BackgroundRectangle" />
+                    </Storyboard>
+                  </VisualState>
+                  <VisualState x:Name="Pressed">
+                    <Storyboard>
+                      <ColorAnimation Duration="0" To="#FF448DCA" Storyboard.TargetProperty="(Fill).Color" Storyboard.TargetName="BackgroundRectangle" />
+                    </Storyboard>
+                  </VisualState>
+                </VisualStateGroup>
+                <VisualStateGroup x:Name="SortStates">
+                  <VisualState x:Name="Unsorted" />
+                  <VisualState x:Name="SortAscending">
+                    <Storyboard>
+                      <DoubleAnimation Duration="0" To="1.0" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="SortIcon" />
+                    </Storyboard>
+                  </VisualState>
+                  <VisualState x:Name="SortDescending">
+                    <Storyboard>
+                      <DoubleAnimation Duration="0" To="1.0" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="SortIcon" />
+                      <DoubleAnimation Duration="0" To="-.9" Storyboard.TargetProperty="(RenderTransform).ScaleY" Storyboard.TargetName="SortIcon" />
+                    </Storyboard>
+                  </VisualState>
+                </VisualStateGroup>
+              </VisualStateManager.VisualStateGroups>
+              <Rectangle x:Name="BackgroundRectangle" Grid.ColumnSpan="2" Stretch="Fill">
+                <Rectangle.Effect>
+                  <DropShadowEffect ShadowDepth="1" Opacity="0.9" />
+                </Rectangle.Effect>
+                <Rectangle.Fill>
+                  <SolidColorBrush Color="{StaticResource ColorAMOTButton}" />
+                </Rectangle.Fill>
+              </Rectangle>
+              <Grid HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition />
+                  <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <ContentPresenter Content="{TemplateBinding Content}" />
+                <Path x:Name="SortIcon" Grid.Column="1" Data="F1 M -5.215,6.099L 5.215,6.099L 0,0L -5.215,6.099 Z " Fill="#FF444444" HorizontalAlignment="Left" Margin="4,0,0,0" Opacity="0" RenderTransformOrigin=".5,.5" Stretch="Uniform" VerticalAlignment="Center" Width="8">
+                  <Path.RenderTransform>
+                    <ScaleTransform ScaleY=".9" ScaleX=".9" />
+                  </Path.RenderTransform>
+                </Path>
+              </Grid>
+              <Rectangle x:Name="VerticalSeparator" Grid.Column="1" Fill="{TemplateBinding SeparatorBrush}" Visibility="{TemplateBinding SeparatorVisibility}" VerticalAlignment="Stretch" Width="1" />
+            </Grid>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
+    <Style x:Key="DataGridCellStyle" TargetType="sdk:DataGridCell">
+      <Setter Property="Background" Value="Transparent" />
+      <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+      <Setter Property="VerticalContentAlignment" Value="Stretch" />
+      <Setter Property="IsTabStop" Value="False" />
+      <Setter Property="Template">
+        <Setter.Value>
+          <ControlTemplate TargetType="sdk:DataGridCell">
+            <Grid x:Name="Root" Background="{TemplateBinding Background}">
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="Auto" />
+              </Grid.ColumnDefinitions>
+              <VisualStateManager.VisualStateGroups>
+                <VisualStateGroup x:Name="CurrentStates">
+                  <VisualState x:Name="Regular" />
+									<VisualState x:Name="Current">
+										
+									</VisualState>
+                </VisualStateGroup>
+                <VisualStateGroup x:Name="ValidationStates">
+                  <VisualState x:Name="Valid" />
+                  <VisualState x:Name="Invalid">
+                    <Storyboard>
+                      <DoubleAnimation Duration="0" To="1" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="InvalidVisualElement" />
+                      <ColorAnimation Duration="0" To="#FFFFFFFF" Storyboard.TargetProperty="(Fill).Color" Storyboard.TargetName="FocusVisual" />
+                    </Storyboard>
+                  </VisualState>
+                </VisualStateGroup>
+              </VisualStateManager.VisualStateGroups>
+              <Rectangle x:Name="FocusVisual" Fill="#66FFFFFF" HorizontalAlignment="Stretch" IsHitTestVisible="false" Opacity="0" Stroke="#FF6DBDD1" StrokeThickness="1" VerticalAlignment="Stretch" />
+              <ContentPresenter ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+              <Rectangle x:Name="InvalidVisualElement" HorizontalAlignment="Stretch" IsHitTestVisible="False" Opacity="0" Stroke="#FFDC000C" StrokeThickness="1" VerticalAlignment="Stretch" />
+              <Rectangle x:Name="RightGridLine" Grid.Column="1" VerticalAlignment="Stretch" Width="1" />
+            </Grid>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
+    <SolidColorBrush x:Key="GridView_HeaderInnerBorder" Color="#FF4B4B4B" />
+    <SolidColorBrush x:Key="GridView_HeaderOuterBorder_Over" Color="{StaticResource ColorAMOTButton}" />
+    <SolidColorBrush x:Key="GridView_HeaderInnerBorder_Over" Color="Transparent" />
+    <SolidColorBrush x:Key="GridView_HeaderBackground_Over" Color="{StaticResource ColorAMOTBlue}" />
+    <SolidColorBrush x:Key="GridView_HeaderOuterBorder_Selected" Color="{StaticResource ColorAMOTBlue}" />
+    <SolidColorBrush x:Key="GridView_HeaderInnerBorder_Selected" Color="{StaticResource ColorAMOTBlue}" />
+    <SolidColorBrush x:Key="GridView_HeaderBackground_Selected" Color="{StaticResource ColorAMOTBlue}" />
+    <Style x:Key="StretchedContentControl" TargetType="ContentControl">
+      <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+      <Setter Property="VerticalContentAlignment" Value="Stretch" />
+    </Style>
+    <SolidColorBrush x:Key="GridView_SortIndicatorColor" />
+    <telerik:MetroTheme x:Key="Theme" IsApplicationTheme="False" Source="/Telerik.Windows.Themes.Metro;component/themes/Generic.xaml" />
+    <ControlTemplate x:Key="ThumbControlTemplate1" TargetType="Thumb">
+      <Grid />
+    </ControlTemplate>
+    <Style x:Key="ColumnHeaderGripperStyle" TargetType="Thumb">
+      <Setter Property="Width" Value="8" />
+      <Setter Property="Background" Value="Transparent" />
+      <Setter Property="BorderBrush" Value="Transparent" />
+      <Setter Property="BorderThickness" Value="0" />
+      <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+      <Setter Property="VerticalContentAlignment" Value="Stretch" />
+      <Setter Property="Padding" Value="0" />
+      <Setter Property="Cursor" Value="SizeWE" />
+      <Setter Property="Template" Value="{StaticResource ThumbControlTemplate1}" />
+    </Style>
+    <SolidColorBrush x:Key="GridView_HeaderForeground_Selected" Color="Black" />
+    <ControlTemplate x:Key="GridViewHeaderCellTemplate" TargetType="telerik:GridViewHeaderCell">
+      <Grid x:Name="PART_HeaderCellGrid" Margin="0" Background="{TemplateBinding Background}">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="*" />
+          <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        <VisualStateManager.VisualStateGroups>
+          <VisualStateGroup x:Name="CommonStates">
+            <VisualStateGroup.Transitions>
+              <VisualTransition GeneratedDuration="00:00:00.2000000" To="Normal" />
+              <VisualTransition GeneratedDuration="00:00:00.2000000" To="MouseOver" />
+            </VisualStateGroup.Transitions>
+            <VisualState x:Name="Normal" />
+            <VisualState x:Name="MouseOver" />
+            <VisualState x:Name="Ascending">
+              <Storyboard>
+                <ObjectAnimationUsingKeyFrames BeginTime="00:00:00" Duration="00:00:00.0010000" Storyboard.TargetProperty="Foreground" Storyboard.TargetName="ContentPresenter">
+                  <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{StaticResource GridView_HeaderForeground_Selected}" />
+                </ObjectAnimationUsingKeyFrames>
+                <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Opacity" Storyboard.TargetName="PART_SortIndicator">
+                  <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="1" />
+                </ObjectAnimationUsingKeyFrames>
+                <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Opacity" Storyboard.TargetName="GridViewHeaderCell_Selected">
+                  <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="1" />
+                </ObjectAnimationUsingKeyFrames>
+              </Storyboard>
+            </VisualState>
+            <VisualState x:Name="Descending">
+              <Storyboard>
+                <ObjectAnimationUsingKeyFrames BeginTime="00:00:00" Duration="00:00:00.0010000" Storyboard.TargetProperty="Foreground" Storyboard.TargetName="ContentPresenter">
+                  <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{StaticResource GridView_HeaderForeground_Selected}" />
+                </ObjectAnimationUsingKeyFrames>
+                <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Opacity" Storyboard.TargetName="PART_SortIndicator">
+                  <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="1" />
+                </ObjectAnimationUsingKeyFrames>
+                <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="RenderTransform" Storyboard.TargetName="PART_SortIndicator">
+                  <DiscreteObjectKeyFrame KeyTime="0:0:0">
+                    <DiscreteObjectKeyFrame.Value>
+                      <ScaleTransform ScaleY="1" ScaleX="1" />
+                    </DiscreteObjectKeyFrame.Value>
+                  </DiscreteObjectKeyFrame>
+                </ObjectAnimationUsingKeyFrames>
+                <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Opacity" Storyboard.TargetName="GridViewHeaderCell_Selected">
+                  <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="1" />
+                </ObjectAnimationUsingKeyFrames>
+              </Storyboard>
+            </VisualState>
+          </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+        <Border x:Name="GridViewHeaderCell" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Grid.ColumnSpan="2">
+          <Border BorderBrush="{StaticResource GridView_HeaderInnerBorder}" BorderThickness="0" Background="{TemplateBinding Background}" />
+        </Border>
+        <Border x:Name="GridViewHeaderCell_Over" BorderBrush="{StaticResource GridView_HeaderOuterBorder_Over}" BorderThickness="{TemplateBinding BorderThickness}" Grid.ColumnSpan="2" Opacity="0" />
+        <Border x:Name="GridViewHeaderCell_Selected" BorderBrush="{StaticResource GridView_HeaderOuterBorder_Selected}" BorderThickness="{TemplateBinding BorderThickness}" Grid.ColumnSpan="2" Opacity="0">
+          <Border BorderBrush="{StaticResource GridView_HeaderInnerBorder_Selected}" BorderThickness="1" Background="{StaticResource GridView_HeaderBackground_Selected}" />
+        </Border>
+        <ContentControl x:Name="ContentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" Grid.Column="0" Foreground="{TemplateBinding Foreground}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" IsTabStop="{TemplateBinding IsTabStop}" Margin="{TemplateBinding Padding}" Style="{StaticResource StretchedContentControl}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+        <Path x:Name="PART_SortIndicator" Grid.ColumnSpan="2" Data="M0,0 L1,0 2,0 3,0 4,0 5,0 5,1 4,1 4,2 3,2 3,3 2,3 2,2 1,2 1,1 0,1 0,0 z" Fill="{StaticResource GridView_SortIndicatorColor}" HorizontalAlignment="Center" Height="3" Margin="0,3,0,0" Opacity="0" RenderTransformOrigin=".5,.5" Stretch="Fill" VerticalAlignment="Top" Width="5">
+          <Path.RenderTransform>
+            <TransformGroup>
+              <ScaleTransform ScaleY="-1" ScaleX="1" />
+              <SkewTransform AngleY="0" AngleX="0" />
+              <RotateTransform Angle="0" />
+              <TranslateTransform X="0" Y="0" />
+            </TransformGroup>
+          </Path.RenderTransform>
+        </Path>
+        <telerik:FilteringDropDown x:Name="PART_DistinctFilterControl" Grid.Column="1" Margin="0,0,8,0" telerik:StyleManager.Theme="{StaticResource Theme}" Visibility="{TemplateBinding FilteringUIVisibility}" />
+        <Thumb x:Name="PART_LeftHeaderGripper" Grid.ColumnSpan="2" HorizontalAlignment="Left" IsTabStop="{TemplateBinding IsTabStop}" Style="{StaticResource ColumnHeaderGripperStyle}" />
+        <Thumb x:Name="PART_RightHeaderGripper" Grid.ColumnSpan="2" HorizontalAlignment="Right" IsTabStop="{TemplateBinding IsTabStop}" Style="{StaticResource ColumnHeaderGripperStyle}" />
+      </Grid>
+    </ControlTemplate>
+    <SolidColorBrush x:Key="GridView_HeaderBackground" Color="{StaticResource ColorAMOTBlue}" />
+    <SolidColorBrush x:Key="GridView_HeaderOuterBorder" Color="#00848484" />
+    <SolidColorBrush x:Key="GridView_HeaderForeground" Color="White" />
+    <Style x:Key="GridViewHeaderCellStyle" TargetType="telerik:GridViewHeaderCell">
+      <Setter Property="Template" Value="{StaticResource GridViewHeaderCellTemplate}" />
+      <Setter Property="Background" Value="{StaticResource GridView_HeaderBackground}" />
+      <Setter Property="BorderBrush" Value="{StaticResource GridView_HeaderOuterBorder}" />
+      <Setter Property="BorderThickness" Value="0,0,1,1" />
+      <Setter Property="VerticalContentAlignment" Value="Center" />
+      <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+      <Setter Property="Padding" Value="5,0,3,0" />
+      <Setter Property="Foreground" Value="{StaticResource GridView_HeaderForeground}" />
+    </Style>
+    <SolidColorBrush x:Key="GridView_GroupPanelOuterBorder" Color="#FF848484" />
+    <telerik:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    <SolidColorBrush x:Key="Background_Disabled" Color="{StaticResource ColorAMOTDisabled}" />
+    <ControlTemplate x:Key="RadGridViewTemplate" TargetType="telerik:RadGridView">
+      <Border x:Name="PART_MasterGridContainer" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Padding="{TemplateBinding Padding}">
+        <VisualStateManager.VisualStateGroups>
+          <VisualStateGroup x:Name="GridViewActivity">
+            <VisualState x:Name="Idle">
+              <Storyboard>
+                <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility" Storyboard.TargetName="PART_GridViewLoadingIndicator">
+                  <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="Collapsed" />
+                </ObjectAnimationUsingKeyFrames>
+              </Storyboard>
+            </VisualState>
+            <VisualState x:Name="Busy">
+              <Storyboard>
+                <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility" Storyboard.TargetName="PART_GridViewLoadingIndicator">
+                  <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="Visible" />
+                </ObjectAnimationUsingKeyFrames>
+              </Storyboard>
+            </VisualState>
+          </VisualStateGroup>
+          <VisualStateGroup x:Name="ColumnHeadersVisibility">
+            <VisualState x:Name="ColumnHeadersVisible">
+              <Storyboard>
+                <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility" Storyboard.TargetName="PART_HeaderRow">
+                  <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="Visible" />
+                </ObjectAnimationUsingKeyFrames>
+              </Storyboard>
+            </VisualState>
+            <VisualState x:Name="ColumnHeadersCollapsed">
+              <Storyboard>
+                <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility" Storyboard.TargetName="PART_HeaderRow">
+                  <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="Collapsed" />
+                </ObjectAnimationUsingKeyFrames>
+              </Storyboard>
+            </VisualState>
+          </VisualStateGroup>
+          <VisualStateGroup x:Name="ColumnFootersVisibility">
+            <VisualState x:Name="ColumnFootersVisible">
+              <Storyboard>
+                <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility" Storyboard.TargetName="PART_FooterRow">
+                  <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="Visible" />
+                </ObjectAnimationUsingKeyFrames>
+              </Storyboard>
+            </VisualState>
+            <VisualState x:Name="ColumnFootersCollapsed">
+              <Storyboard>
+                <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility" Storyboard.TargetName="PART_FooterRow">
+                  <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="Collapsed" />
+                </ObjectAnimationUsingKeyFrames>
+              </Storyboard>
+            </VisualState>
+          </VisualStateGroup>
+          <VisualStateGroup x:Name="GroupPanelVisibility">
+            <VisualState x:Name="GroupPanelVisible">
+              <Storyboard>
+                <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility" Storyboard.TargetName="PART_GroupPanel">
+                  <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="Visible" />
+                </ObjectAnimationUsingKeyFrames>
+              </Storyboard>
+            </VisualState>
+            <VisualState x:Name="GroupPanelCollapsed">
+              <Storyboard>
+                <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility" Storyboard.TargetName="PART_GroupPanel">
+                  <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="Collapsed" />
+                </ObjectAnimationUsingKeyFrames>
+              </Storyboard>
+            </VisualState>
+          </VisualStateGroup>
+          <VisualStateGroup x:Name="InsertRowVisibility">
+            <VisualState x:Name="InsertRowVisible">
+              <Storyboard>
+                <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility" Storyboard.TargetName="PART_AddNewRow">
+                  <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="Visible" />
+                </ObjectAnimationUsingKeyFrames>
+              </Storyboard>
+            </VisualState>
+            <VisualState x:Name="InsertRowCollapsed">
+              <Storyboard>
+                <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility" Storyboard.TargetName="PART_AddNewRow">
+                  <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="Collapsed" />
+                </ObjectAnimationUsingKeyFrames>
+              </Storyboard>
+            </VisualState>
+          </VisualStateGroup>
+          <VisualStateGroup x:Name="DisabledStates">
+            <VisualState x:Name="Enabled" />
+            <VisualState x:Name="Disabled">
+              <Storyboard>
+                <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility" Storyboard.TargetName="Background_Disabled">
+                  <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="Visible" />
+                </ObjectAnimationUsingKeyFrames>
+              </Storyboard>
+            </VisualState>
+          </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+        <Grid x:Name="HierrarchyBackground" Background="{TemplateBinding Background}">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition x:Name="ScrollBarColumn" MinWidth="0" Width="0" />
+          </Grid.ColumnDefinitions>
+          <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition x:Name="PART_AttachedBehaviorRow" Height="Auto" />
+            <RowDefinition />
+            <RowDefinition x:Name="ScrollBarRow" Height="0" MinHeight="0" />
+            <RowDefinition Height="Auto" />
+          </Grid.RowDefinitions>
+          <telerik:GridViewGroupPanel x:Name="PART_GroupPanel" BorderBrush="{StaticResource GridView_GroupPanelOuterBorder}" Background="{TemplateBinding GroupPanelBackground}" Grid.ColumnSpan="2" Foreground="{TemplateBinding GroupPanelForeground}" Grid.Row="0" telerik:StyleManager.Theme="{StaticResource Theme}" />
+          <telerik:GridViewScrollViewer x:Name="PART_ItemsScrollViewer" Background="Transparent" CanContentScroll="True" Grid.ColumnSpan="2" Grid.Row="2" Grid.RowSpan="2" telerik:StyleManager.Theme="{StaticResource Theme}">
+            <telerik:GridViewScrollViewer.FooterRow>
+              <telerik:GridViewFooterRow x:Name="PART_FooterRow" IndentLevel="{TemplateBinding GroupCount}" telerik:StyleManager.Theme="{StaticResource Theme}" />
+            </telerik:GridViewScrollViewer.FooterRow>
+            <telerik:GridViewScrollViewer.HeaderRow>
+              <telerik:GridViewHeaderRow x:Name="PART_HeaderRow" IndentLevel="{TemplateBinding GroupCount}" telerik:StyleManager.Theme="{StaticResource Theme}" />
+            </telerik:GridViewScrollViewer.HeaderRow>
+            <telerik:GridViewScrollViewer.NewRow>
+              <telerik:GridViewNewRow x:Name="PART_AddNewRow" IndentLevel="{TemplateBinding GroupCount}" telerik:StyleManager.Theme="{StaticResource Theme}" Visibility="Collapsed" />
+            </telerik:GridViewScrollViewer.NewRow>
+            <telerik:GridViewVirtualizingPanel x:Name="PART_GridViewVirtualizingPanel" />
+          </telerik:GridViewScrollViewer>
+          <telerik:ScrollPositionIndicator x:Name="PART_ScrollPositionIndicator" Grid.ColumnSpan="2" ContentTemplate="{TemplateBinding ScrollPositionIndicatorTemplate}" HorizontalAlignment="Right" IsHitTestVisible="False" Margin="0,0,28,0" Grid.Row="2" telerik:StyleManager.Theme="{StaticResource Theme}" Visibility="{Binding IsScrolling, Converter={StaticResource BooleanToVisibilityConverter}, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" d:IsHidden="True" />
+          <Border x:Name="PART_FrozenColumnsPreview" Background="#33000000" HorizontalAlignment="Left" Grid.Row="1" Grid.RowSpan="4" Visibility="Collapsed" VerticalAlignment="Stretch" Width="6" d:IsHidden="True" />
+          <telerik:GridViewLoadingIndicator x:Name="PART_GridViewLoadingIndicator" Grid.ColumnSpan="2" Grid.RowSpan="4" telerik:StyleManager.Theme="{StaticResource Theme}" Visibility="Collapsed" d:IsHidden="True" />
+          <Rectangle x:Name="Background_Disabled" Grid.ColumnSpan="2" Fill="{StaticResource Background_Disabled}" IsHitTestVisible="False" Grid.RowSpan="5" Visibility="Collapsed" d:IsHidden="True" />
+        </Grid>
+      </Border>
+    </ControlTemplate>
+    <SolidColorBrush x:Key="ControlBackground" Color="White" />
+    <SolidColorBrush x:Key="ControlOuterBorder" Color="#FF848484" />
+    <SolidColorBrush x:Key="ControlForeground" Color="{StaticResource ColorAMOTText}" />
+    <SolidColorBrush x:Key="Item_AlternateBackground" Color="#FFF4F4F4" />
+    <SolidColorBrush x:Key="GridView_GridLinesItemBorder" Color="#FFCBCBCB" />
+    <LinearGradientBrush x:Key="GridView_GroupPanelBackground" EndPoint="0.5,1" StartPoint="0.5,0">
+      <GradientStop Color="#FFDFDFDF" Offset="1" />
+      <GradientStop Color="#FFBABABA" />
+    </LinearGradientBrush>
+    <SolidColorBrush x:Key="GridView_GroupPanelForeground" Color="Black" />
+    <Style x:Key="RadGridViewStyle" TargetType="telerik:RadGridView">
+      <Setter Property="Template" Value="{StaticResource RadGridViewTemplate}" />
+      <Setter Property="Background" Value="{StaticResource ControlBackground}" />
+      <Setter Property="BorderBrush" Value="{StaticResource ControlOuterBorder}" />
+      <Setter Property="Foreground" Value="{StaticResource ControlForeground}" />
+      <Setter Property="BorderThickness" Value="1" />
+      <Setter Property="AlternateRowBackground" Value="{StaticResource Item_AlternateBackground}" />
+      <Setter Property="VerticalGridLinesBrush" Value="{StaticResource GridView_GridLinesItemBorder}" />
+      <Setter Property="HorizontalGridLinesBrush" Value="{StaticResource GridView_GridLinesItemBorder}" />
+      <Setter Property="GroupPanelBackground" Value="{StaticResource GridView_GroupPanelBackground}" />
+      <Setter Property="GroupPanelForeground" Value="{StaticResource GridView_GroupPanelForeground}" />
+      <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto" />
+      <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
+      <Setter Property="VerticalAlignment" Value="Stretch" />
+      <Setter Property="HorizontalAlignment" Value="Stretch" />
+    </Style>
+		
+		
+		
+  </UserControl.Resources>
+
+  <Grid x:Name="LayoutRoot" DataContext="{Binding Source={StaticResource TrendsModelDataSource}}">
+		
+	 
+    <Grid.RowDefinitions>
+      <RowDefinition Height="*" />
+      <RowDefinition Height="44" />
+      <RowDefinition Height="Auto" />
+    </Grid.RowDefinitions>
+    <!-- TODO: Bind charts to data in MainPage.xts based on selected trends -->
+    <!-- TODO: Bind data to MainPage.xts.trends resource. -->
+    <!--		<sdk:DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Collection}" Height="208" VerticalAlignment="Bottom" DataContext="{Binding Source={StaticResource Trends}}">-->
+    <Border Margin="4,0,4,4" CornerRadius="2" BorderThickness="1" Padding="0">
+      <Border.Background>
+        <SolidColorBrush Color="{StaticResource ColorAMOTBackgroundOverlay}" />
+      </Border.Background>
+      <!-- TODO: Bind charts to data in MainPage.xts based on selected trends -->
+
+      <Grid Name="GraphGrid">
+        <telerik:RadCartesianChart x:Name="xCartesianChart" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+
+          <telerik:RadCartesianChart.Grid>
+            <telerik:CartesianChartGrid MajorLinesVisibility="XY" MajorXLineDashArray="10,5" MajorXLinesRenderMode="All" />
+          </telerik:RadCartesianChart.Grid>
+
+          <telerik:RadCartesianChart.VerticalAxis>
+            <telerik:LinearAxis x:Name="YAxis1" Title="Actual" RangeExtendDirection="None" />
+          </telerik:RadCartesianChart.VerticalAxis>
+                
+		
+          <telerik:RadCartesianChart.HorizontalAxis>
+					<telerik:DateTimeContinuousAxis x:Name="DateCategory" LabelFitMode="MultiLine" Title="Date/Time" LabelFormat="HH:mm:ss&#x0a;dd MMM yyyy"
+												   MajorStepUnit="Minute"  MajorStep="15" PlotMode="OnTicks" />
+          </telerik:RadCartesianChart.HorizontalAxis>
+
+          <telerik:RadCartesianChart.TrackBallInfoStyle>
+            <Style TargetType="telerik:TrackBallInfoControl">
+              <Setter Property="Background" Value="Transparent" />
+              <Setter Property="BorderThickness" Value="0" />
+              <Setter Property="Visibility" Value="Collapsed" />
+              <Setter Property="BorderBrush" Value="Transparent" />
+            </Style>
+          </telerik:RadCartesianChart.TrackBallInfoStyle>
+
+          <telerik:RadCartesianChart.Behaviors>
+            <chartView:ChartTrackBallBehavior x:Name="xChartTrackBall" ShowIntersectionPoints="True" ShowTrackInfo="True" TrackInfoUpdated="ChartTrackBallBehavior_TrackInfoUpdated" />
+          </telerik:RadCartesianChart.Behaviors>
+			
+            
+        </telerik:RadCartesianChart>
+        <Path x:Name="pathRealTime" Data="M0,1.1217178 L4.2399998,1.1217178 L4.2399998,20.824718 L0,20.824718 z M28.673689,0 L28.673689,21.344795 L18.373522,12.193956 L18.373522,21.645 L6.3606892,10.973104 L18.373522,0.30120444 L18.373522,9.1508398 z" Margin="0,18,50,0" RenderTransformOrigin="0.07393537308015,0.506963165879531" Stretch="Fill" UseLayoutRounding="False" d:LayoutRounding="Auto" HorizontalAlignment="Right" Height="30" VerticalAlignment="Top" Width="40" Opacity="0.75">
+          <Path.Effect>
+            <DropShadowEffect Opacity="0.5" ShadowDepth="0" BlurRadius="30" />
+          </Path.Effect>
+          <Path.Fill>
+            <SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+          </Path.Fill>
+          <Path.RenderTransform>
+            <CompositeTransform Rotation="179.456" TranslateX="21" TranslateY="-0.1" />
+          </Path.RenderTransform>
+        </Path>
+        <StackPanel x:Name="stackSPUWarning" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,8,0,0" Orientation="Horizontal" Opacity="0.75" Visibility="Collapsed">
+        	<StackPanel.Effect>
+        		<DropShadowEffect ShadowDepth="0" BlurRadius="14" Opacity="0.8" />
+        	</StackPanel.Effect>
+        	<Path Stretch="Fill" Fill="Red" Data="F1 M 24,12C 30.6274,12 36,17.3726 36,24C 36,30.6274 30.6274,36 24,36C 17.3726,36 12,30.6274 12,24C 12,17.3726 17.3726,12 24,12 Z M 24,15C 22.2389,15 20.5959,15.5058 19.2085,16.3801L 31.6199,28.7915C 32.4942,27.4041 33,25.7611 33,24C 33,19.0294 28.9706,15 24,15 Z M 15,24C 15,28.9706 19.0294,33 24,33C 25.7611,33 27.404,32.4942 28.7914,31.6199L 16.3801,19.2086C 15.5058,20.596 15,22.2389 15,24 Z " Margin="0,0,8,0" UseLayoutRounding="False" Opacity="0.4" VerticalAlignment="Center" HorizontalAlignment="Center" Width="32" Height="32">
+        		<Path.Stroke>
+        			<SolidColorBrush Color="{StaticResource ColorAMOTText}"/>
+        		</Path.Stroke>
+        	</Path>
+        	<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding ResourceStrings.XTSStringTrendWarningNoSPU, Source={StaticResource LocalizedResources}}" FontWeight="Bold" VerticalAlignment="Center">
+        		<TextBlock.Foreground>
+        			<SolidColorBrush Color="{StaticResource ColorAMOTText}"/>
+        		</TextBlock.Foreground>
+        	</TextBlock>
+        </StackPanel>
+      </Grid>
+
+    </Border>
+
+    <Grid Grid.Row="2" Margin="4,0">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition />
+        <ColumnDefinition Width="4" />
+        <ColumnDefinition Width="Auto" />
+      </Grid.ColumnDefinitions>
+
+      <Grid.Resources>
+        <DataTemplate x:Key="ColorPickerTemplate">
+                <localControl:ColorPickerPresenter Trend="{Binding Detail}"
+                                                IsAveraged="{Binding IsAveraged}"/>
+        </DataTemplate>
+
+        <DataTemplate x:Key="DeleteKeyTemplate">
+          <localControl:GridDeleteButton Trend="{Binding Detail}" />
+        </DataTemplate>
+
+        <DataTemplate x:Key="ReorderTemplate">
+          <localControl:TrendReorder Trend="{Binding Detail}" />
+        </DataTemplate>
+      </Grid.Resources>
+      <telerik:RadGridView x:Name="TrendsGrid" AutoGenerateColumns="False" IsFilteringAllowed="False" CanUserSortColumns="False" ShowGroupPanel="False" RowIndicatorVisibility="Collapsed" CanUserReorderColumns="False" CanUserFreezeColumns="False" dragAndDrop:RadDragAndDropManager.AllowDrop="False" ShowInsertRow="False" Style="{StaticResource RadGridViewStyle}" Height="181" ScrollViewer.VerticalScrollBarVisibility="Hidden" ScrollViewer.HorizontalScrollBarVisibility="Hidden" IsReadOnly="True" VerticalAlignment="Bottom" Margin="0,4,0,0">
+        <telerik:RadGridView.ColumnBackground>
+          <SolidColorBrush Color="{StaticResource ColorAMOTBlue75Transparent}" />
+        </telerik:RadGridView.ColumnBackground>
+
+        <telerik:RadGridView.Columns>
+          <telerik:GridViewDataColumn Width="44" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellTemplate="{StaticResource DeleteKeyTemplate}" IsReadOnly="True" />
+          <telerik:GridViewDataColumn Width="84" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellTemplate="{StaticResource ReorderTemplate}" IsReadOnly="True" />
+          <telerik:GridViewDataColumn Width="4*" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" DataMemberBinding="{Binding Path=Detail.Description}" Header="Description" IsReadOnly="True" TextWrapping="Wrap" />
+          <telerik:GridViewDataColumn Width="3*" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" DataMemberBinding="{Binding SelectedTimeDate}" Header="Time/Date" IsReadOnly="True" TextWrapping="Wrap" />
+          <telerik:GridViewDataColumn Width="1*" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" DataMemberBinding="{Binding SelectedActual, Converter={StaticResource ActualValueErrorConverter}}" Header="Actual" IsReadOnly="True" TextWrapping="Wrap" />
+          <telerik:GridViewDataColumn Width="1*" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" DataMemberBinding="{Binding High, Converter={StaticResource BlankZeroConverter}}" IsReadOnly="True" TextWrapping="Wrap" />
+          <telerik:GridViewDataColumn Width="1*" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" DataMemberBinding="{Binding Low, Converter={StaticResource BlankZeroConverter}}" IsReadOnly="True" TextWrapping="Wrap" />
+          <telerik:GridViewDataColumn Width="1*" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" DataMemberBinding="{Binding Max}" IsReadOnly="True" TextWrapping="Wrap" />
+          <telerik:GridViewDataColumn Width="1*" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" DataMemberBinding="{Binding Min}" IsReadOnly="True" TextWrapping="Wrap" />
+          <telerik:GridViewDataColumn Width="148" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellTemplate="{StaticResource ColorPickerTemplate}" IsReadOnly="True" Header="Properties" />
+        </telerik:RadGridView.Columns>
+      </telerik:RadGridView>
+
+      <Grid Grid.Column="2" Margin="0,4,0,0">
+        <Button x:Name="ScrollUp" Width="44" Height="44" VerticalAlignment="Top" Style="{StaticResource ButtonStyleAMOT}" Click="ScrollUp_Click" HorizontalAlignment="Center">
+          <Button.Foreground>
+            <SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+          </Button.Foreground>
+          <Button.Background>
+            <SolidColorBrush Color="{StaticResource ColorAMOTButton}" />
+          </Button.Background>
+          <Path Width="18" Height="16" Stretch="Fill" Data="F1 M 23.9063,22.5L 21.9063,24.5L 14.9063,31.75L 14.9063,25.25L 23.9063,15.75L 32.9063,25.25L 32.9063,31.75L 25.9063,24.5L 23.9063,22.5 Z " HorizontalAlignment="Center" VerticalAlignment="Center" UseLayoutRounding="False" Fill="{Binding Foreground, ElementName=ScrollUp}" />
+        </Button>
+                
+        <Button x:Name="ScrollDown" Width="44" Height="44" VerticalAlignment="Bottom" Style="{StaticResource ButtonStyleAMOT}" Click="ScrollDown_Click" HorizontalAlignment="Center">
+          <Button.Foreground>
+            <SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+          </Button.Foreground>
+          <Button.Background>
+            <SolidColorBrush Color="{StaticResource ColorAMOTButton}" />
+          </Button.Background>
+          <Path x:Name="path" Stretch="Fill" Data="F1 M 23.9063,22.5L 21.9063,24.5L 14.9063,31.75L 14.9063,25.25L 23.9063,15.75L 32.9063,25.25L 32.9063,31.75L 25.9063,24.5L 23.9063,22.5 Z " UseLayoutRounding="False" HorizontalAlignment="Center" VerticalAlignment="Center" RenderTransformOrigin="0.5,0.5" Fill="{Binding Foreground, ElementName=ScrollDown}" Width="18" Height="16">
+            <Path.RenderTransform>
+              <CompositeTransform Rotation="180" />
+            </Path.RenderTransform>
+          </Path>
+        </Button>
+      </Grid>
+    </Grid>
+	<ContentControl x:Name="ccTrendSetup" Grid.Row="1" HorizontalAlignment="Left" Margin="4,0,0,0">
+		<StackPanel Orientation="Horizontal" Height="44">
+			<Button Height="44" x:Name="buttonTrendsSelect" Style="{StaticResource ButtonStyleAMOT}" Width="44"
+				Click="TrendsSelect_Click" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,0,4,0">
+				<Button.Foreground>
+					<SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+				</Button.Foreground>
+				<Button.Background>
+					<SolidColorBrush Color="{StaticResource ColorAMOTButton}" />
+				</Button.Background>
+				<Grid>
+					<TextBlock Margin="2,0,0,0" TextWrapping="Wrap" Text="{Binding ResourceStrings.XTSStringTrends, Source={StaticResource LocalizedResources}}" VerticalAlignment="Bottom" HorizontalAlignment="Left" />
+					<Path Stretch="Fill" Fill="{Binding Foreground, ElementName=buttonTrendsConfigSelect}" Data="F1 M 36.5937,39.25L 36.5937,32.25L 43.5937,32.25L 43.5937,39.25L 36.5937,39.25 Z M 28.5937,39.25L 28.5937,32.25L 35.5937,32.25L 35.5937,39.25L 28.5937,39.25 Z M 20.5937,39.25L 20.5937,32.25L 27.5937,32.25L 27.5937,39.25L 20.5937,39.25 Z M 20.5937,31.25L 20.5937,24.25L 27.5937,24.25L 27.5937,31.25L 20.5937,31.25 Z M 36.5937,31.25L 36.5937,24.25L 43.5937,24.25L 43.5937,31.25L 36.5937,31.25 Z M 28.5937,31.25L 28.5937,24.25L 35.5937,24.25L 35.5937,31.25L 28.5937,31.25 Z M 30.5937,29.25L 33.5937,29.25L 33.5937,26.25L 30.5937,26.25L 30.5937,29.25 Z " Height="17" Margin="0,6,0,0" UseLayoutRounding="False" VerticalAlignment="Top" HorizontalAlignment="Center" Width="26" />
+				</Grid>
+			</Button>
+			<Button x:Name="buttonClear" Width="44" Height="44" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,0,16,0" Style="{StaticResource ButtonStyleAMOT}" Click="buttonClear_Click">
+				<Button.Foreground>
+					<SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+				</Button.Foreground>
+				<Button.Background>
+					<SolidColorBrush Color="{StaticResource ColorAMOTButton}" />
+				</Button.Background>
+				<Grid>
+					<TextBlock Margin="2,0,0,0" TextWrapping="Wrap" Text="{Binding ResourceStrings.XTSStringClear, Source={StaticResource LocalizedResources}}" HorizontalAlignment="Left" VerticalAlignment="Bottom" />
+					<Path Stretch="Fill" Fill="{Binding Foreground, ElementName=buttonClear}" Data="F1 M 16,15L 32,15C 32.5523,15 32.75,17.25 32.75,17.25L 15.25,17.25C 15.25,17.25 15.4477,15 16,15 Z M 22.5,12.5L 25.5,12.5C 25.7761,12.5 26.5,13.2239 26.5,13.5C 26.5,13.7762 25.7761,14.5 25.5,14.5L 22.5,14.5C 22.2238,14.5 21.5,13.7762 21.5,13.5C 21.5,13.2239 22.2238,12.5 22.5,12.5 Z M 17.5,18L 30.5,18C 31.0523,18 31.5,18.4477 31.5,19L 30.5,34C 30.5,34.5523 30.0523,35 29.5,35L 18.5,35C 17.9477,35 17.5,34.5523 17.5,34L 16.5,19C 16.5,18.4477 16.9477,18 17.5,18 Z M 19,20L 19.25,33L 21,33L 20.75,20L 19,20 Z M 23,20L 23,33L 25,33L 25,20L 23,20 Z M 27.25,20L 27,33L 28.75,33L 29,20L 27.25,20 Z " UseLayoutRounding="False" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,4,0,0" Width="22.5" Height="22.5" />
+				</Grid>
+			</Button>
+			<Button Height="44" x:Name="buttonTrendsConfigSelect" Style="{StaticResource ButtonStyleAMOT}" Width="44" Click="TrendsConfigSelect_Click" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,0,4,0">
+				<Button.Foreground>
+					<SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+				</Button.Foreground>
+				<Button.Background>
+					<SolidColorBrush Color="{StaticResource ColorAMOTButton}" />
+				</Button.Background>
+				<Grid>
+					<TextBlock Margin="2,0,0,0" TextWrapping="Wrap" Text="{Binding ResourceStrings.XTSStringConfig, Source={StaticResource LocalizedResources}}" VerticalAlignment="Bottom" HorizontalAlignment="Left" />
+					<Path Stretch="Fill" Fill="{Binding Foreground, ElementName=buttonTrendsConfigSelect}" Data="F1 M 12,13L 23,13L 23,15L 12,15L 12,13 Z M 25,13L 36,13L 36,15L 25,15L 25,13 Z M 12,17L 23,17L 23,19L 12,19L 12,17 Z M 25,17L 36,17L 36,19L 25,19L 25,17 Z M 12,21L 23,21L 23,23L 12,23L 12,21 Z M 25,21L 36,21L 36,23L 25,23L 25,21 Z M 12,25L 23,25L 23,27L 12,27L 12,25 Z M 25,25L 36,25L 36,27L 25,27L 25,25 Z M 12,29L 23,29L 23,31L 12,31L 12,29 Z M 25,29L 36,29L 36,31L 25,31L 25,29 Z M 12,33L 23,33L 23,35L 12,35L 12,33 Z M 25,33L 36,33L 36,35L 25,35L 25,33 Z " UseLayoutRounding="False" VerticalAlignment="Top" HorizontalAlignment="Center" Width="27" Height="20" Margin="0,5,0,0" />
+				</Grid>
+			</Button>
+			<Button Height="44" x:Name="buttonTrendsConfigStore" Style="{StaticResource ButtonStyleAMOT}" Width="44" Click="TrendsConfigStore_Click" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,0,16,0">
+				<Button.Foreground>
+					<SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+				</Button.Foreground>
+				<Button.Background>
+					<SolidColorBrush Color="{StaticResource ColorAMOTButton}" />
+				</Button.Background>
+				<Grid>
+					<TextBlock Margin="2,0,0,0" TextWrapping="Wrap" Text="{Binding ResourceStrings.XTSStringStore, Source={StaticResource LocalizedResources}}" VerticalAlignment="Bottom" HorizontalAlignment="Left" />
+					<Path Stretch="Fill" Fill="{Binding Foreground, ElementName=buttonTrendsConfigStore}" Data="F1 M 13,13L 31.0001,13L 35,17L 35,35L 13,35L 13,13 Z M 32.9999,18.0001L 30,15L 29,15L 29,23L 18,23L 18,15L 15,15L 15,33L 33,33L 32.9999,18.0001 Z M 25,15L 25,21L 27,21L 27,15L 25,15 Z " UseLayoutRounding="False" VerticalAlignment="Top" HorizontalAlignment="Center" Width="20" Height="20" Margin="0,5,0,0" />
+				</Grid>
+			</Button>
+			<Button x:Name="buttonExport" Width="44" Style="{StaticResource ButtonStyleAMOT}" Height="44" Click="Export_Click" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,0,16,0">
+				<Button.Foreground>
+					<SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+				</Button.Foreground>
+				<Button.Background>
+					<SolidColorBrush Color="{StaticResource ColorAMOTButton}" />
+				</Button.Background>
+				<Grid>
+					<Path Stretch="Fill" Data="F1 M 30,24L 36,24L 36,30L 41,30L 33,38L 25,30L 30,30L 30,24 Z M 13,13L 31,13L 35,17L 35,23L 32.9999,23L 32.9999,18.0001L 30,15L 29,15L 29,23L 28,23L 18,23L 18,15L 15,15.0001L 15,33L 26,33L 28,35L 13,35L 13,13 Z M 25,15L 25,21L 27,21L 27,15L 25,15 Z " Margin="4,5,0,0" UseLayoutRounding="False" Fill="{Binding Foreground, ElementName=buttonExport}" Width="25" Height="22" HorizontalAlignment="Center" VerticalAlignment="Top" />
+					<TextBlock Margin="2,0,0,0" TextWrapping="Wrap" Text="{Binding ResourceStrings.XTSStringExport, Source={StaticResource LocalizedResources}}" VerticalAlignment="Bottom" HorizontalAlignment="Left" />
+				</Grid>
+			</Button>
+		</StackPanel></ContentControl>
+
+	<ContentControl x:Name="ccTrendRange" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+		<StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Height="44">
+			<Button x:Name="buttonRewind" Width="44" Style="{StaticResource ButtonStyleAMOT}" Margin="0,0,4,0" Click="Rewind_Click">
+				<Button.Foreground>
+					<SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+				</Button.Foreground>
+				<Button.Background>
+					<SolidColorBrush Color="{StaticResource ColorAMOTButton}" />
+				</Button.Background>
+				<Grid>
+					<Path Stretch="Fill" Data="F1 M 25,17.5L 16.5,24L 25,30.5L 25,17.5 Z " UseLayoutRounding="False" Margin="-16,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" Height="21.667" Width="17.167">
+						<Path.Fill>
+							<SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+						</Path.Fill>
+					</Path>
+					<Path Stretch="Fill" Data="F1 M 25,17.5L 16.5,24L 25,30.5L 25,17.5 Z " UseLayoutRounding="False" Margin="15,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" Height="21.668" Width="17.168">
+						<Path.Fill>
+							<SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+						</Path.Fill>
+					</Path>
+				</Grid>
+			</Button>
+		
+		
+
+			<Button x:Name="buttonStepBack" Width="44" Style="{StaticResource ButtonStyleAMOT}" Margin="0,0,4,0" Click="StepBack_Click">
+				<Button.Foreground>
+					<SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+				</Button.Foreground>
+				<Button.Background>
+					<SolidColorBrush Color="{StaticResource ColorAMOTButton}" />
+				</Button.Background>
+				<Grid>
+					<Path Stretch="Fill" Data="F1 M 25,17.5L 16.5,24L 25,30.5L 25,17.5 Z " UseLayoutRounding="False" HorizontalAlignment="Center" VerticalAlignment="Center" Height="21.667" Width="17.167">
+						<Path.Fill>
+							<SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+						</Path.Fill>
+					</Path>
+				</Grid>
+			</Button>
+			<Button x:Name="buttonStepForward" Margin="0,0,4,0" Width="44" d:LayoutOverrides="Height" Style="{StaticResource ButtonStyleAMOT}" Click="StepForward_Click">
+				<Button.Foreground>
+					<SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+				</Button.Foreground>
+				<Button.Background>
+					<SolidColorBrush Color="{StaticResource ColorAMOTButton}" />
+				</Button.Background>
+				<Grid>
+					<Path Stretch="Fill" Data="F1 M 25,17.5L 16.5,24L 25,30.5L 25,17.5 Z " UseLayoutRounding="False" HorizontalAlignment="Center" VerticalAlignment="Center" Height="21.667" Width="17.167" RenderTransformOrigin="0.5,0.5">
+						<Path.Fill>
+							<SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+						</Path.Fill>
+						<Path.RenderTransform>
+							<CompositeTransform Rotation="180.591" />
+						</Path.RenderTransform>
+					</Path>
+				</Grid>
+			</Button>
+			<Button x:Name="buttonFastForward" Margin="0,0,4,0" Width="44" d:LayoutOverrides="Height" Style="{StaticResource ButtonStyleAMOT}" Click="FastForward_Click">
+				<Button.Foreground>
+					<SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+				</Button.Foreground>
+				<Button.Background>
+					<SolidColorBrush Color="{StaticResource ColorAMOTButton}" />
+				</Button.Background>
+				<Grid>
+					<Path Stretch="Fill" Data="F1 M 25,17.5L 16.5,24L 25,30.5L 25,17.5 Z " UseLayoutRounding="False" Margin="-10,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" Height="21.667" Width="17.167" RenderTransformOrigin="0.5,0.5">
+						<Path.Fill>
+							<SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+						</Path.Fill>
+						<Path.RenderTransform>
+							<CompositeTransform Rotation="180.591" />
+						</Path.RenderTransform>
+					</Path>
+					<Path Stretch="Fill" Data="F1 M 25,17.5L 16.5,24L 25,30.5L 25,17.5 Z " UseLayoutRounding="False" Margin="17,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" Height="21.668" Width="17.168" RenderTransformOrigin="0.5,0.5">
+						<Path.Fill>
+							<SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+						</Path.Fill>
+						<Path.RenderTransform>
+							<CompositeTransform Rotation="180.591" />
+						</Path.RenderTransform>
+					</Path>
+				</Grid>
+			</Button>
+			<Button x:Name="buttonEnd" Margin="0" Width="44" d:LayoutOverrides="Height" Style="{StaticResource ButtonStyleAMOT}" Click="End_Click">
+				<Button.Foreground>
+					<SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+				</Button.Foreground>
+				<Button.Background>
+					<SolidColorBrush Color="{StaticResource ColorAMOTButton}" />
+				</Button.Background>
+				<Grid>
+					<Path Data="M0,1.1217178 L4.2399998,1.1217178 L4.2399998,20.824718 L0,20.824718 z M28.673689,0 L28.673689,21.344795 L18.373522,12.193956 L18.373522,21.645 L6.3606892,10.973104 L18.373522,0.30120444 L18.373522,9.1508398 z" Margin="10.72,8.86,2.606,11.495" RenderTransformOrigin="0.07393537308015,0.506963165879531" Stretch="Fill" UseLayoutRounding="False" d:LayoutRounding="Auto">
+						<Path.Fill>
+							<SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+						</Path.Fill>
+						<Path.RenderTransform>
+							<CompositeTransform Rotation="179.456" TranslateX="21" TranslateY="-0.1" />
+						</Path.RenderTransform>
+					</Path>
+				</Grid>
+			</Button>
+		</StackPanel></ContentControl>
+    <Button x:Name="ButtonDateTime" HorizontalAlignment="Right" Grid.Row="1" Width="260" Style="{StaticResource ButtonStyleAMOT}" VerticalAlignment="Top" Height="44" Click="ButtonDateTime_Click" Margin="0,0,4,0">
+      <Button.Foreground>
+        <SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+      </Button.Foreground>
+      <Button.Background>
+        <SolidColorBrush Color="{StaticResource ColorAMOTButton}" />
+      </Button.Background>
+			
+      <Grid>
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="88" />
+          <ColumnDefinition Width="*" />
+          <ColumnDefinition Width="44" />
+        </Grid.ColumnDefinitions>
+        <Path Stretch="Fill" Fill="{Binding Foreground, ElementName=ButtonDateTime}" Data="F1 M 24,22C 25.1046,22 26,22.8954 26,24C 26,25.1046 25.1046,26 24,26C 22.8954,26 22,25.1046 22,24C 22,22.8954 22.8954,22 24,22 Z M 24.69,17.5542L 27.9094,14.793C 28.5138,15.05 29.0876,15.3647 29.6241,15.7302L 29.0458,19.93L 33.2747,20.2541C 33.5166,20.8524 33.7023,21.4794 33.8252,22.1286L 30.4458,24.69L 33.207,27.9094C 32.95,28.5137 32.6353,29.0876 32.2698,29.6241L 28.0699,29.0458L 27.7459,33.2747C 27.1476,33.5166 26.5206,33.7023 25.8714,33.8252L 23.3099,30.4458L 20.0906,33.207C 19.4862,32.95 18.9124,32.6353 18.3759,32.2698L 18.9542,28.0699L 14.7253,27.7459C 14.4834,27.1476 14.2977,26.5206 14.1748,25.8713L 17.5542,23.3099L 14.793,20.0906C 15.05,19.4862 15.3647,18.9124 15.7302,18.3759L 19.93,18.9542L 20.2541,14.7252C 20.8524,14.4834 21.4794,14.2977 22.1286,14.1748L 24.69,17.5542 Z M 24,20C 21.7909,20 20,21.7909 20,24C 20,26.2091 21.7909,28 24,28C 26.2091,28 28,26.2091 28,24C 28,21.7909 26.2091,20 24,20 Z " Grid.Column="2" UseLayoutRounding="False" HorizontalAlignment="Right" VerticalAlignment="Center" Width="36" Height="36" Margin="0,0,4,0" />
+        <Grid Height="44" VerticalAlignment="Top">
+          <sdk:Label Content="{Binding Path=ResourceStrings.XTSStringSpan, Source={StaticResource LocalizedResources}}" HorizontalAlignment="Left" Height="14" VerticalAlignment="Bottom" d:LayoutOverrides="HorizontalAlignment" Margin="2,2,0,0" Visibility="Collapsed">
+            <sdk:Label.Foreground>
+              <SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+            </sdk:Label.Foreground>
+          </sdk:Label>
+          <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" VerticalAlignment="Bottom" Margin="0,4">
+            <sdk:Label x:Name="labelSpan" Content="{Binding Path=ResourceStrings.XTSStringLabel1, Source={StaticResource LocalizedResources}}" FontSize="16" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center">
+              <sdk:Label.Foreground>
+                <SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+              </sdk:Label.Foreground>
+            </sdk:Label>
+            <sdk:Label Content="{Binding Path=ResourceStrings.XTSStringHrs, Source={StaticResource LocalizedResources}}" HorizontalAlignment="Left" FontSize="14.667" FontWeight="Normal">
+              <sdk:Label.Foreground>
+                <SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+              </sdk:Label.Foreground>
+            </sdk:Label>
+          </StackPanel>
+          <Path Stretch="Fill" Data="F1 M 30,18L 27,15L 31,15L 34.5,18.1111L 34.5,15L 36.5,15L 36.5,23L 34.5,23L 34.5,19.8889L 31,23L 27,23L 30,20L 18,20L 21,23L 17,23L 13.5,19.8889L 13.5,23L 11.5,23L 11.5,15L 13.5,15L 13.5,18.1111L 17,15L 21,15L 18,18L 30,18 Z " HorizontalAlignment="Left" UseLayoutRounding="False" Width="28" VerticalAlignment="Top" Height="10" Margin="4,4,0,0">
+            <Path.Fill>
+              <SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+            </Path.Fill>
+          </Path>
+        </Grid>
+        <Grid Height="44" VerticalAlignment="Top" Grid.Column="1">
+          <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="Auto" />
+          </Grid.RowDefinitions>
+          <Path Stretch="Fill" Data="F1 M 11.0017,36.005L 11.0017,14.002L 14.0021,14.002L 14.0021,11.0015L 19.0028,11.0015L 19.0028,14.002L 28.0039,14.002L 28.0039,11.0015L 33.0046,11.0015L 33.0046,14.002L 36.005,14.002L 36.005,36.005L 11.0017,36.005 Z M 13.0019,34.0048L 34.0047,34.0048L 34.0047,19.0027L 13.0019,19.0027L 13.0019,34.0048 Z M 16.5023,12.5017C 15.95,12.5017 15.5022,13.1734 15.5022,14.0019C 15.5022,14.8305 15.95,15.5021 16.5023,15.5021C 17.0547,15.5021 17.5025,14.8305 17.5025,14.0019C 17.5025,13.1734 17.0547,12.5017 16.5023,12.5017 Z M 30.5,12.4998C 29.9476,12.4998 29.4998,13.1715 29.4998,14C 29.4998,14.8286 29.9476,15.5002 30.5,15.5002C 31.0523,15.5002 31.5001,14.8286 31.5001,14C 31.5001,13.1715 31.0523,12.4998 30.5,12.4998 Z M 14.0019,29.0041L 18.0024,29.0041L 18.0024,32.0045L 14.0019,32.0045L 14.0019,29.0041 Z M 19.0025,29.0041L 23.003,29.0041L 23.003,32.0045L 19.0025,32.0045L 19.0025,29.0041 Z M 23.9996,28.9997L 28.0001,28.9997L 28.0001,32.0001L 23.9996,32.0001L 23.9996,28.9997 Z M 28.9996,28.9997L 33.0001,28.9997L 33.0001,32.0001L 28.9996,32.0001L 28.9996,28.9997 Z M 14.0019,25.0035L 18.0024,25.0035L 18.0024,28.0039L 14.0019,28.0039L 14.0019,25.0035 Z M 19.0025,25.0035L 23.0031,25.0035L 23.0031,28.0039L 19.0025,28.0039L 19.0025,25.0035 Z M 23.9996,24.9991L 28.0001,24.9991L 28.0001,27.9995L 23.9996,27.9995L 23.9996,24.9991 Z M 28.9996,24.9991L 33.0001,24.9991L 33.0001,27.9995L 28.9996,27.9995L 28.9996,24.9991 Z M 19.0026,21.0029L 23.0032,21.0029L 23.0032,24.0034L 19.0026,24.0034L 19.0026,21.0029 Z M 23.9997,20.9999L 28.0003,20.9999L 28.0003,24.0004L 23.9997,24.0004L 23.9997,20.9999 Z M 28.9997,20.9999L 33.0003,20.9999L 33.0003,24.0003L 28.9997,24.0003L 28.9997,20.9999 Z " UseLayoutRounding="False" VerticalAlignment="Center" Height="30" HorizontalAlignment="Left" Width="30" Margin="6,0,0,0" Grid.RowSpan="2">
+            <Path.Fill>
+              <SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+            </Path.Fill>
+          </Path>
+          <sdk:Label x:Name="labelTime" HorizontalAlignment="Left" Content="{Binding XTSDataSource.Trends.LastHistoryUpdate, StringFormat=HH:mm:ss}" VerticalAlignment="Bottom" FontWeight="Normal" FontSize="14.667" Margin="48,0,4,0" Visibility="{Binding XTSDataSource.Trends.LastHistoryUpdate, Converter={StaticResource DTVisibilityConverter}}">
+            <sdk:Label.Foreground>
+              <SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+            </sdk:Label.Foreground>
+          </sdk:Label>
+          <sdk:Label x:Name="labelDate" HorizontalAlignment="Left" Content="{Binding XTSDataSource.Trends.LastHistoryUpdate, StringFormat=dd MMM yyyy}" Grid.Row="1" VerticalAlignment="Top" FontWeight="Normal" FontSize="10.667" Margin="48,0,4,2" Visibility="{Binding XTSDataSource.Trends.LastHistoryUpdate, Converter={StaticResource DTVisibilityConverter}}">
+            <sdk:Label.Foreground>
+              <SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+            </sdk:Label.Foreground>
+          </sdk:Label>
+        </Grid>
+
+      </Grid>
+
+    </Button>
+    <Button x:Name="buttonExportClient" Content="Export Data" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="16,16,0,0" Visibility="Collapsed" Click="buttonExportClient_Click"/>
+	  
+  </Grid>
+</UserControl>

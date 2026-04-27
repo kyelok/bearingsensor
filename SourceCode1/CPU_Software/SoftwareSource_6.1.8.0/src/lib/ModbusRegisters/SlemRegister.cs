@@ -1,0 +1,76 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace ModbusRegisters
+{
+    /// <summary>
+    /// This class processes calculated status words for SLEM.
+    /// </summary>
+    public class SlemRegister : CalculatedSPURegister
+    {
+        /// <summary>
+        /// Constructs a calculated status word
+        /// </summary>
+        /// <param name="id">The intenral slave id</param>
+        /// <param name="address">The base address of this sensor</param>
+        /// <param name="externalId">The external slave id of this register</param>
+        /// <param name="externalAddress">The external address of this register</param>
+        internal SlemRegister(byte id, ushort address, byte externalId, ushort externalAddress)
+            : base(id, (ushort)(address - 1), externalId, externalAddress)
+        {
+            this.InternalRegisters = new ushort[2];
+            this.InternalRegisters[0] = (ushort)(SlemBase + this.InternalAddress);
+            this.InternalRegisters[1] = (ushort)(SlemAlarmStatusBase + this.InternalAddress);
+        }
+
+        /// <summary>
+        /// Calculates the value of this register as follows:
+        /// Bit     Colour          Condition                       Register(s)     Condition       Internal SPU ref 
+        /// 0       Green           Normal       
+        /// 1       Yellow          Alarm                           (473)           Bit 1 = 1       Slemalarm.alarm 
+        /// 2       Red             Slowdown                        n/a     
+        /// 3       Blue            Disabled                        (472)           = -32761   
+        /// 4       Magenta         Sensor adjustment               n/a     
+        /// 5                       Pre-warning                     n/a     
+        /// 6       Blue            Sensor failure                  (472)           ≥ -32766 and ≤ -32763 
+        ///                                                         (473)           bit 0 = 1        Slemalarm.oor 
+        /// 7       Blue            Sensor failure – no pulse       n/a     
+        /// 8       Blue            Sensor failure – low level      (472)           = -32765   
+        /// 9       Blue            Sensor failure – high level     (472)           = -32764   
+        /// 10      Blue            Sensor failure – rpm OOR        n/a     
+        /// </summary>
+        /// <param name="iEnumerable">A list of the SPU registers</param>
+        /// <returns>The calculated value of this register.</returns>
+        override public ushort CalculateValue(IEnumerable<ModbusRegister> spuRegisters)
+        {
+            CalculatedAlarmStatusWord result = 0;
+
+            ushort slemValueAddress = this.InternalRegisters[0];
+            ushort slemAlarmAddress = this.InternalRegisters[1];
+
+            short slemValue = (short)spuRegisters.ElementAt(slemValueAddress).Value;
+            SLEMAlarm alarm = (SLEMAlarm)spuRegisters.ElementAt(slemAlarmAddress).Value;
+
+            if ((alarm & SLEMAlarm.Alarm) == SLEMAlarm.Alarm)
+            {
+                result |= CalculatedAlarmStatusWord.Alarm;
+            }
+
+            if ((alarm & SLEMAlarm.OOR) == SLEMAlarm.OOR)
+            {
+                result |= CalculatedAlarmStatusWord.SensorFailure;
+            }
+
+            result |= CalculateSlemWioFailure(slemValue);
+
+            if (result == 0)
+            {
+                result |= CalculatedAlarmStatusWord.Normal;
+            }
+            
+            return (ushort)result;
+        }
+    }
+}

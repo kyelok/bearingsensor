@@ -1,0 +1,40 @@
+AMOT WES 2009 build
+===================
+
+These instructions assume that the Windows Embedded Studio is 
+installed & licensed using the Microsoft default settings.
+
+Windows Embedded Toolkit patched to Jan 2012 roll-up from Microsoft ECE.
+
+Source directory structure:
+SLX\
+ ECW-281B.slx
+ PC885.slx
+
+SLD_Files\
+ ahci\
+ ECW-Lan
+ ich8\
+ misc\
+ PC885 Lan\
+ RS485-WE\
+ ECW-281B.pmq
+ pc885.pmq
+
+
+ Build process:
+  1) Import the driver components listed above into the database
+  2) Import the two hardware .PMQ files and name the components
+	"PC885 Hardware" & "ECW-281B". Failure to retain these
+	names will cause the build to fail.
+  3) Open Target Designer and open the requires SLX for the hardware
+  4) Press F5 to Check Dependencies
+  5) Press F7 to Build Target Image
+
+The image will be built in c:\Windows Embedded Images
+
+After the image has built, install the files onto the formatted, bootable
+hardware disk.
+Follow the Post-FBA configuration instructions in "amot_slx_config.txt"
+
+

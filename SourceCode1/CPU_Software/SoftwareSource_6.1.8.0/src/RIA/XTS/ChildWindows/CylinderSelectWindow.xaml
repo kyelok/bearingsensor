@@ -1,0 +1,78 @@
+﻿<controls:ChildWindow
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
+    mc:Ignorable="d"
+    x:Class="XTS.ChildWindows.CylinderSelectWindow"
+    Title="{Binding Path=ResourceStrings.XTSStringSelectCylinders, Source={StaticResource LocalizedResources}}" Style="{StaticResource ChildWindowStyleAMOT}"
+    Loaded="CylinderSelectWindow_Loaded"
+    Closing="CylinderSelectWindow_Closing"
+    d:DesignWidth="377" d:DesignHeight="231"
+    HasCloseButton="False">
+  <Grid x:Name="LayoutRoot" Margin="2">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="*" />
+      <RowDefinition Height="44" />
+    </Grid.RowDefinitions>
+    <Button x:Name="CancelButton" Click="CancelButton_Click" Width="44" Height="44" HorizontalAlignment="Right" Margin="0" Grid.Row="1" VerticalAlignment="Top" Style="{StaticResource ButtonStyleAMOT}">
+      <Button.Background>
+        <SolidColorBrush Color="{StaticResource ColorAMOTButton}" />
+      </Button.Background>
+      <Button.Foreground>
+        <SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+      </Button.Foreground>
+      <Grid>
+        <Path Stretch="Fill" Data="F1 M 400,224C 400,237.255 389.255,248 376,248L 280,248C 266.745,248 256,237.255 256,224L 256,128C 256,114.745 266.745,104 280,104L 376,104C 389.255,104 400,114.745 400,128L 400,224 Z M 272,136L 312,176L 272,216L 288,232L 328,192L 368,232L 384,216L 344,176L 384,136L 368,120L 328,160L 288,120L 272,136 Z " Margin="8,4,8,12" UseLayoutRounding="False" Fill="{Binding Foreground, ElementName=CancelButton}" />
+        <TextBlock Margin="2,0,0,0" TextWrapping="Wrap" Text="{Binding Path=ResourceStrings.XTSStringCancel, Source={StaticResource LocalizedResources}}" FontSize="8" HorizontalAlignment="Left" VerticalAlignment="Bottom" />
+      </Grid>
+    </Button>
+    <Button x:Name="OKButton" Click="OKButton_Click" Width="44" Height="44" HorizontalAlignment="Right" Margin="0,0,52,0" Grid.Row="1" VerticalAlignment="Bottom" Style="{StaticResource ButtonStyleAMOT}">
+      <Button.Background>
+        <SolidColorBrush Color="{StaticResource ColorAMOTButton}" />
+      </Button.Background>
+      <Button.Foreground>
+        <SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+      </Button.Foreground>
+      <Grid>
+        <Path Stretch="Fill" Data="F1 M 256,112L 257.947,112.078L 344,112L 344,112.123C 357.24,112.123 367.976,122.845 368,136.123L 368,232.123C 368,245.378 357.255,256.123 344,256.123L 342.052,256.045L 256,256.123C 242.745,256.123 232,245.378 232,232.08L 232,136C 232,122.745 242.745,112 256,112 Z M 353.094,140.14L 336,128L 289.684,206.583L 256,176L 243.146,192L 296,240L 353.094,140.14 Z " Margin="8,4,8,12" UseLayoutRounding="False" Fill="{Binding Foreground, ElementName=OKButton}" />
+        <TextBlock Margin="2,0,0,0" TextWrapping="Wrap" Text="{Binding Path=ResourceStrings.XTSStringOK, Source={StaticResource LocalizedResources}}" FontSize="8" HorizontalAlignment="Left" VerticalAlignment="Bottom" />
+      </Grid>
+    </Button>
+    <Button x:Name="buttonAll" Click="buttonAll_Click" Width="44" Height="44" HorizontalAlignment="Left" Margin="0,0,48,0" Grid.Row="1" VerticalAlignment="Bottom" Style="{StaticResource ButtonStyleAMOT}">
+      <Button.Background>
+        <SolidColorBrush Color="{StaticResource ColorAMOTButton}" />
+      </Button.Background>
+      <Button.Foreground>
+        <SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+      </Button.Foreground>
+      <Grid>
+        <Path Stretch="Fill" Data="F1 M32,0 L159.717,0 L159.717,448 L127.616,448 L127.616,480 L64,480 L64,448 L32,448 L32,0 z" Margin="0,0,20,12" UseLayoutRounding="False" HorizontalAlignment="Center" Height="28" Width="8" VerticalAlignment="Bottom" Fill="{Binding Foreground, ElementName=buttonAll}" />
+        <Path Stretch="Fill" Data="F1 M32,0 L159.717,0 L159.717,448 L127.616,448 L127.616,480 L64,480 L64,448 L32,448 L32,0 z" Margin="0,0,0,12" UseLayoutRounding="False" HorizontalAlignment="Center" Height="28" Width="8" VerticalAlignment="Bottom" Fill="{Binding Foreground, ElementName=buttonAll}" />
+        <Path Stretch="Fill" Data="F1 M32,0 L159.717,0 L159.717,448 L127.616,448 L127.616,480 L64,480 L64,448 L32,448 L32,0 z" Margin="20,0,0,12" UseLayoutRounding="False" HorizontalAlignment="Center" Height="28" Width="8" VerticalAlignment="Bottom" Fill="{Binding Foreground, ElementName=buttonAll}" />
+        <TextBlock Margin="2,0,0,-0.364" TextWrapping="Wrap" Text="{Binding Path=ResourceStrings.XTSStringAll, Source={StaticResource LocalizedResources}}" FontSize="8" HorizontalAlignment="Left" VerticalAlignment="Bottom" />
+      </Grid>
+    </Button>
+    <Button x:Name="buttonNone" Click="buttonNone_Click" Width="44" Height="44" HorizontalAlignment="Left" Grid.Row="1" VerticalAlignment="Bottom" Style="{StaticResource ButtonStyleAMOT}" Margin="48,0,0,0">
+      <Button.Background>
+        <SolidColorBrush Color="{StaticResource ColorAMOTButton}" />
+      </Button.Background>
+      <Button.Foreground>
+        <SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+      </Button.Foreground>
+      <Grid>
+        <Path Stretch="Fill" Data="F1 M32,0 L159.717,0 L159.717,448 L127.616,448 L127.616,480 L64,480 L64,448 L32,448 L32,0 z" Margin="0,0,20,12" UseLayoutRounding="False" Opacity="0.5" HorizontalAlignment="Center" Height="28" Width="8" VerticalAlignment="Bottom" Fill="{Binding Foreground, ElementName=buttonNone}" />
+        <Path Stretch="Fill" Data="F1 M32,0 L159.717,0 L159.717,448 L127.616,448 L127.616,480 L64,480 L64,448 L32,448 L32,0 z" Margin="0,0,0,12" UseLayoutRounding="False" Opacity="0.5" HorizontalAlignment="Center" Height="28" Width="8" VerticalAlignment="Bottom" Fill="{Binding Foreground, ElementName=buttonNone}" />
+        <Path Stretch="Fill" Data="F1 M32,0 L159.717,0 L159.717,448 L127.616,448 L127.616,480 L64,480 L64,448 L32,448 L32,0 z" Margin="20,0,0,12" UseLayoutRounding="False" Opacity="0.5" HorizontalAlignment="Center" Height="28" Width="8" VerticalAlignment="Bottom" Fill="{Binding Foreground, ElementName=buttonNone}" />
+        <TextBlock Margin="2,0,0,0" TextWrapping="Wrap" Text="{Binding Path=ResourceStrings.XTSStringNone, Source={StaticResource LocalizedResources}}" d:LayoutOverrides="Width, Height" FontSize="8" HorizontalAlignment="Left" VerticalAlignment="Bottom" />
+      </Grid>
+    </Button>
+    <StackPanel x:Name="stackCylinders" Margin="0,0,0,4">
+      <StackPanel.Background>
+        <SolidColorBrush Color="{StaticResource ColorAMOTBackground}" />
+      </StackPanel.Background>
+    </StackPanel>
+  </Grid>
+</controls:ChildWindow>

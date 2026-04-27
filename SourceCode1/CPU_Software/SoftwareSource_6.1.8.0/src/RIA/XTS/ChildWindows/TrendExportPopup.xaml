@@ -1,0 +1,74 @@
+﻿<controls:ChildWindow
+     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+     xmlns:controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls"
+     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+     mc:Ignorable="d"
+     x:Class="XTS.ChildWindows.TrendExportPopup"
+     Width="300" Height="180"
+     Title="{Binding Path=ResourceStrings.XTSStringExportTrendData, Source={StaticResource LocalizedResources}}"
+     HasCloseButton="False"
+     Style="{StaticResource ChildWindowStyleAMOT}">
+  <Grid x:Name="LayoutRoot" Margin="2">
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition />
+      <ColumnDefinition Width="8" />
+      <ColumnDefinition />
+    </Grid.ColumnDefinitions>
+    <Grid.RowDefinitions>
+      <RowDefinition />
+      <RowDefinition Height="Auto" />
+    </Grid.RowDefinitions>
+    <!--
+        <Path Stretch="Fill" Data="F1 M 19.0027,22.0036L 28.0039,22.0031L 23.0032,18.0025L 30.0042,18.0025L 37.0052,24.0033L 30.0042,30.0042L 23.0032,30.0042L 28.0039,26.0036L 19.0027,26.0036L 19.0027,22.0036 Z M 32.0045,12.0017L 32.0045,17.0024L 30.0042,17.0024L 30.0042,14.002L 16.0022,14.002L 16.0022,34.0047L 30.0042,34.0047L 30.0042,31.0043L 32.0045,31.0043L 32.0045,36.005L 14.0019,36.005L 14.0019,12.0017L 32.0045,12.0017 Z " UseLayoutRounding="False" HorizontalAlignment="Left" VerticalAlignment="Top" Width="123" Height="124" Grid.RowSpan="2" Margin="0,0,0,0">
+            <Path.Fill>
+                <SolidColorBrush Color="{StaticResource ColorAMOTBGIcon}"/>
+            </Path.Fill>
+        </Path>
+        -->
+    <TextBlock Text="" Grid.ColumnSpan="3">
+      <!--What is this?  Should the text be empty?-->
+    </TextBlock>
+    <Button Height="88" Style="{StaticResource ButtonStyleAMOT}" x:Name="HighExport" Click="HighExport_Click" HorizontalAlignment="Right" VerticalAlignment="Center" Width="88">
+      <Button.Background>
+        <SolidColorBrush Color="{StaticResource ColorAMOTButton}" />
+      </Button.Background>
+      <Button.Foreground>
+        <SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+      </Button.Foreground>
+      <Grid>
+        <TextBlock Margin="2,0,0,0" TextWrapping="Wrap" Text="{Binding Path=ResourceStrings.XTSStringHigh, Source={StaticResource LocalizedResources}}" HorizontalAlignment="Left" VerticalAlignment="Bottom" />
+        <Path Height="64" Stretch="Fill" Fill="{Binding Foreground, ElementName=HighExport}" Data="F1 M -6.0002,-3.6925L -1.38478,-3.6925L -1.38478,47.0771L 54.0002,47.0771L 54.0002,51.6925L -6.0002,51.6925L -6.0002,-3.6925 Z " UseLayoutRounding="False" HorizontalAlignment="Center" VerticalAlignment="Top" Width="64" Margin="0,8,0,0" />
+        <Path Width="22" Height="22" Stretch="Fill" Fill="{Binding Foreground, ElementName=HighExport}" Data="F1 M 54.0002,41.9697L 48.4771,36.5955C 49.1902,35.361 49.3357,33.9282 49.3357,32.4C 49.3357,27.7608 45.8374,24 41.1982,24C 36.559,24 32.7981,27.7608 32.7981,32.4C 32.7981,37.0392 36.559,40.5376 41.1982,40.5376C 42.6479,40.5376 44.0118,40.4328 45.202,39.7863L 50.7679,45.2021C 51.588,46.0222 53.1801,46.0222 54.0002,45.2021C 54.8203,44.382 54.8203,42.7898 54.0002,41.9697 Z M 41.1982,27.15C 44.0977,27.15 46.4482,29.5005 46.4482,32.4C 46.4482,35.2995 44.0977,37.6501 41.1982,37.6501C 38.2987,37.6501 35.9482,35.2995 35.9482,32.4C 35.9482,29.5005 38.2987,27.15 41.1982,27.15 Z M 42.2462,29.25L 40.1462,29.25L 40.1462,31.35L 38.0462,31.35L 38.0462,33.45L 40.1462,33.45L 40.1462,35.55L 42.2462,35.55L 42.2462,33.45L 44.3462,33.45L 44.3462,31.35L 42.2462,31.35L 42.2462,29.25 Z " UseLayoutRounding="False" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="40,40,0,0" />
+        <Path Stretch="Fill" Fill="{Binding Foreground, ElementName=HighExport}" Data="F1 M 33.3802,14.6771L 36,11L 36,13L 34,16L 32.5885,16.8021L 30,21L 26.026,19.4896L 24.0052,20.3021L 22.2969,18.9271L 21,21L 18,22.5313L 18,22.5104L 16.515,21.8607L 14,26.7188L 14,24L 16,20L 18,21L 20,20L 22,17L 24.026,18.6354L 26,18L 29.5885,19.1354L 31.8385,15.6563L 33.3802,14.6771 Z " HorizontalAlignment="Center" Height="40" Margin="4,12,0,0" UseLayoutRounding="False" VerticalAlignment="Top" Width="56" />
+      </Grid>
+    </Button>
+    <Button Height="88" Style="{StaticResource ButtonStyleAMOT}" x:Name="LowExport" Click="LowExport_Click" Grid.Column="3" HorizontalAlignment="Left" Width="88" VerticalAlignment="Center">
+      <Button.Background>
+        <SolidColorBrush Color="{StaticResource ColorAMOTButton}" />
+      </Button.Background>
+      <Button.Foreground>
+        <SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+      </Button.Foreground>
+      <Grid>
+        <TextBlock Margin="2,0,0,0" TextWrapping="Wrap" Text="{Binding Path=ResourceStrings.XTSStringLow, Source={StaticResource LocalizedResources}}" HorizontalAlignment="Left" VerticalAlignment="Bottom" />
+        <Path Width="22" Height="22" Stretch="Fill" Fill="{Binding Foreground, ElementName=HighExport}" Data="F1 M 60.3139,46.0215L 55.0538,40.9033C 55.7329,39.7275 55.8715,38.363 55.8715,36.9076C 55.8715,32.4893 52.5398,28.9076 48.1215,28.9076C 43.7033,28.9076 40.1215,32.4893 40.1215,36.9076C 40.1215,41.3259 43.7033,44.6576 48.1215,44.6576C 49.5022,44.6576 50.8012,44.5579 51.9347,43.9421L 57.2355,49.1C 58.0165,49.881 59.5329,49.881 60.3139,49.1C 61.0949,48.3189 61.0949,46.8026 60.3139,46.0215 Z M 48.1215,31.9076C 50.883,31.9076 53.1216,34.1462 53.1216,36.9076C 53.1216,39.669 50.883,41.9076 48.1215,41.9076C 45.3601,41.9076 43.1215,39.669 43.1215,36.9076C 43.1215,34.1462 45.3601,31.9076 48.1215,31.9076 Z M 51.1197,35.9076L 45.1197,35.9076L 45.1197,37.9076L 51.1197,37.9076L 51.1197,35.9076 Z " UseLayoutRounding="False" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="40,40,0,0" />
+        <Path Height="64" Stretch="Fill" Fill="{Binding Foreground, ElementName=LowExport}" Data="F1 M -6.0002,-3.6925L -1.38478,-3.6925L -1.38478,47.0771L 54.0002,47.0771L 54.0002,51.6925L -6.0002,51.6925L -6.0002,-3.6925 Z " UseLayoutRounding="False" HorizontalAlignment="Center" VerticalAlignment="Top" Width="64" Margin="0,8,0,0" />
+        <Path Stretch="Fill" Fill="{Binding Foreground, ElementName=LowExport}" Data="F1 M 28,24L 21,21.5312L 14,32.4688L 14,29L 20.375,19L 27,21.5937L 37,12.5937L 37,15.6L 28,24 Z " HorizontalAlignment="Center" Height="40" Margin="4,12,0,0" UseLayoutRounding="False" VerticalAlignment="Top" Width="56" />
+      </Grid>
+    </Button>
+    <Button x:Name="CancelButton" Click="CancelButton_Click" Width="44" Height="44" HorizontalAlignment="Right" Style="{StaticResource ButtonStyleAMOT}" VerticalAlignment="Bottom" Grid.Row="1" Grid.Column="2">
+      <Button.Background>
+        <SolidColorBrush Color="{StaticResource ColorAMOTButton}" />
+      </Button.Background>
+      <Button.Foreground>
+        <SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+      </Button.Foreground>
+      <Grid>
+        <TextBlock Margin="2,0,0,0" TextWrapping="Wrap" Text="{Binding Path=ResourceStrings.XTSStringCancel, Source={StaticResource LocalizedResources}}" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontSize="8" />
+        <Path Stretch="Fill" Data="F1 M 400,224C 400,237.255 389.255,248 376,248L 280,248C 266.745,248 256,237.255 256,224L 256,128C 256,114.745 266.745,104 280,104L 376,104C 389.255,104 400,114.745 400,128L 400,224 Z M 272,136L 312,176L 272,216L 288,232L 328,192L 368,232L 384,216L 344,176L 384,136L 368,120L 328,160L 288,120L 272,136 Z " Margin="8,4,8,0" UseLayoutRounding="False" Fill="{Binding Foreground, ElementName=CancelButton}" Height="28" VerticalAlignment="Top" />
+      </Grid>
+    </Button>
+  </Grid>
+</controls:ChildWindow>

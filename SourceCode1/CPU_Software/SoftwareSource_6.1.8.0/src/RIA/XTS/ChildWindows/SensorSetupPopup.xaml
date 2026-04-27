@@ -1,0 +1,31 @@
+﻿<controls:ChildWindow
+    x:Class="XTS.ChildWindows.SensorSetupPopup"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls"
+    Title="{Binding Path=ResourceStrings.XTSStringSensorSetup, Source={StaticResource LocalizedResources}}"
+    xmlns:my="clr-namespace:XTS"
+    HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+    Margin="22,66,22,88"
+    Style="{StaticResource ChildWindowStyleAMOT}"
+    HasCloseButton="False">
+  <Grid x:Name="LayoutRoot" Margin="2">
+    <Grid.RowDefinitions>
+      <RowDefinition />
+      <RowDefinition Height="48" />
+    </Grid.RowDefinitions>
+    <Button x:Name="CancelButton" Click="CancelButton_Click" Width="44" Height="44" HorizontalAlignment="Right" VerticalAlignment="Bottom" Style="{StaticResource ButtonStyleAMOT}" Grid.Row="1">
+      <Button.Background>
+        <SolidColorBrush Color="{StaticResource ColorAMOTButton}" />
+      </Button.Background>
+      <Button.Foreground>
+        <SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+      </Button.Foreground>
+      <Grid>
+        <TextBlock Margin="2,0,0,0" TextWrapping="Wrap" Text="{Binding Path=ResourceStrings.XTSStringClose, Source={StaticResource LocalizedResources}}" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontSize="8" />
+        <Path Stretch="Fill" Data="F1 M 400,224C 400,237.255 389.255,248 376,248L 280,248C 266.745,248 256,237.255 256,224L 256,128C 256,114.745 266.745,104 280,104L 376,104C 389.255,104 400,114.745 400,128L 400,224 Z M 272,136L 312,176L 272,216L 288,232L 328,192L 368,232L 384,216L 344,176L 384,136L 368,120L 328,160L 288,120L 272,136 Z " Margin="8,4,8,0" UseLayoutRounding="False" Fill="{Binding Foreground, ElementName=CancelButton}" Height="28" VerticalAlignment="Top" />
+      </Grid>
+    </Button>
+    <my:SensorSetup x:Name="SensorSetup" Slowroll="true" />
+  </Grid>
+</controls:ChildWindow>

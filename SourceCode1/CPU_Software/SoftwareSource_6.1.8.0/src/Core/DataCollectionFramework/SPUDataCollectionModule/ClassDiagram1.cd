@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="ModbusClient.ModbusClient">
+    <Position X="9.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAAIAYAAACAAAAAIAgAQiAAAgAIQACBAAAAAI=</HashCode>
+      <FileName>ModbusClient.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="ModbusClient.Registers">
+    <Position X="3.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAiAAEAAAAAAAABTJAAAAAAAAgAAACAEAAAAAAAAAAA=</HashCode>
+      <FileName>Registers.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ModbusClient.RegistersInt16">
+    <Position X="5" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>RegistersInt16.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ModbusClient.RegistersInt32">
+    <Position X="0.5" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>RegistersInt32.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ModbusClient.RegistersUInt16">
+    <Position X="2.75" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>RegistersUInt16.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ModbusClient.RegistersUInt32">
+    <Position X="7.25" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>RegistersUInt32.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="Framework.IExtInterface">
+    <Position X="8" Y="0.5" Width="1.5" />
+    <TypeIdentifier />
+  </Interface>
+  <Font Name="Tahoma" Size="9.75" />
+</ClassDiagram>

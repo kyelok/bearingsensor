@@ -1,0 +1,815 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ExpressionBlendVersion>4.1.20402.0</ExpressionBlendVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{07A5E0AD-F07B-4CB2-9E63-04179825DB1F}</ProjectGuid>
+    <ProjectTypeGuids>{A1591282-1198-4647-A2B1-27E5FF5F6F3B};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>XTS</RootNamespace>
+    <AssemblyName>XTS</AssemblyName>
+    <TargetFrameworkIdentifier>Silverlight</TargetFrameworkIdentifier>
+    <TargetFrameworkVersion>v5.0</TargetFrameworkVersion>
+    <SilverlightVersion>$(TargetFrameworkVersion)</SilverlightVersion>
+    <SilverlightApplication>true</SilverlightApplication>
+    <SupportedCultures>fr</SupportedCultures>
+    <XapOutputs>true</XapOutputs>
+    <GenerateSilverlightManifest>true</GenerateSilverlightManifest>
+    <XapFilename>XTS.xap</XapFilename>
+    <SilverlightManifestTemplate>Properties\AppManifest.xml</SilverlightManifestTemplate>
+    <SilverlightAppEntry>XTS.App</SilverlightAppEntry>
+    <TestPageFileName>TestPage.html</TestPageFileName>
+    <CreateTestPage>true</CreateTestPage>
+    <ValidateXaml>true</ValidateXaml>
+    <EnableOutOfBrowser>true</EnableOutOfBrowser>
+    <UsePlatformExtensions>false</UsePlatformExtensions>
+    <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
+    <LinkedServerProject>
+    </LinkedServerProject>
+    <Utf8Output>true</Utf8Output>
+    <OutOfBrowserSettingsFile>Properties\OutOfBrowserSettings.xml</OutOfBrowserSettingsFile>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <!-- This property group is only here to support building this project using the
+	     MSBuild 3.5 toolset. In order to work correctly with this older toolset, it needs 
+	     to set the TargetFrameworkVersion to v3.5 -->
+  <PropertyGroup Condition="'$(MSBuildToolsVersion)' == '3.5'">
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>Bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;TRACE;SILVERLIGHT</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>Bin\Release</OutputPath>
+    <DefineConstants>TRACE;SILVERLIGHT</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug Simulator|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug Simulator\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;SILVERLIGHT, XTS_SIMULATOR</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+    <NoConfig>true</NoConfig>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release Simulator|AnyCPU'">
+    <OutputPath>bin\Release Simulator\</OutputPath>
+    <DefineConstants>TRACE;SILVERLIGHT, XTS_SIMULATOR</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoStdLib>true</NoStdLib>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+    <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
+    <NoConfig>true</NoConfig>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Expression.Controls, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Microsoft SDKs\Expression\Blend\Silverlight\v5.0\Libraries\Microsoft.Expression.Controls.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Expression.Drawing, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.Expression.Effects, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Microsoft SDKs\Expression\Blend\Silverlight\v5.0\Libraries\Microsoft.Expression.Effects.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Expression.Interactions, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Microsoft SDKs\Expression\Blend\Silverlight\v5.0\Libraries\Microsoft.Expression.Interactions.dll</HintPath>
+    </Reference>
+    <Reference Include="mscorlib" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Windows" />
+    <Reference Include="system" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Windows.Controls, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Program Files\Microsoft SDKs\Silverlight\v5.0\Libraries\Client\System.Windows.Controls.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Controls.Data, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Program Files\Microsoft SDKs\Silverlight\v5.0\Libraries\Client\System.Windows.Controls.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Controls.Data.Input, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Program Files\Microsoft SDKs\Silverlight\v5.0\Libraries\Client\System.Windows.Controls.Data.Input.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Controls.Navigation, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Program Files\Microsoft SDKs\Silverlight\v5.0\Libraries\Client\System.Windows.Controls.Navigation.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Data, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Program Files\Microsoft SDKs\Silverlight\v5.0\Libraries\Client\System.Windows.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Interactivity, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Microsoft SDKs\Expression\Blend\Silverlight\v5.0\Libraries\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Windows.Browser" />
+    <Reference Include="Telerik.Windows.Controls, Version=2012.1.326.1050, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <HintPath>Util\Telerik.Windows.Controls.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.Chart, Version=2012.1.326.1050, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <HintPath>Util\Telerik.Windows.Controls.Chart.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.Charting, Version=2012.1.326.1050, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <HintPath>Util\Telerik.Windows.Controls.Charting.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.Data, Version=2012.1.326.1050, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <HintPath>Util\Telerik.Windows.Controls.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.DataServices, Version=2012.1.326.1050, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Util\Telerik.Windows.Controls.DataServices.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.Docking, Version=2012.1.326.1050, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <HintPath>Util\Telerik.Windows.Controls.Docking.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.GridView, Version=2012.1.326.1050, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <HintPath>Util\Telerik.Windows.Controls.GridView.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.ImageEditor, Version=2012.1.326.1050, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <HintPath>Util\Telerik.Windows.Controls.ImageEditor.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.Input, Version=2012.1.326.1050, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <HintPath>Util\Telerik.Windows.Controls.Input.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.Navigation, Version=2012.1.326.1050, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <HintPath>Util\Telerik.Windows.Controls.Navigation.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Data, Version=2012.1.326.1050, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <HintPath>Util\Telerik.Windows.Data.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ChildWindows\AlarmLevelsWindow.xaml.cs">
+      <DependentUpon>AlarmLevelsWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ChildWindows\AlarmPopup.xaml.cs">
+      <DependentUpon>AlarmPopup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ChildWindows\AMOTMessageBox.xaml.cs">
+      <DependentUpon>AMOTMessageBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ChildWindows\TemperatureSetting.xaml.cs">
+      <DependentUpon>TemperatureSetting.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ChildWindows\SensorStatusCodeWindow.xaml.cs">
+      <DependentUpon>SensorStatusCodeWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ChildWindows\CylinderSelectWindow.xaml.cs">
+      <DependentUpon>CylinderSelectWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ChildWindows\DatePickerWindow.xaml.cs">
+      <DependentUpon>DatePickerWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ChildWindows\EventLogWindow.xaml.cs">
+      <DependentUpon>EventLogWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ChildWindows\HelpWindow.xaml.cs">
+      <DependentUpon>HelpWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ChildWindows\LiveDataWindow.xaml.cs">
+      <DependentUpon>LiveDataWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ChildWindows\LoginPopup.xaml.cs">
+      <DependentUpon>LoginPopup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ChildWindows\ReportSelection.xaml.cs">
+      <DependentUpon>ReportSelection.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ChildWindows\SensorSelectWindow.xaml.cs">
+      <DependentUpon>SensorSelectWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ChildWindows\SensorSetupPopup.xaml.cs">
+      <DependentUpon>SensorSetupPopup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ChildWindows\SPUCommsWindow.xaml.cs">
+      <DependentUpon>SPUCommsWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ChildWindows\TemperatureSettingNext.xaml.cs">
+      <DependentUpon>TemperatureSettingNext.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ChildWindows\TestAlarmOutputsWindow.xaml.cs">
+      <DependentUpon>TestAlarmOutputsWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ChildWindows\TrendConfigName.xaml.cs">
+      <DependentUpon>TrendConfigName.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ChildWindows\TrendConfigSelect.xaml.cs">
+      <DependentUpon>TrendConfigSelect.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ChildWindows\TrendDetail.xaml.cs">
+      <DependentUpon>TrendDetail.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ChildWindows\TrendExportPopup.xaml.cs">
+      <DependentUpon>TrendExportPopup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ChildWindows\TrendSettings.xaml.cs">
+      <DependentUpon>TrendSettings.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ChildWindows\TrendsSelect.xaml.cs">
+      <DependentUpon>TrendsSelect.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ChildWindows\TrendsSelectTemp.xaml.cs">
+      <DependentUpon>TrendsSelectTemp.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ChildWindows\VerificationCodeWindow.xaml.cs">
+      <DependentUpon>VerificationCodeWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Alarm.xaml.cs">
+      <DependentUpon>Alarm.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\AlarmItem.xaml.cs">
+      <DependentUpon>AlarmItem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\BarControl.xaml.cs">
+      <DependentUpon>BarControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\BottomBar.xaml.cs">
+      <DependentUpon>BottomBar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ColorPickerPresenter.xaml.cs">
+      <DependentUpon>ColorPickerPresenter.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ContentScroll.xaml.cs">
+      <DependentUpon>ContentScroll.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\UniBarControl.xaml.cs">
+      <DependentUpon>UniBarControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Cylinder.xaml.cs">
+      <DependentUpon>Cylinder.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\CylinderPercentComparison.xaml.cs">
+      <DependentUpon>CylinderPercentComparison.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\DatePickerBasic.xaml.cs">
+      <DependentUpon>DatePickerBasic.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\FiringOrder.xaml.cs">
+      <DependentUpon>FiringOrder.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\FitStackPanel.cs" />
+    <Compile Include="Controls\GridDeleteButton.xaml.cs">
+      <DependentUpon>GridDeleteButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\InputBox.cs" />
+    <Compile Include="Controls\InputKeyboard.xaml.cs">
+      <DependentUpon>InputKeyboard.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\NavigationButton.xaml.cs">
+      <DependentUpon>NavigationButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\NavigationPresenter.xaml.cs">
+      <DependentUpon>NavigationPresenter.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\NavigationToggleButton.xaml.cs">
+      <DependentUpon>NavigationToggleButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PopupSedm.xaml.cs">
+      <DependentUpon>PopupSedm.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PopupWio.xaml.cs">
+      <DependentUpon>PopupWio.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Prop.xaml.cs">
+      <DependentUpon>Prop.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\RPM.xaml.cs">
+      <DependentUpon>RPM.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Scale.xaml.cs">
+      <DependentUpon>Scale.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\MainBearing.xaml.cs">
+      <DependentUpon>MainBearing.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\NavBar.xaml.cs">
+      <DependentUpon>NavBar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Navigation.xaml.cs">
+      <DependentUpon>Navigation.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Popup.xaml.cs">
+      <DependentUpon>Popup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\SEDM.xaml.cs">
+      <DependentUpon>SEDM.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\SensorReplaceControl.xaml.cs">
+      <DependentUpon>SensorReplaceControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PeakGauge.xaml.cs">
+      <DependentUpon>PeakGauge.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\SensorStatus.xaml.cs">
+      <DependentUpon>SensorStatus.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\SensorTemp.xaml.cs">
+      <DependentUpon>SensorTemp.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\SPUDateTimeControl.xaml.cs">
+      <DependentUpon>SPUDateTimeControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\TimeDate.cs" />
+    <Compile Include="Controls\TimePicker.xaml.cs">
+      <DependentUpon>TimePicker.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\TimingChain.xaml.cs">
+      <DependentUpon>TimingChain.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\TopBar.xaml.cs">
+      <DependentUpon>TopBar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\TrendReorder.xaml.cs">
+      <DependentUpon>TrendReorder.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\UserLogInControl.xaml.cs">
+      <DependentUpon>UserLogInControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\WIO.xaml.cs">
+      <DependentUpon>WIO.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Strings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Strings.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Screens\ViewModels\ReportingModel.cs" />
+    <Compile Include="Screens\ViewModels\TemperatureModel.cs" />
+    <Compile Include="Screens\ViewModels\XTSModel.cs" />
+    <Compile Include="Screens\Views\Reporting.xaml.cs">
+      <DependentUpon>Reporting.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Screens\Views\Temperature.xaml.cs">
+      <DependentUpon>Temperature.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Storyboards\SlideMenuAnimation.cs" />
+    <Compile Include="Util\AutoScroll\AutoScrollBehavior.cs" />
+    <Compile Include="Util\LinqToVisualTree.cs" />
+    <Compile Include="Data\NavBarViewModel.cs" />
+    <Compile Include="Util\RowReorder\BeginningDragEventArgs.cs" />
+    <Compile Include="Util\RowReorder\DragEndedEventArgs.cs" />
+    <Compile Include="Util\RowReorder\DragStartedEventArgs.cs" />
+    <Compile Include="Util\RowReorder\RowReorderBehavior.cs" />
+    <Compile Include="Util\RowReorder\RowReorderBehavior.StylingProperties.cs" />
+    <Compile Include="Util\ScrollOffsetBinding.cs" />
+    <Compile Include="MainPage.xaml.cs">
+      <DependentUpon>MainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SampleData\SampleChart\SampleChart.xaml.cs">
+      <DependentUpon>SampleChart.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Screens\ViewModels\BarGraphModel.cs" />
+    <Compile Include="Screens\ViewModels\DiagnosticsModel.cs" />
+    <Compile Include="Screens\ViewModels\LearningModel.cs" />
+    <Compile Include="Screens\ViewModels\MimicModel.cs" />
+    <Compile Include="Screens\ViewModels\SensorReplaceModel.cs" />
+    <Compile Include="Screens\ViewModels\SensorSetupModel.cs" />
+    <Compile Include="Screens\ViewModels\SettingsModel.cs" />
+    <Compile Include="Screens\ViewModels\SurveyorTestModel.cs" />
+    <Compile Include="Screens\ViewModels\TrendsModel.cs" />
+    <Compile Include="Screens\Views\BarGraph.xaml.cs">
+      <DependentUpon>BarGraph.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Screens\Views\Diagnostics.xaml.cs">
+      <DependentUpon>Diagnostics.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Screens\Views\Learning.xaml.cs">
+      <DependentUpon>Learning.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Screens\Views\Mimic.xaml.cs">
+      <DependentUpon>Mimic.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Screens\Views\SensorReplace.xaml.cs">
+      <DependentUpon>SensorReplace.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Screens\Views\SensorSetup.xaml.cs">
+      <DependentUpon>SensorSetup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Screens\Views\Settings.xaml.cs">
+      <DependentUpon>Settings.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Screens\Views\SurveyorTest.xaml.cs">
+      <DependentUpon>SurveyorTest.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Screens\Views\Trends.xaml.cs">
+      <DependentUpon>Trends.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Util\UserPermissionConverter.cs" />
+    <Compile Include="XTSSensorColor.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </ApplicationDefinition>
+    <None Include="SampleData\SampleChart\SampleChart.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <Page Include="ChildWindows\AlarmLevelsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ChildWindows\AlarmPopup.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ChildWindows\AMOTMessageBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ChildWindows\TemperatureSetting.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ChildWindows\SensorStatusCodeWindow.xaml">
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ChildWindows\CylinderSelectWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ChildWindows\DatePickerWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ChildWindows\EventLogWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ChildWindows\HelpWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ChildWindows\LiveDataWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ChildWindows\LoginPopup.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ChildWindows\ReportSelection.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ChildWindows\SensorSelectWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ChildWindows\SensorSetupPopup.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ChildWindows\SPUCommsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ChildWindows\TemperatureSettingNext.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ChildWindows\TestAlarmOutputsWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ChildWindows\TrendConfigName.xaml">
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ChildWindows\TrendConfigSelect.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ChildWindows\TrendDetail.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ChildWindows\TrendExportPopup.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ChildWindows\TrendSettings.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ChildWindows\TrendsSelect.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ChildWindows\TrendsSelectTemp.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ChildWindows\VerificationCodeWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Alarm.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\AlarmItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\BarControl.xaml">
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\BottomBar.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\ColorPickerPresenter.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\ContentScroll.xaml">
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\UniBarControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Cylinder.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\CylinderPercentComparison.xaml">
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\DatePickerBasic.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\FiringOrder.xaml">
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\GridDeleteButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\InputKeyboard.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\NavigationButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\NavigationPresenter.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\NavigationToggleButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\PopupSedm.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\PopupWio.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Prop.xaml">
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\RPM.xaml">
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Scale.xaml">
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\MainBearing.xaml">
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\NavBar.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Navigation.xaml">
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Popup.xaml">
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\SEDM.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\SensorReplaceControl.xaml">
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\PeakGauge.xaml">
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\SensorStatus.xaml">
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\SensorTemp.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\SPUDateTimeControl.xaml">
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\TimePicker.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\TimingChain.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\TopBar.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\TrendReorder.xaml">
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\UserLogInControl.xaml">
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\WIO.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <None Include="favicon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Visible>false</Visible>
+    </None>
+    <Page Include="SampleData\SampleChart\SampleChart.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Screens\Views\BarGraph.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Screens\Views\Diagnostics.xaml">
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Screens\Views\Learning.xaml">
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Screens\Views\Mimic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Screens\Views\Reporting.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Screens\Views\SensorReplace.xaml">
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Screens\Views\SensorSetup.xaml">
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Screens\Views\Settings.xaml">
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Screens\Views\SurveyorTest.xaml">
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Screens\Views\Temperature.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Screens\Views\Trends.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Storyboards\Themes\Generic.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\AppManifest.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AMOTConstants\AMOTConstants.csproj">
+      <Project>{9F0BD6F7-1094-4579-BD8D-704E8DA86277}</Project>
+      <Name>AMOTConstants</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\XTSDataProviderSimulator\XTSDataProviderSimulator.csproj">
+      <Project>{CE655614-4228-459F-ABC9-3CF9CEF20D92}</Project>
+      <Name>XTSDataProviderSimulator</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\XTSDataProviderWeb\XTSDataProviderWeb.csproj">
+      <Project>{F1248A84-D193-4B7D-B208-49C864360DF7}</Project>
+      <Name>XTSDataProviderWeb</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\XTSData\XTSData.csproj">
+      <Project>{ED3EC7FA-935D-4FF3-A42F-6D5C67D8CD97}</Project>
+      <Name>XTSData</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Strings.fr.resx" />
+    <EmbeddedResource Include="Resources\Strings.resx">
+      <SubType>Designer</SubType>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Strings.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\BrushedMetalBack.png" />
+    <Resource Include="Resources\logo_amot.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\OutOfBrowserSettings.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="html\index.htm">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="html\simulator\config.html">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="html\simulator\help.html" />
+    <Content Include="html\TestPage.html">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="html\TestPage_FR.html" />
+    <Content Include="html\xts.js" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{A1591282-1198-4647-A2B1-27E5FF5F6F3B}">
+        <SilverlightProjectProperties />
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <PropertyGroup>
+    <PostBuildEvent>copy /Y /V "$(ProjectDir)$(OutDir)XTS.xap" "$(ProjectDir)html\XTS.xap"
+</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+	     Other similar extension points exist, see Microsoft.Common.targets.
+	<Target Name="BeforeBuild">
+	</Target>
+	<Target Name="AfterBuild">
+	</Target>
+	-->
+</Project>

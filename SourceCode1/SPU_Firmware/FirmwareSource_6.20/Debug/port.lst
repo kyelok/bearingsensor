@@ -1,0 +1,795 @@
+TMS320C2000 COFF Assembler PC v4.1.3 Thu Aug 18 12:16:26 2016
+
+Tools Copyright (c) 1996-2006 Texas Instruments Incorporated
+port.asm                                                             PAGE    1
+
+       1              ;***************************************************************
+       2              ;* TMS320C2000 C/C++ Codegen                         PC v4.1.3 *
+       3              ;* Date/Time created: Thu Aug 18 12:16:26 2016                 *
+       4              ;***************************************************************
+       5                      .compiler_opts --mem_model:code=flat --mem_model:data=large --quiet --silicon_version=28 
+       6        0002  FP      .set    XAR2
+       7              
+       8              DW$CU   .dwtag  DW_TAG_compile_unit
+       9                      .dwattr DW$CU, DW_AT_name("port.c")
+      10                      .dwattr DW$CU, DW_AT_producer("TMS320C2000 C/C++ Codegen PC v4.1.3 Copyright (c) 1996-2006 Texas Inst
+      11                      .dwattr DW$CU, DW_AT_stmt_list(0x00)
+      12                      .dwattr DW$CU, DW_AT_TI_VERSION(0x01)
+      13              ;**************************************************************
+      14              ;* CINIT RECORDS                                              *
+      15              ;**************************************************************
+      16 00000000               .sect   ".cinit"
+      17                      .align  1
+      18 00000000 FFFE          .field          -2,16
+      19 00000001 0000-         .field          _dwrand+0,32
+         00000002 0000 
+      20 00000003 8FB3          .field          1922731955,32                   ; _dwrand @ 0
+         00000004 729A 
+      21              
+      22              
+      23              DW$1    .dwtag  DW_TAG_subprogram, DW_AT_name("BCDtoInt"), DW_AT_symbol_name("_BCDtoInt")
+      24                      .dwattr DW$1, DW_AT_type(*DW$T$11)
+      25                      .dwattr DW$1, DW_AT_declaration(0x01)
+      26                      .dwattr DW$1, DW_AT_external(0x01)
+      27              DW$2    .dwtag  DW_TAG_formal_parameter, DW_AT_type(*DW$T$11)
+      28                      .dwendtag DW$1
+      29              
+      30              DW$3    .dwtag  DW_TAG_variable, DW_AT_name("clocktime"), DW_AT_symbol_name("_clocktime")
+      31                      .dwattr DW$3, DW_AT_type(*DW$T$30)
+      32                      .dwattr DW$3, DW_AT_declaration(0x01)
+      33                      .dwattr DW$3, DW_AT_external(0x01)
+      34 00000000       _dwrand:        .usect  ".ebss",2,1,1
+      35              DW$4    .dwtag  DW_TAG_variable, DW_AT_name("dwrand"), DW_AT_symbol_name("_dwrand")
+      36                      .dwattr DW$4, DW_AT_type(*DW$T$13)
+      37                      .dwattr DW$4, DW_AT_location[DW_OP_addr _dwrand]
+      38              ;       C:\CCStudio_v3.3\C2000\cgtools\bin\opt2000.exe C:\Users\Andrew\AppData\Local\Temp\TI2402 C:\Users\And
+      39              ;       C:\CCStudio_v3.3\C2000\cgtools\bin\ac2000.exe -q -D_INLINE -DLARGE_MODEL -IC:/CCStudio_v3.3/C2000/xda
+      40 00000000               .sect   ".text"
+      41                      .global _f_getrand
+      42              
+      43              DW$5    .dwtag  DW_TAG_subprogram, DW_AT_name("f_getrand"), DW_AT_symbol_name("_f_getrand")
+      44                      .dwattr DW$5, DW_AT_low_pc(_f_getrand)
+      45                      .dwattr DW$5, DW_AT_high_pc(0x00)
+      46                      .dwattr DW$5, DW_AT_begin_file("port.c")
+      47                      .dwattr DW$5, DW_AT_begin_line(0x1f)
+      48                      .dwattr DW$5, DW_AT_begin_column(0x0f)
+      49                      .dwattr DW$5, DW_AT_frame_base[DW_OP_breg20 -4]
+      50                      .dwattr DW$5, DW_AT_skeletal(0x01)
+      51                      .dwpsn  "port.c",31,45
+      52              
+      53              ;***************************************************************
+TMS320C2000 COFF Assembler PC v4.1.3 Thu Aug 18 12:16:26 2016
+
+Tools Copyright (c) 1996-2006 Texas Instruments Incorporated
+port.asm                                                             PAGE    2
+
+      54              ;* FNAME: _f_getrand                    FR SIZE:   2           *
+      55              ;*                                                             *
+      56              ;* FUNCTION ENVIRONMENT                                        *
+      57              ;*                                                             *
+      58              ;* FUNCTION PROPERTIES                                         *
+      59              ;*                            0 Parameter,  0 Auto,  2 SOE     *
+      60              ;***************************************************************
+      61              
+      62              _f_getrand:
+      63              ;* AL    assigned to _rand
+      64              DW$6    .dwtag  DW_TAG_formal_parameter, DW_AT_name("rand"), DW_AT_symbol_name("_rand")
+      65                      .dwattr DW$6, DW_AT_type(*DW$T$13)
+      66                      .dwattr DW$6, DW_AT_location[DW_OP_reg0]
+      67 00000000 B2BD          MOVL      *SP++,XAR1
+      68 00000001 8BA9          MOVL      XAR1,ACC              ; |31| 
+      69 00000002 7640'         LCR       #_f_gettime           ; |34| 
+         00000003 0062 
+      70                      ; call occurs [#_f_gettime] ; |34| 
+      71 00000004 761F-         MOVW      DP,#_dwrand
+         00000005 0000 
+      72 00000006 0EA9          MOVU      ACC,AL
+      73 00000007 2901          CLRC      SXM
+      74 00000008 F200-         XOR       @_dwrand,AL           ; |34| 
+      75 00000009 BE00          MOVB      XAR6,#0
+      76 0000000a 761F-         MOVW      DP,#_dwrand+1
+         0000000b 0000 
+      77                      .dwpsn  "port.c",36,0
+      78 0000000c F301-         XOR       @_dwrand+1,AH         ; |34| 
+      79 0000000d       L1:    
+      80 0000000d       DW$L$_f_getrand$2$B:
+      81 0000000d B2A9          MOVL      ACC,XAR1
+      82 0000000e 9001          ANDB      AL,#0x01              ; |37| 
+      83 0000000f 9B00          MOVB      AH,#0
+      84 00000010 FF58          TEST      ACC                   ; |37| 
+      85 00000011 EC09          BF        L2,EQ                 ; |37| 
+      86                      ; branchcc occurs ; |37| 
+      87 00000012       DW$L$_f_getrand$2$E:
+      88 00000012       DW$L$_f_getrand$3$B:
+      89 00000012 761F-         MOVW      DP,#_dwrand
+         00000013 0000 
+      90 00000014 1C00-         XOR       @_dwrand,#35778       ; |38| 
+         00000015 8BC2 
+      91 00000016 761F-         MOVW      DP,#_dwrand+1
+         00000017 0000 
+      92 00000018 1C01-         XOR       @_dwrand+1,#13321     ; |38| 
+         00000019 3409 
+      93 0000001a       DW$L$_f_getrand$3$E:
+      94 0000001a       L2:    
+      95 0000001a       DW$L$_f_getrand$4$B:
+      96 0000001a 761F-         MOVW      DP,#_dwrand
+         0000001b 0000 
+      97 0000001c 0600-         MOVL      ACC,@_dwrand          ; |40| 
+      98 0000001d 5608          AND       ACC,#2048 << 16       ; |40| 
+         0000001e 0800 
+      99 0000001f ED07          BF        L3,NEQ                ; |40| 
+TMS320C2000 COFF Assembler PC v4.1.3 Thu Aug 18 12:16:26 2016
+
+Tools Copyright (c) 1996-2006 Texas Instruments Incorporated
+port.asm                                                             PAGE    3
+
+     100                      ; branchcc occurs ; |40| 
+     101 00000020       DW$L$_f_getrand$4$E:
+     102 00000020       DW$L$_f_getrand$5$B:
+     103 00000020 761F-         MOVW      DP,#_dwrand
+         00000021 0000 
+     104 00000022 0600-         MOVL      ACC,@_dwrand          ; |44| 
+     105 00000023 FF30          LSL       ACC,1                 ; |44| 
+     106 00000024 56CF          BF        L4,UNC                ; |44| 
+         00000025 0007 
+     107                      ; branch occurs ; |44| 
+     108 00000026       DW$L$_f_getrand$5$E:
+     109 00000026       L3:    
+     110 00000026       DW$L$_f_getrand$6$B:
+     111 00000026 761F-         MOVW      DP,#_dwrand
+         00000027 0000 
+     112 00000028 0600-         MOVL      ACC,@_dwrand          ; |41| 
+     113 00000029 FF30          LSL       ACC,1                 ; |41| 
+     114 0000002a 5001          ORB       AL,#0x01              ; |41| 
+     115 0000002b       DW$L$_f_getrand$6$E:
+     116 0000002b       L4:    
+     117 0000002b       DW$L$_f_getrand$7$B:
+     118 0000002b 761F-         MOVW      DP,#_dwrand
+         0000002c 0000 
+     119 0000002d 1E00-         MOVL      @_dwrand,ACC          ; |41| 
+     120 0000002e B2A9          MOVL      ACC,XAR1
+     121 0000002f FF40          SFR       ACC,1                 ; |45| 
+     122 00000030 8BA9          MOVL      XAR1,ACC              ; |45| 
+     123 00000031 06A6          MOVL      ACC,XAR6              ; |45| 
+     124 00000032 0901          ADDB      ACC,#1                ; |36| 
+     125 00000033 1EA6          MOVL      XAR6,ACC              ; |36| 
+     126 00000034 0220          MOVB      ACC,#32
+     127 00000035 0FA6          CMPL      ACC,XAR6              ; |36| 
+     128                      .dwpsn  "port.c",46,0
+     129 00000036 56C2          BF        L1,GT                 ; |36| 
+         00000037 FFD7 
+     130                      ; branchcc occurs ; |36| 
+     131 00000038       DW$L$_f_getrand$7$E:
+     132 00000038 8BBE          MOVL      XAR1,*--SP            ; |48| 
+     133 00000039 761F-         MOVW      DP,#_dwrand
+         0000003a 0000 
+     134 0000003b 0600-         MOVL      ACC,@_dwrand          ; |48| 
+     135                      .dwpsn  "port.c",49,1
+     136 0000003c 0006          LRETR
+     137                      ; return occurs
+     138              
+     139              DW$7    .dwtag  DW_TAG_loop
+     140                      .dwattr DW$7, DW_AT_name("D:\DEV\Amot\BearingWear\XTSW_V6_20\port.asm:L1:1:1471518986")
+     141                      .dwattr DW$7, DW_AT_begin_file("port.c")
+     142                      .dwattr DW$7, DW_AT_begin_line(0x24)
+     143                      .dwattr DW$7, DW_AT_end_line(0x2e)
+     144              DW$8    .dwtag  DW_TAG_loop_range
+     145                      .dwattr DW$8, DW_AT_low_pc(DW$L$_f_getrand$2$B)
+     146                      .dwattr DW$8, DW_AT_high_pc(DW$L$_f_getrand$2$E)
+     147              DW$9    .dwtag  DW_TAG_loop_range
+     148                      .dwattr DW$9, DW_AT_low_pc(DW$L$_f_getrand$3$B)
+TMS320C2000 COFF Assembler PC v4.1.3 Thu Aug 18 12:16:26 2016
+
+Tools Copyright (c) 1996-2006 Texas Instruments Incorporated
+port.asm                                                             PAGE    4
+
+     149                      .dwattr DW$9, DW_AT_high_pc(DW$L$_f_getrand$3$E)
+     150              DW$10   .dwtag  DW_TAG_loop_range
+     151                      .dwattr DW$10, DW_AT_low_pc(DW$L$_f_getrand$4$B)
+     152                      .dwattr DW$10, DW_AT_high_pc(DW$L$_f_getrand$4$E)
+     153              DW$11   .dwtag  DW_TAG_loop_range
+     154                      .dwattr DW$11, DW_AT_low_pc(DW$L$_f_getrand$5$B)
+     155                      .dwattr DW$11, DW_AT_high_pc(DW$L$_f_getrand$5$E)
+     156              DW$12   .dwtag  DW_TAG_loop_range
+     157                      .dwattr DW$12, DW_AT_low_pc(DW$L$_f_getrand$6$B)
+     158                      .dwattr DW$12, DW_AT_high_pc(DW$L$_f_getrand$6$E)
+     159              DW$13   .dwtag  DW_TAG_loop_range
+     160                      .dwattr DW$13, DW_AT_low_pc(DW$L$_f_getrand$7$B)
+     161                      .dwattr DW$13, DW_AT_high_pc(DW$L$_f_getrand$7$E)
+     162                      .dwendtag DW$7
+     163              
+     164                      .dwattr DW$5, DW_AT_end_file("port.c")
+     165                      .dwattr DW$5, DW_AT_end_line(0x31)
+     166                      .dwattr DW$5, DW_AT_end_column(0x01)
+     167                      .dwendtag DW$5
+     168              
+     169 0000003d               .sect   ".text"
+     170                      .global _f_getdate
+     171              
+     172              DW$14   .dwtag  DW_TAG_subprogram, DW_AT_name("f_getdate"), DW_AT_symbol_name("_f_getdate")
+     173                      .dwattr DW$14, DW_AT_low_pc(_f_getdate)
+     174                      .dwattr DW$14, DW_AT_high_pc(0x00)
+     175                      .dwattr DW$14, DW_AT_begin_file("port.c")
+     176                      .dwattr DW$14, DW_AT_begin_line(0x40)
+     177                      .dwattr DW$14, DW_AT_begin_column(0x10)
+     178                      .dwattr DW$14, DW_AT_frame_base[DW_OP_breg20 -6]
+     179                      .dwattr DW$14, DW_AT_skeletal(0x01)
+     180                      .dwpsn  "port.c",64,32
+     181              
+     182              ;***************************************************************
+     183              ;* FNAME: _f_getdate                    FR SIZE:   4           *
+     184              ;*                                                             *
+     185              ;* FUNCTION ENVIRONMENT                                        *
+     186              ;*                                                             *
+     187              ;* FUNCTION PROPERTIES                                         *
+     188              ;*                            0 Parameter,  0 Auto,  4 SOE     *
+     189              ;***************************************************************
+     190              
+     191 0000003d       _f_getdate:
+     192 0000003d B2BD          MOVL      *SP++,XAR1
+     193 0000003e 761F!         MOVW      DP,#_clocktime+7
+         0000003f 0000 
+     194 00000040 AABD          MOVL      *SP++,XAR2
+     195 00000041 9207!         MOV       AL,@_clocktime+7      ; |70| 
+     196 00000042 7640!         LCR       #_BCDtoInt            ; |70| 
+         00000043 0000 
+     197                      ; call occurs [#_BCDtoInt] ; |70| 
+     198 00000044 28A8          MOV       AH,#2000              ; |70| 
+         00000045 07D0 
+     199 00000046 95A9          ADD       AH,AL                 ; |70| 
+     200 00000047 761F!         MOVW      DP,#_clocktime+6
+TMS320C2000 COFF Assembler PC v4.1.3 Thu Aug 18 12:16:26 2016
+
+Tools Copyright (c) 1996-2006 Texas Instruments Incorporated
+port.asm                                                             PAGE    5
+
+         00000048 0000 
+     201 00000049 5AA8          MOVZ      AR2,AH                ; |70| 
+     202 0000004a 9206!         MOV       AL,@_clocktime+6      ; |71| 
+     203 0000004b 7640!         LCR       #_BCDtoInt            ; |71| 
+         0000004c 0000 
+     204                      ; call occurs [#_BCDtoInt] ; |71| 
+     205 0000004d 59A9          MOVZ      AR1,AL                ; |71| 
+     206 0000004e 761F!         MOVW      DP,#_clocktime+5
+         0000004f 0000 
+     207 00000050 9205!         MOV       AL,@_clocktime+5      ; |72| 
+     208 00000051 7640!         LCR       #_BCDtoInt            ; |72| 
+         00000052 0000 
+     209                      ; call occurs [#_BCDtoInt] ; |72| 
+     210 00000053 08A2          SUB       AR2,#1980             ; |76| 
+         00000054 F844 
+     211 00000055 88A9          MOVZ      AR6,AL                ; |72| 
+     212 00000056 5603          MOV       ACC,AR2 << #9         ; |76| 
+         00000057 09A2 
+     213 00000058 86BE          MOVL      XAR2,*--SP            ; |76| 
+     214 00000059 CDA1          AND       AH,AR1,#0x000f        ; |76| 
+         0000005a 000F 
+     215 0000005b FF94          LSL       AH,5                  ; |76| 
+     216 0000005c CBA9          OR        AH,AL                 ; |76| 
+     217 0000005d 8BBE          MOVL      XAR1,*--SP            ; |76| 
+     218 0000005e CCA6          AND       AL,AR6,#0x001f        ; |76| 
+         0000005f 001F 
+     219 00000060 CAA8          OR        AL,AH                 ; |76| 
+     220                      .dwpsn  "port.c",77,1
+     221 00000061 0006          LRETR
+     222                      ; return occurs
+     223                      .dwattr DW$14, DW_AT_end_file("port.c")
+     224                      .dwattr DW$14, DW_AT_end_line(0x4d)
+     225                      .dwattr DW$14, DW_AT_end_column(0x01)
+     226                      .dwendtag DW$14
+     227              
+     228 00000062               .sect   ".text"
+     229                      .global _f_gettime
+     230              
+     231              DW$15   .dwtag  DW_TAG_subprogram, DW_AT_name("f_gettime"), DW_AT_symbol_name("_f_gettime")
+     232                      .dwattr DW$15, DW_AT_low_pc(_f_gettime)
+     233                      .dwattr DW$15, DW_AT_high_pc(0x00)
+     234                      .dwattr DW$15, DW_AT_begin_file("port.c")
+     235                      .dwattr DW$15, DW_AT_begin_line(0x5c)
+     236                      .dwattr DW$15, DW_AT_begin_column(0x10)
+     237                      .dwattr DW$15, DW_AT_frame_base[DW_OP_breg20 -6]
+     238                      .dwattr DW$15, DW_AT_skeletal(0x01)
+     239                      .dwpsn  "port.c",92,32
+     240              
+     241              ;***************************************************************
+     242              ;* FNAME: _f_gettime                    FR SIZE:   4           *
+     243              ;*                                                             *
+     244              ;* FUNCTION ENVIRONMENT                                        *
+     245              ;*                                                             *
+     246              ;* FUNCTION PROPERTIES                                         *
+     247              ;*                            0 Parameter,  0 Auto,  4 SOE     *
+TMS320C2000 COFF Assembler PC v4.1.3 Thu Aug 18 12:16:26 2016
+
+Tools Copyright (c) 1996-2006 Texas Instruments Incorporated
+port.asm                                                             PAGE    6
+
+     248              ;***************************************************************
+     249              
+     250 00000062       _f_gettime:
+     251 00000062 B2BD          MOVL      *SP++,XAR1
+     252 00000063 761F!         MOVW      DP,#_clocktime+3
+         00000064 0000 
+     253 00000065 AABD          MOVL      *SP++,XAR2
+     254 00000066 9203!         MOV       AL,@_clocktime+3      ; |98| 
+     255 00000067 7640!         LCR       #_BCDtoInt            ; |98| 
+         00000068 0000 
+     256                      ; call occurs [#_BCDtoInt] ; |98| 
+     257 00000069 5AA9          MOVZ      AR2,AL                ; |98| 
+     258 0000006a 761F!         MOVW      DP,#_clocktime+2
+         0000006b 0000 
+     259 0000006c 9202!         MOV       AL,@_clocktime+2      ; |99| 
+     260 0000006d 7640!         LCR       #_BCDtoInt            ; |99| 
+         0000006e 0000 
+     261                      ; call occurs [#_BCDtoInt] ; |99| 
+     262 0000006f 59A9          MOVZ      AR1,AL                ; |99| 
+     263 00000070 761F!         MOVW      DP,#_clocktime+1
+         00000071 0000 
+     264 00000072 9201!         MOV       AL,@_clocktime+1      ; |100| 
+     265 00000073 7640!         LCR       #_BCDtoInt            ; |100| 
+         00000074 0000 
+     266                      ; call occurs [#_BCDtoInt] ; |100| 
+     267 00000075 88A9          MOVZ      AR6,AL                ; |100| 
+     268 00000076 5603          MOV       ACC,AR2 << #11        ; |105| 
+         00000077 0BA2 
+     269 00000078 CDA1          AND       AH,AR1,#0x003f        ; |105| 
+         00000079 003F 
+     270 0000007a FF94          LSL       AH,5                  ; |105| 
+     271 0000007b 86BE          MOVL      XAR2,*--SP            ; |105| 
+     272 0000007c CBA9          OR        AH,AL                 ; |105| 
+     273 0000007d 8BBE          MOVL      XAR1,*--SP            ; |105| 
+     274 0000007e 92A6          MOV       AL,AR6                ; |105| 
+     275 0000007f FFC0          LSR       AL,1                  ; |105| 
+     276 00000080 901F          ANDB      AL,#0x1f              ; |105| 
+     277 00000081 CAA8          OR        AL,AH                 ; |105| 
+     278                      .dwpsn  "port.c",106,1
+     279 00000082 0006          LRETR
+     280                      ; return occurs
+     281                      .dwattr DW$15, DW_AT_end_file("port.c")
+     282                      .dwattr DW$15, DW_AT_end_line(0x6a)
+     283                      .dwattr DW$15, DW_AT_end_column(0x01)
+     284                      .dwendtag DW$15
+     285              
+     286 00000083               .sect   ".text"
+     287                      .global _f_mutex_create
+     288              
+     289              DW$16   .dwtag  DW_TAG_subprogram, DW_AT_name("f_mutex_create"), DW_AT_symbol_name("_f_mutex_create")
+     290                      .dwattr DW$16, DW_AT_low_pc(_f_mutex_create)
+     291                      .dwattr DW$16, DW_AT_high_pc(0x00)
+     292                      .dwattr DW$16, DW_AT_begin_file("port.c")
+     293                      .dwattr DW$16, DW_AT_begin_line(0x79)
+     294                      .dwattr DW$16, DW_AT_begin_column(0x05)
+TMS320C2000 COFF Assembler PC v4.1.3 Thu Aug 18 12:16:26 2016
+
+Tools Copyright (c) 1996-2006 Texas Instruments Incorporated
+port.asm                                                             PAGE    7
+
+     295                      .dwattr DW$16, DW_AT_frame_base[DW_OP_breg20 -2]
+     296                      .dwattr DW$16, DW_AT_skeletal(0x01)
+     297                      .dwpsn  "port.c",122,1
+     298              
+     299              ;***************************************************************
+     300              ;* FNAME: _f_mutex_create               FR SIZE:   0           *
+     301              ;*                                                             *
+     302              ;* FUNCTION ENVIRONMENT                                        *
+     303              ;*                                                             *
+     304              ;* FUNCTION PROPERTIES                                         *
+     305              ;*                            0 Parameter,  0 Auto,  0 SOE     *
+     306              ;***************************************************************
+     307              
+     308              _f_mutex_create:
+     309              ;* AR4   assigned to _mutex
+     310              DW$17   .dwtag  DW_TAG_formal_parameter, DW_AT_name("mutex"), DW_AT_symbol_name("_mutex")
+     311                      .dwattr DW$17, DW_AT_type(*DW$T$21)
+     312                      .dwattr DW$17, DW_AT_location[DW_OP_reg12]
+     313 00000083 0200          MOVB      ACC,#0
+     314 00000084 1EC4          MOVL      *+XAR4[0],ACC         ; |123| 
+     315 00000085 9A00          MOVB      AL,#0
+     316                      .dwpsn  "port.c",125,1
+     317 00000086 0006          LRETR
+     318                      ; return occurs
+     319                      .dwattr DW$16, DW_AT_end_file("port.c")
+     320                      .dwattr DW$16, DW_AT_end_line(0x7d)
+     321                      .dwattr DW$16, DW_AT_end_column(0x01)
+     322                      .dwendtag DW$16
+     323              
+     324 00000087               .sect   ".text"
+     325                      .global _f_mutex_delete
+     326              
+     327              DW$18   .dwtag  DW_TAG_subprogram, DW_AT_name("f_mutex_delete"), DW_AT_symbol_name("_f_mutex_delete")
+     328                      .dwattr DW$18, DW_AT_low_pc(_f_mutex_delete)
+     329                      .dwattr DW$18, DW_AT_high_pc(0x00)
+     330                      .dwattr DW$18, DW_AT_begin_file("port.c")
+     331                      .dwattr DW$18, DW_AT_begin_line(0x8d)
+     332                      .dwattr DW$18, DW_AT_begin_column(0x05)
+     333                      .dwattr DW$18, DW_AT_frame_base[DW_OP_breg20 -2]
+     334                      .dwattr DW$18, DW_AT_skeletal(0x01)
+     335                      .dwpsn  "port.c",142,1
+     336              
+     337              ;***************************************************************
+     338              ;* FNAME: _f_mutex_delete               FR SIZE:   0           *
+     339              ;*                                                             *
+     340              ;* FUNCTION ENVIRONMENT                                        *
+     341              ;*                                                             *
+     342              ;* FUNCTION PROPERTIES                                         *
+     343              ;*                            0 Parameter,  0 Auto,  0 SOE     *
+     344              ;***************************************************************
+     345              
+     346              _f_mutex_delete:
+     347              ;* AR4   assigned to _mutex
+     348              DW$19   .dwtag  DW_TAG_formal_parameter, DW_AT_name("mutex"), DW_AT_symbol_name("_mutex")
+     349                      .dwattr DW$19, DW_AT_type(*DW$T$21)
+TMS320C2000 COFF Assembler PC v4.1.3 Thu Aug 18 12:16:26 2016
+
+Tools Copyright (c) 1996-2006 Texas Instruments Incorporated
+port.asm                                                             PAGE    8
+
+     350                      .dwattr DW$19, DW_AT_location[DW_OP_reg12]
+     351 00000087 0200          MOVB      ACC,#0
+     352 00000088 1EC4          MOVL      *+XAR4[0],ACC         ; |143| 
+     353 00000089 9A00          MOVB      AL,#0
+     354                      .dwpsn  "port.c",145,1
+     355 0000008a 0006          LRETR
+     356                      ; return occurs
+     357                      .dwattr DW$18, DW_AT_end_file("port.c")
+     358                      .dwattr DW$18, DW_AT_end_line(0x91)
+     359                      .dwattr DW$18, DW_AT_end_column(0x01)
+     360                      .dwendtag DW$18
+     361              
+     362 0000008b               .sect   ".text"
+     363                      .global _f_mutex_get
+     364              
+     365              DW$20   .dwtag  DW_TAG_subprogram, DW_AT_name("f_mutex_get"), DW_AT_symbol_name("_f_mutex_get")
+     366                      .dwattr DW$20, DW_AT_low_pc(_f_mutex_get)
+     367                      .dwattr DW$20, DW_AT_high_pc(0x00)
+     368                      .dwattr DW$20, DW_AT_begin_file("port.c")
+     369                      .dwattr DW$20, DW_AT_begin_line(0xa1)
+     370                      .dwattr DW$20, DW_AT_begin_column(0x05)
+     371                      .dwattr DW$20, DW_AT_frame_base[DW_OP_breg20 -2]
+     372                      .dwattr DW$20, DW_AT_skeletal(0x01)
+     373                      .dwpsn  "port.c",162,1
+     374              
+     375              ;***************************************************************
+     376              ;* FNAME: _f_mutex_get                  FR SIZE:   0           *
+     377              ;*                                                             *
+     378              ;* FUNCTION ENVIRONMENT                                        *
+     379              ;*                                                             *
+     380              ;* FUNCTION PROPERTIES                                         *
+     381              ;*                            0 Parameter,  0 Auto,  0 SOE     *
+     382              ;***************************************************************
+     383              
+     384              _f_mutex_get:
+     385              ;* AR4   assigned to _mutex
+     386              DW$21   .dwtag  DW_TAG_formal_parameter, DW_AT_name("mutex"), DW_AT_symbol_name("_mutex")
+     387                      .dwattr DW$21, DW_AT_type(*DW$T$21)
+     388                      .dwattr DW$21, DW_AT_location[DW_OP_reg12]
+     389 0000008b 06C4          MOVL      ACC,*+XAR4[0]         ; |163| 
+     390 0000008c EC04          BF        L5,EQ                 ; |163| 
+     391                      ; branchcc occurs ; |163| 
+     392 0000008d 9A01          MOVB      AL,#1                 ; |163| 
+     393 0000008e 56CF          BF        L6,UNC                ; |163| 
+         0000008f 0005 
+     394                      ; branch occurs ; |163| 
+     395 00000090       L5:    
+     396 00000090 0201          MOVB      ACC,#1
+     397 00000091 1EC4          MOVL      *+XAR4[0],ACC         ; |165| 
+     398 00000092 9A00          MOVB      AL,#0
+     399              L6:    
+     400                      .dwpsn  "port.c",168,1
+     401 00000093 0006          LRETR
+     402                      ; return occurs
+     403                      .dwattr DW$20, DW_AT_end_file("port.c")
+TMS320C2000 COFF Assembler PC v4.1.3 Thu Aug 18 12:16:26 2016
+
+Tools Copyright (c) 1996-2006 Texas Instruments Incorporated
+port.asm                                                             PAGE    9
+
+     404                      .dwattr DW$20, DW_AT_end_line(0xa8)
+     405                      .dwattr DW$20, DW_AT_end_column(0x01)
+     406                      .dwendtag DW$20
+     407              
+     408 00000094               .sect   ".text"
+     409                      .global _f_mutex_put
+     410              
+     411              DW$22   .dwtag  DW_TAG_subprogram, DW_AT_name("f_mutex_put"), DW_AT_symbol_name("_f_mutex_put")
+     412                      .dwattr DW$22, DW_AT_low_pc(_f_mutex_put)
+     413                      .dwattr DW$22, DW_AT_high_pc(0x00)
+     414                      .dwattr DW$22, DW_AT_begin_file("port.c")
+     415                      .dwattr DW$22, DW_AT_begin_line(0xb8)
+     416                      .dwattr DW$22, DW_AT_begin_column(0x05)
+     417                      .dwattr DW$22, DW_AT_frame_base[DW_OP_breg20 -2]
+     418                      .dwattr DW$22, DW_AT_skeletal(0x01)
+     419                      .dwpsn  "port.c",185,1
+     420              
+     421              ;***************************************************************
+     422              ;* FNAME: _f_mutex_put                  FR SIZE:   0           *
+     423              ;*                                                             *
+     424              ;* FUNCTION ENVIRONMENT                                        *
+     425              ;*                                                             *
+     426              ;* FUNCTION PROPERTIES                                         *
+     427              ;*                            0 Parameter,  0 Auto,  0 SOE     *
+     428              ;***************************************************************
+     429              
+     430              _f_mutex_put:
+     431              ;* AR4   assigned to _mutex
+     432              DW$23   .dwtag  DW_TAG_formal_parameter, DW_AT_name("mutex"), DW_AT_symbol_name("_mutex")
+     433                      .dwattr DW$23, DW_AT_type(*DW$T$21)
+     434                      .dwattr DW$23, DW_AT_location[DW_OP_reg12]
+     435 00000094 0200          MOVB      ACC,#0
+     436 00000095 1EC4          MOVL      *+XAR4[0],ACC         ; |186| 
+     437 00000096 9A00          MOVB      AL,#0
+     438                      .dwpsn  "port.c",188,1
+     439 00000097 0006          LRETR
+     440                      ; return occurs
+     441                      .dwattr DW$22, DW_AT_end_file("port.c")
+     442                      .dwattr DW$22, DW_AT_end_line(0xbc)
+     443                      .dwattr DW$22, DW_AT_end_column(0x01)
+     444                      .dwendtag DW$22
+     445              
+     446 00000098               .sect   ".text"
+     447                      .global _fn_gettaskID
+     448              
+     449              DW$24   .dwtag  DW_TAG_subprogram, DW_AT_name("fn_gettaskID"), DW_AT_symbol_name("_fn_gettaskID")
+     450                      .dwattr DW$24, DW_AT_low_pc(_fn_gettaskID)
+     451                      .dwattr DW$24, DW_AT_high_pc(0x00)
+     452                      .dwattr DW$24, DW_AT_begin_file("port.c")
+     453                      .dwattr DW$24, DW_AT_begin_line(0xcd)
+     454                      .dwattr DW$24, DW_AT_begin_column(0x06)
+     455                      .dwattr DW$24, DW_AT_frame_base[DW_OP_breg20 -2]
+     456                      .dwattr DW$24, DW_AT_skeletal(0x01)
+     457                      .dwpsn  "port.c",206,1
+     458              
+TMS320C2000 COFF Assembler PC v4.1.3 Thu Aug 18 12:16:26 2016
+
+Tools Copyright (c) 1996-2006 Texas Instruments Incorporated
+port.asm                                                             PAGE   10
+
+     459              ;***************************************************************
+     460              ;* FNAME: _fn_gettaskID                 FR SIZE:   0           *
+     461              ;*                                                             *
+     462              ;* FUNCTION ENVIRONMENT                                        *
+     463              ;*                                                             *
+     464              ;* FUNCTION PROPERTIES                                         *
+     465              ;*                            0 Parameter,  0 Auto,  0 SOE     *
+     466              ;***************************************************************
+     467              
+     468 00000098       _fn_gettaskID:
+     469 00000098 0201          MOVB      ACC,#1
+     470                      .dwpsn  "port.c",208,1
+     471 00000099 0006          LRETR
+     472                      ; return occurs
+     473                      .dwattr DW$24, DW_AT_end_file("port.c")
+     474                      .dwattr DW$24, DW_AT_end_line(0xd0)
+     475                      .dwattr DW$24, DW_AT_end_column(0x01)
+     476                      .dwendtag DW$24
+     477              
+     478              ;***************************************************************
+     479              ;* UNDEFINED EXTERNAL REFERENCES                               *
+     480              ;***************************************************************
+     481                      .global _BCDtoInt
+     482                      .global _clocktime
+     483              
+     484              ;***************************************************************
+     485              ;* TYPE INFORMATION                                            *
+     486              ;***************************************************************
+     487              
+     488              DW$T$20 .dwtag  DW_TAG_subroutine_type, DW_AT_type(*DW$T$9)
+     489                      .dwattr DW$T$20, DW_AT_language(DW_LANG_C)
+     490              
+     491              DW$T$22 .dwtag  DW_TAG_subroutine_type, DW_AT_type(*DW$T$10)
+     492                      .dwattr DW$T$22, DW_AT_language(DW_LANG_C)
+     493              DW$25   .dwtag  DW_TAG_formal_parameter, DW_AT_type(*DW$T$21)
+     494                      .dwendtag DW$T$22
+     495              
+     496              DW$T$11 .dwtag  DW_TAG_base_type, DW_AT_name("unsigned int")
+     497                      .dwattr DW$T$11, DW_AT_encoding(DW_ATE_unsigned)
+     498                      .dwattr DW$T$11, DW_AT_byte_size(0x01)
+     499              
+     500              DW$T$23 .dwtag  DW_TAG_subroutine_type, DW_AT_type(*DW$T$11)
+     501                      .dwattr DW$T$23, DW_AT_language(DW_LANG_C)
+     502              DW$26   .dwtag  DW_TAG_formal_parameter, DW_AT_type(*DW$T$11)
+     503                      .dwendtag DW$T$23
+     504              
+     505              
+     506              DW$T$27 .dwtag  DW_TAG_subroutine_type, DW_AT_type(*DW$T$12)
+     507                      .dwattr DW$T$27, DW_AT_language(DW_LANG_C)
+     508              DW$T$13 .dwtag  DW_TAG_base_type, DW_AT_name("unsigned long")
+     509                      .dwattr DW$T$13, DW_AT_encoding(DW_ATE_unsigned)
+     510                      .dwattr DW$T$13, DW_AT_byte_size(0x02)
+     511              DW$T$21 .dwtag  DW_TAG_pointer_type, DW_AT_type(*DW$T$13)
+     512                      .dwattr DW$T$21, DW_AT_address_class(0x16)
+     513              
+TMS320C2000 COFF Assembler PC v4.1.3 Thu Aug 18 12:16:26 2016
+
+Tools Copyright (c) 1996-2006 Texas Instruments Incorporated
+port.asm                                                             PAGE   11
+
+     514              DW$T$29 .dwtag  DW_TAG_subroutine_type, DW_AT_type(*DW$T$13)
+     515                      .dwattr DW$T$29, DW_AT_language(DW_LANG_C)
+     516              DW$27   .dwtag  DW_TAG_formal_parameter, DW_AT_type(*DW$T$13)
+     517                      .dwendtag DW$T$29
+     518              
+     519              DW$T$30 .dwtag  DW_TAG_typedef, DW_AT_name("clockstruct"), DW_AT_type(*DW$T$19)
+     520                      .dwattr DW$T$30, DW_AT_language(DW_LANG_C)
+     521              DW$T$9  .dwtag  DW_TAG_base_type, DW_AT_name("unsigned short")
+     522                      .dwattr DW$T$9, DW_AT_encoding(DW_ATE_unsigned)
+     523                      .dwattr DW$T$9, DW_AT_byte_size(0x01)
+     524              DW$T$10 .dwtag  DW_TAG_base_type, DW_AT_name("int")
+     525                      .dwattr DW$T$10, DW_AT_encoding(DW_ATE_signed)
+     526                      .dwattr DW$T$10, DW_AT_byte_size(0x01)
+     527              DW$T$12 .dwtag  DW_TAG_base_type, DW_AT_name("long")
+     528                      .dwattr DW$T$12, DW_AT_encoding(DW_ATE_signed)
+     529                      .dwattr DW$T$12, DW_AT_byte_size(0x02)
+     530              
+     531              DW$T$19 .dwtag  DW_TAG_structure_type
+     532                      .dwattr DW$T$19, DW_AT_name("tag_clockstruct")
+     533                      .dwattr DW$T$19, DW_AT_byte_size(0x0e)
+     534              DW$28   .dwtag  DW_TAG_member, DW_AT_type(*DW$T$11)
+     535                      .dwattr DW$28, DW_AT_name("WPstate"), DW_AT_symbol_name("_WPstate")
+     536                      .dwattr DW$28, DW_AT_data_member_location[DW_OP_plus_uconst 0x0]
+     537                      .dwattr DW$28, DW_AT_accessibility(DW_ACCESS_public)
+     538              DW$29   .dwtag  DW_TAG_member, DW_AT_type(*DW$T$11)
+     539                      .dwattr DW$29, DW_AT_name("seconds"), DW_AT_symbol_name("_seconds")
+     540                      .dwattr DW$29, DW_AT_data_member_location[DW_OP_plus_uconst 0x1]
+     541                      .dwattr DW$29, DW_AT_accessibility(DW_ACCESS_public)
+     542              DW$30   .dwtag  DW_TAG_member, DW_AT_type(*DW$T$11)
+     543                      .dwattr DW$30, DW_AT_name("minutes"), DW_AT_symbol_name("_minutes")
+     544                      .dwattr DW$30, DW_AT_data_member_location[DW_OP_plus_uconst 0x2]
+     545                      .dwattr DW$30, DW_AT_accessibility(DW_ACCESS_public)
+     546              DW$31   .dwtag  DW_TAG_member, DW_AT_type(*DW$T$11)
+     547                      .dwattr DW$31, DW_AT_name("hours"), DW_AT_symbol_name("_hours")
+     548                      .dwattr DW$31, DW_AT_data_member_location[DW_OP_plus_uconst 0x3]
+     549                      .dwattr DW$31, DW_AT_accessibility(DW_ACCESS_public)
+     550              DW$32   .dwtag  DW_TAG_member, DW_AT_type(*DW$T$11)
+     551                      .dwattr DW$32, DW_AT_name("day"), DW_AT_symbol_name("_day")
+     552                      .dwattr DW$32, DW_AT_data_member_location[DW_OP_plus_uconst 0x4]
+     553                      .dwattr DW$32, DW_AT_accessibility(DW_ACCESS_public)
+     554              DW$33   .dwtag  DW_TAG_member, DW_AT_type(*DW$T$11)
+     555                      .dwattr DW$33, DW_AT_name("date"), DW_AT_symbol_name("_date")
+     556                      .dwattr DW$33, DW_AT_data_member_location[DW_OP_plus_uconst 0x5]
+     557                      .dwattr DW$33, DW_AT_accessibility(DW_ACCESS_public)
+     558              DW$34   .dwtag  DW_TAG_member, DW_AT_type(*DW$T$11)
+     559                      .dwattr DW$34, DW_AT_name("month"), DW_AT_symbol_name("_month")
+     560                      .dwattr DW$34, DW_AT_data_member_location[DW_OP_plus_uconst 0x6]
+     561                      .dwattr DW$34, DW_AT_accessibility(DW_ACCESS_public)
+     562              DW$35   .dwtag  DW_TAG_member, DW_AT_type(*DW$T$11)
+     563                      .dwattr DW$35, DW_AT_name("year"), DW_AT_symbol_name("_year")
+     564                      .dwattr DW$35, DW_AT_data_member_location[DW_OP_plus_uconst 0x7]
+     565                      .dwattr DW$35, DW_AT_accessibility(DW_ACCESS_public)
+     566              DW$36   .dwtag  DW_TAG_member, DW_AT_type(*DW$T$11)
+     567                      .dwattr DW$36, DW_AT_name("control"), DW_AT_symbol_name("_control")
+     568                      .dwattr DW$36, DW_AT_data_member_location[DW_OP_plus_uconst 0x8]
+TMS320C2000 COFF Assembler PC v4.1.3 Thu Aug 18 12:16:26 2016
+
+Tools Copyright (c) 1996-2006 Texas Instruments Incorporated
+port.asm                                                             PAGE   12
+
+     569                      .dwattr DW$36, DW_AT_accessibility(DW_ACCESS_public)
+     570              DW$37   .dwtag  DW_TAG_member, DW_AT_type(*DW$T$13)
+     571                      .dwattr DW$37, DW_AT_name("framstamp"), DW_AT_symbol_name("_framstamp")
+     572                      .dwattr DW$37, DW_AT_data_member_location[DW_OP_plus_uconst 0xa]
+     573                      .dwattr DW$37, DW_AT_accessibility(DW_ACCESS_public)
+     574              DW$38   .dwtag  DW_TAG_member, DW_AT_type(*DW$T$11)
+     575                      .dwattr DW$38, DW_AT_name("clockerr"), DW_AT_symbol_name("_clockerr")
+     576                      .dwattr DW$38, DW_AT_data_member_location[DW_OP_plus_uconst 0xc]
+     577                      .dwattr DW$38, DW_AT_accessibility(DW_ACCESS_public)
+     578                      .dwendtag DW$T$19
+     579              
+     580              
+     581                      .dwattr DW$14, DW_AT_external(0x01)
+     582                      .dwattr DW$14, DW_AT_type(*DW$T$9)
+     583                      .dwattr DW$5, DW_AT_external(0x01)
+     584                      .dwattr DW$5, DW_AT_type(*DW$T$13)
+     585                      .dwattr DW$15, DW_AT_external(0x01)
+     586                      .dwattr DW$15, DW_AT_type(*DW$T$9)
+     587                      .dwattr DW$16, DW_AT_external(0x01)
+     588                      .dwattr DW$16, DW_AT_type(*DW$T$10)
+     589                      .dwattr DW$18, DW_AT_external(0x01)
+     590                      .dwattr DW$18, DW_AT_type(*DW$T$10)
+     591                      .dwattr DW$20, DW_AT_external(0x01)
+     592                      .dwattr DW$20, DW_AT_type(*DW$T$10)
+     593                      .dwattr DW$22, DW_AT_external(0x01)
+     594                      .dwattr DW$22, DW_AT_type(*DW$T$10)
+     595                      .dwattr DW$24, DW_AT_external(0x01)
+     596                      .dwattr DW$24, DW_AT_type(*DW$T$12)
+     597                      .dwattr DW$CU, DW_AT_language(DW_LANG_C)
+     598              
+     599              ;***************************************************************
+     600              ;* DWARF REGISTER MAP                                          *
+     601              ;***************************************************************
+     602              
+     603              DW$39   .dwtag  DW_TAG_assign_register, DW_AT_name("AL")
+     604                      .dwattr DW$39, DW_AT_location[DW_OP_reg0]
+     605              DW$40   .dwtag  DW_TAG_assign_register, DW_AT_name("AH")
+     606                      .dwattr DW$40, DW_AT_location[DW_OP_reg1]
+     607              DW$41   .dwtag  DW_TAG_assign_register, DW_AT_name("PL")
+     608                      .dwattr DW$41, DW_AT_location[DW_OP_reg2]
+     609              DW$42   .dwtag  DW_TAG_assign_register, DW_AT_name("PH")
+     610                      .dwattr DW$42, DW_AT_location[DW_OP_reg3]
+     611              DW$43   .dwtag  DW_TAG_assign_register, DW_AT_name("AR0")
+     612                      .dwattr DW$43, DW_AT_location[DW_OP_reg4]
+     613              DW$44   .dwtag  DW_TAG_assign_register, DW_AT_name("XAR0")
+     614                      .dwattr DW$44, DW_AT_location[DW_OP_reg5]
+     615              DW$45   .dwtag  DW_TAG_assign_register, DW_AT_name("AR1")
+     616                      .dwattr DW$45, DW_AT_location[DW_OP_reg6]
+     617              DW$46   .dwtag  DW_TAG_assign_register, DW_AT_name("XAR1")
+     618                      .dwattr DW$46, DW_AT_location[DW_OP_reg7]
+     619              DW$47   .dwtag  DW_TAG_assign_register, DW_AT_name("AR2")
+     620                      .dwattr DW$47, DW_AT_location[DW_OP_reg8]
+     621              DW$48   .dwtag  DW_TAG_assign_register, DW_AT_name("XAR2")
+     622                      .dwattr DW$48, DW_AT_location[DW_OP_reg9]
+     623              DW$49   .dwtag  DW_TAG_assign_register, DW_AT_name("AR3")
+TMS320C2000 COFF Assembler PC v4.1.3 Thu Aug 18 12:16:26 2016
+
+Tools Copyright (c) 1996-2006 Texas Instruments Incorporated
+port.asm                                                             PAGE   13
+
+     624                      .dwattr DW$49, DW_AT_location[DW_OP_reg10]
+     625              DW$50   .dwtag  DW_TAG_assign_register, DW_AT_name("XAR3")
+     626                      .dwattr DW$50, DW_AT_location[DW_OP_reg11]
+     627              DW$51   .dwtag  DW_TAG_assign_register, DW_AT_name("AR4")
+     628                      .dwattr DW$51, DW_AT_location[DW_OP_reg12]
+     629              DW$52   .dwtag  DW_TAG_assign_register, DW_AT_name("XAR4")
+     630                      .dwattr DW$52, DW_AT_location[DW_OP_reg13]
+     631              DW$53   .dwtag  DW_TAG_assign_register, DW_AT_name("AR5")
+     632                      .dwattr DW$53, DW_AT_location[DW_OP_reg14]
+     633              DW$54   .dwtag  DW_TAG_assign_register, DW_AT_name("XAR5")
+     634                      .dwattr DW$54, DW_AT_location[DW_OP_reg15]
+     635              DW$55   .dwtag  DW_TAG_assign_register, DW_AT_name("AR6")
+     636                      .dwattr DW$55, DW_AT_location[DW_OP_reg16]
+     637              DW$56   .dwtag  DW_TAG_assign_register, DW_AT_name("XAR6")
+     638                      .dwattr DW$56, DW_AT_location[DW_OP_reg17]
+     639              DW$57   .dwtag  DW_TAG_assign_register, DW_AT_name("AR7")
+     640                      .dwattr DW$57, DW_AT_location[DW_OP_reg18]
+     641              DW$58   .dwtag  DW_TAG_assign_register, DW_AT_name("XAR7")
+     642                      .dwattr DW$58, DW_AT_location[DW_OP_reg19]
+     643              DW$59   .dwtag  DW_TAG_assign_register, DW_AT_name("SP")
+     644                      .dwattr DW$59, DW_AT_location[DW_OP_reg20]
+     645              DW$60   .dwtag  DW_TAG_assign_register, DW_AT_name("XT")
+     646                      .dwattr DW$60, DW_AT_location[DW_OP_reg21]
+     647              DW$61   .dwtag  DW_TAG_assign_register, DW_AT_name("T")
+     648                      .dwattr DW$61, DW_AT_location[DW_OP_reg22]
+     649              DW$62   .dwtag  DW_TAG_assign_register, DW_AT_name("ST0")
+     650                      .dwattr DW$62, DW_AT_location[DW_OP_reg23]
+     651              DW$63   .dwtag  DW_TAG_assign_register, DW_AT_name("ST1")
+     652                      .dwattr DW$63, DW_AT_location[DW_OP_reg24]
+     653              DW$64   .dwtag  DW_TAG_assign_register, DW_AT_name("PC")
+     654                      .dwattr DW$64, DW_AT_location[DW_OP_reg25]
+     655              DW$65   .dwtag  DW_TAG_assign_register, DW_AT_name("RPC")
+     656                      .dwattr DW$65, DW_AT_location[DW_OP_reg26]
+     657              DW$66   .dwtag  DW_TAG_assign_register, DW_AT_name("FP")
+     658                      .dwattr DW$66, DW_AT_location[DW_OP_reg27]
+     659              DW$67   .dwtag  DW_TAG_assign_register, DW_AT_name("DP")
+     660                      .dwattr DW$67, DW_AT_location[DW_OP_reg28]
+     661              DW$68   .dwtag  DW_TAG_assign_register, DW_AT_name("SXM")
+     662                      .dwattr DW$68, DW_AT_location[DW_OP_reg29]
+     663              DW$69   .dwtag  DW_TAG_assign_register, DW_AT_name("PM")
+     664                      .dwattr DW$69, DW_AT_location[DW_OP_reg30]
+     665              DW$70   .dwtag  DW_TAG_assign_register, DW_AT_name("OVM")
+     666                      .dwattr DW$70, DW_AT_location[DW_OP_reg31]
+     667              DW$71   .dwtag  DW_TAG_assign_register, DW_AT_name("PAGE0")
+     668                      .dwattr DW$71, DW_AT_location[DW_OP_regx 0x20]
+     669              DW$72   .dwtag  DW_TAG_assign_register, DW_AT_name("AMODE")
+     670                      .dwattr DW$72, DW_AT_location[DW_OP_regx 0x21]
+     671              DW$73   .dwtag  DW_TAG_assign_register, DW_AT_name("IFR")
+     672                      .dwattr DW$73, DW_AT_location[DW_OP_regx 0x22]
+     673              DW$74   .dwtag  DW_TAG_assign_register, DW_AT_name("IER")
+     674                      .dwattr DW$74, DW_AT_location[DW_OP_regx 0x23]
+     675              DW$75   .dwtag  DW_TAG_assign_register, DW_AT_name("IER")
+     676                      .dwattr DW$75, DW_AT_location[DW_OP_regx 0x24]
+     677              DW$76   .dwtag  DW_TAG_assign_register, DW_AT_name("PSEUDO")
+     678                      .dwattr DW$76, DW_AT_location[DW_OP_regx 0x25]
+TMS320C2000 COFF Assembler PC v4.1.3 Thu Aug 18 12:16:26 2016
+
+Tools Copyright (c) 1996-2006 Texas Instruments Incorporated
+port.asm                                                             PAGE   14
+
+     679              DW$77   .dwtag  DW_TAG_assign_register, DW_AT_name("PSEUDOH")
+     680                      .dwattr DW$77, DW_AT_location[DW_OP_regx 0x26]
+     681              DW$78   .dwtag  DW_TAG_assign_register, DW_AT_name("VOL")
+     682                      .dwattr DW$78, DW_AT_location[DW_OP_regx 0x27]
+     683              DW$79   .dwtag  DW_TAG_assign_register, DW_AT_name("CIE_RETA")
+     684                      .dwattr DW$79, DW_AT_location[DW_OP_regx 0x28]
+     685                      .dwendtag DW$CU
+     686              
+
+No Assembly Errors, No Assembly Warnings

@@ -1,0 +1,28 @@
+﻿<UserControl
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk" x:Name="userControl"
+	mc:Ignorable="d"
+	x:Class="XTS.Controls.RPM"
+	d:DesignWidth="44" d:DesignHeight="44">
+  <UserControl.Foreground>
+    <SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+  </UserControl.Foreground>
+
+  <Grid x:Name="LayoutRoot">
+    <Grid.Background>
+      <SolidColorBrush Color="{StaticResource ColorAMOTBlue}" />
+    </Grid.Background>
+    <sdk:Label Margin="2,0,0,0" VerticalAlignment="Bottom" d:LayoutOverrides="Width" HorizontalAlignment="Left" Content="{Binding Path=ResourceStrings.XTSStringRPM, Source={StaticResource LocalizedResources}}" FontSize="10.667" Foreground="{Binding Foreground, ElementName=userControl}" />
+    <sdk:Label x:Name="LabelRPM" Margin="0,0,0,6" VerticalAlignment="Center" d:LayoutOverrides="Width" HorizontalAlignment="Center" FontSize="{Binding FontSize, ElementName=userControl}" Foreground="{Binding Foreground, ElementName=userControl}" FontWeight="{Binding FontWeight, ElementName=userControl}" FontFamily="{Binding FontFamily, ElementName=userControl}" />
+    <Path x:Name="PathForwards" Stretch="Fill" StrokeLineJoin="Round" Data="F1 M 128,128L 128,192L 174.104,160L 128,128 Z " HorizontalAlignment="Right" Height="7" Margin="0,0,2,4.5" UseLayoutRounding="False" VerticalAlignment="Bottom" Width="5" Fill="{Binding Foreground, ElementName=userControl}" />
+    <Path x:Name="PathReverse" Stretch="Fill" StrokeLineJoin="Round" Data="F1 M 128,128L 128,192L 174.104,160L 128,128 Z " HorizontalAlignment="Right" Height="7" Margin="0,0,4,4.5" UseLayoutRounding="False" VerticalAlignment="Bottom" Width="5" RenderTransformOrigin="0.5,0.5" Fill="{Binding Foreground, ElementName=userControl}">
+      <Path.RenderTransform>
+        <CompositeTransform ScaleX="-1" />
+      </Path.RenderTransform>
+    </Path>
+    <Path x:Name="PathNoComms" Stretch="Fill" Fill="{Binding Foreground, ElementName=userControl}" Data="F1 M 24,12C 30.6274,12 36,17.3726 36,24C 36,30.6274 30.6274,36 24,36C 17.3726,36 12,30.6274 12,24C 12,17.3726 17.3726,12 24,12 Z M 16.2218,28.9497L 19.0503,31.7782L 24,26.8284L 28.9497,31.7782L 31.7782,28.9497L 26.8284,24L 31.7782,19.0503L 28.9497,16.2218L 24,21.1716L 19.0503,16.2218L 16.2218,19.0502L 21.1716,24L 16.2218,28.9497 Z " UseLayoutRounding="False" Margin="8,2,8,14" Visibility="Collapsed"/>
+  </Grid>
+</UserControl>

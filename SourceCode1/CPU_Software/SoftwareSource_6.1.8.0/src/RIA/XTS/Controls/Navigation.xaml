@@ -1,0 +1,65 @@
+﻿<UserControl xmlns:my="clr-namespace:XTS.Controls" 
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:ee="http://schemas.microsoft.com/expression/2010/effects" xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions" xmlns:XTS_ViewModels="clr-namespace:XTS.ViewModels" xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" xmlns:Telerik_Windows_Media_Imaging_ShaderEffects="clr-namespace:Telerik.Windows.Media.Imaging.ShaderEffects;assembly=Telerik.Windows.Controls.ImageEditor" x:Name="userControl"
+	mc:Ignorable="d"
+	x:Class="XTS.Controls.Navigation" Width="112" Height="470.5" Loaded="Navigation_Loaded" Unloaded="Navigation_Unloaded">
+
+
+	<UserControl.Resources>
+
+		<Style x:Key="NavigationBorderStyle" TargetType="Border">
+			<Setter Property="BorderBrush" Value="#FF5E5E5E"/>
+			<Setter Property="BorderThickness" Value="1"/>
+			<Setter Property="Padding" Value="5"/>
+			<Setter Property="UseLayoutRounding" Value="True"/>
+		</Style>
+	
+	</UserControl.Resources>
+    
+	<UserControl.DataContext>
+		<XTS_ViewModels:NavBarViewModel/>
+	</UserControl.DataContext>
+
+	<Grid x:Name="LayoutRoot" RenderTransformOrigin="0.5,0.5"  >
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+       
+        <Border Grid.Column="0" x:Name="border" Style="{StaticResource NavigationBorderStyle}" CornerRadius="4" Height="450" BorderBrush="#FF5E5E5E" VerticalAlignment="Top">
+			<Border.Effect>
+				<DropShadowEffect Opacity="0.5"/>
+			</Border.Effect>
+			<Border.RenderTransform>
+				<CompositeTransform/>
+			</Border.RenderTransform>
+			<Border.Background>
+				
+				<LinearGradientBrush MappingMode="Absolute" StartPoint="0,0" EndPoint="1920,0">
+					<GradientStop Color="#BAADC9E5" Offset="0.010"/>
+					<GradientStop Color="#BAA7C2DC" Offset="0.069"/>
+					<GradientStop Color="#BAB7D2EC" Offset="0.084"/>
+					<GradientStop Color="#BAB7D2EC" Offset="0.146"/>
+					<GradientStop Color="#BAA8C4DE" Offset="0.168"/>
+					<GradientStop Color="#BAB8D3ED" Offset="0.455"/>
+					<GradientStop Color="#BAA6C1DB" Offset="0.518"/>
+					<GradientStop Color="#BAB6D1EB" Offset="0.543"/>
+					<GradientStop Color="#BAA7C2DC" Offset="0.604"/>
+					<GradientStop Color="#BAB7D2EC" Offset="0.618"/>
+					<GradientStop Color="#BAB7D2EC" Offset="0.700"/>
+					<GradientStop Color="#BAABC6E1" Offset="0.722"/>
+					<GradientStop Color="{StaticResource ColorAMOTGlassEffect}" Offset="0.778"/>
+				</LinearGradientBrush>
+						  
+			
+			</Border.Background>
+
+            
+        </Border>
+
+        <Border Grid.Column="0" Width="112" HorizontalAlignment="Left">
+            <my:NavigationPresenter x:Name="Menu" VerticalAlignment="Top"  Width="96" />
+        </Border>
+    </Grid>
+</UserControl>

@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XTSDataTest", "XTSDataTest\XTSDataTest.csproj", "{883A1AE1-1FF2-40F6-8F63-F16A188E007B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XTSData", "..\..\RIA\XTSData\XTSData.csproj", "{ED3EC7FA-935D-4FF3-A42F-6D5C67D8CD97}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{883A1AE1-1FF2-40F6-8F63-F16A188E007B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{883A1AE1-1FF2-40F6-8F63-F16A188E007B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{883A1AE1-1FF2-40F6-8F63-F16A188E007B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{883A1AE1-1FF2-40F6-8F63-F16A188E007B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ED3EC7FA-935D-4FF3-A42F-6D5C67D8CD97}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED3EC7FA-935D-4FF3-A42F-6D5C67D8CD97}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED3EC7FA-935D-4FF3-A42F-6D5C67D8CD97}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED3EC7FA-935D-4FF3-A42F-6D5C67D8CD97}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

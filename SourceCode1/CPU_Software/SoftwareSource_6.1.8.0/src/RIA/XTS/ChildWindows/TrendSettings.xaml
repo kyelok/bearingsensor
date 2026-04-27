@@ -1,0 +1,283 @@
+﻿<controls:ChildWindow
+    xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls"
+    xmlns:localControl="clr-namespace:XTS.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
+    mc:Ignorable="d"
+    x:Class="XTS.ChildWindows.TrendSettings"
+    Title="{Binding Path=ResourceStrings.XTSStringTrendSettings, Source={StaticResource LocalizedResources}}"
+    HasCloseButton="False"
+    Loaded="TrendSettings_Loaded"
+    VerticalAlignment="Center">
+  <controls:ChildWindow.Style>
+    <StaticResource ResourceKey="ChildWindowStyleAMOT" />
+  </controls:ChildWindow.Style>
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="8" />
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="8" />
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="1*" MinHeight="22" />
+      <RowDefinition Height="48" />
+    </Grid.RowDefinitions>
+    <Path Stretch="Fill" Data="F1 M 24,22C 25.1046,22 26,22.8954 26,24C 26,25.1046 25.1046,26 24,26C 22.8954,26 22,25.1046 22,24C 22,22.8954 22.8954,22 24,22 Z M 24.69,17.5542L 27.9094,14.793C 28.5138,15.05 29.0876,15.3647 29.6241,15.7302L 29.0458,19.93L 33.2747,20.2541C 33.5166,20.8524 33.7023,21.4794 33.8252,22.1286L 30.4458,24.69L 33.207,27.9094C 32.95,28.5137 32.6353,29.0876 32.2698,29.6241L 28.0699,29.0458L 27.7459,33.2747C 27.1476,33.5166 26.5206,33.7023 25.8714,33.8252L 23.3099,30.4458L 20.0906,33.207C 19.4862,32.95 18.9124,32.6353 18.3759,32.2698L 18.9542,28.0699L 14.7253,27.7459C 14.4834,27.1476 14.2977,26.5206 14.1748,25.8713L 17.5542,23.3099L 14.793,20.0906C 15.05,19.4862 15.3647,18.9124 15.7302,18.3759L 19.93,18.9542L 20.2541,14.7252C 20.8524,14.4834 21.4794,14.2977 22.1286,14.1748L 24.69,17.5542 Z M 24,20C 21.7909,20 20,21.7909 20,24C 20,26.2091 21.7909,28 24,28C 26.2091,28 28,26.2091 28,24C 28,21.7909 26.2091,20 24,20 Z " HorizontalAlignment="Left" Height="500" UseLayoutRounding="False" VerticalAlignment="Bottom" Width="500" Grid.RowSpan="9" Margin="-100,0,0,-40" d:IsLocked="True">
+      <Path.Fill>
+        <SolidColorBrush Color="{StaticResource ColorAMOTBGIcon}" />
+      </Path.Fill>
+    </Path>
+    <Grid Height="188" Margin="92,0,0,0">
+      <Grid.Background>
+        <SolidColorBrush Color="{StaticResource ColorAMOTBackgroundOverlay}" />
+      </Grid.Background>
+      <Grid.RowDefinitions>
+      	<RowDefinition Height="4" />
+      	<RowDefinition />
+      	<RowDefinition Height="4" />
+      	<RowDefinition />
+      	<RowDefinition Height="4" />
+      </Grid.RowDefinitions>
+      <Grid.ColumnDefinitions>
+      	<ColumnDefinition Width="22" />
+      	<ColumnDefinition Width="88" />
+      	<ColumnDefinition Width="4" />
+      	<ColumnDefinition Width="268" />
+      	<ColumnDefinition />
+      </Grid.ColumnDefinitions>
+    	<RadioButton x:Name="buttonSpan" Grid.Row="1" Grid.Column="1" Style="{StaticResource ToggleButtonStyleAMOT}" GroupName="GroupSpanTime" Checked="buttonSpan_Checked" HorizontalAlignment="Right" Width="88">
+    		<RadioButton.Background>
+    			<SolidColorBrush Color="{StaticResource ColorAMOTButton}" />
+    		</RadioButton.Background>
+    		<RadioButton.Foreground>
+    			<SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+    		</RadioButton.Foreground>
+    		<Grid>
+    			<TextBlock Margin="2,0,0,0" TextWrapping="Wrap" Text="{Binding ResourceStrings.XTSStringSpan, Source={StaticResource LocalizedResources}}" VerticalAlignment="Bottom" HorizontalAlignment="Left" />
+    			<Path Stretch="Fill" Data="F1 M 30,18L 27,15L 31,15L 34.5,18.1111L 34.5,15L 36.5,15L 36.5,23L 34.5,23L 34.5,19.8889L 31,23L 27,23L 30,20L 18,20L 21,23L 17,23L 13.5,19.8889L 13.5,23L 11.5,23L 11.5,15L 13.5,15L 13.5,18.1111L 17,15L 21,15L 18,18L 30,18 Z " HorizontalAlignment="Left" UseLayoutRounding="False" Width="28" VerticalAlignment="Top" Height="10" Margin="4,4,0,0">
+    				<Path.Fill>
+    					<SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+    				</Path.Fill>
+    			</Path>
+    		</Grid>
+    	</RadioButton>
+    	<Grid Grid.Row="1" Grid.Column="3">
+    		<Grid.Background>
+    			<SolidColorBrush Color="{StaticResource ColorAMOTBlue}" />
+    		</Grid.Background>
+    		<sdk:Label Content="{Binding ResourceStrings.XTSStringSpan, Source={StaticResource LocalizedResources}}" HorizontalAlignment="Left" Height="14" VerticalAlignment="Bottom" d:LayoutOverrides="HorizontalAlignment" Margin="2,0,0,-80" Visibility="Collapsed">
+    			<sdk:Label.Foreground>
+    				<SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+    			</sdk:Label.Foreground>
+    		</sdk:Label>
+    		<StackPanel x:Name="stackPanelTimeSpan" HorizontalAlignment="Center" Orientation="Horizontal" VerticalAlignment="Center">
+    			<TextBlock x:Name="SpanDisplay" Text="{Binding ResourceStrings.XTSString1, Source={StaticResource LocalizedResources}}" TextAlignment="Center" VerticalAlignment="Center" FontSize="29.333" FontWeight="Bold" HorizontalAlignment="Left">
+    				<TextBlock.Foreground>
+    					<SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+    				</TextBlock.Foreground>
+    			</TextBlock>
+    			<sdk:Label Content="{Binding ResourceStrings.XTSStringHrs, Source={StaticResource LocalizedResources}}" HorizontalAlignment="Left" FontSize="24" FontWeight="Bold" VerticalAlignment="Center">
+    				<sdk:Label.Foreground>
+    					<SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+    				</sdk:Label.Foreground>
+    			</sdk:Label>
+    		</StackPanel>
+    		<Path Stretch="Fill" Data="F1 M 30,18L 27,15L 31,15L 34.5,18.1111L 34.5,15L 36.5,15L 36.5,23L 34.5,23L 34.5,19.8889L 31,23L 27,23L 30,20L 18,20L 21,23L 17,23L 13.5,19.8889L 13.5,23L 11.5,23L 11.5,15L 13.5,15L 13.5,18.1111L 17,15L 21,15L 18,18L 30,18 Z " HorizontalAlignment="Left" UseLayoutRounding="False" Width="28" VerticalAlignment="Top" Height="10" Margin="4,4,0,0" Visibility="Collapsed">
+    			<Path.Fill>
+    				<SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+    			</Path.Fill>
+    		</Path>
+    		<sdk:Label HorizontalAlignment="Left" VerticalAlignment="Bottom" Content="{Binding ResourceStrings.XTSStringSpan, Source={StaticResource LocalizedResources}}" Margin="2,0,0,0" Visibility="Collapsed">
+    			<sdk:Label.Foreground>
+    				<SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+    			</sdk:Label.Foreground>
+    		</sdk:Label>
+    		<Button Width="120" Height="24" Style="{StaticResource ButtonStyleAMOTNavigationUp}" x:Name="SpanInc" Click="SpanInc_Click" HorizontalAlignment="Center" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" UseLayoutRounding="False" d:LayoutRounding="Auto" Margin="0,4,0,0">
+    			<Button.Foreground>
+    				<SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+    			</Button.Foreground>
+    			<Button.Background>
+    				<SolidColorBrush Color="{StaticResource ColorAMOTButton}" />
+    			</Button.Background>
+    		</Button>
+    		<Button Width="120" Height="24" Style="{StaticResource ButtonStyleAMOTNavigationDown}" x:Name="SpanDec" Click="SpanDec_Click" HorizontalAlignment="Center" VerticalAlignment="Bottom" RenderTransformOrigin="0.5,0.5" UseLayoutRounding="False" d:LayoutRounding="Auto" Margin="0,0,0,4">
+    			<Button.Foreground>
+    				<SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+    			</Button.Foreground>
+    			<Button.Background>
+    				<SolidColorBrush Color="{StaticResource ColorAMOTButton}" />
+    			</Button.Background>
+    		</Button>
+    	</Grid>
+    	<RadioButton x:Name="buttonTimeStart" Grid.Row="3" Grid.Column="1" Style="{StaticResource ToggleButtonStyleAMOT}" GroupName="GroupSpanTime" Checked="buttonTimeStart_Checked" HorizontalAlignment="Right" Width="88">
+    		<RadioButton.Foreground>
+    			<SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+    		</RadioButton.Foreground>
+    		<RadioButton.Background>
+    			<SolidColorBrush Color="{StaticResource ColorAMOTButton}" />
+    		</RadioButton.Background>
+    		<Grid>
+    			<TextBlock Margin="2,0,0,0" TextWrapping="Wrap" Text="{Binding ResourceStrings.XTSStringSpecifyDate, Source={StaticResource LocalizedResources}}" VerticalAlignment="Bottom" HorizontalAlignment="Left" />
+    			<Path Stretch="Fill" Data="F1 M 11.0017,36.005L 11.0017,14.002L 14.0021,14.002L 14.0021,11.0015L 19.0028,11.0015L 19.0028,14.002L 28.0039,14.002L 28.0039,11.0015L 33.0046,11.0015L 33.0046,14.002L 36.005,14.002L 36.005,36.005L 11.0017,36.005 Z M 13.0019,34.0048L 34.0047,34.0048L 34.0047,19.0027L 13.0019,19.0027L 13.0019,34.0048 Z M 16.5023,12.5017C 15.95,12.5017 15.5022,13.1734 15.5022,14.0019C 15.5022,14.8305 15.95,15.5021 16.5023,15.5021C 17.0547,15.5021 17.5025,14.8305 17.5025,14.0019C 17.5025,13.1734 17.0547,12.5017 16.5023,12.5017 Z M 30.5,12.4998C 29.9476,12.4998 29.4998,13.1715 29.4998,14C 29.4998,14.8286 29.9476,15.5002 30.5,15.5002C 31.0523,15.5002 31.5001,14.8286 31.5001,14C 31.5001,13.1715 31.0523,12.4998 30.5,12.4998 Z M 14.0019,29.0041L 18.0024,29.0041L 18.0024,32.0045L 14.0019,32.0045L 14.0019,29.0041 Z M 19.0025,29.0041L 23.003,29.0041L 23.003,32.0045L 19.0025,32.0045L 19.0025,29.0041 Z M 23.9996,28.9997L 28.0001,28.9997L 28.0001,32.0001L 23.9996,32.0001L 23.9996,28.9997 Z M 28.9996,28.9997L 33.0001,28.9997L 33.0001,32.0001L 28.9996,32.0001L 28.9996,28.9997 Z M 14.0019,25.0035L 18.0024,25.0035L 18.0024,28.0039L 14.0019,28.0039L 14.0019,25.0035 Z M 19.0025,25.0035L 23.0031,25.0035L 23.0031,28.0039L 19.0025,28.0039L 19.0025,25.0035 Z M 23.9996,24.9991L 28.0001,24.9991L 28.0001,27.9995L 23.9996,27.9995L 23.9996,24.9991 Z M 28.9996,24.9991L 33.0001,24.9991L 33.0001,27.9995L 28.9996,27.9995L 28.9996,24.9991 Z M 19.0026,21.0029L 23.0032,21.0029L 23.0032,24.0034L 19.0026,24.0034L 19.0026,21.0029 Z M 23.9997,20.9999L 28.0003,20.9999L 28.0003,24.0004L 23.9997,24.0004L 23.9997,20.9999 Z M 28.9997,20.9999L 33.0003,20.9999L 33.0003,24.0003L 28.9997,24.0003L 28.9997,20.9999 Z " UseLayoutRounding="False" VerticalAlignment="Top" Height="30" HorizontalAlignment="Left" Width="30" Margin="6,6,0,0" Grid.RowSpan="2">
+    				<Path.Fill>
+    					<SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+    				</Path.Fill>
+    			</Path>
+    		</Grid>
+    	</RadioButton>
+    	<localControl:DatePickerBasic x:Name="datePickerBasicStart" FontSize="16" FontWeight="Bold" IsEnabled="False" Grid.Column="3" Grid.Row="3">
+    		<localControl:DatePickerBasic.Foreground>
+    			<SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+    		</localControl:DatePickerBasic.Foreground>
+    		<localControl:DatePickerBasic.Background>
+    			<SolidColorBrush Color="{StaticResource ColorAMOTBlue}" />
+    		</localControl:DatePickerBasic.Background>
+    	</localControl:DatePickerBasic>
+    	<sdk:Label RenderTransformOrigin="0.5,0.5" Content="{Binding ResourceStrings.XTSStringTimeSpanSlashStartDate, Source={StaticResource LocalizedResources}}" HorizontalAlignment="Center" Margin="-60,60,-60,0" FontWeight="Bold" UseLayoutRounding="False" d:LayoutRounding="Auto" Grid.Row="1" d:LayoutOverrides="GridBox" VerticalAlignment="Top">
+    		<sdk:Label.RenderTransform>
+    			<CompositeTransform Rotation="270" />
+    		</sdk:Label.RenderTransform>
+    	</sdk:Label>
+    	<TextBlock TextWrapping="Wrap" Text="{Binding ResourceStrings.XTSStringNoteRealTimeOnlySpanSupport, Source={StaticResource LocalizedResources}}" d:LayoutOverrides="Height" Grid.Row="1" Grid.Column="4" Grid.RowSpan="3" Margin="4,0,0,0" Width="176" HorizontalAlignment="Left" />
+    </Grid>
+    <Grid Height="96" Grid.Row="2">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="4" />
+        <RowDefinition />
+        <RowDefinition Height="4" />
+      </Grid.RowDefinitions>
+      <Grid.Background>
+        <SolidColorBrush Color="{StaticResource ColorAMOTBackgroundOverlay}" />
+      </Grid.Background>
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="22" />
+        <ColumnDefinition Width="88" />
+        <ColumnDefinition Width="4" />
+        <ColumnDefinition Width="88" />
+        <ColumnDefinition Width="4" />
+        <ColumnDefinition Width="268" />
+        <ColumnDefinition Width="4" />
+        <ColumnDefinition Width="180" />
+        <ColumnDefinition Width="4" />
+      </Grid.ColumnDefinitions>
+      <RadioButton GroupName="EndSelection" x:Name="buttonRealTime" Style="{StaticResource ToggleButtonStyleAMOT}" Width="88" Height="88" VerticalAlignment="Center" Checked="buttonRealTime_Checked" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center">
+        <RadioButton.Background>
+          <SolidColorBrush Color="{StaticResource ColorAMOTButton}" />
+        </RadioButton.Background>
+        <RadioButton.Foreground>
+          <SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+        </RadioButton.Foreground>
+        <Grid>
+          <TextBlock Margin="2,0,0,0" TextWrapping="Wrap" Text="{Binding Path=ResourceStrings.XTSStringRealTime, Source={StaticResource LocalizedResources}}" VerticalAlignment="Bottom" HorizontalAlignment="Left" />
+          <Path Data="M0,1.1217178 L4.2399998,1.1217178 L4.2399998,20.824718 L0,20.824718 z M28.673689,0 L28.673689,21.344795 L18.373522,12.193956 L18.373522,21.645 L6.3606892,10.973104 L18.373522,0.30120444 L18.373522,9.1508398 z" RenderTransformOrigin="0.07393537308015,0.506963165879531" Stretch="Fill" UseLayoutRounding="False" d:LayoutRounding="Auto" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="13,8,0,0" Width="30" Height="22">
+            <Path.Fill>
+              <SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+            </Path.Fill>
+            <Path.RenderTransform>
+              <CompositeTransform Rotation="179.456" TranslateX="21" TranslateY="-0.1" />
+            </Path.RenderTransform>
+          </Path>
+        </Grid>
+      </RadioButton>
+      <RadioButton GroupName="EndSelection" Grid.Row="1" x:Name="buttonTime" HorizontalAlignment="Center" Style="{StaticResource ToggleButtonStyleAMOT}" Width="88" Checked="buttonTime_Checked" Grid.Column="3" Height="88" VerticalAlignment="Center">
+        <RadioButton.Background>
+          <SolidColorBrush Color="{StaticResource ColorAMOTButton}" />
+        </RadioButton.Background>
+        <RadioButton.Foreground>
+          <SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+        </RadioButton.Foreground>
+        <Grid>
+          <TextBlock Margin="2,0,0,0" TextWrapping="Wrap" Text="{Binding Path=ResourceStrings.XTSStringSpecifyDateTime, Source={StaticResource LocalizedResources}}" VerticalAlignment="Bottom" HorizontalAlignment="Left" />
+          <Path Stretch="Fill" Data="F1 M 11.0017,36.005L 11.0017,14.002L 14.0021,14.002L 14.0021,11.0015L 19.0028,11.0015L 19.0028,14.002L 28.0039,14.002L 28.0039,11.0015L 33.0046,11.0015L 33.0046,14.002L 36.005,14.002L 36.005,36.005L 11.0017,36.005 Z M 13.0019,34.0048L 34.0047,34.0048L 34.0047,19.0027L 13.0019,19.0027L 13.0019,34.0048 Z M 16.5023,12.5017C 15.95,12.5017 15.5022,13.1734 15.5022,14.0019C 15.5022,14.8305 15.95,15.5021 16.5023,15.5021C 17.0547,15.5021 17.5025,14.8305 17.5025,14.0019C 17.5025,13.1734 17.0547,12.5017 16.5023,12.5017 Z M 30.5,12.4998C 29.9476,12.4998 29.4998,13.1715 29.4998,14C 29.4998,14.8286 29.9476,15.5002 30.5,15.5002C 31.0523,15.5002 31.5001,14.8286 31.5001,14C 31.5001,13.1715 31.0523,12.4998 30.5,12.4998 Z M 14.0019,29.0041L 18.0024,29.0041L 18.0024,32.0045L 14.0019,32.0045L 14.0019,29.0041 Z M 19.0025,29.0041L 23.003,29.0041L 23.003,32.0045L 19.0025,32.0045L 19.0025,29.0041 Z M 23.9996,28.9997L 28.0001,28.9997L 28.0001,32.0001L 23.9996,32.0001L 23.9996,28.9997 Z M 28.9996,28.9997L 33.0001,28.9997L 33.0001,32.0001L 28.9996,32.0001L 28.9996,28.9997 Z M 14.0019,25.0035L 18.0024,25.0035L 18.0024,28.0039L 14.0019,28.0039L 14.0019,25.0035 Z M 19.0025,25.0035L 23.0031,25.0035L 23.0031,28.0039L 19.0025,28.0039L 19.0025,25.0035 Z M 23.9996,24.9991L 28.0001,24.9991L 28.0001,27.9995L 23.9996,27.9995L 23.9996,24.9991 Z M 28.9996,24.9991L 33.0001,24.9991L 33.0001,27.9995L 28.9996,27.9995L 28.9996,24.9991 Z M 19.0026,21.0029L 23.0032,21.0029L 23.0032,24.0034L 19.0026,24.0034L 19.0026,21.0029 Z M 23.9997,20.9999L 28.0003,20.9999L 28.0003,24.0004L 23.9997,24.0004L 23.9997,20.9999 Z M 28.9997,20.9999L 33.0003,20.9999L 33.0003,24.0003L 28.9997,24.0003L 28.9997,20.9999 Z " UseLayoutRounding="False" VerticalAlignment="Top" Height="30" HorizontalAlignment="Left" Width="30" Margin="6,6,0,0" Grid.RowSpan="2">
+            <Path.Fill>
+              <SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+            </Path.Fill>
+          </Path>
+        </Grid>
+      </RadioButton>
+      <localControl:DatePickerBasic x:Name="datePickerBasic" FontSize="16" FontWeight="Bold" IsEnabled="False" Grid.Column="5" Grid.Row="1">
+        <localControl:DatePickerBasic.Foreground>
+          <SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+        </localControl:DatePickerBasic.Foreground>
+        <localControl:DatePickerBasic.Background>
+          <SolidColorBrush Color="{StaticResource ColorAMOTBlue}" />
+        </localControl:DatePickerBasic.Background>
+      </localControl:DatePickerBasic>
+      <localControl:TimePicker x:Name="timePicker" FontSize="16" FontWeight="Bold" IsEnabled="False" Grid.Column="7" Grid.Row="1">
+        <localControl:TimePicker.Foreground>
+          <SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+        </localControl:TimePicker.Foreground>
+        <localControl:TimePicker.Background>
+          <SolidColorBrush Color="{StaticResource ColorAMOTBlue}" />
+        </localControl:TimePicker.Background>
+      </localControl:TimePicker>
+      <sdk:Label RenderTransformOrigin="0.5,0.5" Content="{Binding Path=ResourceStrings.XTSStringEndTime, Source={StaticResource LocalizedResources}}" HorizontalAlignment="Center" Margin="-60,21,-60,40" FontWeight="Bold" UseLayoutRounding="False" d:LayoutRounding="Auto" Grid.Row="1" d:LayoutOverrides="Height" VerticalAlignment="Top">
+        <sdk:Label.RenderTransform>
+          <CompositeTransform Rotation="270" />
+        </sdk:Label.RenderTransform>
+      </sdk:Label>
+    </Grid>
+    <Grid Grid.Row="4" Height="72">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto" MinHeight="22" />
+        <RowDefinition />
+      </Grid.RowDefinitions>
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition />
+        <ColumnDefinition />
+      </Grid.ColumnDefinitions>
+      <sdk:Label HorizontalAlignment="Left" VerticalAlignment="Bottom" Content="{Binding Path=ResourceStrings.XTSStringAxis1LabelC, Source={StaticResource LocalizedResources}}" Margin="2,0,0,0" />
+            <TextBox x:Name="textBoxAxis1" TextWrapping="NoWrap" Text="TextBox" VerticalAlignment="Center" FontSize="16" Grid.Row="1" Width="326" HorizontalAlignment="Left">
+                <TextBox.Background>
+          <SolidColorBrush Color="{StaticResource ColorAMOTBackground}" />
+                </TextBox.Background>
+            </TextBox>
+      <sdk:Label HorizontalAlignment="Left" VerticalAlignment="Bottom" Content="{Binding Path=ResourceStrings.XTSStringAxis2LabelC, Source={StaticResource LocalizedResources}}" Grid.Column="1" Margin="2,0,0,0" />
+            <TextBox x:Name="textBoxAxis2" TextWrapping="NoWrap" Text="TextBox" VerticalAlignment="Center" FontSize="16" Grid.Row="1" Width="282" Grid.Column="1" HorizontalAlignment="Left">
+                <TextBox.Background>
+          <SolidColorBrush Color="{StaticResource ColorAMOTBackground}" />
+                </TextBox.Background>
+            </TextBox>
+      <ToggleButton Width="44" Height="44" Style="{StaticResource ToggleButtonStyleAMOT}" x:Name="ExtraAxis"
+        Content="{Binding Path=ResourceStrings.XTSStringEnable, Source={StaticResource LocalizedResources}}" Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Right" ContentTemplate="{StaticResource ContentTemplateAMOTButton}">
+        <ToggleButton.Foreground>
+          <SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+        </ToggleButton.Foreground>
+        <ToggleButton.Background>
+          <SolidColorBrush Color="{StaticResource ColorAMOTButton}" />
+        </ToggleButton.Background>
+      </ToggleButton>
+    </Grid>
+    <Button x:Name="OKButton"
+      Margin="0,0,52,0"
+      Width="44" Height="44" Click="OKButton_Click" Style="{StaticResource ButtonStyleAMOT}" VerticalAlignment="Bottom" d:LayoutOverrides="Height, GridBox" Grid.Row="6" HorizontalAlignment="Right">
+      <Button.Foreground>
+        <SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+      </Button.Foreground>
+      <Button.Background>
+        <SolidColorBrush Color="{StaticResource ColorAMOTButton}" />
+      </Button.Background>
+      <Grid VerticalAlignment="Bottom">
+        <Path Stretch="Fill" Data="F1 M 256,112L 257.947,112.078L 344,112L 344,112.123C 357.24,112.123 367.976,122.845 368,136.123L 368,232.123C 368,245.378 357.255,256.123 344,256.123L 342.052,256.045L 256,256.123C 242.745,256.123 232,245.378 232,232.08L 232,136C 232,122.745 242.745,112 256,112 Z M 353.094,140.14L 336,128L 289.684,206.583L 256,176L 243.146,192L 296,240L 353.094,140.14 Z " Margin="8,4,8,12" UseLayoutRounding="False" Fill="{Binding Foreground, ElementName=OKButton}" />
+        <TextBlock Margin="2,0,0,0" TextWrapping="Wrap" Text="{Binding Path=ResourceStrings.XTSStringOK, Source={StaticResource LocalizedResources}}" FontSize="8" HorizontalAlignment="Left" VerticalAlignment="Bottom" />
+      </Grid>
+    </Button>
+    <Button x:Name="CancelButton"
+      Width="44" Height="44" Click="CancelButton_Click" Style="{StaticResource ButtonStyleAMOT}" VerticalAlignment="Bottom" d:LayoutOverrides="Height" Grid.Row="8" HorizontalAlignment="Right">
+      <Button.Foreground>
+        <SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+      </Button.Foreground>
+      <Button.Background>
+        <SolidColorBrush Color="{StaticResource ColorAMOTButton}" />
+      </Button.Background>
+      <Grid>
+        <Path Stretch="Fill" Data="F1 M 400,224C 400,237.255 389.255,248 376,248L 280,248C 266.745,248 256,237.255 256,224L 256,128C 256,114.745 266.745,104 280,104L 376,104C 389.255,104 400,114.745 400,128L 400,224 Z M 272,136L 312,176L 272,216L 288,232L 328,192L 368,232L 384,216L 344,176L 384,136L 368,120L 328,160L 288,120L 272,136 Z " Margin="8,4,8,12" UseLayoutRounding="False" Fill="{Binding Foreground, ElementName=CancelButton}" />
+        <TextBlock Margin="2,0,0,0" TextWrapping="Wrap" Text="{Binding Path=ResourceStrings.XTSStringCancel, Source={StaticResource LocalizedResources}}" FontSize="8" HorizontalAlignment="Left" VerticalAlignment="Bottom" />
+      </Grid>
+    </Button>
+  </Grid>
+</controls:ChildWindow>

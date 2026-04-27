@@ -1,0 +1,20 @@
+﻿<UserControl
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" x:Name="userControl"
+	mc:Ignorable="d"
+	x:Class="XTS.Controls.Prop" d:DesignHeight="364" Height="242">
+
+	<Grid x:Name="LayoutRoot" Background="{Binding Background, ElementName=userControl}">
+		<Rectangle Margin="0,0,0,107" StrokeThickness="0.5" Height="20" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="12">
+			<Rectangle.Fill>
+				<LinearGradientBrush EndPoint="0.5,0" StartPoint="0.5,1">
+					<GradientStop Color="#FF606060"/>
+					<GradientStop Color="White" Offset="0.65"/>
+				</LinearGradientBrush>
+			</Rectangle.Fill>
+		</Rectangle>
+		<Path Data="M13.000002,0.5 C19.903561,0.5 25.500002,34.750214 25.499998,77 C25.500002,98.124893 24.100891,117.24989 21.838837,131.09367 L21.769197,131.5 L24.167,131.5 L30.500004,131.5 L31.833002,131.5 C44.903927,131.5 55.500004,142.09607 55.500004,155.16699 L55.500004,159.83301 C55.500004,172.90393 44.903927,183.5 31.833002,183.5 L30.500004,183.5 L24.167,183.5 L22.388565,183.5 L22.451839,183.93643 C24.350927,197.35362 25.500002,214.85556 25.499998,234 C25.500002,276.24979 19.903561,310.5 13.000002,310.5 C6.0964432,310.5 0.50000226,276.24979 0.5,234 C0.50000197,214.69052 1.6689731,197.05199 3.5974424,183.59036 L3.611104,183.5 L0.5,183.5 L0.5,159.83301 L0.5,155.16699 L0.5,131.5 L4.2348809,131.5 L3.9258144,129.61414 C1.8024668,115.90269 0.50000197,97.382217 0.5,77 C0.50000226,34.750214 6.0964432,0.5 13.000002,0.5 z" HorizontalAlignment="Left" RenderTransformOrigin="0.91100001690377,0.505749194760031" Stretch="Fill" UseLayoutRounding="False" Width="32" Margin="12,0,0,53" Fill="{Binding Foreground, ElementName=userControl}" VerticalAlignment="Bottom" Height="130" Stroke="#FF787878"/>
+	</Grid>
+</UserControl>

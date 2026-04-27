@@ -1,0 +1,108 @@
+[SPU_FILE]
+Name,Register,Description,Value,Control,DataType,MinLimit,MaxLimit,Level
+STATUS1,117,Channel Status 1 registers,1,TextBox,UINT,0,65535,SPU
+STATUS2,118,Channel Status 2 registers,1,TextBox,UINT,0,65535,SPU
+STATUS3,119,Channel Status 3 registers,1,TextBox,UINT,0,65535,SPU
+STATUS4,120,Channel Status 4 registers,1,TextBox,UINT,0,65535,SPU
+STATUS5,121,Channel Status 5 registers,1,TextBox,UINT,0,65535,SPU
+STATUS6,122,Channel Status 6 registers,1,TextBox,UINT,0,65535,SPU
+STATUS7,123,Channel Status 7 registers,1,TextBox,UINT,0,65535,SPU
+STATUS8,124,Channel Status 8 registers,1,TextBox,UINT,0,65535,SPU
+STATUS9,125,Channel Status 9 registers,1,TextBox,UINT,0,65535,SPU
+STATUS10,126,Channel Status 10 registers,1,TextBox,UINT,0,65535,SPU
+STATUS11,127,Channel Status 11 registers,1,TextBox,UINT,0,65535,SPU
+STATUS12,128,Channel Status 12 registers,1,TextBox,UINT,0,65535,SPU
+STATUS13,129,Channel Status 13 registers,0,TextBox,UINT,0,65535,SPU
+STATUS14,130,Channel Status 14 registers,0,TextBox,UINT,0,65535,SPU
+STATUS15,131,Channel Status 15 registers,0,TextBox,UINT,0,65535,SPU
+STATUS16,132,Channel Status 16 registers,0,TextBox,UINT,0,65535,SPU
+STATUS17,133,Channel Status 17 registers,0,TextBox,UINT,0,65535,SPU
+STATUS18,134,Channel Status 18 registers,0,TextBox,UINT,0,65535,SPU
+STATUS19,135,Channel Status 19 registers,0,TextBox,UINT,0,65535,SPU
+STATUS20,136,Channel Status 20 registers,0,TextBox,UINT,0,65535,SPU
+STATUS21,137,Channel Status 21 registers,0,TextBox,UINT,0,65535,SPU
+STATUS22,138,Channel Status 22 registers,0,TextBox,UINT,0,65535,SPU
+STATUS23,139,Channel Status 23 registers,0,TextBox,UINT,0,65535,SPU
+STATUS24,140,Channel Status 24 registers,0,TextBox,UINT,0,65535,SPU
+STATUS25,141,Channel Status 25 registers,0,TextBox,UINT,0,65535,SPU
+STATUS26,142,Channel Status 26 registers,0,TextBox,UINT,0,65535,SPU
+STATUS27,143,Channel Status 27 registers,0,TextBox,UINT,0,65535,SPU
+STATUS28,144,Channel Status 28 registers,0,TextBox,UINT,0,65535,SPU
+DSSS,1012,DSSS (RPM),18,TextBox,UINT,0,999,SPU
+PEAKDETECTOFFSET,1028,Channel low threshold,1000,TextBox,UINT,500,2000,SPU
+PEAKDETECTTHRESOLD,1029,Channel hi threshold,500,TextBox,UINT,500,2000,SPU
+SENSORSCALINGFACTOR,1030,Sensor scaling,3300,TextBox,UINT,2000,8000,SPU
+TRENDMAXRPM,1032,Trend graph maximum 0,140,TextBox,UINT,20,2000,SPU
+RPMLIMIT,1034,RPM Limit,18,TextBox,UINT,0,100,SPU
+SDCARDSTATUS,1038,SD card error (Read only),0,TextBox,UINT,0,65535,SPU
+SDCARDENABLE,1039,SD card enabled,1,ListBox,UINT,0,1,SPU
+WIOENABLED,1045,WIO Enabled,0,ListBox,UINT,0,2,SensorSetup
+WIOALARMBITMAP,1046,WIO Alarm Bitmap,0,ListBox,UINT,0,1,SPU
+SLEMENABLED,1050,SLEM Enable,0,ListBox,UINT,0,1,SensorSetup
+SLEMALARMBITMAP,1051,SLEM alarm mask,0,ListBox,UINT,0,1,SPU
+SLEMMVFSD,1052,SLEM mV FSD,300,TextBox,UINT,0,65535,SPU
+SLOWDOWNBLIP,1053,Slowdown blipcontrol,0,ListBox,UINT,0,1,SPU
+SLEMALARMLEVEL,1054,SLEM alarm level mV,80,TextBox,UINT,0,5000,SPU
+SLEMHYSTERESIS,1055,SLEM hysteresis mV,16,TextBox,UINT,0,1000,SPU
+SLEMALARMDELAY,1056,SLEM alarm delay seconds,30,TextBox,UINT,0,3600,SPU
+NUMSENSORS,2048,Number of sensors,12,TextBox,UINT,0,28,SensorSetup
+NUMSENSORSSPU1,2049,Number of sensors SPU 1,12,TextBox,UINT,0,14,SensorSetup
+NUMSENSORSSPU2,2050,Number of sensors SPU 2,0,TextBox,UINT,0,14,SensorSetup
+SENSORHYSTERESIS,2051,Sensor Hysteresis,50,TextBox,UINT,0,2500,SPU
+CYLINDERHYSTERESIS,2052,Cylinder Hysteresis,50,TextBox,UINT,0,2500,SPU
+SLOWDOWNLEVEL,2053,Sensor slow down level,700,TextBox,UINT,0,2500,SPU
+ALARMLEVEL,2054,Sensor alarm level,500,TextBox,UINT,0,2500,SPU
+SLOWDOWNDEVCALLEVEL,2055,Sensor deviation slow down level (calibration),700,TextBox,UINT,0,2500,SPU
+ALARMDEVCALLEVEL,2056,Sensor deviation alarm level (calibration),500,TextBox,UINT,0,2500,SPU
+SLOWDOWNDEVLEVEL,2057,Sensor deviation slow down level,500,TextBox,UINT,0,2500,SPU
+ALARMDEVLEVEL,2058,Sensor deviation alarm level,400,TextBox,UINT,0,2500,SPU
+CYLINDERALARMLEVEL,2059,Cylinder alarm level,300,TextBox,UINT,0,2500,SPU
+NOMINALSPEED,2062,Nominal engine speed,127,TextBox,UINT,50,167,SPU
+WIO_UPPERALARMLEVEL,2064,WIO upper alarm,90,TextBox,UINT,0,10100,SPU
+WIO_ALARMLEVEL,2065,WIO alarm,50,TextBox,UINT,0,10100,SPU
+WIO_HYSTERESIS,2066,WIO hysteresis,5,TextBox,UINT,0,10100,SPU
+ALARMREFLASH,2067,Alarm reflash,10,TextBox,UINT,0,60,SPU
+MANFILTER,2068,MAN filter co-efficient,500,TextBox,UINT,50,2000,SPU
+PREWARNINGTIME,2069,Pre warning timer,360,TextBox,UINT,1,1000,SPU
+PREWARNINGLEVEL,2070,Pre warning level,250,TextBox,UINT,0,2500,SPU
+ENGINERUNTIME,2071,Engine run time,6,TextBox,ULONG,0,4294967296,SPU
+MANMINAPPLIEDSAMPLES,2075,MAN minimum samples,100,TextBox,UINT,1,5000,SPU
+SLOWDOWNCALLEVEL,2076,Sensor slow down level (calibration),900,TextBox,UINT,0,2500,SPU
+SENSORALARMCALLEVEL,2077,Sensor alarm level (calibration),800,TextBox,UINT,0,2500,SPU
+CYLDEVCALLEVEL,2078,Cylinder alarm level (calibration),400,TextBox,UINT,0,2500,SPU
+WIOSCALEDMIN,2084,WIO scaled min,0,TextBox,UINT,0,65535,SPU
+WIOSCALEDMAX,2085,WIO scaled max,10000,TextBox,UINT,0,65535,SPU
+WIOUNITS,2086,WIO Units,0,ListBox,UINT,0,65535,SPU
+DCMODEIDEALLO,2087,DC mode ideal.lo,13000,TextBox,UINT,0,21000,SPU
+DCMODEIDEALHI,2088,DC mode ideal.hi,15000,TextBox,UINT,0,21000,SPU
+DCMODEOKLO,2089,DC mode ok.lo,11000,TextBox,UINT,0,21000,SPU
+DCMODEOKHI,2090,DC mode ok.hi,16000,TextBox,UINT,0,21000,SPU
+DCMODECYLCOMPMAX,2091,DC mode cylindercomparison.max,8000,TextBox,UINT,0,21000,SPU
+DCMODECYLCOMPTHRES,2092,DC mode cylindercomparison.threshold,7000,TextBox,UINT,0,21000,SPU
+BAND1LOWER,3002,Rough calibration speed band 1 lower,20,TextBox,UINT,10,110,SPU
+BAND1UPPER,3003,Rough calibration speed band 1 upper,34,TextBox,UINT,10,110,SPU
+BAND2LOWER,3004,Rough calibration speed band 2 lower,54,TextBox,UINT,10,110,SPU
+BAND2UPPER,3005,Rough calibration speed band 2 upper,67,TextBox,UINT,10,110,SPU
+BAND3LOWER,3006,Rough calibration speed band 3 lower,87,TextBox,UINT,10,110,SPU
+BAND3UPPER,3007,Rough calibration speed band 3 upper,100,TextBox,UINT,10,110,SPU
+SLOPECOEFF,3008,Initial slope co-efficient,150,TextBox,UINT,10,1000,SPU
+ROUGHCALTIMER,3009,Rough calibration timer,10,TextBox,UINT,1,60,SPU
+LEARNINGMODETIMER,3010,Learning mode total timer,10,TextBox,UINT,1,60000,SPU
+INTERVALTIMER,3011,Learning mode interval timer,1,TextBox,UINT,1,6000,SPU
+NUMSAMPLES,3012,Fine calibration samples,1000,TextBox,UINT,1,5000,SPU
+CCSPLIT,4616,Crankcase split (Damage monitoring),0,TextBox,UINT,0,13,SensorSetup
+K0,4617,K 0 (Damage monitoring),12500,TextBox,UINT,1,65000,SPU
+BETA0,4618,Beta 0 (Damage monitoring),300,TextBox,UINT,1,10000,SPU
+RPMLEVELX,4619,Rpm level x (Damage monitoring),300,TextBox,UINT,1,65000,SPU
+REFLEVELX,4620,Ref level x (Damage monitoring),10,TextBox,UINT,1,65000,SPU
+PRESENTSTATEX,4621,Present state x (Damage monitoring),20000,TextBox,UINT,1,65000,SPU
+ALARMLEVELSINGLE,4622,Alarm level single (Damage monitoring),250,TextBox,UINT,10,1000,SPU
+ALARMLEVELCYL,4623,Alarm level cylinder (Damage monitoring),180,TextBox,UINT,10,1000,SPU
+ALARMLEVELMBSUM,4624,Alarm level MB Sum (Damage monitoring),250,TextBox,UINT,10,1000,SPU
+DMCYLNEIGHSETP,4625,Cylinder neighbour  Setpoint (Damage monitoring),63,TextBox,UINT,0,16383,SPU
+DMMBNEIGHSETP,4626,MB neighbour Setpoint (Damage monitoring),31,TextBox,UINT,0,16383,SPU
+DMCYLNEIGHALARMSETP,4627,cylinder neighbour alarm Setpoint (Damage monitoring),63,TextBox,UINT,0,16383,SPU
+DMMBNEIGHALARMSETP,4628,MB neighbour alarm Setpoint (Damage monitoring),31,TextBox,UINT,0,16383,SPU
+DELTARPMLIMIT,4629,Delta rpm limit (Damage monitoring),4,TextBox,UINT,1,100,SPU
+DAMAGEMONHYS,4630,Hysteresis (Damage monitoring),50,TextBox,UINT,0,2500,SPU
+DAMAGEMONENB,4631,Damage monitoring enable/disable,1,ListBox,UINT,0,1,SPU

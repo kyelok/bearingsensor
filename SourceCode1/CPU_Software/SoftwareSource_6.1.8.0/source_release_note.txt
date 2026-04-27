@@ -1,0 +1,419 @@
+MPC DATA LIMITED RELEASE NOTE
+-----------------------------
+
+Title:     XTS-W GEN II
+MPC Job:   3392
+Order No:  A11859
+Version:   6.0.1.2664
+Tag:       SVN 2664
+Date:      13 March 2013
+Contact:   John Goss
+           MPC Data Limited, a Bsquare Company
+           County Gate, County Way
+           Trowbridge, Wiltshire
+           BA14 7FJ, UK
+           Tel: 01225 710600  Fax: 01225 710601
+E-mail:    johngo@bsquare.com
+
+Reason for release: Source code spill release of software to customer.
+
+Release approved by: Rik Attrill
+
+Approval date:
+
+Approval Signature:
+
+
+**********************************************************************
+                             NOTICE
+
+The item accompanying this notice does not constitute a Formal Release
+from MPC Data Limited (as defined in the MPC Data Limited Release Note
+Standard and Procedure) and, as such, MPC Data Limited can accept no
+liability and offer no warranty on the accompanying item.  The item is
+offered only for evaluation or demonstration purposes
+
+**********************************************************************
+
+
+INTRODUCTION
+------------
+This is a release notification for the source release of the of the XTS-W GEN II
+software.  This software release is composed of the source code for the following
+software modules:
+
+	* SilverLight Rich Internet Application
+	* Modbus Server
+	* Data logging framework
+		- Data Logger Plugin
+		- Web Services Plugin
+		- Engine Learn Plugin
+		- Sensor Replacement Plugin
+		- Reporting Plugin
+		- Trend Plugin
+		- Alarm Monitor Plugin
+		- GL Machine Measurement Client Plugin
+	* Configuration Web Site
+	* Update Web Site
+
+It also includes the Windows Embedded Standard platform definition files.
+
+
+DISTRIBUTION METHOD
+-------------------
+This release is made available by FTP to Simon Davies of AMOT.
+
+
+DISTRIBUTION CONTENTS
+---------------------
+An archive file, release_6_0_1_2664_src.zip, created with 7-Zip, 
+containing the following files:
+
+  source_release_note.txt
+      This file.
+
+  BuildInstructions.txt    
+      Source code build instructions.
+
+  AMOT WES2009 Build Instructions.txt
+      WES image build instructions.
+
+  dirlist.txt
+      A complete list of all the files included in the release.
+
+A freeware copy of 7-Zip is available http://www.7-zip.org/, although most modern
+OS's support Zip file decompression integrated in the shell.
+
+
+DISTRIBUTION INTEGRITY
+---------------------
+The integrity of the release is achieved by including all files within a
+compressed archive.
+
+
+REQUIREMENTS
+------------
+This Software release requires the following hardware:
+
+1) ECW281B (black box)
+	4Gb CF Card
+	2Mb RAM
+	150Gb Hard Disk
+	USB-RS485-WE-LLLL-CU-X RS485 Adapter
+
+2) PC885 (marine PC)
+	512Mb RAM
+	250Gb Hard Disk
+
+AMOT SPU(s)
+
+SOURCE BUILD INSTRUCTIONS
+-------------------------
+For full build instructions and software requirements, please refer to
+BuildInstructions.txt.
+
+
+INSTALLATION INSTRUCTIONS 
+-------------------------
+Perform the following steps to install the software onto the target platform:
+
+	Unzip the archive file.
+
+	Copy the folders "c" and "d" from the archive onto a USB key.
+
+	On the target hardware disable the Windows Embedded File System
+	Write Filters.
+
+	Reboot the hardware after disabling the write filters.
+
+	Copy the contents of the folder "c" from the USB key to c:\ on
+	the target hardware.
+
+	Copy the folder "d" the folder d from the USB key to d:\ on the
+	target hardware.
+
+		The C:\ drive of the target system should now contain an
+		"AMOT" folder
+
+		The D:\drive of the target system should now contain the
+		following folders:
+			
+			config
+			database
+			exports
+			log
+			reports
+			updates
+
+	Create a Shortcut to c:\AMOT\Launcher.exe.
+
+	Copy the Shortcut to the startup Folder on the Start menu.
+
+	Reboot the target hardware.
+
+	Using a Web Browser open the page <target hardware ip>/config.
+
+	Navigate to Advanced Settings | Write Filter Settings.
+
+		Verify that the Write Filters are disabled.
+
+	Navigate to Serial Configuration.
+
+		Setup the correct Serial Configuration for the SPU Port.
+
+		Setup the correct Serial Configuration for the External
+		Port (Used to access the Modbus Server).
+
+	Navigate to Network Configuration.
+
+		If required configure the network ports for the target
+		network.
+	
+	Navigate to Advanced Settings | Write Filter Settings.
+
+		Enable the Write Filters.
+		Reboot the system.
+
+	The system is now ready to use.
+
+	To decrease the number of requests to the SPU during operation
+	the SPUs configuration should be setup using the SPU Settings
+	Configuration Web Page located at <target hardware ip>/config.
+	You may need to import a SPU configuration file before settings
+	can be changed (See samples folder).
+
+Please note before editing Serial Configuration or Network Configuration
+the Write Filters should be disabled using the Advanced Settings | Write
+Filter Settings or the Write Filters Tray Icon application on the target
+hardware.
+
+
+CLEARED/OUTSTANDING PORs
+-------------------------
+This release resolves the following PORs:
+
+536 - BUG - Export Trend Data - Low
+535 - BUG - Export Trend Data - High
+533 - BUG - Verification file
+430 - CRQ - Export Reports
+
+For a complete list of open PORs please see cvs.mpc-ogw.co.uk/mantis/amot.
+
+
+TESTING
+-------
+A full system test has been performed on this release using 3228-TP01
+AMOT XTS-W+ GEN II Test Plan (Draft 4a) prior to implementation of the above PORs.
+
+Regression testing for the new functionality/fixes has been done using the new
+tests added to 3228-TP01 AMOT XTS-W+ GEN II Test Plan (Issue 4).
+
+
+BACKWARDS COMPATIBILITY ISSUES
+------------------------------
+The event log database format from previous versions is not compatible
+with this release. Any exisitng d:\database\amot_xtsii_event.db3 file
+will need to be deleted before upgrading to this release.
+
+Software update packages may also not work with previous versions.
+
+
+NOTES
+-----
+Please take care when editing the Modbus map file.  Internal software
+components of the system rely on the Modbus Server exposing registers at
+the addresses defined in the register.map file included with this
+release.  If a new range is required for use by 3rd party software
+please define this range outside of the ranges defined in the file.
+
+All software components in the system can be switched from using the
+mapped version of the Modbus Server registers to using the non-mapped
+versions by editing the following application configuration files:
+
+	c:\AMOT\Logger\Framework.exe.config
+	c:\AMOT\Website\Web.config
+
+	In each file locate the <DataCollectionSDK> XML element and
+	change the <Modbus> child element from:
+
+	<Modbus ModbushostIP="127.0.0.1"  ModbusExternalHostPort="502"
+	ModbusInternalHostPort="1502" ModbusTCPIPTimeout="30000"
+	ModbusSlaveUnitId="1" PreferInternal="false"/>
+
+	to
+
+	<Modbus ModbushostIP="127.0.0.1"  ModbusExternalHostPort="1502"
+	ModbusInternalHostPort="1502" ModbusTCPIPTimeout="30000"
+	ModbusSlaveUnitId="1" PreferInternal="true"/>
+
+
+Default Passwords
+-----------------
+The system is configured with the following default passwords:
+
+User		Password
+
+AMOT		amotxtsw22012
+Admin		xtsw2admin
+Setup		setupxts
+
+The RIA in marketing mode uses the following passwords:
+
+User		Password
+
+AMOT		AMOT
+Admin		Admin
+Setup		Setup
+
+
+Utilities
+---------
+This section describes how to use the various utilities that are
+included with this release.
+
+  ConvertDatabase
+  ---------------
+The ConvertDatabase utility is used to convert databases from SQLExpress
+to SQLite.  The utility is designed to be run on a XTS-W+ V1.5 system
+before upgrading it to this version of the software.  The utility will
+convert all the data from the V1.5 database and store it in a SQLite
+format database for using on a upgraded system.  When running the
+application the user should select an output folder for the converted
+database and click the convert button.  The utility will create two
+database files in the selected folder:
+
+	* amot_xtsii_data.db3
+
+	* amot_xtsii_event.db3
+
+These files should be copied to d:\databases once the system has been
+upgraded.  Please be aware that these database files may be very large.
+An external USB hard drive may be required to copy them from the old
+to the new system.
+
+  PasswordResetResponse
+  ---------------------
+The PasswordResetResponse utility is used to generate the code that is
+sent to a user when they have selected to reset the users passwords.  To
+ use the utility open a command line and enter:
+
+	PasswordResetResponse <code from user>
+
+The utility will then output the response code that should be sent to
+the user on the command line.
+
+
+Error Codes
+-----------
+The GUI reports errors to the user in the form of Error Codes.  This
+codes are listed below:
+
+1  RTU Failed to Start
+	Caused by incorrect SPU serial port configuration 
+2  RTU Serial Port Failure
+	Caused by RS-485 Dongle failure
+3  RTU No RS485 Comms
+	Caused by the SPU not replying to a Modbus request
+4  ExternalRTUFailure
+	Caused by incorrect external serial port configuration
+5  ExternalTCPIPFailure
+	Caused by incorrect TCP/IP configuration
+6  ModbusMapperFailure
+	Caused by invalid Modbus map file
+7  DataLoggerDatabaseFailure
+	Caused by the data loggers database failing
+8  DataLoggerDatabaseMissedLog
+	Caused by the data logger missing a log due to database locks
+9  DataLoggerDatabaseWriteFailure
+	Caused by a file system failure
+10 DataLoggerDatabaseReadFailure
+	Caused by a file system failure
+11 ReplacementDatabaseFailure
+	Caused by the sensor replacement database failing	
+12 ReplacementDatabaseMissedLog
+	Caused by the data base write time out
+13 ReplacementDatabaseWriteFailure
+	Caused by a file system failure
+14 ReplacementDatabaseReadFailure
+	Caused by a file system failure
+15 CommsStatisticsFailure
+	Caused by the comm statistics database has failing
+16 DatabaseConnectionFailure
+	Caused by a process unable to open a database
+17 DatabaseFailure
+	Caused by the configuration database failing
+18 DatabaseWriteFailure
+	Caused by a file system failure
+19 DatabaseReadFailure
+	Caused by a file system failure
+20 EventLogWriteFailure
+	Caused by a file system failure
+21 EventLogReadFailure
+	Caused by a file system failure
+22 EventLogDatabaseFailure
+	Caused by the event log database failing
+23 EventLogDatabaseMissedLog
+	Caused by a database write timing out on the event log
+24 ModbusConnectionFailure
+	Caused by the Modbus Server not running
+25 ModbusReadFailure
+	Caused by a read from the Modbus server timing out
+26 ModbusWriteFailure
+	Caused by a write to the Modbus server timing out
+27 ModbusServerFailure
+	Caused by an unknown failure with the Modbus server
+28 GLReportHeader
+	Caused by a failure to create the report header for the GL
+	report
+29 GLReportStatus
+	Caused by a failure to create the report status for the GL
+	report
+30 GLReportTrend
+	Caused by a failure to create the trend report for the GL
+	report
+31 GLReportLogging
+	Caused by a failure to create the logging report for the GL
+	report
+32 GLReportCreateDirectory
+	Caused by a failure to create the GL report output directory
+33 AMOTReportCreateDirectory
+	Caused by a failure to create the AMOT report output directory
+34 AMOTReportFileHeader
+	Caused by a failure to create the AMOT report file header
+35 AMOTReportFrontPage
+	Caused by a failure to create the AMOT report front page
+36 AMOTReportReportHeader
+	Caused by a failure to create the AMOT report header
+37 AMOTReportStatus
+	Caused by a failure to create the AMOT report status
+38 AMOTReportTrendData
+	Caused by a failure to create the AMOT report trend
+39 AMOTReportDamageMonitoring
+	Caused by a failure to create the AMOT report damage monitoring
+40 AMOTReportLogging
+	Caused by a failure to create the AMOT report log output
+41 GLMMInvalidUsername
+	Caused by an invalid username entered for the GL Web Services
+	Client 
+42 GLMMNotAuthorized
+	Caused by a username not being Authorized for use with the GL
+	Web Services Client 
+43 GLMMServerNotAvaliable
+	Caused by the GL Web Services server not being contactable
+44 GLMMUnknown
+	Caused by an unknown error being returned by the GL Web Services
+	Client 
+45 GLMMNoFile
+	Caused by a failure to create the GL Web Services report file
+46 GLMMReportFailed
+	Caused by a failure in creating the GL Web Services report
+
+
+PROBLEM REPORTING
+-----------------
+Problems found with this release should be notified to John Goss at
+MPC Data Limited by e-mailing johngo@bsquare.com. Each separate problem
+will be allocated a Problem Observation Report (POR) number, which will
+be referred to in subsequent release notes.
+
+- END OF RELEASE NOTE - 

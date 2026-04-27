@@ -1,0 +1,333 @@
+﻿<UserControl
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:local="clr-namespace:XTS"
+	xmlns:xtscontrols="clr-namespace:XTS.Controls"
+	xmlns:ed="http://schemas.microsoft.com/expression/2010/drawing"
+	xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
+	mc:Ignorable="d"
+	x:Class="XTS.Mimic" d:DesignWidth="1024" d:DesignHeight="546" Loaded="Mimic_Loaded" Unloaded="Mimic_Unloaded">
+  <UserControl.Resources>
+    <local:MimicModel x:Key="MimicModelDataSource" />
+    <local:XTSStatusConverter x:Key="StatusConverter" />
+  </UserControl.Resources>
+
+  <Grid x:Name="LayoutRoot" DataContext="{Binding Source={StaticResource MimicModelDataSource}}">
+    <Viewbox>
+      <Grid x:Name="GridEngine" Margin="22">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition />
+          <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        <StackPanel x:Name="StackEngineBlock" Orientation="Horizontal" MinWidth="320" MinHeight="320" />
+        <StackPanel x:Name="StackEngine" Orientation="Horizontal" MinWidth="320" MinHeight="320" />
+        <Rectangle StrokeThickness="0.5" Height="20" VerticalAlignment="Bottom" Grid.Column="1" Margin="0,0,60,129">
+          <Rectangle.Fill>
+            <LinearGradientBrush EndPoint="0.5,0" StartPoint="0.5,1">
+              <GradientStop Color="#FF606060" />
+              <GradientStop Color="White" Offset="0.65" />
+            </LinearGradientBrush>
+          </Rectangle.Fill>
+        </Rectangle>
+        <Grid Grid.Column="1">
+          <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="66" />
+            <RowDefinition Height="12" />
+            <RowDefinition Height="66" />
+            <RowDefinition Height="12" />
+            <RowDefinition Height="66" />
+            <RowDefinition Height="32" />
+            <RowDefinition Height="66" />
+            <RowDefinition Height="12" />
+            <RowDefinition Height="176" />
+            <RowDefinition Height="22"/>
+          </Grid.RowDefinitions>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="12" />
+            <ColumnDefinition Width="66" />
+            <ColumnDefinition Width="12" />
+            <ColumnDefinition Width="66" />
+            <ColumnDefinition Width="12" />
+            <ColumnDefinition Width="66" />
+          </Grid.ColumnDefinitions>
+          <Grid Grid.Column="1" Grid.Row="1">
+            <Grid.Background>
+              <SolidColorBrush Color="{StaticResource ColorAMOTBlue}" />
+            </Grid.Background>
+            <Rectangle x:Name="RectCPUComms" Height="8" VerticalAlignment="Top" Margin="0" />
+            <Rectangle Height="8" VerticalAlignment="Top" Stroke="Black" Opacity="0.35" Margin="0" />
+            <sdk:Label HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="2,0,0,0" FontSize="10.667" Content="{Binding Path=ResourceStrings.XTSStringCPU, Source={StaticResource LocalizedResources}}">
+              <sdk:Label.Foreground>
+                <SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+              </sdk:Label.Foreground>
+            </sdk:Label>
+            <Path Stretch="Fill" Data="F1 M 160,96.0005L 192,96.0005L 192,128L 224,128L 224,96.0004L 256,96.0004L 256,128L 288,128L 288,96.0004L 320,96.0004L 320,128L 351.999,128L 351.999,96.0003L 383.999,96.0003L 383.999,128L 415.999,128L 415.999,96.0003L 447.999,96.0003L 447.999,128L 479.999,128L 479.999,96.0002L 511.999,96.0002L 511.999,128L 543.999,128L 543.999,96.0003L 575.999,96.0003L 576,128L 608,128L 608,160L 576,160L 576,192L 608,192L 608,224L 576,224L 576,256L 608,256L 608,288L 576,288L 576,320L 608,320L 608,352L 576,352L 576,384L 608,384L 608,416L 576,416L 160,416L 128,416L 128,384L 160,384L 160,352L 128,352L 128,320L 160,320L 160,288L 128,288L 128,256L 160,256L 160,224L 128,224L 128,192L 160,192L 160,160L 128,160L 128,128L 160,128L 160,96.0005 Z M 448,288L 448,352L 512,352L 512,288L 448,288 Z " HorizontalAlignment="Left" Height="18" UseLayoutRounding="False" VerticalAlignment="Top" Width="26" Margin="4,12,0,0">
+              <Path.Fill>
+                <SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+              </Path.Fill>
+            </Path>
+          </Grid>
+        <Grid x:Name="GridPLC" Grid.Column="3" Grid.Row="1" Visibility="Collapsed">
+            <Grid.Background>
+                <SolidColorBrush Color="{StaticResource ColorAMOTBlue}" />
+            </Grid.Background>
+            <Rectangle Fill="{Binding XTSDataSource.Diagnostics.PLCComms, Converter={StaticResource StatusConverter}}" Height="8" VerticalAlignment="Top" Margin="0" />
+            <Rectangle Height="8" VerticalAlignment="Top" Stroke="Black" Opacity="0.35" Margin="0" />
+                        <sdk:Label HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="2,0,0,0" FontSize="10.667" Content="{Binding Path=ResourceStrings.XTSStringTempModule, Source={StaticResource LocalizedResources}}">
+                <sdk:Label.Foreground>
+                    <SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+                </sdk:Label.Foreground>
+            </sdk:Label>
+            <Path Stretch="Fill" Fill="#FFFFFFFF" Data="F1 M 184,128L 208,128L 208,104L 224,104L 224,128L 248,128L 248,104L 264,104L 264,128L 288,128L 288,104L 304,104L 304,128L 328,128L 328,192L 304,192L 304,216L 288,216L 288,192L 264,192L 264,216L 248,216L 248,192L 224,192L 224,216L 208,216L 208,192L 184,192L 184,128 Z " HorizontalAlignment="Left" Height="22" Margin="4,12,0,0" UseLayoutRounding="False" VerticalAlignment="Top" Width="26" />
+        </Grid>
+        <Grid x:Name="GridPLCComms" Grid.Row="1"  Grid.Column="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="16" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="10" />
+            </Grid.RowDefinitions>
+            <Path  x:Name="pathPLC" Grid.Row="2" Data="M0,1 L1,1" UseLayoutRounding="False" VerticalAlignment="Top" StrokeThickness="8" Stretch="Fill" StrokeEndLineCap="Square" StrokeStartLineCap="Square" Height="8" Stroke="{Binding XTSDataSource.Diagnostics.PLCComms, Converter={StaticResource StatusConverter}}" />
+        </Grid>
+        <Grid x:Name="GridSPUComms" Grid.ColumnSpan="2" Grid.Row="2" Grid.RowSpan="3" Grid.Column="1">
+            <Grid.RowDefinitions>
+              <RowDefinition Height="12" />
+              <RowDefinition Height="*" />
+              <RowDefinition Height="*" />
+              <RowDefinition Height="*" />
+              <RowDefinition Height="12" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition />
+              <ColumnDefinition />
+              <ColumnDefinition Width="12" />
+            </Grid.ColumnDefinitions>
+            <Path Grid.Column="1" Data="M0,0 L0,1" HorizontalAlignment="Left" Stretch="Fill" Stroke="{Binding XTSDataSource.Diagnostics.SPUComms, Converter={StaticResource StatusConverter}}" UseLayoutRounding="False" StrokeThickness="8" Margin="-4,0,0,0" StrokeStartLineCap="Square" StrokeEndLineCap="Square" Grid.RowSpan="2" Width="8" />
+            <Path Grid.Column="1" Data="M0,1 L1,1" Stroke="{Binding XTSDataSource.Diagnostics.SPUComms, Converter={StaticResource StatusConverter}}" UseLayoutRounding="False" VerticalAlignment="Bottom" StrokeThickness="8" Grid.ColumnSpan="2" Stretch="Fill" StrokeEndLineCap="Square" StrokeStartLineCap="Square" Grid.Row="1" Height="8" />
+            <Path Data="M0,0 L0,1" HorizontalAlignment="Left" Stretch="Fill" UseLayoutRounding="False" StrokeThickness="8" Margin="-4,0,0,0" StrokeStartLineCap="Square" StrokeEndLineCap="Square" Grid.RowSpan="2" d:LayoutOverrides="GridBox" Grid.Row="3" Grid.Column="1" Stroke="{Binding XTSDataSource.Diagnostics.SPUComms, Converter={StaticResource StatusConverter}}" Width="8" />
+            <Path Grid.Column="1" Data="M0,1 L1,1" UseLayoutRounding="False" VerticalAlignment="Top" StrokeThickness="8" Grid.ColumnSpan="2" Stretch="Fill" StrokeEndLineCap="Square" StrokeStartLineCap="Square" Grid.Row="3" Height="8" Stroke="{Binding XTSDataSource.Diagnostics.SPUComms, Converter={StaticResource StatusConverter}}" />
+          </Grid>
+          <Grid x:Name="GridIF" Grid.Column="3" Grid.Row="3" Margin="0">
+            <Grid.Background>
+              <SolidColorBrush Color="{StaticResource ColorAMOTBlue}" />
+            </Grid.Background>
+            <sdk:Label HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="2,0,0,0" FontSize="10.667" Content="{Binding Path=ResourceStrings.XTSStringISlashF, Source={StaticResource LocalizedResources}}">
+              <sdk:Label.Foreground>
+                <SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+              </sdk:Label.Foreground>
+            </sdk:Label>
+            <Path Stretch="Fill" Data="F1 M 12.0017,21.0029L 18.0025,21.0029L 18.0025,23.0032L 19.0028,23.0032C 20.0029,22.3365 22.0031,21.6697 23.1143,20.3084C 24.2256,18.9471 25.448,16.8912 26.6148,15.7244C 27.78,14.5592 28.8898,14.2805 29.9996,14.0031L 29.9996,11.9996L 36.0004,11.9996L 36.0004,18.0004L 29.9996,18.0004L 29.9996,16.0034C 28.9131,16.2808 27.8265,16.5595 26.6683,17.7247C 25.5084,18.8915 24.2767,20.9474 23.1538,22.3087L 22.5354,23.0032L 30.0042,23.0032L 30.0042,21.0029L 36.005,21.0029L 36.005,27.0038L 30.0042,27.0038L 30.0042,25.0035L 22.5354,25.0035C 22.7382,25.2138 22.9441,25.4438 23.1538,25.698C 24.2767,27.0593 25.5084,29.1152 26.6683,30.282C 27.8281,31.4488 28.9162,31.7266 30.0042,32.0045L 30.0042,30.0042L 36.005,30.0042L 36.005,36.005L 30.0042,36.005L 30.0042,34.0047C 28.8929,33.7269 27.7817,33.4491 26.6148,32.2823C 25.448,31.1155 24.2256,29.0596 23.1143,27.6983C 22.0031,26.337 20.0029,25.6703 19.0028,25.0035L 18.0025,25.0035L 18.0025,27.0038L 12.0017,27.0038L 12.0017,21.0029 Z " UseLayoutRounding="False" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="4,4,0,0" Width="26" Height="26">
+              <Path.Fill>
+                <SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+              </Path.Fill>
+            </Path>
+          </Grid>
+          <Grid x:Name="GridIFComms" Grid.Row="3" Grid.Column="4">
+            <Grid.RowDefinitions>
+              <RowDefinition Height="12" />
+              <RowDefinition Height="4" />
+              <RowDefinition />
+              <RowDefinition Height="4" />
+              <RowDefinition />
+              <RowDefinition Height="4" />
+              <RowDefinition Height="4" />
+            </Grid.RowDefinitions>
+            <Rectangle Grid.Row="1" Stroke="#3F000000">
+              <Rectangle.Fill>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                  <GradientStop Color="#FF404040" Offset="1" />
+                  <GradientStop Color="#FFC8C8C8" Offset="0.239" />
+                </LinearGradientBrush>
+              </Rectangle.Fill>
+            </Rectangle>
+            <Rectangle Grid.Row="3" Stroke="#3F000000">
+              <Rectangle.Fill>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                  <GradientStop Color="#FF404040" Offset="1" />
+                  <GradientStop Color="#FFC8C8C8" Offset="0.239" />
+                </LinearGradientBrush>
+              </Rectangle.Fill>
+            </Rectangle>
+            <Rectangle Grid.Row="5" Stroke="#3F000000">
+              <Rectangle.Fill>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                  <GradientStop Color="#FF404040" Offset="1" />
+                  <GradientStop Color="#FFC8C8C8" Offset="0.239" />
+                </LinearGradientBrush>
+              </Rectangle.Fill>
+            </Rectangle>
+          </Grid>
+          <Grid x:Name="GridAlarms" Grid.Row="3" Grid.Column="5" Margin="0">
+            <Grid.RowDefinitions>
+              <RowDefinition />
+              <RowDefinition Height="2" />
+              <RowDefinition />
+              <RowDefinition Height="2" />
+              <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid>
+              <Grid.Background>
+                <SolidColorBrush Color="{StaticResource ColorAMOTBlue}" />
+              </Grid.Background>
+              <Rectangle Fill="{Binding XTSDataSource.Diagnostics.SystemStatus, Converter={StaticResource StatusConverter}}" Height="8" VerticalAlignment="Top" Margin="0" />
+              <Rectangle Height="8" VerticalAlignment="Top" Stroke="Black" Opacity="0.35" Margin="0" />
+              <sdk:Label HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="2,0,0,0" FontSize="10.667" Content="{Binding Path=ResourceStrings.XTSStringSystem, Source={StaticResource LocalizedResources}}">
+                <sdk:Label.Foreground>
+                  <SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+                </sdk:Label.Foreground>
+              </sdk:Label>
+            </Grid>
+            <Grid Grid.Row="2">
+              <Grid.Background>
+                <SolidColorBrush Color="{StaticResource ColorAMOTBlue}" />
+              </Grid.Background>
+              <Rectangle Fill="{Binding XTSDataSource.Diagnostics.SPUAlarm, Converter={StaticResource StatusConverter}}" Height="8" VerticalAlignment="Top" Margin="0" />
+              <Rectangle Height="8" VerticalAlignment="Top" Stroke="Black" Opacity="0.35" Margin="0" />
+              <sdk:Label HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="2,0,0,0" FontSize="10.667" Content="{Binding Path=ResourceStrings.XTSStringAlarm, Source={StaticResource LocalizedResources}}">
+                <sdk:Label.Foreground>
+                  <SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+                </sdk:Label.Foreground>
+              </sdk:Label>
+            </Grid>
+            <Grid Grid.Row="4">
+              <Grid.Background>
+                <SolidColorBrush Color="{StaticResource ColorAMOTBlue}" />
+              </Grid.Background>
+              <Rectangle Fill="{Binding XTSDataSource.Diagnostics.SPUSlowdown, Converter={StaticResource StatusConverter}}" Height="8" VerticalAlignment="Top" Margin="0" />
+              <Rectangle Height="8" VerticalAlignment="Top" Stroke="Black" Opacity="0.35" Margin="0" />
+              <sdk:Label HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="2,0,0,0" FontSize="10.667" Content="{Binding Path=ResourceStrings.XTSStringSlowdown, Source={StaticResource LocalizedResources}}">
+                <sdk:Label.Foreground>
+                  <SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+                </sdk:Label.Foreground>
+              </sdk:Label>
+            </Grid>
+          </Grid>
+          <Grid x:Name="GridSPU" Grid.Column="1" Grid.Row="5">
+            <Grid.Background>
+              <SolidColorBrush Color="{StaticResource ColorAMOTBlue}" />
+            </Grid.Background>
+            <Button x:Name="ButtonSPU" Content="" Style="{StaticResource ButtonStyleAMOT}" Click="buttonSPU_Click">
+              <Button.Foreground>
+                <SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+              </Button.Foreground>
+              <Button.Background>
+                <SolidColorBrush Color="{StaticResource ColorAMOTButton}" />
+              </Button.Background>
+            </Button>
+            <Rectangle Fill="{Binding XTSDataSource.Diagnostics.SPUComms, Converter={StaticResource StatusConverter}}" Height="8" VerticalAlignment="Top" Margin="0" />
+            <Rectangle Height="8" VerticalAlignment="Top" Stroke="Black" Opacity="0.35" Margin="0" />
+            <Path Stretch="Fill" Fill="#FFFFFFFF" Data="F1 M 184,128L 208,128L 208,104L 224,104L 224,128L 248,128L 248,104L 264,104L 264,128L 288,128L 288,104L 304,104L 304,128L 328,128L 328,192L 304,192L 304,216L 288,216L 288,192L 264,192L 264,216L 248,216L 248,192L 224,192L 224,216L 208,216L 208,192L 184,192L 184,128 Z " HorizontalAlignment="Left" Height="22" Margin="4,12,0,0" UseLayoutRounding="False" VerticalAlignment="Top" Width="26" IsHitTestVisible="False" />
+            <sdk:Label HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="2,0,0,0" FontSize="10.667" Content="{Binding Path=ResourceStrings.XTSStringSPU1, Source={StaticResource LocalizedResources}}">
+              <sdk:Label.Foreground>
+                <SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+              </sdk:Label.Foreground>
+            </sdk:Label>
+          </Grid>
+          <Path x:Name="PathSPU2" Grid.Column="2" Data="M0,1 L1,1" Stroke="{Binding XTSDataSource.Diagnostics.SPU2Comms, Converter={StaticResource StatusConverter}}" UseLayoutRounding="False" StrokeThickness="8" Stretch="Fill" StrokeEndLineCap="Square" StrokeStartLineCap="Square" Grid.Row="5" VerticalAlignment="Center" Height="8" />
+          <Grid x:Name="GridSPU2" Grid.Column="3" Grid.Row="5" Visibility="Collapsed">
+            <Grid.Background>
+              <SolidColorBrush Color="{StaticResource ColorAMOTBlue}" />
+            </Grid.Background>
+            <Rectangle Fill="{Binding XTSDataSource.Diagnostics.SPU2Comms, Converter={StaticResource StatusConverter}}" Height="8" VerticalAlignment="Top" Margin="0" />
+            <Rectangle Height="8" VerticalAlignment="Top" Stroke="Black" Opacity="0.35" Margin="0" />
+            <sdk:Label HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="2,0,0,0" FontSize="10.667" Content="{Binding Path=ResourceStrings.XTSStringSPU2, Source={StaticResource LocalizedResources}}">
+              <sdk:Label.Foreground>
+                <SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+              </sdk:Label.Foreground>
+            </sdk:Label>
+            <Path Stretch="Fill" Fill="#FFFFFFFF" Data="F1 M 184,128L 208,128L 208,104L 224,104L 224,128L 248,128L 248,104L 264,104L 264,128L 288,128L 288,104L 304,104L 304,128L 328,128L 328,192L 304,192L 304,216L 288,216L 288,192L 264,192L 264,216L 248,216L 248,192L 224,192L 224,216L 208,216L 208,192L 184,192L 184,128 Z " HorizontalAlignment="Left" Height="22" Margin="4,12,0,0" UseLayoutRounding="False" VerticalAlignment="Top" Width="26" />
+          </Grid>
+          <Grid x:Name="GridWIOSEDMComms" Grid.ColumnSpan="2" Grid.Row="6" Grid.RowSpan="5" Grid.Column="1">
+            <Grid.RowDefinitions>
+              <RowDefinition Height="32" />
+              <RowDefinition Height="33" />
+              <RowDefinition Height="33" />
+              <RowDefinition Height="12" />
+              <RowDefinition Height="33" />
+              <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition />
+              <ColumnDefinition />
+              <ColumnDefinition />
+              <ColumnDefinition Width="12" />
+            </Grid.ColumnDefinitions>
+            <Path x:Name="pathWIO1" Grid.Column="2" Data="M0,0 L0,1" HorizontalAlignment="Left" Stretch="Fill" Stroke="{Binding XTSDataSource.EngineData.WIO.Connection, Converter={StaticResource StatusConverter}}" UseLayoutRounding="False" StrokeThickness="8" Margin="-4,0,0,0" StrokeStartLineCap="Square" StrokeEndLineCap="Square" Grid.RowSpan="2" Width="8" />
+            <Path x:Name="pathWIO2" Grid.Column="2" Data="M0,1 L1,1" Stroke="{Binding XTSDataSource.EngineData.WIO.Connection, Converter={StaticResource StatusConverter}}" UseLayoutRounding="False" VerticalAlignment="Bottom" StrokeThickness="8" Grid.ColumnSpan="2" Margin="0" Stretch="Fill" StrokeEndLineCap="Square" StrokeStartLineCap="Square" Grid.Row="1" Height="8" />
+            <Path x:Name="pathSEDM1" Data="M0,0 L0,1" HorizontalAlignment="Left" Stretch="Fill" Stroke="{Binding XTSDataSource.EngineData.SEDM.Connection, Converter={StaticResource StatusConverter}}" UseLayoutRounding="False" StrokeThickness="8" Margin="-4,0,0,0" StrokeStartLineCap="Square" StrokeEndLineCap="Square" Grid.RowSpan="5" d:LayoutOverrides="GridBox" VerticalAlignment="Bottom" Grid.Column="1" Width="8" />
+            <Path x:Name="pathSEDM2" Grid.Column="1" Data="M0,1 L1,1" Stroke="{Binding XTSDataSource.EngineData.SEDM.Connection, Converter={StaticResource StatusConverter}}" UseLayoutRounding="False" VerticalAlignment="Bottom" StrokeThickness="8" Grid.ColumnSpan="3" Margin="0" Stretch="Fill" StrokeEndLineCap="Square" StrokeStartLineCap="Square" Grid.Row="4" Height="8" />
+          </Grid>
+          <xtscontrols:SEDM x:Name="sedm" Grid.Column="3" Grid.Row="9" FontSize="10">
+            <xtscontrols:SEDM.Background>
+              <SolidColorBrush Color="{StaticResource ColorAMOTButton}" />
+            </xtscontrols:SEDM.Background>
+            <xtscontrols:SEDM.Foreground>
+              <SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+            </xtscontrols:SEDM.Foreground>
+          </xtscontrols:SEDM>
+          <xtscontrols:Prop Height="Auto" Grid.Column="5" Grid.Row="7" Grid.RowSpan="3">
+            <xtscontrols:Prop.Foreground>
+              <SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+            </xtscontrols:Prop.Foreground>
+          </xtscontrols:Prop>
+          <xtscontrols:WIO x:Name="wio" Grid.Column="3" Grid.Row="7" FontSize="10" Visibility="Collapsed">
+            <xtscontrols:WIO.Background>
+              <SolidColorBrush Color="{StaticResource ColorAMOTButton}" />
+            </xtscontrols:WIO.Background>
+            <xtscontrols:WIO.Foreground>
+              <SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+            </xtscontrols:WIO.Foreground>
+          </xtscontrols:WIO>
+        </Grid>
+        <Grid HorizontalAlignment="Left" Height="234" VerticalAlignment="Bottom" Width="8" Grid.Column="1" Margin="4,0,0,22">
+        	<Grid.Background>
+        		<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+        			<GradientStop Color="#FFD2B6B0" Offset="0.249"/>
+        			<GradientStop Color="#FF672B1C"/>
+        			<GradientStop Color="#FFD2B6B0" Offset="1"/>
+        			<GradientStop Color="#FF672B1C" Offset="0.621"/>
+        			<GradientStop Color="#FFD2B6B0" Offset="0.34"/>
+        			<GradientStop Color="#FF672B1C" Offset="0.828"/>
+        		</LinearGradientBrush>
+        	</Grid.Background>
+        	<Path Data="M0,0 L8,0" Height="1.262" Stretch="Fill" StrokeThickness="0.5" UseLayoutRounding="False" VerticalAlignment="Center" Stroke="Black" Margin="0,4,0,0"/>
+        	<Path Data="M0,0 L8,0" Height="1.262" Stretch="Fill" StrokeThickness="0.5" UseLayoutRounding="False" VerticalAlignment="Center" Stroke="Black" Margin="0,34,0,0"/>
+        	<Path Data="M0,0 L8,0" Height="1.262" Stretch="Fill" StrokeThickness="0.5" UseLayoutRounding="False" VerticalAlignment="Center" Stroke="Black" Margin="0,62,0,0"/>
+        	<Path Data="M0,0 L8,0" Height="1.262" Stretch="Fill" StrokeThickness="0.5" UseLayoutRounding="False" VerticalAlignment="Center" Stroke="Black" Margin="0,88,0,0"/>
+        	<Path Data="M0,0 L8,0" Height="1.262" Stretch="Fill" StrokeThickness="0.5" UseLayoutRounding="False" VerticalAlignment="Center" Stroke="Black" Margin="0,112,0,0"/>
+        	<Path Data="M0,0 L8,0" Height="1.262" Stretch="Fill" StrokeThickness="0.5" UseLayoutRounding="False" VerticalAlignment="Center" Stroke="Black" Margin="0,134,0,0"/>
+        	<Path Data="M0,0 L8,0" Height="1.262" Stretch="Fill" StrokeThickness="0.5" UseLayoutRounding="False" VerticalAlignment="Center" Stroke="Black" Margin="0,154,0,0"/>
+        	<Path Data="M0,0 L8,0" Height="1.262" Stretch="Fill" StrokeThickness="0.5" UseLayoutRounding="False" VerticalAlignment="Center" Stroke="Black" Margin="0,172,0,0"/>
+        	<Path Data="M0,0 L8,0" Height="1.262" Stretch="Fill" StrokeThickness="0.5" UseLayoutRounding="False" VerticalAlignment="Center" Stroke="Black" Margin="0,188,0,0"/>
+        	<Path Data="M0,0 L8,0" Height="1.262" Stretch="Fill" StrokeThickness="0.5" UseLayoutRounding="False" VerticalAlignment="Center" Stroke="Black" Margin="0,202,0,0"/>
+        	<Path Data="M0,0 L8,0" Height="1.262" Stretch="Fill" StrokeThickness="0.5" UseLayoutRounding="False" VerticalAlignment="Center" Stroke="Black" Margin="0,214,0,0"/>
+        	<Path Data="M0,0 L8,0" Height="1.262" Stretch="Fill" StrokeThickness="0.5" UseLayoutRounding="False" VerticalAlignment="Center" Stroke="Black" Margin="0,224,0,0"/>
+        	<Path Data="M0,0 L8,0" Height="1.262" Stretch="Fill" StrokeThickness="0.5" UseLayoutRounding="False" VerticalAlignment="Bottom" Stroke="Black" Margin="0,0,0,0.369"/>
+        	<Path Data="M0,0 L8,0" Height="1.262" Stretch="Fill" StrokeThickness="0.5" UseLayoutRounding="False" VerticalAlignment="Center" Stroke="Black" Margin="0,0,0,26"/>
+        	<Path Data="M0,0 L8,0" Height="1.262" Stretch="Fill" StrokeThickness="0.5" UseLayoutRounding="False" VerticalAlignment="Center" Stroke="Black" Margin="0,0,0,54"/>
+        	<Path Data="M0,0 L8,0" Height="1.262" Stretch="Fill" StrokeThickness="0.5" UseLayoutRounding="False" VerticalAlignment="Center" Stroke="Black" Margin="0,0,0,80"/>
+        	<Path Data="M0,0 L8,0" Height="1.262" Stretch="Fill" StrokeThickness="0.5" UseLayoutRounding="False" VerticalAlignment="Center" Stroke="Black" Margin="0,0,0,104"/>
+        	<Path Data="M0,0 L8,0" Height="1.262" Stretch="Fill" StrokeThickness="0.5" UseLayoutRounding="False" VerticalAlignment="Center" Stroke="Black" Margin="0,0,0,126"/>
+        	<Path Data="M0,0 L8,0" Height="1.262" Stretch="Fill" StrokeThickness="0.5" UseLayoutRounding="False" VerticalAlignment="Center" Stroke="Black" Margin="0,0,0,146"/>
+        	<Path Data="M0,0 L8,0" Height="1.262" Stretch="Fill" StrokeThickness="0.5" UseLayoutRounding="False" VerticalAlignment="Center" Stroke="Black" Margin="0,0,0,164"/>
+        	<Path Data="M0,0 L8,0" Height="1.262" Stretch="Fill" StrokeThickness="0.5" UseLayoutRounding="False" VerticalAlignment="Center" Stroke="Black" Margin="0,0,0,180"/>
+        	<Path Data="M0,0 L8,0" Height="1.262" Stretch="Fill" StrokeThickness="0.5" UseLayoutRounding="False" VerticalAlignment="Center" Stroke="Black" Margin="0,0,0,194"/>
+        	<Path Data="M0,0 L8,0" Height="1.262" Stretch="Fill" StrokeThickness="0.5" UseLayoutRounding="False" VerticalAlignment="Center" Stroke="Black" Margin="0,0,0,206"/>
+        	<Path Data="M0,0 L8,0" Height="1.262" Stretch="Fill" StrokeThickness="0.5" UseLayoutRounding="False" VerticalAlignment="Center" Stroke="Black" Margin="0,0,0,216"/>
+        	<Path Data="M0,0 L8,0" Height="1.262" Stretch="Fill" StrokeThickness="0.5" UseLayoutRounding="False" VerticalAlignment="Center" Stroke="Black" Margin="0,0,0,224"/>
+        	<Path Data="M0,0 L8,0" Height="1.262" Stretch="Fill" StrokeThickness="0.5" UseLayoutRounding="False" VerticalAlignment="Center" Stroke="Black" Margin="0,0,0,230"/>
+        </Grid>
+      </Grid>
+    </Viewbox>
+    <xtscontrols:Popup x:Name="Popup" Width="320" HorizontalAlignment="Left" Margin="0,22" Visibility="Collapsed" />
+	<xtscontrols:PopupWio x:Name="PopupWio" Width="320" HorizontalAlignment="Left" Margin="0,22" Visibility="Collapsed" />
+    <xtscontrols:PopupSedm x:Name="PopupSedm" Width="320" HorizontalAlignment="Left" Margin="0,22" Visibility="Collapsed" />
+        <Grid x:Name="GridWaiting" HorizontalAlignment="Center" VerticalAlignment="Center">
+      <sdk:Label HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding Path=ResourceStrings.XTSStringConnectingXTSWServer, Source={StaticResource LocalizedResources}}" FontSize="29.333" FontWeight="Bold" FontStyle="Italic" />
+    </Grid>
+  </Grid>
+</UserControl>

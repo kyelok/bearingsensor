@@ -1,0 +1,65 @@
+﻿<UserControl
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:local="clr-namespace:XTS"
+	xmlns:xtscontrols="clr-namespace:XTS.Controls"
+	xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+	xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
+	mc:Ignorable="d"
+	x:Class="XTS.BarGraph"
+	d:DesignWidth="1024" d:DesignHeight="546" Width="Auto" Height="Auto" Loaded="BarGraph_Loaded" Unloaded="BarGraph_Unloaded">
+  <UserControl.Resources>
+    <local:BarGraphModel x:Key="BarGraphModelDataSource" />
+  </UserControl.Resources>
+
+  <Grid x:Name="LayoutRoot" DataContext="{Binding Source={StaticResource BarGraphModelDataSource}}">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="1*" />
+      <RowDefinition Height="2*" />
+    </Grid.RowDefinitions>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="62" />
+      <ColumnDefinition />
+      <ColumnDefinition Width="62" />
+    </Grid.ColumnDefinitions>
+    <xtscontrols:FitStackPanel x:Name="PanelDeviation" Margin="4,4,4,2" Padding="2" Grid.Column="1">
+      <xtscontrols:FitStackPanel.Background>
+        <SolidColorBrush Color="{StaticResource ColorAMOTGlassEffect}" />
+      </xtscontrols:FitStackPanel.Background>
+    </xtscontrols:FitStackPanel>
+
+    <xtscontrols:FitStackPanel x:Name="PanelWear" Margin="4,2,4,4" Padding="2" Grid.Row="1" Grid.Column="1">
+      <xtscontrols:FitStackPanel.Background>
+        <SolidColorBrush Color="{StaticResource ColorAMOTGlassEffect}" />
+      </xtscontrols:FitStackPanel.Background>
+    </xtscontrols:FitStackPanel>
+    <xtscontrols:Scale x:Name="ScaleDeviation" Margin="0,6,0,4" RenderTransformOrigin="0.5,0.5">
+      <xtscontrols:Scale.RenderTransform>
+        <CompositeTransform />
+      </xtscontrols:Scale.RenderTransform>
+    </xtscontrols:Scale>
+    <xtscontrols:Scale x:Name="ScaleWear" Margin="0,4,0,6" Grid.Row="1" RenderTransformOrigin="0.5,0.5">
+      <xtscontrols:Scale.RenderTransform>
+        <CompositeTransform />
+      </xtscontrols:Scale.RenderTransform>
+    </xtscontrols:Scale>
+    <RadioButton x:Name="buttonSensors" Content="{Binding Path=ResourceStrings.XTSStringSensors, Source={StaticResource LocalizedResources}}" VerticalAlignment="Top" Style="{StaticResource ToggleButtonStyleAMOT}" GroupName="CylinderOrSensor" Width="44" Height="44" HorizontalAlignment="Center" Grid.Column="3" Margin="0,56,0,0" Checked="buttonSensors_Checked" ContentTemplate="{StaticResource ContentTemplateAMOTButton}" FontSize="8">
+      <RadioButton.Foreground>
+        <SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+      </RadioButton.Foreground>
+      <RadioButton.Background>
+        <SolidColorBrush Color="{StaticResource ColorAMOTButton}" />
+      </RadioButton.Background>
+    </RadioButton>
+    <RadioButton Content="{Binding Path=ResourceStrings.XTSStringCylinders, Source={StaticResource LocalizedResources}}" VerticalAlignment="Top" Style="{StaticResource ToggleButtonStyleAMOT}" GroupName="CylinderOrSensor" Width="44" Height="44" HorizontalAlignment="Center" Grid.Column="3" Margin="0,8,0,0" Checked="buttonCylinders_Checked" ContentTemplate="{StaticResource ContentTemplateAMOTButton}" FontSize="8">
+      <RadioButton.Foreground>
+        <SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+      </RadioButton.Foreground>
+      <RadioButton.Background>
+        <SolidColorBrush Color="{StaticResource ColorAMOTButton}" />
+      </RadioButton.Background>
+    </RadioButton>
+  </Grid>
+</UserControl>

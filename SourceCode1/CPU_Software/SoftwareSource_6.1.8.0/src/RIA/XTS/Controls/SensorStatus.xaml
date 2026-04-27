@@ -1,0 +1,46 @@
+﻿<UserControl
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk" x:Name="userControl"
+	mc:Ignorable="d"
+	x:Class="XTS.Controls.SensorStatus"
+	d:DesignWidth="640" d:DesignHeight="480" MinWidth="28" MinHeight="22">
+	<UserControl.Background>
+		<SolidColorBrush Color="{StaticResource ColorAMOTBlue}"/>
+	</UserControl.Background>
+	<UserControl.Foreground>
+		<SolidColorBrush Color="{StaticResource ColorAMOTText}"/>
+	</UserControl.Foreground>
+
+	<Grid x:Name="LayoutRoot" Background="{Binding Background, ElementName=userControl}">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="*"/>
+			<RowDefinition Height="14"/>
+		</Grid.RowDefinitions>
+		<Rectangle x:Name="SensorState" Fill="#FF8AE234" Margin="0" />
+		<sdk:Label x:Name="LabelSensor" Margin="2,1,0,0" FontSize="8" Foreground="{Binding Foreground, ElementName=userControl}" HorizontalAlignment="Left" FontWeight="Bold" Content="1.1" Grid.Row="1" d:LayoutOverrides="Height" />
+		<Rectangle Opacity="0.35" Stroke="Black" Margin="0" />
+		<Path x:Name="PathFailureHighLevel" Stretch="Fill" Data="F1 M 448,256L 384,320L 416,320L 416,416L 480,416L 480,320L 512,320L 448,256 Z " UseLayoutRounding="False" StrokeThickness="2" HorizontalAlignment="Center" VerticalAlignment="Center" Width="12" Height="15">
+			<Path.Stroke>
+				<SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+			</Path.Stroke>
+		</Path>
+		<Path x:Name="PathFailureLowLevel" Stretch="Fill" Data="F1 M 839.116,313.689L 903.116,249.689L 871.116,249.689L 871.116,153.689L 807.116,153.689L 807.116,249.689L 775.116,249.689L 839.116,313.689 Z " UseLayoutRounding="False" StrokeThickness="2" HorizontalAlignment="Center" VerticalAlignment="Center" Width="12" Height="15">
+			<Path.Stroke>
+				<SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+			</Path.Stroke>
+		</Path>
+		<Path x:Name="PathFailureNoPulse" Data="F1 M0.1632653,19.411764 L5.3877549,19.411764 L5.3877549,0.58823532 L10.612245,0.58823532 L10.612245,19.411764 L15.836735,19.411764" UseLayoutRounding="False" StrokeThickness="2" HorizontalAlignment="Center" VerticalAlignment="Center" Width="20" Height="8" Stretch="Fill">
+			<Path.Stroke>
+				<SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+			</Path.Stroke>
+		</Path>
+		<sdk:Label x:Name="LabelFailureOOR" FontSize="8" FontWeight="Bold" HorizontalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" Content="OOR">
+			<sdk:Label.Foreground>
+				<SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+			</sdk:Label.Foreground>
+		</sdk:Label>
+	</Grid>
+</UserControl>

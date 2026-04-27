@@ -1,0 +1,515 @@
+﻿<UserControl
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
+	xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions" x:Name="userControl"
+	mc:Ignorable="d"
+	x:Class="XTS.Controls.Cylinder" d:DesignHeight="387" d:DesignWidth="102" Width="88" Height="706" MouseLeftButtonDown="ShowPopup">
+  <UserControl.Foreground>
+    <SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+  </UserControl.Foreground>
+
+  <i:Interaction.Triggers>
+    <i:EventTrigger EventName="MouseLeftButtonDown">
+      <ei:CallMethodAction MethodName="ShowPopup" />
+    </i:EventTrigger>
+  </i:Interaction.Triggers>
+
+  <Grid x:Name="LayoutRoot">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="88" />
+      <RowDefinition Height="*"/>
+      <RowDefinition Height="22"/>
+    </Grid.RowDefinitions>
+    <Path Stretch="Fill" Data="F1 M 320,0L 416,0L 416,32L 512,32.0001L 512,208L 576,208L 576,352L 592,352L 592,336L 608,336L 608,480L 608,480L 128,480L 128,480L 128,336L 144,336L 144,352L 160,352L 160,208L 224,208L 224,32.0001L 320,32L 320,0 Z " UseLayoutRounding="False" Margin="-0.5,0,-0.5,-0.5">
+    	<Path.Fill>
+    		<SolidColorBrush Color="{StaticResource ColorAMOTEngineBlock}"/>
+    	</Path.Fill>
+    </Path>
+    <Rectangle StrokeLineJoin="Round" Grid.Row="1" Grid.RowSpan="2" Margin="-0.5,0">
+    	<Rectangle.Fill>
+    		<SolidColorBrush Color="{StaticResource ColorAMOTEngineBlock}"/>
+    	</Rectangle.Fill>
+    </Rectangle>
+    <Grid Grid.Row="1">
+    	<Grid.RowDefinitions>
+    		<RowDefinition Height="0.302*"/>
+    		<RowDefinition Height="0.277*"/>
+    		<RowDefinition Height="0.371*"/>
+    		<RowDefinition Height="0.051*"/>
+    	</Grid.RowDefinitions>
+    	<Border BorderThickness="1" Margin="2,4,2,0" Grid.RowSpan="3">
+    		<Border.Background>
+    			<LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
+    				<GradientStop Color="{StaticResource ColorAMOTBackground}" Offset="0.43" />
+    				<GradientStop Color="#FFC8C8C8" />
+    				<GradientStop Color="#FFC8C8C8" Offset="1" />
+    				<GradientStop Color="Gray" Offset="0.57" />
+    			</LinearGradientBrush>
+    		</Border.Background>
+    	</Border>
+    	<Path Data="M0,176 L0,0" HorizontalAlignment="Left" Stretch="Fill" Stroke="#FF282828" StrokeLineJoin="Round" UseLayoutRounding="False" Width="3" Margin="2,4,0,0" StrokeStartLineCap="Square" StrokeEndLineCap="Square">
+    		<Path.Fill>
+    			<SolidColorBrush Color="{StaticResource ColorAMOTEngineBlock}"/>
+    		</Path.Fill>
+    	</Path>
+    	<Path Data="M0,176 L0,0" HorizontalAlignment="Right" Stretch="Fill" Stroke="#FF282828" StrokeLineJoin="Round" UseLayoutRounding="False" Width="3" Margin="0,4,2,0" StrokeStartLineCap="Square" StrokeEndLineCap="Square">
+    		<Path.Fill>
+    			<SolidColorBrush Color="{StaticResource ColorAMOTEngineBlock}"/>
+    		</Path.Fill>
+    	</Path>
+    	<Path Data="M0,176 L0,0" HorizontalAlignment="Left" Stretch="Fill" Stroke="#FF282828" StrokeLineJoin="Round" UseLayoutRounding="False" Width="3" Margin="2,0,0,0" Grid.Row="2" StrokeEndLineCap="Square" StrokeStartLineCap="Square">
+    		<Path.Fill>
+    			<SolidColorBrush Color="{StaticResource ColorAMOTEngineBlock}"/>
+    		</Path.Fill>
+    	</Path>
+    	<Path Data="M0,176 L0,0" HorizontalAlignment="Right" Stretch="Fill" Stroke="#FF282828" StrokeLineJoin="Round" UseLayoutRounding="False" Width="3" Margin="0,0,2,0" Grid.Row="2" StrokeEndLineCap="Square" StrokeStartLineCap="Square">
+    		<Path.Fill>
+    			<SolidColorBrush Color="{StaticResource ColorAMOTEngineBlock}"/>
+    		</Path.Fill>
+    	</Path>
+    	<Path Data="M0,1 L1,1" Height="1" Margin="2,0" Grid.Row="2" Stretch="Fill" Stroke="#FF282828" StrokeLineJoin="Round" UseLayoutRounding="False" VerticalAlignment="Bottom" StrokeEndLineCap="Square" StrokeStartLineCap="Square">
+    		<Path.Fill>
+    			<SolidColorBrush Color="{StaticResource ColorAMOTEngineBlock}"/>
+    		</Path.Fill>
+    	</Path>
+    	<Path Data="M0,1 L1,1" Height="1" Margin="2,4,2,0" Stretch="Fill" Stroke="#FF282828" StrokeLineJoin="Round" UseLayoutRounding="False" VerticalAlignment="Top" StrokeEndLineCap="Square" StrokeStartLineCap="Square">
+    		<Path.Fill>
+    			<SolidColorBrush Color="{StaticResource ColorAMOTEngineBlock}"/>
+    		</Path.Fill>
+    	</Path>
+    	<Path Stretch="Fill" StrokeLineJoin="Round" Stroke="#FF282828" Data="F1 M0,0 L352,30 L352,556 C30,556 0,576 0,576" UseLayoutRounding="False" HorizontalAlignment="Left" Width="22" Margin="2,0,0,0" Grid.Row="1" StrokeStartLineCap="Square" StrokeEndLineCap="Square">
+    		<Path.Fill>
+    			<SolidColorBrush Color="{StaticResource ColorAMOTEngineBlock}"/>
+    		</Path.Fill>
+    	</Path>
+    	<Path Stretch="Fill" StrokeLineJoin="Round" Stroke="#FF282828" Data="F1 M0,0 L352,30 L352,556 C30,556 0,576 0,576" UseLayoutRounding="False" HorizontalAlignment="Right" Width="22" Margin="0,0,2,0" RenderTransformOrigin="0.5,0.5" Grid.Row="1" StrokeEndLineCap="Square" StrokeStartLineCap="Square">
+    		<Path.Fill>
+    			<SolidColorBrush Color="{StaticResource ColorAMOTEngineBlock}"/>
+    		</Path.Fill>
+    		<Path.RenderTransform>
+    			<CompositeTransform ScaleX="-1"/>
+    		</Path.RenderTransform>
+    	</Path>
+    	<Rectangle
+    		Margin="0,0,0,-53" StrokeThickness="0.5" HorizontalAlignment="Center" Width="12" Grid.Row="1">
+    		<Rectangle.Fill>
+    			<LinearGradientBrush EndPoint="0,0.5" StartPoint="1,0.5">
+    				<GradientStop Color="#FF606060" />
+    				<GradientStop Color="White" Offset="0.65" />
+    			</LinearGradientBrush>
+    		</Rectangle.Fill>
+    	</Rectangle>
+    	<Rectangle Margin="0,0,0,76.831" StrokeThickness="0.5" HorizontalAlignment="Left" Width="4" Grid.Row="2" Height="20" VerticalAlignment="Bottom">
+    		<Rectangle.Fill>
+    			<LinearGradientBrush EndPoint="0.5,0" StartPoint="0.5,1">
+    				<GradientStop Color="#FF606060" />
+    				<GradientStop Color="White" Offset="0.65" />
+    			</LinearGradientBrush>
+    		</Rectangle.Fill>
+    	</Rectangle>
+    	<Rectangle Margin="0,0,0,76.831" StrokeThickness="0.5" HorizontalAlignment="Right" Width="4" Grid.Row="2" Height="20" VerticalAlignment="Bottom">
+    		<Rectangle.Fill>
+    			<LinearGradientBrush EndPoint="0.5,0" StartPoint="0.5,1">
+    				<GradientStop Color="#FF606060" />
+    				<GradientStop Color="White" Offset="0.65" />
+    			</LinearGradientBrush>
+    		</Rectangle.Fill>
+    	</Rectangle>
+    	<Grid x:Name="GridCrankUp" Margin="0,53,0,5.831" Grid.Row="2">
+    		<Rectangle
+    			Margin="0" StrokeThickness="0.5" Height="3" VerticalAlignment="Top" HorizontalAlignment="Center" Width="12">
+    			<Rectangle.Fill>
+    				<LinearGradientBrush EndPoint="0,0.5" StartPoint="1,0.5">
+    					<GradientStop Color="#FF606060" />
+    					<GradientStop Color="White" Offset="0.659" />
+    				</LinearGradientBrush>
+    			</Rectangle.Fill>
+    		</Rectangle>
+    		<Rectangle Margin="26,0,26,112" StrokeThickness="0.5" Height="12" VerticalAlignment="Center">
+    			<Rectangle.Fill>
+    				<LinearGradientBrush EndPoint="0.5,0" StartPoint="0.5,1">
+    					<GradientStop Color="#FF606060" />
+    					<GradientStop Color="White" Offset="0.65" />
+    				</LinearGradientBrush>
+    			</Rectangle.Fill>
+    		</Rectangle>
+    		<Path Stretch="Fill" StrokeLineJoin="Round" Stroke="#FF787878" Data="F1 M 192,288L 192,160L 256,96L 352,96L 416,160L 416,288L 352,288L 256,288L 192,288 Z " Margin="0,0,0,120" UseLayoutRounding="False" HorizontalAlignment="Center" VerticalAlignment="Center" Width="32" Height="36">
+    			<Path.Fill>
+    				<ImageBrush Stretch="Fill" ImageSource="/XTS;component/Resources/BrushedMetalBack.png" />
+    			</Path.Fill>
+    		</Path>
+    		<Rectangle x:Name="CrankpinUp" Fill="#FF8AE234" Height="20" VerticalAlignment="Center" Margin="0,0,0,112" RenderTransformOrigin="0.5,0.5" Width="24" HorizontalAlignment="Center">
+    			<Rectangle.RenderTransform>
+    				<CompositeTransform ScaleY="-1" />
+    			</Rectangle.RenderTransform>
+    		</Rectangle>
+    		<Path Stretch="Fill" StrokeLineJoin="Round" Data="F1 M 192,64.0001L 160,64L 96,128L 96,320L 192,320L 192,64.0001 Z " HorizontalAlignment="Left" Height="90" Margin="4,0,0,44" UseLayoutRounding="False" VerticalAlignment="Center" Width="22" RenderTransformOrigin="0.5,0.5" Stroke="#FF747474">
+    			<Path.RenderTransform>
+    				<CompositeTransform />
+    			</Path.RenderTransform>
+    			<Path.Fill>
+    				<ImageBrush Stretch="Fill" ImageSource="/XTS;component/Resources/BrushedMetalBack.png" />
+    			</Path.Fill>
+    		</Path>
+    		<Path Stretch="Fill" StrokeLineJoin="Round" Data="F1 M 192,64.0001L 160,64L 96,128L 96,320L 192,320L 192,64.0001 Z " HorizontalAlignment="Right" Height="90" Margin="0,0,4,44" UseLayoutRounding="False" VerticalAlignment="Center" Width="22" RenderTransformOrigin="0.5,0.5" Stroke="#FF747474">
+    			<Path.RenderTransform>
+    				<CompositeTransform ScaleX="-1" />
+    			</Path.RenderTransform>
+    			<Path.Fill>
+    				<ImageBrush Stretch="Fill" ImageSource="/XTS;component/Resources/BrushedMetalBack.png" />
+    			</Path.Fill>
+    		</Path>
+    		<Rectangle Height="20" VerticalAlignment="Center" Margin="0,0,0,112" RenderTransformOrigin="0.5,0.5" Width="24" HorizontalAlignment="Center" Opacity="0.35" Stroke="Black">
+    			<Rectangle.RenderTransform>
+    				<CompositeTransform ScaleY="-1" />
+    			</Rectangle.RenderTransform>
+    		</Rectangle>
+    	</Grid>
+    	<Grid x:Name="GridCrankDown" Margin="0,53,0,5.831" Grid.Row="2" d:IsHidden="True">
+    		<Rectangle StrokeThickness="0.5" HorizontalAlignment="Center" Width="12" Margin="0,0,0,47">
+    			<Rectangle.Fill>
+    				<LinearGradientBrush EndPoint="0,0.5" StartPoint="1,0.5">
+    					<GradientStop Color="#FF606060" />
+    					<GradientStop Color="White" Offset="0.659" />
+    				</LinearGradientBrush>
+    			</Rectangle.Fill>
+    		</Rectangle>
+    		<Rectangle Margin="26,112,26,0" StrokeThickness="0.5" Height="12" VerticalAlignment="Center">
+    			<Rectangle.Fill>
+    				<LinearGradientBrush EndPoint="0.5,0" StartPoint="0.5,1">
+    					<GradientStop Color="#FF606060" />
+    					<GradientStop Color="White" Offset="0.65" />
+    				</LinearGradientBrush>
+    			</Rectangle.Fill>
+    		</Rectangle>
+    		<Path Stretch="Fill" StrokeLineJoin="Round" Stroke="#FF787878" Data="F1 M 192,288L 192,160L 256,96L 352,96L 416,160L 416,288L 352,288L 256,288L 192,288 Z " Margin="0,104,0,0" UseLayoutRounding="False" HorizontalAlignment="Center" VerticalAlignment="Center" Width="32" Height="36">
+    			<Path.Fill>
+    				<ImageBrush ImageSource="/XTS;component/Resources/BrushedMetalBack.png" />
+    			</Path.Fill>
+    		</Path>
+    		<Rectangle x:Name="CrankpinDown" Fill="#FF8AE234" Height="20" VerticalAlignment="Center" Margin="0,112,0,0" RenderTransformOrigin="0.5,0.5" Width="24" HorizontalAlignment="Center">
+    			<Rectangle.RenderTransform>
+    				<CompositeTransform ScaleY="-1" />
+    			</Rectangle.RenderTransform>
+    		</Rectangle>
+    		<Path Stretch="Fill" StrokeLineJoin="Round" Data="F1 M 192,64.0001L 160,64L 96,128L 96,320L 192,320L 192,64.0001 Z " HorizontalAlignment="Left" Height="90" Margin="4,44,0,0" UseLayoutRounding="False" VerticalAlignment="Center" Width="22" RenderTransformOrigin="0.5,0.5" Stroke="#FF747474">
+    			<Path.RenderTransform>
+    				<CompositeTransform ScaleY="-1" />
+    			</Path.RenderTransform>
+    			<Path.Fill>
+    				<ImageBrush Stretch="Fill" ImageSource="/XTS;component/Resources/BrushedMetalBack.png" />
+    			</Path.Fill>
+    		</Path>
+    		<Path Stretch="Fill" StrokeLineJoin="Round" Data="F1 M 192,64.0001L 160,64L 96,128L 96,320L 192,320L 192,64.0001 Z " HorizontalAlignment="Right" Height="90" Margin="0,44,4,0" UseLayoutRounding="False" VerticalAlignment="Center" Width="22" RenderTransformOrigin="0.5,0.5" Stroke="#FF747474">
+    			<Path.RenderTransform>
+    				<CompositeTransform ScaleY="-1" ScaleX="-1" />
+    			</Path.RenderTransform>
+    			<Path.Fill>
+    				<ImageBrush Stretch="Fill" ImageSource="/XTS;component/Resources/BrushedMetalBack.png" />
+    			</Path.Fill>
+    		</Path>
+    		<Rectangle Height="20" VerticalAlignment="Center" Margin="0,112,0,0" RenderTransformOrigin="0.5,0.5" Width="24" HorizontalAlignment="Center" Opacity="0.35" Stroke="Black">
+    			<Rectangle.RenderTransform>
+    				<CompositeTransform ScaleY="-1" />
+    			</Rectangle.RenderTransform>
+    		</Rectangle>
+    	</Grid>
+    	<Grid
+    		x:Name="GridSensor0" HorizontalAlignment="Center" Margin="0,0,50,0" Width="22" VerticalAlignment="Top" Height="44" Grid.Row="2">
+    		<Grid.Background>
+    			<SolidColorBrush Color="{StaticResource ColorAMOTBlue}" />
+    		</Grid.Background>
+    		<Grid.ColumnDefinitions>
+    			<ColumnDefinition />
+    		</Grid.ColumnDefinitions>
+    		<Rectangle x:Name="Sensor0" Fill="#FF8AE234" Height="10" VerticalAlignment="Top" />
+    		<sdk:Label x:Name="LabelSensor0" Height="22" VerticalAlignment="Stretch" Margin="0,0" FontSize="20" Foreground="{Binding Foreground, ElementName=userControl}" Content=".1" />
+    		<Rectangle Height="10" VerticalAlignment="Top" Opacity="0.35" Stroke="Black" />
+    	</Grid>
+    	<Grid
+    		VerticalAlignment="Top" HorizontalAlignment="Center" Height="44" Margin="50,0,0,0" x:Name="GridSensor1" Width="22" Grid.Row="2">
+    		<Grid.Background>
+    			<SolidColorBrush Color="{StaticResource ColorAMOTBlue}" />
+    		</Grid.Background>
+    		<Rectangle
+    			x:Name="Sensor1" Fill="#FF8AE234" Height="10" VerticalAlignment="Top"/>
+    		<sdk:Label x:Name="LabelSensor1" Height="22" VerticalAlignment="Stretch" Margin="0,0" d:LayoutOverrides="HorizontalAlignment" FontSize="20" Foreground="{Binding Foreground, ElementName=userControl}" Content=".2" />
+    		<Rectangle Height="10" VerticalAlignment="Top" Opacity="0.35" Stroke="Black" />
+    	</Grid>
+    	<Grid x:Name="GridPistonDown" Margin="4,4,4,0">
+    		<Rectangle StrokeThickness="0.5" RenderTransformOrigin="0.5,0.5" Margin="34,0" HorizontalAlignment="Center" Width="12" Height="12" VerticalAlignment="Bottom">
+    			<Rectangle.Fill>
+    				<LinearGradientBrush EndPoint="0,0.5" StartPoint="1,0.5">
+    					<GradientStop Color="#FF606060" />
+    					<GradientStop Color="White" Offset="0.659" />
+    				</LinearGradientBrush>
+    			</Rectangle.Fill>
+    		</Rectangle>
+    		<Grid Margin="4,82,4,0" HorizontalAlignment="Center" VerticalAlignment="Center" Height="70">
+    			<Rectangle Stroke="#FF888A85" StrokeThickness="0.5">
+    				<Rectangle.Fill>
+    					<LinearGradientBrush EndPoint="0,0.5" StartPoint="1,0.5">
+    						<GradientStop Color="#FFD6D6D6" Offset="0.75" />
+    						<GradientStop Color="#FF464646" />
+    					</LinearGradientBrush>
+    				</Rectangle.Fill>
+    			</Rectangle>
+    			<Path Data="M12,24 L55, 24" Height="1" Margin="0,6,0,0" Stretch="Fill" Stroke="#FF888A85" StrokeThickness="1.5" UseLayoutRounding="False" VerticalAlignment="Top" Fill="#C0000000" />
+    			<Path Data="M12,24 L55, 24" Height="1" Margin="0,11,0,0" Stretch="Fill" Stroke="#FF888A85" StrokeThickness="1.5" UseLayoutRounding="False" VerticalAlignment="Top" Fill="#C0000000" />
+    			<Path Data="M12,24 L55, 24" Height="1" Margin="0,16,0,0" Stretch="Fill" Stroke="#FF888A85" StrokeThickness="1.5" UseLayoutRounding="False" VerticalAlignment="Top" Fill="#C0000000" />
+    			<sdk:Label x:Name="LabelPistonDownIndex" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="34.667" Content="n" Foreground="Black"/>
+    		</Grid>
+    	</Grid>
+    	<Grid x:Name="GridPistonUp" Margin="4,4,4,0">
+    		<Rectangle StrokeThickness="0.5" HorizontalAlignment="Center" Width="12" RenderTransformOrigin="0.5,0.5" Margin="0,82,0,0" d:LayoutOverrides="VerticalAlignment">
+    			<Rectangle.Fill>
+    				<LinearGradientBrush EndPoint="0,0.5" StartPoint="1,0.5">
+    					<GradientStop Color="#FF606060" />
+    					<GradientStop Color="White" Offset="0.659" />
+    				</LinearGradientBrush>
+    			</Rectangle.Fill>
+    		</Rectangle>
+    		<Grid Margin="4,0,4,82" HorizontalAlignment="Center" VerticalAlignment="Center" Height="70">
+    			<Rectangle Stroke="#FF888A85" StrokeThickness="0.5">
+    				<Rectangle.Fill>
+    					<LinearGradientBrush EndPoint="0,0.5" StartPoint="1,0.5">
+    						<GradientStop Color="#FFD6D6D6" Offset="0.75" />
+    						<GradientStop Color="#FF464646" />
+    					</LinearGradientBrush>
+    				</Rectangle.Fill>
+    			</Rectangle>
+    			<Path Data="M12,24 L55, 24" Height="1" Margin="0,6,0,0" Stretch="Fill" Stroke="#FF888A85" StrokeThickness="1.5" UseLayoutRounding="False" VerticalAlignment="Top" Fill="#C0000000" />
+    			<Path Data="M12,24 L55, 24" Height="1" Margin="0,11,0,0" Stretch="Fill" Stroke="#FF888A85" StrokeThickness="1.5" UseLayoutRounding="False" VerticalAlignment="Top" Fill="#C0000000" />
+    			<Path Data="M12,24 L55, 24" Height="1" Margin="0,16,0,0" Stretch="Fill" Stroke="#FF888A85" StrokeThickness="1.5" UseLayoutRounding="False" VerticalAlignment="Top" Fill="#C0000000" />
+    			<sdk:Label x:Name="LabelPistonUpIndex" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="34.667" Content="n" Foreground="Black"/>
+    		</Grid>
+    	</Grid>
+    	<Grid Height="64" x:Name="GridCrossheadUp" Margin="0,0,0,89" VerticalAlignment="Bottom" Grid.Row="1">
+    		<Rectangle Margin="20,0" StrokeThickness="0.5" Height="16" VerticalAlignment="Center">
+    			<Rectangle.Fill>
+    				<LinearGradientBrush EndPoint="0.5,0" StartPoint="0.5,1">
+    					<GradientStop Color="#FF606060" />
+    					<GradientStop Color="White" Offset="0.65" />
+    				</LinearGradientBrush>
+    			</Rectangle.Fill>
+    		</Rectangle>
+    		<Path Stretch="Fill" StrokeLineJoin="Round" Stroke="#FF787878" Data="F1 M 192,256L 192,128L 224,96L 352,96L 384,128L 384,256L 352,288L 224,288L 192,256 Z " HorizontalAlignment="Center" Height="32" UseLayoutRounding="False" VerticalAlignment="Center" Width="38">
+    			<Path.Fill>
+    				<ImageBrush Stretch="Fill" ImageSource="/XTS;component/Resources/BrushedMetalBack.png" />
+    			</Path.Fill>
+    		</Path>
+    		<Rectangle
+    			x:Name="CrossheadUp" Fill="#FF8AE234" Width="28" Height="22" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+    		<Rectangle Width="28" Height="22" VerticalAlignment="Center" HorizontalAlignment="Center" Opacity="0.35" Stroke="Black" />
+    		<Grid HorizontalAlignment="Center" VerticalAlignment="Center" Margin="54,0,0,0" Width="10" Height="50">
+    			<Grid.ColumnDefinitions>
+    				<ColumnDefinition Width="3"/>
+    				<ColumnDefinition Width="*"/>
+    				<ColumnDefinition Width="3"/>
+    			</Grid.ColumnDefinitions>
+    			<Grid.RowDefinitions>
+    				<RowDefinition Height="3"/>
+    				<RowDefinition Height="*"/>
+    				<RowDefinition Height="3"/>
+    			</Grid.RowDefinitions>
+    			<Rectangle Grid.RowSpan="3">
+    				<Rectangle.Fill>
+    					<LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
+    						<GradientStop Color="#FFAFAFAF"/>
+    						<GradientStop Color="#FFF2F2F2" Offset="1"/>
+    					</LinearGradientBrush>
+    				</Rectangle.Fill>
+    			</Rectangle>
+    			<Rectangle Grid.Row="1" Grid.Column="1" Fill="#FFF2F2F2"/>
+    			<Rectangle Grid.Column="3" Grid.RowSpan="3">
+    				<Rectangle.Fill>
+    					<LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
+    						<GradientStop Color="#FFAFAFAF" Offset="1"/>
+    						<GradientStop Color="#FFF2F2F2"/>
+    					</LinearGradientBrush>
+    				</Rectangle.Fill>
+    			</Rectangle>
+    			<Path Data="M0,0 L10,0" Stroke="#FF606060" StrokeThickness="1.5" UseLayoutRounding="False" RenderTransformOrigin="0.5,0.5" Stretch="Fill" VerticalAlignment="Center" StrokeStartLineCap="Square" StrokeEndLineCap="Square" Grid.ColumnSpan="3" Grid.Row="1"/>
+    			<Path Data="M0,0 L10,0" Stroke="#FF606060" UseLayoutRounding="False" RenderTransformOrigin="0.5,0.5" Stretch="Fill" VerticalAlignment="Center" StrokeStartLineCap="Square" StrokeEndLineCap="Square" Margin="0,25,0,0" Grid.ColumnSpan="3" Grid.Row="1"/>
+    			<Path Data="M0,0 L10,0" Stroke="#FF606060" UseLayoutRounding="False" RenderTransformOrigin="0.5,0.5" Stretch="Fill" VerticalAlignment="Center" StrokeStartLineCap="Square" StrokeEndLineCap="Square" Margin="0,0,0,25" Grid.ColumnSpan="3" Grid.Row="1"/>
+    			<Path Data="M0,0 L0,10" HorizontalAlignment="Left" Stretch="Fill" UseLayoutRounding="False" Stroke="#FF898989" StrokeEndLineCap="Square" StrokeStartLineCap="Square" Grid.RowSpan="3"/>
+    			<Path Data="M0,0 L0,10" HorizontalAlignment="Right" Stretch="Fill" UseLayoutRounding="False" Stroke="#FF898989" StrokeEndLineCap="Square" StrokeStartLineCap="Square" Grid.RowSpan="3" Grid.Column="2"/>
+    			<Path Data="M0,0 L10,0" Stretch="Fill" UseLayoutRounding="False" Stroke="#FF898989" StrokeEndLineCap="Square" StrokeStartLineCap="Square" VerticalAlignment="Top" Margin="0,0,0.235,0" d:LayoutOverrides="HorizontalAlignment"/>
+    			<Path Data="M0,0 L10,0" Stretch="Fill" UseLayoutRounding="False" Stroke="#FF898989" StrokeEndLineCap="Square" StrokeStartLineCap="Square" VerticalAlignment="Top" Margin="0.472,0,0,0" Grid.Column="2" d:LayoutOverrides="HorizontalAlignment"/>
+    			<Path Data="M0,0 L10,0" Stretch="Fill" UseLayoutRounding="False" Stroke="#FF898989" StrokeEndLineCap="Square" StrokeStartLineCap="Square" VerticalAlignment="Bottom" Grid.Row="2" d:LayoutOverrides="HorizontalAlignment"/>
+    			<Path Data="M0,0 L10,0" Stretch="Fill" UseLayoutRounding="False" Stroke="#FF898989" StrokeEndLineCap="Square" StrokeStartLineCap="Square" VerticalAlignment="Bottom" Grid.Row="2" Grid.Column="2" d:LayoutOverrides="HorizontalAlignment"/>
+    			<Path Data="M0,0 L10,0" Stretch="Fill" UseLayoutRounding="False" Stroke="#FF898989" StrokeEndLineCap="Square" StrokeStartLineCap="Square" VerticalAlignment="Bottom" Grid.Column="1"/>
+    			<Path Data="M0,0 L10,0" Stretch="Fill" UseLayoutRounding="False" Stroke="#FF898989" StrokeEndLineCap="Square" StrokeStartLineCap="Square" VerticalAlignment="Top" Grid.Row="2" Grid.Column="1"/>
+    			<Path Data="M0,0 L0,10" Stretch="Fill" UseLayoutRounding="False" Stroke="#FF898989" StrokeEndLineCap="Square" StrokeStartLineCap="Square" d:LayoutOverrides="VerticalAlignment" Grid.Column="2" HorizontalAlignment="Left"/>
+    			<Path Data="M0,0 L0,10" HorizontalAlignment="Right" Stretch="Fill" UseLayoutRounding="False" Stroke="#FF898989" StrokeEndLineCap="Square" StrokeStartLineCap="Square" d:LayoutOverrides="VerticalAlignment"/>
+    			<Path Data="M0,0 L0,10" Stretch="Fill" UseLayoutRounding="False" Stroke="#FF898989" StrokeEndLineCap="Square" StrokeStartLineCap="Square" Margin="-0.028,0,0,0" VerticalAlignment="Bottom" Grid.Row="3" Grid.Column="3" HorizontalAlignment="Left"/>
+    			<Path Data="M0,0 L0,10" HorizontalAlignment="Right" Stretch="Fill" UseLayoutRounding="False" Stroke="#FF898989" StrokeEndLineCap="Square" StrokeStartLineCap="Square" VerticalAlignment="Bottom" Grid.Row="2"/>
+    		</Grid>
+    		<Grid HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,54,0" Width="10" Height="50">
+    			<Grid.ColumnDefinitions>
+    				<ColumnDefinition Width="3"/>
+    				<ColumnDefinition Width="*"/>
+    				<ColumnDefinition Width="3"/>
+    			</Grid.ColumnDefinitions>
+    			<Grid.RowDefinitions>
+    				<RowDefinition Height="3"/>
+    				<RowDefinition Height="*"/>
+    				<RowDefinition Height="3"/>
+    			</Grid.RowDefinitions>
+    			<Rectangle Grid.RowSpan="3">
+    				<Rectangle.Fill>
+    					<LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
+    						<GradientStop Color="#FFAFAFAF"/>
+    						<GradientStop Color="#FFF2F2F2" Offset="1"/>
+    					</LinearGradientBrush>
+    				</Rectangle.Fill>
+    			</Rectangle>
+    			<Rectangle Grid.Row="1" Grid.Column="1" Fill="#FFF2F2F2"/>
+    			<Rectangle Grid.Column="3" Grid.RowSpan="3">
+    				<Rectangle.Fill>
+    					<LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
+    						<GradientStop Color="#FFAFAFAF" Offset="1"/>
+    						<GradientStop Color="#FFF2F2F2"/>
+    					</LinearGradientBrush>
+    				</Rectangle.Fill>
+    			</Rectangle>
+    			<Path Data="M0,0 L10,0" Stroke="#FF606060" StrokeThickness="1.5" UseLayoutRounding="False" RenderTransformOrigin="0.5,0.5" Stretch="Fill" VerticalAlignment="Center" StrokeStartLineCap="Square" StrokeEndLineCap="Square" Grid.ColumnSpan="3" Grid.Row="1"/>
+    			<Path Data="M0,0 L10,0" Stroke="#FF606060" UseLayoutRounding="False" RenderTransformOrigin="0.5,0.5" Stretch="Fill" VerticalAlignment="Center" StrokeStartLineCap="Square" StrokeEndLineCap="Square" Margin="0,25,0,0" Grid.ColumnSpan="3" Grid.Row="1"/>
+    			<Path Data="M0,0 L10,0" Stroke="#FF606060" UseLayoutRounding="False" RenderTransformOrigin="0.5,0.5" Stretch="Fill" VerticalAlignment="Center" StrokeStartLineCap="Square" StrokeEndLineCap="Square" Margin="0,0,0,25" Grid.ColumnSpan="3" Grid.Row="1"/>
+    			<Path Data="M0,0 L0,10" HorizontalAlignment="Left" Stretch="Fill" UseLayoutRounding="False" Stroke="#FF898989" StrokeEndLineCap="Square" StrokeStartLineCap="Square" Grid.RowSpan="3"/>
+    			<Path Data="M0,0 L0,10" HorizontalAlignment="Right" Stretch="Fill" UseLayoutRounding="False" Stroke="#FF898989" StrokeEndLineCap="Square" StrokeStartLineCap="Square" Grid.RowSpan="3" Grid.Column="2"/>
+    			<Path Data="M0,0 L10,0" Stretch="Fill" UseLayoutRounding="False" Stroke="#FF898989" StrokeEndLineCap="Square" StrokeStartLineCap="Square" VerticalAlignment="Top" Margin="0,0,0.235,0" d:LayoutOverrides="HorizontalAlignment"/>
+    			<Path Data="M0,0 L10,0" Stretch="Fill" UseLayoutRounding="False" Stroke="#FF898989" StrokeEndLineCap="Square" StrokeStartLineCap="Square" VerticalAlignment="Top" Margin="0.472,0,0,0" Grid.Column="2" d:LayoutOverrides="HorizontalAlignment"/>
+    			<Path Data="M0,0 L10,0" Stretch="Fill" UseLayoutRounding="False" Stroke="#FF898989" StrokeEndLineCap="Square" StrokeStartLineCap="Square" VerticalAlignment="Bottom" Grid.Row="2" d:LayoutOverrides="HorizontalAlignment"/>
+    			<Path Data="M0,0 L10,0" Stretch="Fill" UseLayoutRounding="False" Stroke="#FF898989" StrokeEndLineCap="Square" StrokeStartLineCap="Square" VerticalAlignment="Bottom" Grid.Row="2" Grid.Column="2" d:LayoutOverrides="HorizontalAlignment"/>
+    			<Path Data="M0,0 L10,0" Stretch="Fill" UseLayoutRounding="False" Stroke="#FF898989" StrokeEndLineCap="Square" StrokeStartLineCap="Square" VerticalAlignment="Bottom" Grid.Column="1"/>
+    			<Path Data="M0,0 L10,0" Stretch="Fill" UseLayoutRounding="False" Stroke="#FF898989" StrokeEndLineCap="Square" StrokeStartLineCap="Square" VerticalAlignment="Top" Grid.Row="2" Grid.Column="1"/>
+    			<Path Data="M0,0 L0,10" Stretch="Fill" UseLayoutRounding="False" Stroke="#FF898989" StrokeEndLineCap="Square" StrokeStartLineCap="Square" d:LayoutOverrides="VerticalAlignment" Grid.Column="2" HorizontalAlignment="Left"/>
+    			<Path Data="M0,0 L0,10" HorizontalAlignment="Right" Stretch="Fill" UseLayoutRounding="False" Stroke="#FF898989" StrokeEndLineCap="Square" StrokeStartLineCap="Square" d:LayoutOverrides="VerticalAlignment"/>
+    			<Path Data="M0,0 L0,10" Stretch="Fill" UseLayoutRounding="False" Stroke="#FF898989" StrokeEndLineCap="Square" StrokeStartLineCap="Square" Margin="-0.028,0,0,0" VerticalAlignment="Bottom" Grid.Row="3" Grid.Column="3" HorizontalAlignment="Left"/>
+    			<Path Data="M0,0 L0,10" HorizontalAlignment="Right" Stretch="Fill" UseLayoutRounding="False" Stroke="#FF898989" StrokeEndLineCap="Square" StrokeStartLineCap="Square" VerticalAlignment="Bottom" Grid.Row="2"/>
+    		</Grid>
+    	</Grid>
+    	<Grid Height="64" x:Name="GridCrossheadDown" Margin="0,0,0,5" VerticalAlignment="Bottom" Grid.Row="1" d:LayoutOverrides="VerticalAlignment">
+    		<Rectangle Margin="20,0" StrokeThickness="0.5" Height="16" VerticalAlignment="Center">
+    			<Rectangle.Fill>
+    				<LinearGradientBrush EndPoint="0.5,0" StartPoint="0.5,1">
+    					<GradientStop Color="#FF606060" />
+    					<GradientStop Color="White" Offset="0.65" />
+    				</LinearGradientBrush>
+    			</Rectangle.Fill>
+    		</Rectangle>
+    		<Path Stretch="Fill" StrokeLineJoin="Round" Stroke="#FF787878" Data="F1 M 192,256L 192,128L 224,96L 352,96L 384,128L 384,256L 352,288L 224,288L 192,256 Z " HorizontalAlignment="Center" Height="32" UseLayoutRounding="False" VerticalAlignment="Center" Width="38">
+    			<Path.Fill>
+    				<ImageBrush Stretch="Fill" ImageSource="/XTS;component/Resources/BrushedMetalBack.png" />
+    			</Path.Fill>
+    		</Path>
+    		<Rectangle
+    			x:Name="CrossheadDown" Fill="#FF8AE234" Width="28" Height="22" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+    		<Rectangle Width="28" Height="22" VerticalAlignment="Center" HorizontalAlignment="Center" Opacity="0.35" Stroke="Black" />
+    		<Grid HorizontalAlignment="Center" VerticalAlignment="Center" Margin="54,0,0,0" Width="10" Height="50">
+    			<Grid.ColumnDefinitions>
+    				<ColumnDefinition Width="3"/>
+    				<ColumnDefinition Width="*"/>
+    				<ColumnDefinition Width="3"/>
+    			</Grid.ColumnDefinitions>
+    			<Grid.RowDefinitions>
+    				<RowDefinition Height="3"/>
+    				<RowDefinition Height="*"/>
+    				<RowDefinition Height="3"/>
+    			</Grid.RowDefinitions>
+    			<Rectangle Grid.RowSpan="3">
+    				<Rectangle.Fill>
+    					<LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
+    						<GradientStop Color="#FFAFAFAF"/>
+    						<GradientStop Color="#FFF2F2F2" Offset="1"/>
+    					</LinearGradientBrush>
+    				</Rectangle.Fill>
+    			</Rectangle>
+    			<Rectangle Grid.Row="1" Grid.Column="1" Fill="#FFF2F2F2"/>
+    			<Rectangle Grid.Column="3" Grid.RowSpan="3">
+    				<Rectangle.Fill>
+    					<LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
+    						<GradientStop Color="#FFAFAFAF" Offset="1"/>
+    						<GradientStop Color="#FFF2F2F2"/>
+    					</LinearGradientBrush>
+    				</Rectangle.Fill>
+    			</Rectangle>
+    			<Path Data="M0,0 L10,0" Stroke="#FF606060" StrokeThickness="1.5" UseLayoutRounding="False" RenderTransformOrigin="0.5,0.5" Stretch="Fill" VerticalAlignment="Center" StrokeStartLineCap="Square" StrokeEndLineCap="Square" Grid.ColumnSpan="3" Grid.Row="1"/>
+    			<Path Data="M0,0 L10,0" Stroke="#FF606060" UseLayoutRounding="False" RenderTransformOrigin="0.5,0.5" Stretch="Fill" VerticalAlignment="Center" StrokeStartLineCap="Square" StrokeEndLineCap="Square" Margin="0,25,0,0" Grid.ColumnSpan="3" Grid.Row="1"/>
+    			<Path Data="M0,0 L10,0" Stroke="#FF606060" UseLayoutRounding="False" RenderTransformOrigin="0.5,0.5" Stretch="Fill" VerticalAlignment="Center" StrokeStartLineCap="Square" StrokeEndLineCap="Square" Margin="0,0,0,25" Grid.ColumnSpan="3" Grid.Row="1"/>
+    			<Path Data="M0,0 L0,10" HorizontalAlignment="Left" Stretch="Fill" UseLayoutRounding="False" Stroke="#FF898989" StrokeEndLineCap="Square" StrokeStartLineCap="Square" Grid.RowSpan="3"/>
+    			<Path Data="M0,0 L0,10" HorizontalAlignment="Right" Stretch="Fill" UseLayoutRounding="False" Stroke="#FF898989" StrokeEndLineCap="Square" StrokeStartLineCap="Square" Grid.RowSpan="3" Grid.Column="2"/>
+    			<Path Data="M0,0 L10,0" Stretch="Fill" UseLayoutRounding="False" Stroke="#FF898989" StrokeEndLineCap="Square" StrokeStartLineCap="Square" VerticalAlignment="Top" Margin="0,0,0.235,0" d:LayoutOverrides="HorizontalAlignment"/>
+    			<Path Data="M0,0 L10,0" Stretch="Fill" UseLayoutRounding="False" Stroke="#FF898989" StrokeEndLineCap="Square" StrokeStartLineCap="Square" VerticalAlignment="Top" Margin="0.472,0,0,0" Grid.Column="2" d:LayoutOverrides="HorizontalAlignment"/>
+    			<Path Data="M0,0 L10,0" Stretch="Fill" UseLayoutRounding="False" Stroke="#FF898989" StrokeEndLineCap="Square" StrokeStartLineCap="Square" VerticalAlignment="Bottom" Grid.Row="2" d:LayoutOverrides="HorizontalAlignment"/>
+    			<Path Data="M0,0 L10,0" Stretch="Fill" UseLayoutRounding="False" Stroke="#FF898989" StrokeEndLineCap="Square" StrokeStartLineCap="Square" VerticalAlignment="Bottom" Grid.Row="2" Grid.Column="2" d:LayoutOverrides="HorizontalAlignment"/>
+    			<Path Data="M0,0 L10,0" Stretch="Fill" UseLayoutRounding="False" Stroke="#FF898989" StrokeEndLineCap="Square" StrokeStartLineCap="Square" VerticalAlignment="Bottom" Grid.Column="1"/>
+    			<Path Data="M0,0 L10,0" Stretch="Fill" UseLayoutRounding="False" Stroke="#FF898989" StrokeEndLineCap="Square" StrokeStartLineCap="Square" VerticalAlignment="Top" Grid.Row="2" Grid.Column="1"/>
+    			<Path Data="M0,0 L0,10" Stretch="Fill" UseLayoutRounding="False" Stroke="#FF898989" StrokeEndLineCap="Square" StrokeStartLineCap="Square" d:LayoutOverrides="VerticalAlignment" Grid.Column="2" HorizontalAlignment="Left"/>
+    			<Path Data="M0,0 L0,10" HorizontalAlignment="Right" Stretch="Fill" UseLayoutRounding="False" Stroke="#FF898989" StrokeEndLineCap="Square" StrokeStartLineCap="Square" d:LayoutOverrides="VerticalAlignment"/>
+    			<Path Data="M0,0 L0,10" Stretch="Fill" UseLayoutRounding="False" Stroke="#FF898989" StrokeEndLineCap="Square" StrokeStartLineCap="Square" Margin="-0.028,0,0,0" VerticalAlignment="Bottom" Grid.Row="3" Grid.Column="3" HorizontalAlignment="Left"/>
+    			<Path Data="M0,0 L0,10" HorizontalAlignment="Right" Stretch="Fill" UseLayoutRounding="False" Stroke="#FF898989" StrokeEndLineCap="Square" StrokeStartLineCap="Square" VerticalAlignment="Bottom" Grid.Row="2"/>
+    		</Grid>
+    		<Grid HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,54,0" Width="10" Height="50">
+    			<Grid.ColumnDefinitions>
+    				<ColumnDefinition Width="3"/>
+    				<ColumnDefinition Width="*"/>
+    				<ColumnDefinition Width="3"/>
+    			</Grid.ColumnDefinitions>
+    			<Grid.RowDefinitions>
+    				<RowDefinition Height="3"/>
+    				<RowDefinition Height="*"/>
+    				<RowDefinition Height="3"/>
+    			</Grid.RowDefinitions>
+    			<Rectangle Grid.RowSpan="3">
+    				<Rectangle.Fill>
+    					<LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
+    						<GradientStop Color="#FFAFAFAF"/>
+    						<GradientStop Color="#FFF2F2F2" Offset="1"/>
+    					</LinearGradientBrush>
+    				</Rectangle.Fill>
+    			</Rectangle>
+    			<Rectangle Grid.Row="1" Grid.Column="1" Fill="#FFF2F2F2"/>
+    			<Rectangle Grid.Column="3" Grid.RowSpan="3">
+    				<Rectangle.Fill>
+    					<LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
+    						<GradientStop Color="#FFAFAFAF" Offset="1"/>
+    						<GradientStop Color="#FFF2F2F2"/>
+    					</LinearGradientBrush>
+    				</Rectangle.Fill>
+    			</Rectangle>
+    			<Path Data="M0,0 L10,0" Stroke="#FF606060" StrokeThickness="1.5" UseLayoutRounding="False" RenderTransformOrigin="0.5,0.5" Stretch="Fill" VerticalAlignment="Center" StrokeStartLineCap="Square" StrokeEndLineCap="Square" Grid.ColumnSpan="3" Grid.Row="1"/>
+    			<Path Data="M0,0 L10,0" Stroke="#FF606060" UseLayoutRounding="False" RenderTransformOrigin="0.5,0.5" Stretch="Fill" VerticalAlignment="Center" StrokeStartLineCap="Square" StrokeEndLineCap="Square" Margin="0,25,0,0" Grid.ColumnSpan="3" Grid.Row="1"/>
+    			<Path Data="M0,0 L10,0" Stroke="#FF606060" UseLayoutRounding="False" RenderTransformOrigin="0.5,0.5" Stretch="Fill" VerticalAlignment="Center" StrokeStartLineCap="Square" StrokeEndLineCap="Square" Margin="0,0,0,25" Grid.ColumnSpan="3" Grid.Row="1"/>
+    			<Path Data="M0,0 L0,10" HorizontalAlignment="Left" Stretch="Fill" UseLayoutRounding="False" Stroke="#FF898989" StrokeEndLineCap="Square" StrokeStartLineCap="Square" Grid.RowSpan="3"/>
+    			<Path Data="M0,0 L0,10" HorizontalAlignment="Right" Stretch="Fill" UseLayoutRounding="False" Stroke="#FF898989" StrokeEndLineCap="Square" StrokeStartLineCap="Square" Grid.RowSpan="3" Grid.Column="2"/>
+    			<Path Data="M0,0 L10,0" Stretch="Fill" UseLayoutRounding="False" Stroke="#FF898989" StrokeEndLineCap="Square" StrokeStartLineCap="Square" VerticalAlignment="Top" Margin="0,0,0.235,0" d:LayoutOverrides="HorizontalAlignment"/>
+    			<Path Data="M0,0 L10,0" Stretch="Fill" UseLayoutRounding="False" Stroke="#FF898989" StrokeEndLineCap="Square" StrokeStartLineCap="Square" VerticalAlignment="Top" Margin="0.472,0,0,0" Grid.Column="2" d:LayoutOverrides="HorizontalAlignment"/>
+    			<Path Data="M0,0 L10,0" Stretch="Fill" UseLayoutRounding="False" Stroke="#FF898989" StrokeEndLineCap="Square" StrokeStartLineCap="Square" VerticalAlignment="Bottom" Grid.Row="2" d:LayoutOverrides="HorizontalAlignment"/>
+    			<Path Data="M0,0 L10,0" Stretch="Fill" UseLayoutRounding="False" Stroke="#FF898989" StrokeEndLineCap="Square" StrokeStartLineCap="Square" VerticalAlignment="Bottom" Grid.Row="2" Grid.Column="2" d:LayoutOverrides="HorizontalAlignment"/>
+    			<Path Data="M0,0 L10,0" Stretch="Fill" UseLayoutRounding="False" Stroke="#FF898989" StrokeEndLineCap="Square" StrokeStartLineCap="Square" VerticalAlignment="Bottom" Grid.Column="1"/>
+    			<Path Data="M0,0 L10,0" Stretch="Fill" UseLayoutRounding="False" Stroke="#FF898989" StrokeEndLineCap="Square" StrokeStartLineCap="Square" VerticalAlignment="Top" Grid.Row="2" Grid.Column="1"/>
+    			<Path Data="M0,0 L0,10" Stretch="Fill" UseLayoutRounding="False" Stroke="#FF898989" StrokeEndLineCap="Square" StrokeStartLineCap="Square" d:LayoutOverrides="VerticalAlignment" Grid.Column="2" HorizontalAlignment="Left"/>
+    			<Path Data="M0,0 L0,10" HorizontalAlignment="Right" Stretch="Fill" UseLayoutRounding="False" Stroke="#FF898989" StrokeEndLineCap="Square" StrokeStartLineCap="Square" d:LayoutOverrides="VerticalAlignment"/>
+    			<Path Data="M0,0 L0,10" Stretch="Fill" UseLayoutRounding="False" Stroke="#FF898989" StrokeEndLineCap="Square" StrokeStartLineCap="Square" Margin="-0.028,0,0,0" VerticalAlignment="Bottom" Grid.Row="3" Grid.Column="3" HorizontalAlignment="Left"/>
+    			<Path Data="M0,0 L0,10" HorizontalAlignment="Right" Stretch="Fill" UseLayoutRounding="False" Stroke="#FF898989" StrokeEndLineCap="Square" StrokeStartLineCap="Square" VerticalAlignment="Bottom" Grid.Row="2"/>
+    		</Grid>
+    	</Grid>
+    	<Grid x:Name="GridIndex" Grid.Row="3" Margin="2,0">
+    		<Grid.Background>
+    			<SolidColorBrush Color="{StaticResource ColorAMOTBlue}" />
+    		</Grid.Background>
+    		<Rectangle x:Name="CylinderState" Fill="#FF8AE234" VerticalAlignment="Top" Height="8" d:LayoutOverrides="VerticalAlignment" />
+    		<sdk:Label x:Name="LabelIndex" Margin="2,0" VerticalAlignment="Bottom" FontSize="18" FontWeight="Normal" Foreground="{Binding Foreground, ElementName=userControl}" HorizontalAlignment="Center" Content="Cyl n" />
+    		<Rectangle VerticalAlignment="Top" Height="8" d:LayoutOverrides="VerticalAlignment" Opacity="0.35" Stroke="Black" />
+    	</Grid>
+    </Grid>
+        <ToolTipService.ToolTip>
+            <ToolTip x:Name="ToolTipName" Content=""></ToolTip>
+        </ToolTipService.ToolTip>
+    </Grid>
+</UserControl>

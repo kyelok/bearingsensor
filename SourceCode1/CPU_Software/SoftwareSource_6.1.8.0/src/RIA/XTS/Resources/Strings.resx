@@ -1,0 +1,1572 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="XTSStringHome" xml:space="preserve">
+    <value>Home</value>
+  </data>
+  <data name="XTSStringCommsError" xml:space="preserve">
+    <value>Network communication to the XTS-W2 server has been lost.  Communications Error: {0}</value>
+  </data>
+  <data name="XTSStringNoSensors" xml:space="preserve">
+    <value>No Sensors configured on the SPU</value>
+  </data>
+  <data name="XTSStringStatusDefault" xml:space="preserve">
+    <value>XTS-W2</value>
+  </data>
+  <data name="XTSStringStatusLearningAbort" xml:space="preserve">
+    <value>CAUTION: Engine learning aborted by user.</value>
+  </data>
+  <data name="XTSStringStatusLearningComplete1" xml:space="preserve">
+    <value>Engine learning procedure complete.</value>
+  </data>
+  <data name="XTSStringStatusLearningComplete2" xml:space="preserve">
+    <value>Engine learning complete. Please send verification data to AMOT.</value>
+  </data>
+  <data name="XTSStringStatusLearningFiringOrder" xml:space="preserve">
+    <value>Cylinder firing order not determined.</value>
+  </data>
+  <data name="XTSStringStatusLearningNotCal" xml:space="preserve">
+    <value>Engine learning procedure has not been completed. Indicated wear will be incorrect.</value>
+  </data>
+  <data name="XTSStringStatusLearningS1" xml:space="preserve">
+    <value>First stage "Preliminary engine learning" in progress {0} minute(s) remaining.</value>
+  </data>
+  <data name="XTSStringStatusLearningS1Complete" xml:space="preserve">
+    <value>First stage "Preliminary engine learning" complete waiting for next speed band entry.</value>
+  </data>
+  <data name="XTSStringStatusLearningS1Start" xml:space="preserve">
+    <value>First stage "Preliminary engine learning" waiting for speed band entry.</value>
+  </data>
+  <data name="XTSStringStatusLearningS2" xml:space="preserve">
+    <value>Second stage "Preliminary engine learning" in progress {0} minute(s) remaining.</value>
+  </data>
+  <data name="XTSStringStatusLearningS2Complete" xml:space="preserve">
+    <value>Second stage "Preliminary engine learning" complete, waiting for next speed band entry.</value>
+  </data>
+  <data name="XTSStringStatusLearningS3" xml:space="preserve">
+    <value>Third stage "Preliminary engine learning" in progress {0} minute(s) remaining.</value>
+  </data>
+  <data name="XTSStringStatusLearningS4" xml:space="preserve">
+    <value>Fine engine learning procedure in progress... {0} Hour(s) and {1} minute(s) remaining.</value>
+  </data>
+  <data name="XTSStringStatusLearningS5" xml:space="preserve">
+    <value>Fine engine learning procedure in progress... {0} Hour(s) and {1} minute(s) remaining.</value>
+  </data>
+  <data name="XTSStringEnter" xml:space="preserve">
+    <value>Enter</value>
+  </data>
+  <data name="XTSStringProgress" xml:space="preserve">
+    <value>Progress</value>
+  </data>
+  <data name="XTSStringCancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="XTSStringCancelled" xml:space="preserve">
+    <value>Cancelled</value>
+  </data>
+  <data name="XTSStringComplete" xml:space="preserve">
+    <value>Complete</value>
+  </data>
+  <data name="XTSStringReplace" xml:space="preserve">
+    <value>Replace</value>
+  </data>
+  <data name="XTSStringReplaced" xml:space="preserve">
+    <value>Replaced</value>
+  </data>
+  <data name="XTSStringCTRL" xml:space="preserve">
+    <value>CTRL</value>
+  </data>
+  <data name="XTSStringYes" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+  <data name="XTSStringNo" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="XTSStringSend" xml:space="preserve">
+    <value>Send</value>
+  </data>
+  <data name="XTSStringReceive" xml:space="preserve">
+    <value>Receive</value>
+  </data>
+  <data name="XTSStringImport" xml:space="preserve">
+    <value>Import</value>
+  </data>
+  <data name="XTSStringExport" xml:space="preserve">
+    <value>Export</value>
+  </data>
+  <data name="XTSStringOK" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="XTSStringRetry" xml:space="preserve">
+    <value>Retry</value>
+  </data>
+  <data name="XTSStringAbort" xml:space="preserve">
+    <value>Abort</value>
+  </data>
+  <data name="XTSStringOpen" xml:space="preserve">
+    <value>Open</value>
+  </data>
+  <data name="XTSStringClose" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="XTSStringConnect" xml:space="preserve">
+    <value>Connect</value>
+  </data>
+  <data name="XTSStringDisconnect" xml:space="preserve">
+    <value>Disconnect</value>
+  </data>
+  <data name="XTSStringEnable" xml:space="preserve">
+    <value>Enable</value>
+  </data>
+  <data name="XTSStringDisable" xml:space="preserve">
+    <value>Disable</value>
+  </data>
+  <data name="XTSStringAll" xml:space="preserve">
+    <value>All</value>
+  </data>
+  <data name="XTSStringNone" xml:space="preserve">
+    <value>None</value>
+  </data>
+  <data name="XTSStringFrom" xml:space="preserve">
+    <value>From</value>
+  </data>
+  <data name="XTSStringTo" xml:space="preserve">
+    <value>To</value>
+  </data>
+  <data name="XTSStringFirst" xml:space="preserve">
+    <value>First</value>
+  </data>
+  <data name="XTSStringLast" xml:space="preserve">
+    <value>Last</value>
+  </data>
+  <data name="XTSStringPrevious" xml:space="preserve">
+    <value>Previous</value>
+  </data>
+  <data name="XTSStringNext" xml:space="preserve">
+    <value>Next</value>
+  </data>
+  <data name="XTSStringHigh" xml:space="preserve">
+    <value>High</value>
+  </data>
+  <data name="XTSStringLow" xml:space="preserve">
+    <value>Low</value>
+  </data>
+  <data name="XTSStringHealthy" xml:space="preserve">
+    <value>Healthy</value>
+  </data>
+  <data name="XTSStringAlarm" xml:space="preserve">
+    <value>Alarm</value>
+  </data>
+  <data name="XTSStringAlarms" xml:space="preserve">
+    <value>Alarms</value>
+  </data>
+  <data name="XTSStringSuccess" xml:space="preserve">
+    <value>Success</value>
+  </data>
+  <data name="XTSStringSEDMError" xml:space="preserve">
+    <value>OOR</value>
+  </data>
+  <data name="XTSStringFailure" xml:space="preserve">
+    <value>Failure</value>
+  </data>
+  <data name="XTSStringReset" xml:space="preserve">
+    <value>Reset</value>
+  </data>
+  <data name="XTSStringClear" xml:space="preserve">
+    <value>Clear</value>
+  </data>
+  <data name="XTSStringLogOn" xml:space="preserve">
+    <value>Log On</value>
+  </data>
+  <data name="XTSStringLogOff" xml:space="preserve">
+    <value>Log Off</value>
+  </data>
+  <data name="XTSStringPasswordC" xml:space="preserve">
+    <value>Password:</value>
+  </data>
+  <data name="XTSStringIgnore" xml:space="preserve">
+    <value>Ignore</value>
+  </data>
+  <data name="XTSStringTextBlock" xml:space="preserve">
+    <value>TextBlock</value>
+  </data>
+  <data name="XTSStringOption0" xml:space="preserve">
+    <value>Option 0</value>
+  </data>
+  <data name="XTSStringOption1" xml:space="preserve">
+    <value>Option 1</value>
+  </data>
+  <data name="XTSStringSPUStatusOutput1" xml:space="preserve">
+    <value>SPU Status (Output 1)</value>
+  </data>
+  <data name="XTSStringAlarmOutput2" xml:space="preserve">
+    <value>Alarm (Output 2)</value>
+  </data>
+  <data name="XTSStringSlowdownOutput3" xml:space="preserve">
+    <value>Slowdown (Output 3)</value>
+  </data>
+  <data name="XTSStringActual" xml:space="preserve">
+    <value>Actual</value>
+  </data>
+  <data name="XTSStringNormalOutputs" xml:space="preserve">
+    <value>Normal Condition</value>
+  </data>
+  <data name="XTSStringNoteAlarmTestModeAuto" xml:space="preserve">
+    <value>Note: Alarm output test mode has been activated automatically.</value>
+  </data>
+  <data name="XTSStringAxisSelect" xml:space="preserve">
+    <value>Axis Select</value>
+  </data>
+  <data name="XTSStringRealTime" xml:space="preserve">
+    <value>Real Time</value>
+  </data>
+  <data name="XTSStringSpecifyDateTime" xml:space="preserve">
+    <value>Specify       Date/Time</value>
+  </data>
+  <data name="XTSStringSpan" xml:space="preserve">
+    <value>Span</value>
+  </data>
+  <data name="XTSString1" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="XTSStringSpecifyDate" xml:space="preserve">
+    <value>Specify Date</value>
+  </data>
+  <data name="XTSStringNoteRealTimeOnlySpanSupport" xml:space="preserve">
+    <value>Note: For real time mode only time span is supported.</value>
+  </data>
+  <data name="XTSStringSensor" xml:space="preserve">
+    <value>Sensor</value>
+  </data>
+  <data name="XTSStringSensors" xml:space="preserve">
+    <value>Sensors</value>
+  </data>
+  <data name="XTSStringSensorDeviation" xml:space="preserve">
+    <value>Sensor Deviation</value>
+  </data>
+  <data name="XTSStringSensorDeviations" xml:space="preserve">
+    <value>Sensor Deviations</value>
+  </data>
+  <data name="XTSStringSensorStatus1" xml:space="preserve">
+    <value>Sensor Status 1</value>
+  </data>
+  <data name="XTSStringSensorStatus2" xml:space="preserve">
+    <value>Sensor Status 2</value>
+  </data>
+  <data name="XTSStringSensorStatus3" xml:space="preserve">
+    <value>Sensor Status 3</value>
+  </data>
+  <data name="XTSStringCylinders" xml:space="preserve">
+    <value>Cylinders</value>
+  </data>
+  <data name="XTSStringCylinderDeviation" xml:space="preserve">
+    <value>Cylinder Deviation</value>
+  </data>
+  <data name="XTSStringCylinderDeviations" xml:space="preserve">
+    <value>Cylinder Deviations</value>
+  </data>
+  <data name="XTSStringCylinderAv" xml:space="preserve">
+    <value>Cylinder Av</value>
+  </data>
+  <data name="XTSStringCylinderStatus1" xml:space="preserve">
+    <value>Cylinder Status 1</value>
+  </data>
+  <data name="XTSStringCylinderStatus2" xml:space="preserve">
+    <value>Cylinder Status 2</value>
+  </data>
+  <data name="XTSStringCylinderStatus3" xml:space="preserve">
+    <value>Cylinder Status 3</value>
+  </data>
+  <data name="XTSStringSEDM" xml:space="preserve">
+    <value>SEDM</value>
+  </data>
+  <data name="XTSStringWIO" xml:space="preserve">
+    <value>WIO</value>
+  </data>
+  <data name="XTSStringWIOActivity" xml:space="preserve">
+    <value>WIO Activity</value>
+  </data>
+  <data name="XTSStringWIOPPM" xml:space="preserve">
+    <value>WIO PPM</value>
+  </data>
+  <data name="XTSStringWIOTemp" xml:space="preserve">
+    <value>WIO Temp</value>
+  </data>
+  <data name="XTSStringMenu" xml:space="preserve">
+    <value>Menu</value>
+  </data>
+  <data name="XTSStringLabel00" xml:space="preserve">
+    <value>00</value>
+  </data>
+  <data name="XTSStringLabel0" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="XTSStringLabel1" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="XTSStringLabel2" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="XTSStringLabel3" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="XTSStringLabel4" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="XTSStringLabel5" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="XTSStringLabel6" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="XTSStringLabel7" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="XTSStringLabel8" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="XTSStringLabel9" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="XTSStringLabel10" xml:space="preserve">
+    <value>10</value>
+  </data>
+  <data name="XTSStringLabel11" xml:space="preserve">
+    <value>11</value>
+  </data>
+  <data name="XTSStringLabel12" xml:space="preserve">
+    <value>12</value>
+  </data>
+  <data name="XTSStringLabel13" xml:space="preserve">
+    <value>13</value>
+  </data>
+  <data name="XTSStringLabel14" xml:space="preserve">
+    <value>14</value>
+  </data>
+  <data name="XTSStringLabel15" xml:space="preserve">
+    <value>15</value>
+  </data>
+  <data name="XTSStringLabel400" xml:space="preserve">
+    <value>400</value>
+  </data>
+  <data name="XTSStringLabel700" xml:space="preserve">
+    <value>700</value>
+  </data>
+  <data name="XTSStringLabel2012" xml:space="preserve">
+    <value>2012</value>
+  </data>
+  <data name="XTSStringSlowdown" xml:space="preserve">
+    <value>Slowdown</value>
+  </data>
+  <data name="XTSStringButtonUpArrow" xml:space="preserve">
+    <value>/\</value>
+  </data>
+  <data name="XTSStringButtonDownArrow" xml:space="preserve">
+    <value>\/</value>
+  </data>
+  <data name="XTSStringSelectAlarmThresholds" xml:space="preserve">
+    <value>Select Alarm Thresholds</value>
+  </data>
+  <data name="XTSStringAMOTMessageBox" xml:space="preserve">
+    <value>AMOTMessageBox</value>
+  </data>
+  <data name="XTSStringSelectCylinders" xml:space="preserve">
+    <value>Select Cylinders</value>
+  </data>
+  <data name="XTSStringPleaseSelectADate" xml:space="preserve">
+    <value>Please Select a Date</value>
+  </data>
+  <data name="XTSStringEventLog" xml:space="preserve">
+    <value>Event Log</value>
+  </data>
+  <data name="XTSStringHelp" xml:space="preserve">
+    <value>Help</value>
+  </data>
+  <data name="XTSStringLiveData" xml:space="preserve">
+    <value>Live Data</value>
+  </data>
+  <data name="XTSStringDateSlashTime" xml:space="preserve">
+    <value>Date/Time</value>
+  </data>
+  <data name="XTSStringSensors0to13" xml:space="preserve">
+    <value>Sensors 0-13</value>
+  </data>
+  <data name="XTSStringRawuA" xml:space="preserve">
+    <value>Raw µA</value>
+  </data>
+  <data name="XTSStringScaledValues" xml:space="preserve">
+    <value>Scaled Values</value>
+  </data>
+  <data name="XTSStringPreComp" xml:space="preserve">
+    <value>Pre Comp</value>
+  </data>
+  <data name="XTSStringPostComp" xml:space="preserve">
+    <value>Post Comp</value>
+  </data>
+  <data name="XTSStringPostFiltered" xml:space="preserve">
+    <value>Post Filtered</value>
+  </data>
+  <data name="XTSStringRPM" xml:space="preserve">
+    <value>RPM</value>
+  </data>
+  <data name="XTSStringSEDMmV" xml:space="preserve">
+    <value>SEDM (mV)</value>
+  </data>
+  <data name="XTSStringSEDMStatus" xml:space="preserve">
+    <value>SEDM Status</value>
+  </data>
+  <data name="XTSStringReportSelection" xml:space="preserve">
+    <value>ReportSelection</value>
+  </data>
+  <data name="XTSStringSelectSensors" xml:space="preserve">
+    <value>Select Sensors</value>
+  </data>
+  <data name="XTSStringSensorSetup" xml:space="preserve">
+    <value>Sensor Setup</value>
+  </data>
+  <data name="XTSStringDetailedCommunicationsStatistics" xml:space="preserve">
+    <value>Detailed Communications Statistics</value>
+  </data>
+  <data name="XTSStringPacketsReceivedC" xml:space="preserve">
+    <value>Packets Received:</value>
+  </data>
+  <data name="XTSStringPacketsSentC" xml:space="preserve">
+    <value>Packets Sent:</value>
+  </data>
+  <data name="XTSStringReadPacketsLostC" xml:space="preserve">
+    <value>Read Packets Lost:</value>
+  </data>
+  <data name="XTSStringWritePacketsLostC" xml:space="preserve">
+    <value>Write Packets Lost:</value>
+  </data>
+  <data name="XTSStringRetriesC" xml:space="preserve">
+    <value>Retries:</value>
+  </data>
+  <data name="XTSStringCRCErrorsC" xml:space="preserve">
+    <value>CRC Errors:</value>
+  </data>
+  <data name="XTSStringAlarmOutputs" xml:space="preserve">
+    <value>Alarm Outputs</value>
+  </data>
+  <data name="XTSStringConfigurationName" xml:space="preserve">
+    <value>Configuration Name</value>
+  </data>
+  <data name="XTSStringConfigDescriptionC" xml:space="preserve">
+    <value>Config Description:</value>
+  </data>
+  <data name="XTSStringTrendConfiguration" xml:space="preserve">
+    <value>Trend Properties</value>
+  </data>
+  <data name="XTSStringSelectTrendConfiguration" xml:space="preserve">
+    <value>Select Trend Configuration</value>
+  </data>
+  <data name="XTSStringSelectTrendsForCurrentConfiguration" xml:space="preserve">
+    <value>Select Trends For Current Configuration</value>
+  </data>
+  <data name="XTSStringButton" xml:space="preserve">
+    <value>Button</value>
+  </data>
+  <data name="XTSStringAxis1" xml:space="preserve">
+    <value>Axis 1</value>
+  </data>
+  <data name="XTSStringAxis1LabelC" xml:space="preserve">
+    <value>Axis 1 Label:</value>
+  </data>
+  <data name="XTSStringAxis2" xml:space="preserve">
+    <value>Axis 2</value>
+  </data>
+  <data name="XTSStringAxis2LabelC" xml:space="preserve">
+    <value>Axis 2 Label:</value>
+  </data>
+  <data name="XTSStringTrendDescriptionC" xml:space="preserve">
+    <value>Trend Description:</value>
+  </data>
+  <data name="XTSStringTrendSettings" xml:space="preserve">
+    <value>Trend Settings</value>
+  </data>
+  <data name="XTSStringExportTrendData" xml:space="preserve">
+    <value>Export Trend Data</value>
+  </data>
+  <data name="XTSStringTrend" xml:space="preserve">
+    <value>Trend</value>
+  </data>
+  <data name="XTSStringEndTime" xml:space="preserve">
+    <value>End Time</value>
+  </data>
+  <data name="XTSStringHrs" xml:space="preserve">
+    <value>Hr(s)</value>
+  </data>
+  <data name="XTSStringTimeSpanSlashStartDate" xml:space="preserve">
+    <value>Time Span/Start Date</value>
+  </data>
+  <data name="XTSStringmV" xml:space="preserve">
+    <value>mV</value>
+  </data>
+  <data name="XTSStringPPM" xml:space="preserve">
+    <value>PPM</value>
+  </data>
+  <data name="XTSStringEnterVerficationCode" xml:space="preserve">
+    <value>Enter Verfication Code</value>
+  </data>
+  <data name="XTSStringPleaseEnterverificationCodeC" xml:space="preserve">
+    <value>Please enter your verification code:</value>
+  </data>
+  <data name="XTSStringWIOStatus" xml:space="preserve">
+    <value>WIO Status</value>
+  </data>
+  <data name="XTSStringBarGraph" xml:space="preserve">
+    <value>BarGraph</value>
+  </data>
+  <data name="XTSStringSettings" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="XTSStringAdvanced" xml:space="preserve">
+    <value>Advanced</value>
+  </data>
+  <data name="XTSStringOOR" xml:space="preserve">
+    <value>OOR</value>
+  </data>
+  <data name="XTSStringCapture" xml:space="preserve">
+    <value>Capture</value>
+  </data>
+  <data name="XTSStringQuestionMarkChar" xml:space="preserve">
+    <value>?</value>
+  </data>
+  <data name="XTSStringHashChar" xml:space="preserve">
+    <value>#</value>
+  </data>
+  <data name="XTSStringPercentChar" xml:space="preserve">
+    <value>%</value>
+  </data>
+  <data name="XTSStringTimeSeparator" xml:space="preserve">
+    <value>:</value>
+  </data>
+  <data name="XTSStringReplaceStageNone" xml:space="preserve">
+    <value>-</value>
+  </data>
+  <data name="XTSStringBWMSensors" xml:space="preserve">
+    <value>BWM Sensors</value>
+  </data>
+  <data name="XTSStringApril" xml:space="preserve">
+    <value>April</value>
+  </data>
+  <data name="XTSStringFiringOrder" xml:space="preserve">
+    <value>Firing Order</value>
+  </data>
+  <data name="XTSStringMaxChannelsInFiringOrder" xml:space="preserve">
+    <value>(Maximum 7 channels in the firing order - 1 per cylinder, SPU1)</value>
+  </data>
+  <data name="XTSStringAmpersand123" xml:space="preserve">
+    <value>&amp;123</value>
+  </data>
+  <data name="XTSStringAddSpaceToTrend" xml:space="preserve">
+    <value>Add                To Trend</value>
+  </data>
+  <data name="XTSStringLegend" xml:space="preserve">
+    <value>Legend</value>
+  </data>
+  <data name="XTSStringStage" xml:space="preserve">
+    <value>Stage</value>
+  </data>
+  <data name="XTSStringHour" xml:space="preserve">
+    <value>Hour</value>
+  </data>
+  <data name="XTSStringMinute" xml:space="preserve">
+    <value>Minute</value>
+  </data>
+  <data name="XTSStringTimingChainBox" xml:space="preserve">
+    <value>Timing Chain Box</value>
+  </data>
+  <data name="XTSStringDescription" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="XTSStringCurrentUserC" xml:space="preserve">
+    <value>Current User:</value>
+  </data>
+  <data name="XTSStringReportCompleted" xml:space="preserve">
+    <value>Report Completed</value>
+  </data>
+  <data name="XTSStringUsersC" xml:space="preserve">
+    <value>Users:</value>
+  </data>
+  <data name="XTSStringWebServer" xml:space="preserve">
+    <value>WebServer</value>
+  </data>
+  <data name="XTSStringMarketingMode" xml:space="preserve">
+    <value>Marketing Mode</value>
+  </data>
+  <data name="XTSStringDCMode" xml:space="preserve">
+    <value>DC Mode</value>
+  </data>
+  <data name="XTSStringPulseMode" xml:space="preserve">
+    <value>Pulse Mode</value>
+  </data>
+  <data name="XTSStringDCPeakHold" xml:space="preserve">
+    <value>DC Peak Hold</value>
+  </data>
+  <data name="XTSStringSetSensorMode" xml:space="preserve">
+    <value>Set Sensor Mode</value>
+  </data>
+  <data name="XTSStringCurrentC" xml:space="preserve">
+    <value>Current:</value>
+  </data>
+  <data name="XTSStringReportInProgress" xml:space="preserve">
+    <value>Report in progress</value>
+  </data>
+  <data name="XTSStringSystemInfo" xml:space="preserve">
+    <value>System Info</value>
+  </data>
+  <data name="XTSStringExportSpaceEventLog" xml:space="preserve">
+    <value>Export           Event Log</value>
+  </data>
+  <data name="XTSStringEnableSensors" xml:space="preserve">
+    <value>Enable Sensors</value>
+  </data>
+  <data name="XTSStringDigitalOutputTestMode" xml:space="preserve">
+    <value>Digital Output Test Mode</value>
+  </data>
+  <data name="XTSStringExportSpeedAccumulatedTable" xml:space="preserve">
+    <value>Export Speed Accumulated Table</value>
+  </data>
+  <data name="XTSStringCPU" xml:space="preserve">
+    <value>CPU</value>
+  </data>
+  <data name="XTSStringCPUComms" xml:space="preserve">
+    <value>CPU Comms</value>
+  </data>
+  <data name="XTSStringSystem" xml:space="preserve">
+    <value>System</value>
+  </data>
+  <data name="XTSStringWIOInput" xml:space="preserve">
+    <value>WIO Input</value>
+  </data>
+  <data name="XTSStringSEDMInput" xml:space="preserve">
+    <value>SEDM Input</value>
+  </data>
+  <data name="XTSStringBattery" xml:space="preserve">
+    <value>Battery</value>
+  </data>
+  <data name="XTSStringSDCard" xml:space="preserve">
+    <value>SD Card</value>
+  </data>
+  <data name="XTSStringFirmware" xml:space="preserve">
+    <value>Firmware</value>
+  </data>
+  <data name="XTSStringComms" xml:space="preserve">
+    <value>Comms</value>
+  </data>
+  <data name="XTSStringSPU1" xml:space="preserve">
+    <value>SPU 1</value>
+  </data>
+  <data name="XTSStringSPU2" xml:space="preserve">
+    <value>SPU 2</value>
+  </data>
+  <data name="XTSStringSPU2SlashSlave" xml:space="preserve">
+    <value>SPU 2 / Slave</value>
+  </data>
+  <data name="XTSStringRunTime" xml:space="preserve">
+    <value>Run Time</value>
+  </data>
+  <data name="XTSStringSoftwareRevisions" xml:space="preserve">
+    <value>Software Revisions</value>
+  </data>
+  <data name="XTSStringPHASE1" xml:space="preserve">
+    <value>PHASE 1</value>
+  </data>
+  <data name="XTSStringPHASE2" xml:space="preserve">
+    <value>PHASE 2</value>
+  </data>
+  <data name="XTSStringPHASE3" xml:space="preserve">
+    <value>PHASE 3</value>
+  </data>
+  <data name="XTSStringRemaining" xml:space="preserve">
+    <value>Remaining</value>
+  </data>
+  <data name="XTSStringMaintainEngineBetween" xml:space="preserve">
+    <value>Maintain Engine Between</value>
+  </data>
+  <data name="XTSStringISlashF" xml:space="preserve">
+    <value>I/F</value>
+  </data>
+  <data name="XTSStringConnectingXTSWServer" xml:space="preserve">
+    <value>Connecting to XTSW Server</value>
+  </data>
+  <data name="XTSStringAllData" xml:space="preserve">
+    <value>All Data</value>
+  </data>
+  <data name="XTSStringSelectedCylindersOnly" xml:space="preserve">
+    <value>Selected Cylinders Only</value>
+  </data>
+  <data name="XTSStringGraphData" xml:space="preserve">
+    <value>Graph Data</value>
+  </data>
+  <data name="XTSStringMainBearingNeighbourSum" xml:space="preserve">
+    <value>Main Bearing Neighbour Sum</value>
+  </data>
+  <data name="XTSStringViewReports" xml:space="preserve">
+    <value>View Reports</value>
+  </data>
+  <data name="XTSStringGenerateReport" xml:space="preserve">
+    <value>Generate Report</value>
+  </data>
+  <data name="XTSStringDateRange" xml:space="preserve">
+    <value>Date Range</value>
+  </data>
+  <data name="XTSStringEventLogData" xml:space="preserve">
+    <value>Event Log Data</value>
+  </data>
+  <data name="XTSStringCylinderGraphs" xml:space="preserve">
+    <value>Cylinder Graphs</value>
+  </data>
+  <data name="XTSStringAbsolute" xml:space="preserve">
+    <value>Absolute</value>
+  </data>
+  <data name="XTSStringRelative" xml:space="preserve">
+    <value>Relative</value>
+  </data>
+  <data name="XTSStringDeviation" xml:space="preserve">
+    <value>Deviation</value>
+  </data>
+  <data name="XTSStringSum" xml:space="preserve">
+    <value>Sum</value>
+  </data>
+  <data name="XTSStringSensorGraphs" xml:space="preserve">
+    <value>Sensor Graphs</value>
+  </data>
+  <data name="XTSStringSingleSensor" xml:space="preserve">
+    <value>Single Sensor</value>
+  </data>
+  <data name="XTSStringGraph" xml:space="preserve">
+    <value>Graph</value>
+  </data>
+  <data name="XTSStringGraphs" xml:space="preserve">
+    <value>Graphs</value>
+  </data>
+  <data name="XTSStringReportTypes" xml:space="preserve">
+    <value>Report Types</value>
+  </data>
+  <data name="XTSStringSlowroll" xml:space="preserve">
+    <value>Slowroll</value>
+  </data>
+  <data name="XTSStringResetAll" xml:space="preserve">
+    <value>Reset All</value>
+  </data>
+  <data name="XTSStringPeakCalibration" xml:space="preserve">
+    <value>Peak Calibration</value>
+  </data>
+  <data name="XTSStringCalibrateFiringOrder" xml:space="preserve">
+    <value>Calibrate Firing Order</value>
+  </data>
+  <data name="XTSStringmA" xml:space="preserve">
+    <value>mA</value>
+  </data>
+  <data name="XTSStringmuM" xml:space="preserve">
+    <value>µm</value>
+  </data>
+  <data name="XTSStringPeak" xml:space="preserve">
+    <value>Peak</value>
+  </data>
+  <data name="XTSStringBraceResetBrace" xml:space="preserve">
+    <value>(Reset)</value>
+  </data>
+  <data name="XTSStringAlarmSlowdownLevels" xml:space="preserve">
+    <value>Alarm and Slowdown Levels</value>
+  </data>
+  <data name="XTSStringTrends" xml:space="preserve">
+    <value>Trends</value>
+  </data>
+  <data name="XTSStringConfig" xml:space="preserve">
+    <value>Config</value>
+  </data>
+  <data name="XTSStringStore" xml:space="preserve">
+    <value>Store</value>
+  </data>
+  <data name="XTSStringBarCharts" xml:space="preserve">
+    <value>Bar Charts</value>
+  </data>
+  <data name="XTSStringDiagnostics" xml:space="preserve">
+    <value>Diagnostics</value>
+  </data>
+  <data name="XTSStringEngineLearning" xml:space="preserve">
+    <value>Engine Learning</value>
+  </data>
+  <data name="XTSStringSensorReplacement" xml:space="preserve">
+    <value>Sensor Replacement</value>
+  </data>
+  <data name="XTSStringSensorSurvey" xml:space="preserve">
+    <value>Sensor Survey</value>
+  </data>
+  <data name="XTSStringReporting" xml:space="preserve">
+    <value>Reporting</value>
+  </data>
+  <data name="XTSStringEngineMimicScreen" xml:space="preserve">
+    <value>Engine Mimic Screen</value>
+  </data>
+  <data name="XTSStringUnhandledErrorReportAdmin" xml:space="preserve">
+    <value>An unhandled error occurred, please report it to your system administrator
+
+</value>
+  </data>
+  <data name="XTSStringErrorOccurred" xml:space="preserve">
+    <value>An error occurred</value>
+  </data>
+  <data name="XTSStringErrorOccurred0" xml:space="preserve">
+    <value>An error occurred, code {0}</value>
+  </data>
+  <data name="XTSStringEngineLearnCodeIncorrect" xml:space="preserve">
+    <value>Engine Learn Verification Code Incorrect</value>
+  </data>
+  <data name="XTSStringUnknownErrorOccurred" xml:space="preserve">
+    <value>An unknown error occurred</value>
+  </data>
+  <data name="XTSStringFunctionAccessDenied" xml:space="preserve">
+    <value>You do not have permission to access the current function.</value>
+  </data>
+  <data name="XTSStringCommsErrorOccurred" xml:space="preserve">
+    <value>No response received from XTSW Server</value>
+  </data>
+  <data name="XTSStringNoSelectedUser" xml:space="preserve">
+    <value>No Selected User</value>
+  </data>
+  <data name="XTSStringUserNotLoggedIn" xml:space="preserve">
+    <value>The user could not be logged in.</value>
+  </data>
+  <data name="XTSStringErrorExclamation" xml:space="preserve">
+    <value>Error!</value>
+  </data>
+  <data name="XTSStringCsvFileFilter" xml:space="preserve">
+    <value>CSV Files (*.csv)|*.csv</value>
+  </data>
+  <data name="XTSStringOpenCsvFileFilter" xml:space="preserve">
+    <value>Comma Separated Value Files (*.csv)|*.csv|All Files (*.*)|*.*</value>
+  </data>
+  <data name="XTSStringSaveCsvFileFilter" xml:space="preserve">
+    <value>Comma Separated Value Files (*.csv)|*.csv|All Files (*.*)|*.*</value>
+  </data>
+  <data name="XTSStringCsvFileExt" xml:space="preserve">
+    <value>csv</value>
+  </data>
+  <data name="XTSStringPngFileFilter" xml:space="preserve">
+    <value>PNG Files (*.png)|*.png</value>
+  </data>
+  <data name="XTSStringPngFileExt" xml:space="preserve">
+    <value>png</value>
+  </data>
+  <data name="XTSStringSpanGreaterThan0Mins" xml:space="preserve">
+    <value>Span should be greater than {0} minutes</value>
+  </data>
+  <data name="XTSStringStartDateLaterThanEndDate" xml:space="preserve">
+    <value>The start date for the date range must be earlier than the end date</value>
+  </data>
+  <data name="XTSStringTooManyTrendsInConfig" xml:space="preserve">
+    <value>The maximum number of trends within a configuration is {0}
+
+Please deselect {1} trends.</value>
+  </data>
+  <data name="XTSStringMaxValueLessThanMin" xml:space="preserve">
+    <value>MaxValue is less than Minvalue!</value>
+  </data>
+  <data name="XTSStringMinValueGreaterThanMax" xml:space="preserve">
+    <value>MinValue is greater than MaxValue!</value>
+  </data>
+  <data name="XTSStringIndexIsTooHigh" xml:space="preserve">
+    <value>Index is too high!</value>
+  </data>
+  <data name="XTSStringSureRemoveSelectedTrend" xml:space="preserve">
+    <value>Are you sure you want to remove the selected trend?</value>
+  </data>
+  <data name="XTSStringKeyboardSubmit" xml:space="preserve">
+    <value>Submit</value>
+  </data>
+  <data name="XTSStringKeyboardLogin" xml:space="preserve">
+    <value>Login</value>
+  </data>
+  <data name="XTSStringKeyboardGo" xml:space="preserve">
+    <value>Go</value>
+  </data>
+  <data name="XTSStringKeyboardOK" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="XTSStringKeyboardNext" xml:space="preserve">
+    <value>Next</value>
+  </data>
+  <data name="XTSStringKeyboardEnter" xml:space="preserve">
+    <value>Enter</value>
+  </data>
+  <data name="XTSStringKeyboardDefaultKeys" xml:space="preserve">
+    <value>q,w,e,r,t,y,u,i,o,p-a,s,d,f,g,h,j,k,l,APOST-z,x,c,v,b,n,m,COMMA,FULLSTOP,QUESTION</value>
+  </data>
+  <data name="XTSStringKeyboardDefaultAltKeys" xml:space="preserve">
+    <value>1,2,3,4,5,6,7,8,9,0-AT,HASH,POUND,PERCENT,AMPSAND,ASTERIK,MINUS,PLUS,OPENBRACKET,CLOSEBRACKET-DOLLAR,EXCLAMATION,QUOTE,APOST,COLON,SEMICOLON,BACKSLASH,QUESTION,UNDERSCORE,TILDE</value>
+  </data>
+  <data name="XTSStringMainBearing0Value" xml:space="preserve">
+    <value>{0}</value>
+  </data>
+  <data name="XTSStringProgressTimeRemaining" xml:space="preserve">
+    <value>{0}hrs {1}mins Remaining</value>
+  </data>
+  <data name="XTSStringCollection" xml:space="preserve">
+    <value>Collection</value>
+  </data>
+  <data name="XTSStringSureWishLogOut" xml:space="preserve">
+    <value>Are you sure you wish to log off?</value>
+  </data>
+  <data name="XTSStringTime0Hrs" xml:space="preserve">
+    <value>{0}hrs </value>
+  </data>
+  <data name="XTSStringTime0Mins" xml:space="preserve">
+    <value>{0}mins</value>
+  </data>
+  <data name="XTSStringTimeOneHour" xml:space="preserve">
+    <value>1hr </value>
+  </data>
+  <data name="XTSStringTimeOneMin" xml:space="preserve">
+    <value>1min</value>
+  </data>
+  <data name="XTSStringTimeZeroMins" xml:space="preserve">
+    <value>0mins</value>
+  </data>
+  <data name="XTSStringTargetType0NotSupported" xml:space="preserve">
+    <value>Target type {0} not supported</value>
+  </data>
+  <data name="XTSStringValue0mV" xml:space="preserve">
+    <value>{0} mV</value>
+  </data>
+  <data name="XTSString0To1RPMRange" xml:space="preserve">
+    <value>{0}-{1} RPM</value>
+  </data>
+  <data name="XTSStringGreaterThan0RPM" xml:space="preserve">
+    <value>&gt;{0} RPM</value>
+  </data>
+  <data name="XTSStringLearningStartTitle" xml:space="preserve">
+    <value>WARNING</value>
+  </data>
+  <data name="XTSStringLearningStartMsg" xml:space="preserve">
+    <value>STARTING THE LEARNING PROCEDURE SHOULD ONLY BE CARRIED OUT BY A HIGH LEVEL USER.
+
+This process will automatically learn the engine profile.
+
+All sensors must be adjusted at ''Bottom Dead Centre" via the "Sensor Setup" procedure before learning is started.
+
+Please refer to the Installation and Maintenance sections of the manual for more information.
+
+WARNING
+Any current indication of wear will be permanently lost.
+
+Are you sure you wish to continue?</value>
+  </data>
+  <data name="XTSStringLearningCancelTitle" xml:space="preserve">
+    <value>"WARNING</value>
+  </data>
+  <data name="XTSStringLearningCancelMsg" xml:space="preserve">
+    <value>TERMINATING LEARNING MODE BEFORE COMPLETION WILL LEAD TO INCORRECT READINGS FROM ALL THE SENSORS!
+
+ARE YOU SURE YOU WISH TO CANCEL?</value>
+  </data>
+  <data name="XTSStringInitialLearningCompleteTitle" xml:space="preserve">
+    <value>Stage 3 Complete</value>
+  </data>
+  <data name="XTSStringInitialLearningCompleteMsg" xml:space="preserve">
+    <value>Initial learning complete.  The engine can be run at any speed.
+
+In order to achieve the best possible engine profile, please run the engine at as many speeds as possible.</value>
+  </data>
+  <data name="XTSStringLearningCompleteTitle" xml:space="preserve">
+    <value>Learning Complete</value>
+  </data>
+  <data name="XTSStringLearningCompleteMsg" xml:space="preserve">
+    <value>Engine learning complete.  Data will be represented with speed compensation applied.
+
+In order to validate the system warranty:
+1. Log On.
+2. Press "Send Verification Data to AMOT" button.</value>
+  </data>
+  <data name="XTSStringLearningVerificationTitle" xml:space="preserve">
+    <value>Learning Verification Code</value>
+  </data>
+  <data name="XTSStringLearningVerificationOKMsg" xml:space="preserve">
+    <value>Learning verification complete.</value>
+  </data>
+  <data name="XTSStringLearningVerificationInvalidMsg" xml:space="preserve">
+    <value>The code entered is invalid.</value>
+  </data>
+  <data name="XTSStringReportAlreadyInProgress" xml:space="preserve">
+    <value>A report is already in progress</value>
+  </data>
+  <data name="XTSStringReportStyleNeeded" xml:space="preserve">
+    <value>A report style needs to be chosen</value>
+  </data>
+  <data name="XTSStringCouldNotStartReport" xml:space="preserve">
+    <value>Could not start report.</value>
+  </data>
+  <data name="XTSStringDCModeSelectTitle" xml:space="preserve">
+    <value />
+  </data>
+  <data name="XTSStringDCModeSelectMsg" xml:space="preserve">
+    <value>The engine must be stationary and ready to be rotated on the 'turning gear'.
+
+This process may take several minutes to complete.
+
+Do not enter 'DC Mode' unless you are ready to use the turning gear.
+
+Are you sure you wish to enter DC Mode?</value>
+  </data>
+  <data name="XTSStringDCModeEngineRunningTitle" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="XTSStringDCModeEngineRunningMsg" xml:space="preserve">
+    <value>The engine is running.
+
+DC mode is unavailable.</value>
+  </data>
+  <data name="XTSStringPeakCalibrationTitle" xml:space="preserve">
+    <value />
+  </data>
+  <data name="XTSStringPeakCalibrationMsg" xml:space="preserve">
+    <value>The engine MUST have already been rotated at least one full revolution using the turning gear to setup the dc level offsets.
+
+Please refer to the installation and maintenance sections of the manual for more information.
+
+WARNING! The indication of wear can be lost when this operation is carried out.
+
+Are you sure you wish to continue?</value>
+  </data>
+  <data name="XTSStringSelectSensorsToCalibrate" xml:space="preserve">
+    <value>Select sensors to calibrate...</value>
+  </data>
+  <data name="XTSStringCalibrateFiringOrderTitle" xml:space="preserve">
+    <value>Warning</value>
+  </data>
+  <data name="XTSStringCalibrateFiringOrderMsg" xml:space="preserve">
+    <value>Ensure the engine is running in a forward direction.</value>
+  </data>
+  <data name="XTSStringSetSensorModeFailTitle" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="XTSStringSetSensorModeFailMsg" xml:space="preserve">
+    <value>Failed to set Sensor Mode.</value>
+  </data>
+  <data name="XTSStringDCOffsetCalibrationCompleteTitle" xml:space="preserve">
+    <value>Success</value>
+  </data>
+  <data name="XTSStringDCOffsetCalibrationCompleteMsg" xml:space="preserve">
+    <value>DC Offset calibration complete.</value>
+  </data>
+  <data name="XTSStringDCOffsetCalibrationFailTitle" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="XTSStringDCOffsetCalibrationFailMsg" xml:space="preserve">
+    <value>DC Offset calibration failed.</value>
+  </data>
+  <data name="XTSStringRunning" xml:space="preserve">
+    <value>Running</value>
+  </data>
+  <data name="XTSStringStopped" xml:space="preserve">
+    <value>Stopped</value>
+  </data>
+  <data name="XTSStringGreaterThan99" xml:space="preserve">
+    <value>&lt;99</value>
+  </data>
+  <data name="XTSStringTrendsReplaceConfiguration" xml:space="preserve">
+    <value>Trends - Replace in TrendConfiguration</value>
+  </data>
+  <data name="XTSStringFailureRPMORR" xml:space="preserve">
+    <value>Failure RPM OOR</value>
+  </data>
+  <data name="XTSStringFailureHighLevel" xml:space="preserve">
+    <value>Failure High Level</value>
+  </data>
+  <data name="XTSStringFailureLowLevel" xml:space="preserve">
+    <value>Failure Low Level</value>
+  </data>
+  <data name="XTSStringFailureNoPulse" xml:space="preserve">
+    <value>Failure No Pulse</value>
+  </data>
+  <data name="XTSStringStateInsertOrCreateTitle" xml:space="preserve">
+    <value>Change Trend Configuration</value>
+  </data>
+  <data name="XTSStringStateInsertOrCreateOpt1" xml:space="preserve">
+    <value>Merge Into Current</value>
+  </data>
+  <data name="XTSStringStateInsertOrCreateOpt2" xml:space="preserve">
+    <value>Create New</value>
+  </data>
+  <data name="XTSStringStateInsertOrCreateMsg" xml:space="preserve">
+    <value>Do you wish to add {0} to the current trend configuration, or create a new one?</value>
+  </data>
+  <data name="XTSStringStateLimitWarningTitle" xml:space="preserve">
+    <value>Warning!</value>
+  </data>
+  <data name="XTSStringStateLimitWarningMsg" xml:space="preserve">
+    <value>The current configuration has the maximum number of trends.
+You can only create a new configuration.</value>
+  </data>
+  <data name="XTSStringStateSaveOrDiscardTitle" xml:space="preserve">
+    <value>Warning!</value>
+  </data>
+  <data name="XTSStringStateSaveOrDiscardOpt1" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="XTSStringStateSaveOrDiscardOpt2" xml:space="preserve">
+    <value>Discard</value>
+  </data>
+  <data name="XTSStringStateSaveOrDiscardMsg" xml:space="preserve">
+    <value>This will clear the existing trend configuration.
+
+Do you wish to save the existing configuration before creating the new one?</value>
+  </data>
+  <data name="XTSStringStateConfirmOverwriteTitle" xml:space="preserve">
+    <value>Warning!</value>
+  </data>
+  <data name="XTSStringStateConfirmOverwriteMsg" xml:space="preserve">
+    <value>Are you sure?
+
+This will overwrite the trend configuration.</value>
+  </data>
+  <data name="XTSStringStateConfirmLoseExistingTitle" xml:space="preserve">
+    <value>Warning!</value>
+  </data>
+  <data name="XTSStringStateConfirmLoseExistingMsg" xml:space="preserve">
+    <value>Are you sure?
+
+You will lose the current trend configuration.</value>
+  </data>
+  <data name="XTSStringChildWindowNegativeResult" xml:space="preserve">
+    <value>HandleResult has received a child window with a negative result</value>
+  </data>
+  <data name="XTSStringGeneralErrorNumber" xml:space="preserve">
+    <value>Error!</value>
+  </data>
+  <data name="XTSStringNumberaW" xml:space="preserve">
+    <value>{0:0.00} aW</value>
+  </data>
+  <data name="XTSStringNumberPercent" xml:space="preserve">
+    <value>{0}%</value>
+  </data>
+  <data name="XTSStringNumberPPM" xml:space="preserve">
+    <value>{0} ppm</value>
+  </data>
+  <data name="XTSStringVersionInfoLong" xml:space="preserve">
+    <value>{0} v{1}.{2} {3}</value>
+  </data>
+  <data name="XTSStringVersionInfoShort" xml:space="preserve">
+    <value>{0} v{1}.{2}</value>
+  </data>
+  <data name="XTSStringTrendDefaultCylinder" xml:space="preserve">
+    <value>Cylinder {0}</value>
+  </data>
+  <data name="XTSStringTrendDefaultRPM" xml:space="preserve">
+    <value>RPM</value>
+  </data>
+  <data name="XTSStringTrendDefaultSEDMmV" xml:space="preserve">
+    <value>SEDM (mV)</value>
+  </data>
+  <data name="XTSStringTrendDefaultSensor" xml:space="preserve">
+    <value>Sensor {0}.{1}</value>
+  </data>
+  <data name="XTSStringTrendDefaultSensorDeviation" xml:space="preserve">
+    <value>Sensor {0}.{1} Deviation</value>
+  </data>
+  <data name="XTSStringTrendDefaultWIOPct" xml:space="preserve">
+    <value>WIO (%)</value>
+  </data>
+  <data name="XTSStringTrendDefaultWIOPPM" xml:space="preserve">
+    <value>WIO (ppm)</value>
+  </data>
+  <data name="XTSStringTrendDefaultCylinderDeviation" xml:space="preserve">
+    <value>Cylinder {0} Deviation</value>
+  </data>
+  <data name="XTSStringDisabled" xml:space="preserve">
+    <value>Disabled</value>
+  </data>
+  <data name="XTSDefaultFontFamily" xml:space="preserve">
+    <value>Portable User Interface</value>
+    <comment>Default font name for silverlight controls</comment>
+  </data>
+  <data name="XTSStringCylinder0Number" xml:space="preserve">
+    <value>Cylinder {0}</value>
+  </data>
+  <data name="XTSStringCoreErrorDatabaseCorrupt" xml:space="preserve">
+    <value>Database corrupt!  Attempting to create new database.</value>
+  </data>
+  <data name="XTSStringTimeSpanGreaterThanYears" xml:space="preserve">
+    <value>The time span must be less than {0} years.</value>
+  </data>
+  <data name="XTSStringPleaseSelectAFailureDate" xml:space="preserve">
+    <value>Please select a failure date</value>
+  </data>
+  <data name="XTSStringSendData" xml:space="preserve">
+    <value>Send Data</value>
+  </data>
+  <data name="XTSStringDownload" xml:space="preserve">
+    <value>Download</value>
+  </data>
+  <data name="XTSStringZipFileExt" xml:space="preserve">
+    <value>zip</value>
+  </data>
+  <data name="XTSZipFileFilter" xml:space="preserve">
+    <value>Zip Files (*.zip)|*.zip|All Files (*.*)|*.*</value>
+  </data>
+  <data name="XTSStringTrendWarningNoSPU" xml:space="preserve">
+    <value>Note: Due to SPU Communications failure latest data may not be available</value>
+  </data>
+  <data name="XTSStringSettingsWarningNoSPU" xml:space="preserve">
+    <value>Note: Due to SPU Communications failure, not all settings will be available</value>
+  </data>
+  <data name="XTSStringWIOErrorComms" xml:space="preserve">
+    <value>COM Error</value>
+  </data>
+  <data name="XTSStringWIOErrorHigh" xml:space="preserve">
+    <value>HIGH</value>
+  </data>
+  <data name="XTSStringWIOErrorLow" xml:space="preserve">
+    <value>LOW</value>
+  </data>
+  <data name="XTSStringAlarmRetriggered" xml:space="preserve">
+    <value>Retriggered {0} Times</value>
+  </data>
+  <data name="XTSStringCoreErrorCommStats" xml:space="preserve">
+    <value>Comm Stats</value>
+  </data>
+  <data name="XTSStringCoreErrorDatabase" xml:space="preserve">
+    <value>Database</value>
+  </data>
+  <data name="XTSStringCoreErrorDataLogger" xml:space="preserve">
+    <value>Datalogger</value>
+  </data>
+  <data name="XTSStringCoreErrorEventLog" xml:space="preserve">
+    <value>Event Log</value>
+  </data>
+  <data name="XTSStringCoreErrorModbus" xml:space="preserve">
+    <value>Modbus Server</value>
+  </data>
+  <data name="XTSStringCoreErrorModBusMapper" xml:space="preserve">
+    <value>Invalid Modbus Map</value>
+  </data>
+  <data name="XTSStringCoreErrorReplacementDatabase" xml:space="preserve">
+    <value>Replacement Database</value>
+  </data>
+  <data name="XTSStringCoreErrorReportAMOT" xml:space="preserve">
+    <value>AMOT Report Generation</value>
+  </data>
+  <data name="XTSStringCoreErrorRTUStart" xml:space="preserve">
+    <value>All SPU communications have been lost (Serial Port Configuration)</value>
+  </data>
+  <data name="XTSStringCoreErrorRTUExternal" xml:space="preserve">
+    <value>All SPU communications have been lost (Incorrect External Serial Port Configuration)</value>
+  </data>
+  <data name="XTSStringCoreErrorModbusTCPIP" xml:space="preserve">
+    <value>Modbus external port unavailable</value>
+  </data>
+  <data name="XTSStringCoreErrorUnknown" xml:space="preserve">
+    <value>UNKNOWN</value>
+  </data>
+  <data name="XTSStringCoreError" xml:space="preserve">
+    <value>Error:{0}</value>
+  </data>
+  <data name="XTSStringCoreErrorRTUDongle" xml:space="preserve">
+    <value>All SPU communications have been lost (Connection Hardware Failure)</value>
+  </data>
+  <data name="XTSStringCoreErrorRTURS485" xml:space="preserve">
+    <value>All SPU communications have been lost (Not Replying To Modbus)</value>
+  </data>
+  <data name="XTSStringSPU2Error" xml:space="preserve">
+    <value>SPU 2 Communications have been lost</value>
+  </data>
+  <data name="XTSStringCoreErrorGLMM" xml:space="preserve">
+    <value>GL MM Web Service</value>
+  </data>
+  <data name="XTSStringCoreErrorReportGL" xml:space="preserve">
+    <value>GL Report Generation</value>
+  </data>
+  <data name="XTSStringAckAlarmFailed" xml:space="preserve">
+    <value>Failed to acknowledge the alarm</value>
+  </data>
+  <data name="XTSStringRestartRequired" xml:space="preserve">
+    <value>The software has been updated, press OK to update from the server.</value>
+  </data>
+  <data name="XTSStringMessageBoxTitleError" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="XTSStringMessageBoxTitleWarning" xml:space="preserve">
+    <value>Warning</value>
+  </data>
+  <data name="XTSStringRestartRequiredTitle" xml:space="preserve">
+    <value>Software Updated</value>
+  </data>
+  <data name="XTSStringOFF" xml:space="preserve">
+    <value>OFF</value>
+  </data>
+  <data name="XTSStringON" xml:space="preserve">
+    <value>ON</value>
+  </data>
+  <data name="XTSStringRestarting" xml:space="preserve">
+    <value>Restarting, please wait...</value>
+  </data>
+  <data name="XTSStringAlarmOutputTestCancelled" xml:space="preserve">
+    <value>The test mode has been cancelled due to inactivity.</value>
+  </data>
+  <data name="XTSStringCouldNotSetTestOutputMode" xml:space="preserve">
+    <value>Could not set requested alarm output test mode</value>
+  </data>
+  <data name="XTSStringUpdateMode" xml:space="preserve">
+    <value>The server is currently updating</value>
+  </data>
+  <data name="XTSStringLegendDeviation" xml:space="preserve">
+    <value>Deviation (µm)</value>
+  </data>
+  <data name="XTSStringLegendWear" xml:space="preserve">
+    <value>Wear (µm)</value>
+  </data>
+  <data name="XTSStringSPU2NotConnected" xml:space="preserve">
+    <value>SPU 2 Not Connected</value>
+  </data>
+  <data name="XTSStringSensorStatus" xml:space="preserve">
+    <value>Sensor Status</value>
+  </data>
+  <data name="XTSStringSPU1SlashMaster" xml:space="preserve">
+    <value>SPU 1 / Master</value>
+  </data>
+  <data name="XTSStringCylIndex" xml:space="preserve">
+    <value>Cyl {0}</value>
+  </data>
+  <data name="XTSStringSensorImportFileError" xml:space="preserve">
+    <value>The import file format is invalid or does not match the selected sensor.</value>
+  </data>
+  <data name="XTSStringFileDownloadError" xml:space="preserve">
+    <value>Failed to download the requested file.</value>
+  </data>
+  <data name="XTSStringPrewarning" xml:space="preserve">
+    <value>Prewarning</value>
+  </data>
+  <data name="XTSStringSensorStatusKey" xml:space="preserve">
+    <value>Sensor Status Key</value>
+  </data>
+  <data name="XTSStringNormal" xml:space="preserve">
+    <value>Normal</value>
+  </data>
+  <data name="XTSStringReplacementAdjustment" xml:space="preserve">
+    <value>Replacement/Adjustment</value>
+  </data>
+  <data name="XTSStringKey" xml:space="preserve">
+    <value>Key</value>
+  </data>
+  <data name="XTSStringTemperature" xml:space="preserve">
+    <value>Temperature</value>
+  </data>
+  <data name="XTSStringTrendDefaultTemperature" xml:space="preserve">
+    <value>Temperature {0}</value>
+  </data>
+  <data name="XTSStringPageOne" xml:space="preserve">
+    <value>Page 1</value>
+  </data>
+  <data name="XTSStringPageTwo" xml:space="preserve">
+    <value>Page 2</value>
+  </data>
+  <data name="XTSStringLegendTemperature" xml:space="preserve">
+    <value>Temperature (°C)</value>
+  </data>
+  <data name="XTSStringLegendTemperatureDeviation" xml:space="preserve">
+    <value>Deviation (°C)</value>
+  </data>
+  <data name="XTSStringTemperatureSetting" xml:space="preserve">
+    <value>Temperature Settings</value>
+  </data>
+  <data name="XTSStringName" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="XTSStringWrongInput" xml:space="preserve">
+    <value>Error in Alarm or Slowdown input</value>
+  </data>
+  <data name="XTSStringAlarmGreaterThanSlowdown" xml:space="preserve">
+    <value>The alarm setpoint cannot be higher than slowdown setpoint for channel {0}</value>
+  </data>
+  <data name="XTSStringAlarmOutofRange" xml:space="preserve">
+    <value>Alarm setpoint is out of range for channel {0}</value>
+  </data>
+  <data name="XTSStringSlowdownOutofRange" xml:space="preserve">
+    <value>Slowdown setpoint is out of range for channel {0}</value>
+  </data>
+  <data name="XTSStringTemperatureSettingsComplete" xml:space="preserve">
+    <value>Temperature settings have been submitted, please wait for 10 second for refreshing</value>
+  </data>
+  <data name="XTSStringTempModule" xml:space="preserve">
+    <value>TMP</value>
+  </data>
+  <data name="XTSStringRPMAndTemp" xml:space="preserve">
+    <value>RPM &amp; Temperature °C</value>
+  </data>
+  <data name="XTSStringFailureLowLevelTemperature" xml:space="preserve">
+    <value>Failure Low Level or Temperature Sensor Short Circuit</value>
+  </data>
+  <data name="XTSStringFailureHighLevelTemperature" xml:space="preserve">
+    <value>Failure High Level or Temperature Sensor Open Circuit</value>
+  </data>
+  <data name="XTSStringFailureRPMORRTemperature" xml:space="preserve">
+    <value>Failure RPM OOR or Temperature Sensor Loose Connection</value>
+  </data>
+  <data name="XTSStringFailureNoPulseTemperature" xml:space="preserve">
+    <value>Failure No Pulse or Temperature BTM module failure</value>
+  </data>
+  <data name="XTSStringGenerateReportMessage" xml:space="preserve">
+    <value>Generating the report may take up to {0} minutes, do you want to continue?</value>
+  </data>
+  <data name="XTSStringCloseWindow" xml:space="preserve">
+    <value>x</value>
+  </data>
+  <data name="XTSStringAbnormalOutputs" xml:space="preserve">
+    <value>Abnormal Condition</value>
+  </data>
+  <data name="XTSStringActualOutput" xml:space="preserve">
+    <value>Actual Output Condition</value>
+  </data>
+  <data name="XTSStringInterface" xml:space="preserve">
+    <value>Interface Relay Coil:</value>
+  </data>
+  <data name="XTSStringMessageBoxTitleInfo" xml:space="preserve">
+    <value>Infomation</value>
+  </data>
+  <data name="XTSStringReportComplete" xml:space="preserve">
+    <value>Report is generated, please click "View Reports" to view it.</value>
+  </data>
+  <data name="XTSStringCPP" xml:space="preserve">
+    <value>CPP</value>
+  </data>
+  <data name="XTSStringmAX10" xml:space="preserve">
+    <value>mA(x10)</value>
+  </data>
+  <data name="XTSStringTrendDefaultCPPmA" xml:space="preserve">
+    <value>CPP (mAx10)</value>
+  </data>
+  <data name="XTSStringTrendDefaultCPPPct" xml:space="preserve">
+    <value>CPP (%)</value>
+  </data>
+  <data name="XTSStringCoreErrorIMO" xml:space="preserve">
+    <value>System is not registered</value>
+  </data>
+  <data name="XTSStringImoErrorOccurred" xml:space="preserve">
+    <value>This system has not been registered, please contact xtswsupport@amot.com for registration.</value>
+  </data>
+  <data name="XTSStringRegistered" xml:space="preserve">
+    <value>System is registered</value>
+  </data>
+  <data name="XTSStringSerialNumber" xml:space="preserve">
+    <value>Serial Number:</value>
+  </data>
+</root>

@@ -1,0 +1,17 @@
+<html>
+  <head>
+    <script type="text/javascript">
+      function onImgError(xObj) {
+	setTimeout("location.reload(true);",1000);
+      }
+
+      function onImgLoad() {
+        window.location="http://localhost/";
+      }
+    </script>
+  </head>
+  <body>
+    <img src="http://localhost/logo_amot.gif" style="width:0;height:0;visiblity:hidden;position:absolute;" onerror="onImgError(this)" onload="onImgLoad()">
+    Welcome to the AMOT XTS-W II Engine Monitoring System
+  </body>
+</html>

@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<userGroups>
+  <!-- User levels -->
+  <usertype name="user" level="0"/>
+  <usertype name="setup" level="1"/>
+  <usertype name="admin" level="2"/>
+  <usertype name="amot" level="100"/>
+
+  <!-- Basic functions -->
+  <function name="AckAlarms" level="0"/>
+
+  <!-- Setup functions -->
+  <function name="Surveying" level="1"/>
+  <function name="SensorSetup" level="1"/>
+  <function name="EngineLearning" level="1"/>
+  <function name="Diagnostics" level="1"/>
+  
+  <function name="GraphScale" level="1"/>
+  <function name="TestAlarms" level="1"/>
+  <function name="ShipInfo" level="1"/>
+  <function name="WriteFilterDiskProtection" level="1"/>
+  <function name="Reboot" level="1"/>
+  <function name="FirmwareUpdate" level="2"/>
+  <function name="SystemUpdate" level="2"/>
+  <function name="NetworkSettings" level="1"/>
+  <function name="SerialSettings" level="1"/>
+  <function name="GLMachineSettings" level="1"/>
+  <function name="Users" level="2"/>
+  
+  <!-- Config File Dummy Functions -->
+  <function name="AMOT" level="100"/>
+  <function name="ADMIN" level="2"/>
+  <function name="SETUP" level="1"/>
+
+  
+  <!-- Advanced functions -->
+  <function name="SPU" level="2"/>
+</userGroups>

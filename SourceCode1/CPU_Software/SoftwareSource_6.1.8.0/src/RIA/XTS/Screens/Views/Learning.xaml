@@ -1,0 +1,355 @@
+﻿<UserControl
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:local="clr-namespace:XTS"
+	xmlns:xtscontrols="clr-namespace:XTS.Controls"
+	xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
+	mc:Ignorable="d"
+	x:Class="XTS.Learning"
+	d:DesignWidth="1024" d:DesignHeight="546" Width="Auto" Height="Auto" Loaded="Learning_Loaded" Unloaded="Learning_Unloaded">
+  <UserControl.Resources>
+    <local:LearningModel x:Key="LearningModelDataSource" />
+    <local:XTSStatusConverter x:Key="ColourConverter" />
+    <local:XTSTimeConverter x:Key="TimeConverter" />
+  </UserControl.Resources>
+
+  <Grid x:Name="LayoutRoot" DataContext="{Binding Source={StaticResource LearningModelDataSource}}" Margin="0,8" HorizontalAlignment="Center" VerticalAlignment="Center" Width="1024">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="96" />
+      <RowDefinition Height="8" />
+      <RowDefinition Height="188" />
+      <RowDefinition Height="8" />
+      <RowDefinition Height="96" />
+    </Grid.RowDefinitions>
+    <Grid Margin="0">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="4" />
+        <RowDefinition Height="*" />
+        <RowDefinition Height="4" />
+      </Grid.RowDefinitions>
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="22" />
+        <ColumnDefinition Width="1*" />
+        <ColumnDefinition Width="4" />
+        <ColumnDefinition Width="1*" />
+        <ColumnDefinition Width="4" />
+        <ColumnDefinition Width="1*" />
+        <ColumnDefinition Width="4" />
+        <ColumnDefinition Width="1*" />
+        <ColumnDefinition Width="4" />
+        <ColumnDefinition Width="1*" />
+        <ColumnDefinition Width="4" />
+        <ColumnDefinition Width="1*" />
+        <ColumnDefinition Width="4" />
+      </Grid.ColumnDefinitions>
+      <Grid.Background>
+        <SolidColorBrush Color="{StaticResource ColorAMOTBackgroundOverlay}" />
+      </Grid.Background>
+      <sdk:Label Content="{Binding Path=ResourceStrings.XTSStringPHASE1, Source={StaticResource LocalizedResources}}" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1" FontWeight="Bold" FontSize="13.333" RenderTransformOrigin="0.5,0.5" Margin="-44,0" UseLayoutRounding="False" d:LayoutRounding="Auto">
+        <sdk:Label.RenderTransform>
+          <CompositeTransform Rotation="270" />
+        </sdk:Label.RenderTransform>
+      </sdk:Label>
+      <Button x:Name="buttonFiringOrder" Style="{StaticResource ButtonStyleAMOTArrow}" Grid.Row="1" Click="buttonFiringOrder_Click" Grid.Column="1" IsEnabled="False">
+        <Button.Background>
+          <SolidColorBrush Color="{StaticResource ColorAMOTButton}" />
+        </Button.Background>
+        <Button.Foreground>
+          <SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+        </Button.Foreground>
+        <TextBlock TextWrapping="Wrap" Text="Detect Cylinder Firing Order" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="2,0,0,0" Width="100" />
+      </Button>
+      <Grid Grid.Column="3" Grid.Row="1">
+        <Path x:Name="PathFiringOrderLearning" Data="M133.00003,9.7155589E-06 L163.00003,44.000145 L133.00003,88.000008 z M0,0 L133,0 L133,88 L0,88 z" Stretch="Fill" UseLayoutRounding="False">
+          <Path.Fill>
+            <SolidColorBrush Color="{StaticResource ColorAMOTBlue}" />
+          </Path.Fill>
+        </Path>
+        <TextBlock TextWrapping="Wrap" Text="Learning Firing Order" VerticalAlignment="Center" Margin="0,0,30,0" TextAlignment="Center" FontSize="16" FontWeight="Bold">
+          <TextBlock.Foreground>
+            <SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+          </TextBlock.Foreground>
+        </TextBlock>
+      </Grid>
+      <Grid x:Name="GridFiringOrderComplete" Grid.Column="5" Grid.Row="1">
+        <Grid.Background>
+          <SolidColorBrush Color="{StaticResource ColorAMOTBlue}" />
+        </Grid.Background>
+        <TextBlock x:Name="textBlockFiringOrderComplete" TextWrapping="Wrap" Text="Firing Order Complete" VerticalAlignment="Center" TextAlignment="Center" FontSize="16" FontWeight="Bold" Opacity="0.5">
+          <TextBlock.Foreground>
+            <SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+          </TextBlock.Foreground>
+        </TextBlock>
+      </Grid>
+      <xtscontrols:FiringOrder Grid.ColumnSpan="5" Grid.Column="7" Grid.Row="1" d:LayoutOverrides="Width, Height" Background="{x:Null}">
+        <xtscontrols:FiringOrder.Foreground>
+          <SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+        </xtscontrols:FiringOrder.Foreground>
+      </xtscontrols:FiringOrder>
+    </Grid>
+    <Grid Grid.Row="2">
+      <Grid.Background>
+        <SolidColorBrush Color="{StaticResource ColorAMOTBackgroundOverlay}" />
+      </Grid.Background>
+      <Grid.RowDefinitions>
+        <RowDefinition Height="4" />
+        <RowDefinition Height="88" />
+        <RowDefinition Height="4" />
+        <RowDefinition Height="88" />
+        <RowDefinition Height="4" />
+        <RowDefinition Height="*" />
+        <RowDefinition Height="4" />
+      </Grid.RowDefinitions>
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="22" />
+        <ColumnDefinition Width="1*" />
+        <ColumnDefinition Width="4" />
+        <ColumnDefinition Width="1*" />
+        <ColumnDefinition Width="4" />
+        <ColumnDefinition Width="1*" />
+        <ColumnDefinition Width="4" />
+        <ColumnDefinition Width="1*" />
+        <ColumnDefinition Width="4" />
+        <ColumnDefinition Width="1*" />
+        <ColumnDefinition Width="4" />
+        <ColumnDefinition Width="1*" />
+        <ColumnDefinition Width="4" />
+      </Grid.ColumnDefinitions>
+      <sdk:Label Content="{Binding Path=ResourceStrings.XTSStringPHASE2, Source={StaticResource LocalizedResources}}" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1" FontWeight="Bold" FontSize="13.333" RenderTransformOrigin="0.5,0.5" Margin="-44,0" UseLayoutRounding="False" d:LayoutRounding="Auto">
+        <sdk:Label.RenderTransform>
+          <CompositeTransform Rotation="270" />
+        </sdk:Label.RenderTransform>
+      </sdk:Label>
+      <Button x:Name="buttonLearningStart" Style="{StaticResource ButtonStyleAMOTArrow}" Grid.Row="1" Click="buttonLearningStart_Click" Grid.Column="1" IsEnabled="False">
+        <Button.Background>
+          <SolidColorBrush Color="{StaticResource ColorAMOTButton}" />
+        </Button.Background>
+        <Button.Foreground>
+          <SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+        </Button.Foreground>
+        <TextBlock TextWrapping="Wrap" Text="Start" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="2,0,0,0" />
+      </Button>
+      <Grid Grid.Column="3" Grid.Row="1">
+        <Path x:Name="PathStage1" Data="M133.00003,2.4288897E-06 L163.00003,44.000137 L133.00003,88 z M0,0 L133,0 L133,88 L0,88 z" Stretch="Fill" UseLayoutRounding="False">
+          <Path.Fill>
+            <SolidColorBrush Color="{StaticResource ColorAMOTBlue}" />
+          </Path.Fill>
+        </Path>
+        <TextBlock TextWrapping="Wrap" Text="Stage 1" VerticalAlignment="Top" Margin="4,4,0,0" FontSize="16" FontWeight="Bold" HorizontalAlignment="Left">
+          <TextBlock.Foreground>
+            <SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+          </TextBlock.Foreground>
+        </TextBlock>
+        <TextBlock x:Name="textBlockLimitStage1" TextWrapping="Wrap" Text="20-34 RPM" VerticalAlignment="Center" Margin="8,0,0,0" FontSize="21.333" FontWeight="Normal" HorizontalAlignment="Left">
+          <TextBlock.Foreground>
+            <SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+          </TextBlock.Foreground>
+        </TextBlock>
+        <TextBlock x:Name="TextBlockS1Complete" TextWrapping="Wrap" VerticalAlignment="Bottom" Margin="8,0,0,8" FontSize="13.333" FontWeight="Normal" HorizontalAlignment="Left" Text="Complete" Visibility="Collapsed">
+          <TextBlock.Foreground>
+            <SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+          </TextBlock.Foreground>
+        </TextBlock>
+      </Grid>
+      <Grid Grid.Column="5" Grid.Row="1">
+        <Path x:Name="PathStage2" Data="M133.00006,0 L163.00006,44.000137 L133.00006,88 z M0,0 L133,0 L133,88 L0,88 z" Stretch="Fill" UseLayoutRounding="False">
+          <Path.Fill>
+            <SolidColorBrush Color="{StaticResource ColorAMOTBlue}" />
+          </Path.Fill>
+        </Path>
+        <TextBlock TextWrapping="Wrap" Text="Stage 2" VerticalAlignment="Top" Margin="4,4,0,0" FontSize="16" FontWeight="Bold" HorizontalAlignment="Left">
+          <TextBlock.Foreground>
+            <SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+          </TextBlock.Foreground>
+        </TextBlock>
+        <TextBlock x:Name="textBlockLimitStage2" TextWrapping="Wrap" Text="20-34 RPM" VerticalAlignment="Center" Margin="8,0,0,0" FontSize="21.333" FontWeight="Normal" d:LayoutOverrides="Width" HorizontalAlignment="Left">
+          <TextBlock.Foreground>
+            <SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+          </TextBlock.Foreground>
+        </TextBlock>
+        <TextBlock x:Name="TextBlockS2Complete" TextWrapping="Wrap" VerticalAlignment="Bottom" Margin="8,0,0,8" FontSize="13.333" FontWeight="Normal" HorizontalAlignment="Left" Text="Complete" Visibility="Collapsed">
+          <TextBlock.Foreground>
+            <SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+          </TextBlock.Foreground>
+        </TextBlock>
+      </Grid>
+      <Grid Grid.Column="7" Grid.Row="1">
+        <Path x:Name="PathStage3" Data="M133.00003,7.2866687E-06 L163.00003,44.000141 L133.00003,88.000008 z M0,0 L133,0 L133,88 L0,88 z" Stretch="Fill" UseLayoutRounding="False">
+          <Path.Fill>
+            <SolidColorBrush Color="{StaticResource ColorAMOTBlue}" />
+          </Path.Fill>
+        </Path>
+        <TextBlock TextWrapping="Wrap" Text="Stage 3" VerticalAlignment="Top" Margin="4,4,0,0" FontSize="16" FontWeight="Bold" HorizontalAlignment="Left">
+          <TextBlock.Foreground>
+            <SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+          </TextBlock.Foreground>
+        </TextBlock>
+        <TextBlock x:Name="textBlockLimitStage3" TextWrapping="Wrap" Text="20-34 RPM" VerticalAlignment="Center" Margin="8,0,0,0" FontSize="21.333" FontWeight="Normal" d:LayoutOverrides="Width" HorizontalAlignment="Left">
+          <TextBlock.Foreground>
+            <SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+          </TextBlock.Foreground>
+        </TextBlock>
+        <TextBlock x:Name="TextBlockS3Complete" TextWrapping="Wrap" VerticalAlignment="Bottom" Margin="8,0,0,8" FontSize="13.333" FontWeight="Normal" HorizontalAlignment="Left" Text="Complete" Visibility="Collapsed">
+          <TextBlock.Foreground>
+            <SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+          </TextBlock.Foreground>
+        </TextBlock>
+      </Grid>
+      <Grid Grid.Column="9" Grid.Row="1">
+        <Path x:Name="PathStage4" Data="M133,0 L163,44.000134 L133,88 L0,88.000008 L0,2.4288893E-06 z" Stretch="Fill" UseLayoutRounding="False">
+          <Path.Fill>
+            <SolidColorBrush Color="{StaticResource ColorAMOTBlue}" />
+          </Path.Fill>
+        </Path>
+        <TextBlock TextWrapping="Wrap" Text="Long Term" VerticalAlignment="Top" Margin="4,4,0,0" FontSize="16" FontWeight="Bold" HorizontalAlignment="Left">
+          <TextBlock.Foreground>
+            <SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+          </TextBlock.Foreground>
+        </TextBlock>
+        <TextBlock x:Name="textBlockLimitStage4" TextWrapping="Wrap" Text="20-34 RPM" VerticalAlignment="Center" Margin="8,0,0,0" FontSize="21.333" FontWeight="Normal" d:LayoutOverrides="Width" HorizontalAlignment="Left">
+          <TextBlock.Foreground>
+            <SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+          </TextBlock.Foreground>
+        </TextBlock>
+        <TextBlock x:Name="TextBlockS4Complete" TextWrapping="Wrap" VerticalAlignment="Bottom" Margin="8,0,0,8" FontSize="13.333" FontWeight="Normal" HorizontalAlignment="Left" Text="Complete" Visibility="Collapsed">
+          <TextBlock.Foreground>
+            <SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+          </TextBlock.Foreground>
+        </TextBlock>
+      </Grid>
+      <Grid x:Name="GridLearningComplete" Grid.Column="11" Grid.Row="1">
+        <Grid.Background>
+          <SolidColorBrush Color="{StaticResource ColorAMOTBlue}" />
+        </Grid.Background>
+        <TextBlock x:Name="textBlockLearnComplete" TextWrapping="Wrap" Text="Learn Complete" VerticalAlignment="Center" TextAlignment="Center" FontSize="16" FontWeight="Bold" Opacity="0.5">
+          <TextBlock.Foreground>
+            <SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+          </TextBlock.Foreground>
+        </TextBlock>
+      </Grid>
+      <Button x:Name="buttonLearningCancel" Style="{StaticResource ButtonStyleAMOT}" Grid.Row="3" Click="buttonLearningCancel_Click" Grid.Column="1" IsEnabled="False">
+        <Button.Background>
+          <SolidColorBrush Color="{StaticResource ColorAMOTButton}" />
+        </Button.Background>
+        <Button.Foreground>
+          <SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+        </Button.Foreground>
+        <TextBlock TextWrapping="Wrap" Text="Cancel" d:LayoutOverrides="Height" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="2,0,0,0" />
+      </Button>
+      <Grid Grid.Column="3" Grid.Row="3" Grid.ColumnSpan="9">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition />
+          <ColumnDefinition Width="4" />
+          <ColumnDefinition />
+          <ColumnDefinition Width="4" />
+          <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid>
+          <Grid.Background>
+            <SolidColorBrush Color="{StaticResource ColorAMOTBlue}" />
+          </Grid.Background>
+          <sdk:Label HorizontalAlignment="Left" VerticalAlignment="Top" Content="{Binding Path=ResourceStrings.XTSStringRemaining, Source={StaticResource LocalizedResources}}" Margin="2,0,0,0" FontSize="16">
+            <sdk:Label.Foreground>
+              <SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+            </sdk:Label.Foreground>
+          </sdk:Label>
+          <sdk:Label x:Name="labelTimeRemaining" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="32" Content="{Binding XTSDataSource.Learning.TimeRemaining, Converter={StaticResource TimeConverter}}" FontWeight="Bold" Margin="0">
+            <sdk:Label.Foreground>
+              <SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+            </sdk:Label.Foreground>
+          </sdk:Label>
+        </Grid>
+        <Grid Grid.Column="2">
+          <Grid.Background>
+            <SolidColorBrush Color="{StaticResource ColorAMOTBlue}" />
+          </Grid.Background>
+          <sdk:Label HorizontalAlignment="Left" VerticalAlignment="Top" Content="{Binding Path=ResourceStrings.XTSStringMaintainEngineBetween, Source={StaticResource LocalizedResources}}" Margin="2,0,0,0" FontSize="16">
+            <sdk:Label.Foreground>
+              <SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+            </sdk:Label.Foreground>
+          </sdk:Label>
+          <sdk:Label x:Name="LabelRPMBound" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" FontSize="37.333">
+            <sdk:Label.Foreground>
+              <SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+            </sdk:Label.Foreground>
+          </sdk:Label>
+        </Grid>
+        <Grid x:Name="GridRPM" Grid.Column="4">
+          <Grid.Background>
+            <SolidColorBrush Color="{StaticResource ColorAMOTBlue}" />
+          </Grid.Background>
+          <sdk:Label x:Name="LabelRPM" HorizontalAlignment="Center" FontWeight="Bold" FontSize="72" VerticalAlignment="Center" Margin="-20,-8,-20,0">
+            <sdk:Label.Foreground>
+              <SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+            </sdk:Label.Foreground>
+          </sdk:Label>
+          <sdk:Label HorizontalAlignment="Right" VerticalAlignment="Bottom" Content="{Binding Path=ResourceStrings.XTSStringRPM, Source={StaticResource LocalizedResources}}" Margin="0,0,2,0" FontSize="16">
+            <sdk:Label.Foreground>
+              <SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+            </sdk:Label.Foreground>
+          </sdk:Label>
+        </Grid>
+      </Grid>
+    </Grid>
+    <Grid Grid.Row="4">
+      <Grid.Background>
+        <SolidColorBrush Color="{StaticResource ColorAMOTBackgroundOverlay}" />
+      </Grid.Background>
+      <Grid.RowDefinitions>
+        <RowDefinition Height="4" />
+        <RowDefinition Height="*" />
+        <RowDefinition Height="4" />
+      </Grid.RowDefinitions>
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="22" />
+        <ColumnDefinition Width="1*" />
+        <ColumnDefinition Width="4" />
+        <ColumnDefinition Width="1*" />
+        <ColumnDefinition Width="4" />
+        <ColumnDefinition Width="1*" />
+        <ColumnDefinition Width="4" />
+        <ColumnDefinition Width="1*" />
+        <ColumnDefinition Width="4" />
+        <ColumnDefinition Width="1*" />
+        <ColumnDefinition Width="4" />
+        <ColumnDefinition Width="1*" />
+        <ColumnDefinition Width="4" />
+      </Grid.ColumnDefinitions>
+      <sdk:Label d:LayoutOverrides="Width" Content="{Binding Path=ResourceStrings.XTSStringPHASE3, Source={StaticResource LocalizedResources}}" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1" FontWeight="Bold" FontSize="13.333" RenderTransformOrigin="0.5,0.5" Margin="-44,0">
+        <sdk:Label.RenderTransform>
+          <CompositeTransform Rotation="270" />
+        </sdk:Label.RenderTransform>
+      </sdk:Label>
+      <Button x:Name="buttonEnterVerification" Style="{StaticResource ButtonStyleAMOTArrow}" Grid.Row="1" Grid.Column="3" Click="buttonEnterVerification_Click" IsEnabled="False">
+        <Button.Background>
+          <SolidColorBrush Color="{StaticResource ColorAMOTButton}" />
+        </Button.Background>
+        <Button.Foreground>
+          <SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+        </Button.Foreground>
+        <TextBlock TextWrapping="Wrap" Text="Enter Verification Code" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="2,0,0,0" Width="100" />
+      </Button>
+      <Button x:Name="buttonSendVerification" Style="{StaticResource ButtonStyleAMOTArrow}" Grid.Row="1" Grid.Column="1" Click="buttonSendVerification_Click" IsEnabled="False">
+        <Button.Background>
+          <SolidColorBrush Color="{StaticResource ColorAMOTButton}" />
+        </Button.Background>
+        <Button.Foreground>
+          <SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+        </Button.Foreground>
+        <TextBlock TextWrapping="Wrap" Text="Send Verifictation Code" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="2,0,0,0" Width="100" />
+      </Button>
+      <Grid x:Name="GridVerificationComplete" Grid.Column="5" Grid.Row="1">
+        <Grid.Background>
+          <SolidColorBrush Color="{StaticResource ColorAMOTBlue}" />
+        </Grid.Background>
+        <TextBlock x:Name="textBlockVerificationComplete" TextWrapping="Wrap" Text="Complete" VerticalAlignment="Center" TextAlignment="Center" FontSize="16" FontWeight="Bold" Opacity="0.5">
+          <TextBlock.Foreground>
+            <SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+          </TextBlock.Foreground>
+        </TextBlock>
+      </Grid>
+    </Grid>
+  </Grid>
+</UserControl>

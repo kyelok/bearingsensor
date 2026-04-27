@@ -1,0 +1,561 @@
+﻿<controls:ChildWindow
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
+    x:Class="XTS.ChildWindows.LiveDataWindow"
+    xmlns:local="clr-namespace:XTS"
+    mc:Ignorable="d"
+    Title="{Binding Path=ResourceStrings.XTSStringLiveData, Source={StaticResource LocalizedResources}}"
+    Style="{StaticResource ChildWindowStyleAMOT}"
+    HorizontalAlignment="Center" VerticalAlignment="Center"
+    d:DesignWidth="600" d:DesignHeight="400"
+    Height="680" Width="758"
+    HasCloseButton="False">
+  <controls:ChildWindow.Resources>
+    <local:DiagnosticsModel x:Key="DiagnosticsModelDataSource" />
+  </controls:ChildWindow.Resources>
+  <Grid x:Name="LayoutRoot" Margin="2" DataContext="{Binding Source={StaticResource DiagnosticsModelDataSource}}">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="22" />
+      <RowDefinition Height="4" />
+      <RowDefinition Height="10*" />
+      <RowDefinition Height="4" />
+      <RowDefinition Height="10*" />
+      <RowDefinition Height="4" />
+      <RowDefinition Height="4*" />
+      <RowDefinition Height="4" />
+      <RowDefinition Height="44" />
+      <RowDefinition Height="4" />
+      <RowDefinition Height="44" />
+    </Grid.RowDefinitions>
+    <Grid>
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="132" />
+        <ColumnDefinition Width="88" />
+        <ColumnDefinition Width="88" />
+        <ColumnDefinition Width="88" />
+        <ColumnDefinition />
+      </Grid.ColumnDefinitions>
+      <Grid.Background>
+        <SolidColorBrush Color="{StaticResource ColorAMOTBackgroundOverlay}" />
+      </Grid.Background>
+      <sdk:Label HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,4,0" Content="{Binding Path=ResourceStrings.XTSStringDateSlashTime, Source={StaticResource LocalizedResources}}" />
+      <sdk:Label HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1" FontWeight="Bold" Content="{Binding XTSDataSource.Diagnostics.LiveData.LiveDateTime.Value0}" />
+      <sdk:Label HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="2" FontWeight="Bold" Content="{Binding XTSDataSource.Diagnostics.LiveData.LiveDateTime.Value1}" />
+      <sdk:Label HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="3" FontWeight="Bold" Content="{Binding XTSDataSource.Diagnostics.LiveData.LiveDateTime.Value2}" />
+    </Grid>
+    <Grid Grid.Row="2">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="22" />
+        <ColumnDefinition Width="110" />
+        <ColumnDefinition />
+        <ColumnDefinition />
+        <ColumnDefinition />
+        <ColumnDefinition />
+        <ColumnDefinition />
+        <ColumnDefinition />
+        <ColumnDefinition />
+        <ColumnDefinition />
+        <ColumnDefinition />
+        <ColumnDefinition />
+        <ColumnDefinition />
+        <ColumnDefinition />
+        <ColumnDefinition />
+        <ColumnDefinition />
+      </Grid.ColumnDefinitions>
+      <Grid.RowDefinitions>
+        <RowDefinition />
+        <RowDefinition />
+        <RowDefinition />
+        <RowDefinition />
+        <RowDefinition />
+        <RowDefinition />
+        <RowDefinition />
+        <RowDefinition />
+        <RowDefinition />
+        <RowDefinition />
+      </Grid.RowDefinitions>
+      <Grid.Background>
+        <SolidColorBrush Color="{StaticResource ColorAMOTBackgroundOverlay}" />
+      </Grid.Background>
+      <sdk:Label RenderTransformOrigin="0.5,0.5" Content="{Binding Path=ResourceStrings.XTSStringSensors0to13, Source={StaticResource LocalizedResources}}" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="-60,36,-60,0" FontWeight="Bold" UseLayoutRounding="False" d:LayoutRounding="Auto" Grid.RowSpan="10">
+        <sdk:Label.RenderTransform>
+          <CompositeTransform Rotation="270" />
+        </sdk:Label.RenderTransform>
+      </sdk:Label>
+      <sdk:Label d:LayoutOverrides="Height" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,4,0" Content="{Binding Path=ResourceStrings.XTSStringRawuA, Source={StaticResource LocalizedResources}}" Grid.Column="1" />
+      <sdk:Label HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Row="1" Margin="0,0,4,0" Content="{Binding Path=ResourceStrings.XTSStringScaledValues, Source={StaticResource LocalizedResources}}" Grid.Column="1" />
+      <sdk:Label HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Row="2" Margin="0,0,4,0" Content="{Binding Path=ResourceStrings.XTSStringPreComp, Source={StaticResource LocalizedResources}}" Grid.Column="1" />
+      <sdk:Label HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Row="3" Margin="0,0,4,0" Content="Post Comp" Grid.Column="1" />
+      <sdk:Label HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Row="4" Margin="0,0,4,0" Content="{Binding Path=ResourceStrings.XTSStringPostFiltered, Source={StaticResource LocalizedResources}}" Grid.Column="1" />
+      <sdk:Label HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Row="5" Margin="0,0,4,0" Content="{Binding Path=ResourceStrings.XTSStringSensorDeviation, Source={StaticResource LocalizedResources}}" Grid.Column="1" />
+      <sdk:Label HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Row="6" Margin="0,0,4,0" Content="{Binding Path=ResourceStrings.XTSStringSensorStatus1, Source={StaticResource LocalizedResources}}" Grid.Column="1" />
+      <sdk:Label HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Row="7" Margin="0,0,4,0" Content="{Binding Path=ResourceStrings.XTSStringSensorStatus2, Source={StaticResource LocalizedResources}}" Grid.Column="1" />
+      <sdk:Label HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Row="8" Margin="0,0,4,0" Content="{Binding Path=ResourceStrings.XTSStringSensorStatus3, Source={StaticResource LocalizedResources}}" Grid.Column="1" />
+      <sdk:Label HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Row="9" Margin="0,0,4,0" Content="{Binding Path=ResourceStrings.XTSStringRPM, Source={StaticResource LocalizedResources}}" Grid.Column="1" />
+      <sdk:Label Grid.Column="2" FontWeight="Bold" FontSize="8" Grid.Row="0" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[0].Rawua}" />
+      <sdk:Label Grid.Column="3" FontWeight="Bold" FontSize="8" Grid.Row="0" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[1].Rawua}" />
+      <sdk:Label Grid.Column="4" FontWeight="Bold" FontSize="8" Grid.Row="0" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[2].Rawua}" />
+      <sdk:Label Grid.Column="5" FontWeight="Bold" FontSize="8" Grid.Row="0" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[3].Rawua}" />
+      <sdk:Label Grid.Column="6" FontWeight="Bold" FontSize="8" Grid.Row="0" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[4].Rawua}" />
+      <sdk:Label Grid.Column="7" FontWeight="Bold" FontSize="8" Grid.Row="0" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[5].Rawua}" />
+      <sdk:Label Grid.Column="8" FontWeight="Bold" FontSize="8" Grid.Row="0" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[6].Rawua}" />
+      <sdk:Label Grid.Column="9" FontWeight="Bold" FontSize="8" Grid.Row="0" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[7].Rawua}" />
+      <sdk:Label Grid.Column="10" FontWeight="Bold" FontSize="8" Grid.Row="0" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[8].Rawua}" />
+      <sdk:Label Grid.Column="11" FontWeight="Bold" FontSize="8" Grid.Row="0" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[9].Rawua}" />
+      <sdk:Label Grid.Column="12" FontWeight="Bold" FontSize="8" Grid.Row="0" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[10].Rawua}" />
+      <sdk:Label Grid.Column="13" FontWeight="Bold" FontSize="8" Grid.Row="0" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[11].Rawua}" />
+      <sdk:Label Grid.Column="14" FontWeight="Bold" FontSize="8" Grid.Row="0" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[12].Rawua}" />
+      <sdk:Label Grid.Column="15" FontWeight="Bold" FontSize="8" Grid.Row="0" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[13].Rawua}" />
+      <sdk:Label Grid.Column="2" FontWeight="Bold" FontSize="8" Grid.Row="1" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[0].ScaledValue}" />
+      <sdk:Label Grid.Column="3" FontWeight="Bold" FontSize="8" Grid.Row="1" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[1].ScaledValue}" />
+      <sdk:Label Grid.Column="4" FontWeight="Bold" FontSize="8" Grid.Row="1" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[2].ScaledValue}" />
+      <sdk:Label Grid.Column="5" FontWeight="Bold" FontSize="8" Grid.Row="1" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[3].ScaledValue}" />
+      <sdk:Label Grid.Column="6" FontWeight="Bold" FontSize="8" Grid.Row="1" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[4].ScaledValue}" />
+      <sdk:Label Grid.Column="7" FontWeight="Bold" FontSize="8" Grid.Row="1" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[5].ScaledValue}" />
+      <sdk:Label Grid.Column="8" FontWeight="Bold" FontSize="8" Grid.Row="1" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[6].ScaledValue}" />
+      <sdk:Label Grid.Column="9" FontWeight="Bold" FontSize="8" Grid.Row="1" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[7].ScaledValue}" />
+      <sdk:Label Grid.Column="10" FontWeight="Bold" FontSize="8" Grid.Row="1" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[8].ScaledValue}" />
+      <sdk:Label Grid.Column="11" FontWeight="Bold" FontSize="8" Grid.Row="1" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[9].ScaledValue}" />
+      <sdk:Label Grid.Column="12" FontWeight="Bold" FontSize="8" Grid.Row="1" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[10].ScaledValue}" />
+      <sdk:Label Grid.Column="13" FontWeight="Bold" FontSize="8" Grid.Row="1" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[11].ScaledValue}" />
+      <sdk:Label Grid.Column="14" FontWeight="Bold" FontSize="8" Grid.Row="1" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[12].ScaledValue}" />
+      <sdk:Label Grid.Column="15" FontWeight="Bold" FontSize="8" Grid.Row="1" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[13].ScaledValue}" />
+      <sdk:Label Grid.Column="2" FontWeight="Bold" FontSize="8" Grid.Row="2" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[0].PreComp}" />
+      <sdk:Label Grid.Column="3" FontWeight="Bold" FontSize="8" Grid.Row="2" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[1].PreComp}" />
+      <sdk:Label Grid.Column="4" FontWeight="Bold" FontSize="8" Grid.Row="2" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[2].PreComp}" />
+      <sdk:Label Grid.Column="5" FontWeight="Bold" FontSize="8" Grid.Row="2" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[3].PreComp}" />
+      <sdk:Label Grid.Column="6" FontWeight="Bold" FontSize="8" Grid.Row="2" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[4].PreComp}" />
+      <sdk:Label Grid.Column="7" FontWeight="Bold" FontSize="8" Grid.Row="2" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[5].PreComp}" />
+      <sdk:Label Grid.Column="8" FontWeight="Bold" FontSize="8" Grid.Row="2" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[6].PreComp}" />
+      <sdk:Label Grid.Column="9" FontWeight="Bold" FontSize="8" Grid.Row="2" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[7].PreComp}" />
+      <sdk:Label Grid.Column="10" FontWeight="Bold" FontSize="8" Grid.Row="2" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[8].PreComp}" />
+      <sdk:Label Grid.Column="11" FontWeight="Bold" FontSize="8" Grid.Row="2" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[9].PreComp}" />
+      <sdk:Label Grid.Column="12" FontWeight="Bold" FontSize="8" Grid.Row="2" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[10].PreComp}" />
+      <sdk:Label Grid.Column="13" FontWeight="Bold" FontSize="8" Grid.Row="2" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[11].PreComp}" />
+      <sdk:Label Grid.Column="14" FontWeight="Bold" FontSize="8" Grid.Row="2" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[12].PreComp}" />
+      <sdk:Label Grid.Column="15" FontWeight="Bold" FontSize="8" Grid.Row="2" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[13].PreComp}" />
+      <sdk:Label Grid.Column="2" FontWeight="Bold" FontSize="8" Grid.Row="3" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[0].PostComp}" />
+      <sdk:Label Grid.Column="3" FontWeight="Bold" FontSize="8" Grid.Row="3" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[1].PostComp}" />
+      <sdk:Label Grid.Column="4" FontWeight="Bold" FontSize="8" Grid.Row="3" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[2].PostComp}" />
+      <sdk:Label Grid.Column="5" FontWeight="Bold" FontSize="8" Grid.Row="3" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[3].PostComp}" />
+      <sdk:Label Grid.Column="6" FontWeight="Bold" FontSize="8" Grid.Row="3" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[4].PostComp}" />
+      <sdk:Label Grid.Column="7" FontWeight="Bold" FontSize="8" Grid.Row="3" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[5].PostComp}" />
+      <sdk:Label Grid.Column="8" FontWeight="Bold" FontSize="8" Grid.Row="3" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[6].PostComp}" />
+      <sdk:Label Grid.Column="9" FontWeight="Bold" FontSize="8" Grid.Row="3" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[7].PostComp}" />
+      <sdk:Label Grid.Column="10" FontWeight="Bold" FontSize="8" Grid.Row="3" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[8].PostComp}" />
+      <sdk:Label Grid.Column="11" FontWeight="Bold" FontSize="8" Grid.Row="3" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[9].PostComp}" />
+      <sdk:Label Grid.Column="12" FontWeight="Bold" FontSize="8" Grid.Row="3" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[10].PostComp}" />
+      <sdk:Label Grid.Column="13" FontWeight="Bold" FontSize="8" Grid.Row="3" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[11].PostComp}" />
+      <sdk:Label Grid.Column="14" FontWeight="Bold" FontSize="8" Grid.Row="3" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[12].PostComp}" />
+      <sdk:Label Grid.Column="15" FontWeight="Bold" FontSize="8" Grid.Row="3" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[13].PostComp}" />
+      <sdk:Label Grid.Column="2" FontWeight="Bold" FontSize="8" Grid.Row="4" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[0].PostFiltered}" />
+      <sdk:Label Grid.Column="3" FontWeight="Bold" FontSize="8" Grid.Row="4" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[1].PostFiltered}" />
+      <sdk:Label Grid.Column="4" FontWeight="Bold" FontSize="8" Grid.Row="4" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[2].PostFiltered}" />
+      <sdk:Label Grid.Column="5" FontWeight="Bold" FontSize="8" Grid.Row="4" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[3].PostFiltered}" />
+      <sdk:Label Grid.Column="6" FontWeight="Bold" FontSize="8" Grid.Row="4" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[4].PostFiltered}" />
+      <sdk:Label Grid.Column="7" FontWeight="Bold" FontSize="8" Grid.Row="4" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[5].PostFiltered}" />
+      <sdk:Label Grid.Column="8" FontWeight="Bold" FontSize="8" Grid.Row="4" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[6].PostFiltered}" />
+      <sdk:Label Grid.Column="9" FontWeight="Bold" FontSize="8" Grid.Row="4" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[7].PostFiltered}" />
+      <sdk:Label Grid.Column="10" FontWeight="Bold" FontSize="8" Grid.Row="4" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[8].PostFiltered}" />
+      <sdk:Label Grid.Column="11" FontWeight="Bold" FontSize="8" Grid.Row="4" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[9].PostFiltered}" />
+      <sdk:Label Grid.Column="12" FontWeight="Bold" FontSize="8" Grid.Row="4" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[10].PostFiltered}" />
+      <sdk:Label Grid.Column="13" FontWeight="Bold" FontSize="8" Grid.Row="4" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[11].PostFiltered}" />
+      <sdk:Label Grid.Column="14" FontWeight="Bold" FontSize="8" Grid.Row="4" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[12].PostFiltered}" />
+      <sdk:Label Grid.Column="15" FontWeight="Bold" FontSize="8" Grid.Row="4" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[13].PostFiltered}" />
+      <sdk:Label Grid.Column="2" FontWeight="Bold" FontSize="8" Grid.Row="5" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[0].Deviation}" />
+      <sdk:Label Grid.Column="3" FontWeight="Bold" FontSize="8" Grid.Row="5" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[1].Deviation}" />
+      <sdk:Label Grid.Column="4" FontWeight="Bold" FontSize="8" Grid.Row="5" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[2].Deviation}" />
+      <sdk:Label Grid.Column="5" FontWeight="Bold" FontSize="8" Grid.Row="5" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[3].Deviation}" />
+      <sdk:Label Grid.Column="6" FontWeight="Bold" FontSize="8" Grid.Row="5" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[4].Deviation}" />
+      <sdk:Label Grid.Column="7" FontWeight="Bold" FontSize="8" Grid.Row="5" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[5].Deviation}" />
+      <sdk:Label Grid.Column="8" FontWeight="Bold" FontSize="8" Grid.Row="5" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[6].Deviation}" />
+      <sdk:Label Grid.Column="9" FontWeight="Bold" FontSize="8" Grid.Row="5" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[7].Deviation}" />
+      <sdk:Label Grid.Column="10" FontWeight="Bold" FontSize="8" Grid.Row="5" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[8].Deviation}" />
+      <sdk:Label Grid.Column="11" FontWeight="Bold" FontSize="8" Grid.Row="5" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[9].Deviation}" />
+      <sdk:Label Grid.Column="12" FontWeight="Bold" FontSize="8" Grid.Row="5" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[10].Deviation}" />
+      <sdk:Label Grid.Column="13" FontWeight="Bold" FontSize="8" Grid.Row="5" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[11].Deviation}" />
+      <sdk:Label Grid.Column="14" FontWeight="Bold" FontSize="8" Grid.Row="5" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[12].Deviation}" />
+      <sdk:Label Grid.Column="15" FontWeight="Bold" FontSize="8" Grid.Row="5" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[13].Deviation}" />
+      <sdk:Label Grid.Column="2" FontWeight="Bold" FontSize="8" Grid.Row="6" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[0].Status1}" />
+      <sdk:Label Grid.Column="3" FontWeight="Bold" FontSize="8" Grid.Row="6" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[1].Status1}" />
+      <sdk:Label Grid.Column="4" FontWeight="Bold" FontSize="8" Grid.Row="6" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[2].Status1}" />
+      <sdk:Label Grid.Column="5" FontWeight="Bold" FontSize="8" Grid.Row="6" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[3].Status1}" />
+      <sdk:Label Grid.Column="6" FontWeight="Bold" FontSize="8" Grid.Row="6" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[4].Status1}" />
+      <sdk:Label Grid.Column="7" FontWeight="Bold" FontSize="8" Grid.Row="6" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[5].Status1}" />
+      <sdk:Label Grid.Column="8" FontWeight="Bold" FontSize="8" Grid.Row="6" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[6].Status1}" />
+      <sdk:Label Grid.Column="9" FontWeight="Bold" FontSize="8" Grid.Row="6" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[7].Status1}" />
+      <sdk:Label Grid.Column="10" FontWeight="Bold" FontSize="8" Grid.Row="6" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[8].Status1}" />
+      <sdk:Label Grid.Column="11" FontWeight="Bold" FontSize="8" Grid.Row="6" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[9].Status1}" />
+      <sdk:Label Grid.Column="12" FontWeight="Bold" FontSize="8" Grid.Row="6" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[10].Status1}" />
+      <sdk:Label Grid.Column="13" FontWeight="Bold" FontSize="8" Grid.Row="6" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[11].Status1}" />
+      <sdk:Label Grid.Column="14" FontWeight="Bold" FontSize="8" Grid.Row="6" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[12].Status1}" />
+      <sdk:Label Grid.Column="15" FontWeight="Bold" FontSize="8" Grid.Row="6" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[13].Status1}" />
+      <sdk:Label Grid.Column="2" FontWeight="Bold" FontSize="8" Grid.Row="7" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[0].Status2}" />
+      <sdk:Label Grid.Column="3" FontWeight="Bold" FontSize="8" Grid.Row="7" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[1].Status2}" />
+      <sdk:Label Grid.Column="4" FontWeight="Bold" FontSize="8" Grid.Row="7" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[2].Status2}" />
+      <sdk:Label Grid.Column="5" FontWeight="Bold" FontSize="8" Grid.Row="7" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[3].Status2}" />
+      <sdk:Label Grid.Column="6" FontWeight="Bold" FontSize="8" Grid.Row="7" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[4].Status2}" />
+      <sdk:Label Grid.Column="7" FontWeight="Bold" FontSize="8" Grid.Row="7" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[5].Status2}" />
+      <sdk:Label Grid.Column="8" FontWeight="Bold" FontSize="8" Grid.Row="7" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[6].Status2}" />
+      <sdk:Label Grid.Column="9" FontWeight="Bold" FontSize="8" Grid.Row="7" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[7].Status2}" />
+      <sdk:Label Grid.Column="10" FontWeight="Bold" FontSize="8" Grid.Row="7" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[8].Status2}" />
+      <sdk:Label Grid.Column="11" FontWeight="Bold" FontSize="8" Grid.Row="7" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[9].Status2}" />
+      <sdk:Label Grid.Column="12" FontWeight="Bold" FontSize="8" Grid.Row="7" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[10].Status2}" />
+      <sdk:Label Grid.Column="13" FontWeight="Bold" FontSize="8" Grid.Row="7" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[11].Status2}" />
+      <sdk:Label Grid.Column="14" FontWeight="Bold" FontSize="8" Grid.Row="7" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[12].Status2}" />
+      <sdk:Label Grid.Column="15" FontWeight="Bold" FontSize="8" Grid.Row="7" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[13].Status2}" />
+      <sdk:Label Grid.Column="2" FontWeight="Bold" FontSize="8" Grid.Row="8" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[0].Status3}" />
+      <sdk:Label Grid.Column="3" FontWeight="Bold" FontSize="8" Grid.Row="8" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[1].Status3}" />
+      <sdk:Label Grid.Column="4" FontWeight="Bold" FontSize="8" Grid.Row="8" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[2].Status3}" />
+      <sdk:Label Grid.Column="5" FontWeight="Bold" FontSize="8" Grid.Row="8" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[3].Status3}" />
+      <sdk:Label Grid.Column="6" FontWeight="Bold" FontSize="8" Grid.Row="8" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[4].Status3}" />
+      <sdk:Label Grid.Column="7" FontWeight="Bold" FontSize="8" Grid.Row="8" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[5].Status3}" />
+      <sdk:Label Grid.Column="8" FontWeight="Bold" FontSize="8" Grid.Row="8" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[6].Status3}" />
+      <sdk:Label Grid.Column="9" FontWeight="Bold" FontSize="8" Grid.Row="8" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[7].Status3}" />
+      <sdk:Label Grid.Column="10" FontWeight="Bold" FontSize="8" Grid.Row="8" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[8].Status3}" />
+      <sdk:Label Grid.Column="11" FontWeight="Bold" FontSize="8" Grid.Row="8" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[9].Status3}" />
+      <sdk:Label Grid.Column="12" FontWeight="Bold" FontSize="8" Grid.Row="8" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[10].Status3}" />
+      <sdk:Label Grid.Column="13" FontWeight="Bold" FontSize="8" Grid.Row="8" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[11].Status3}" />
+      <sdk:Label Grid.Column="14" FontWeight="Bold" FontSize="8" Grid.Row="8" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[12].Status3}" />
+      <sdk:Label Grid.Column="15" FontWeight="Bold" FontSize="8" Grid.Row="8" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[13].Status3}" />
+      <sdk:Label Grid.Column="2" FontWeight="Bold" FontSize="8" Grid.Row="9" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.RPM[0].Value}" />
+      <sdk:Label Grid.Column="3" FontWeight="Bold" FontSize="8" Grid.Row="9" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.RPM[1].Value}" />
+      <sdk:Label Grid.Column="4" FontWeight="Bold" FontSize="8" Grid.Row="9" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.RPM[2].Value}" />
+      <sdk:Label Grid.Column="5" FontWeight="Bold" FontSize="8" Grid.Row="9" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.RPM[3].Value}" />
+      <sdk:Label Grid.Column="6" FontWeight="Bold" FontSize="8" Grid.Row="9" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.RPM[4].Value}" />
+      <sdk:Label Grid.Column="7" FontWeight="Bold" FontSize="8" Grid.Row="9" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.RPM[5].Value}" />
+      <sdk:Label Grid.Column="8" FontWeight="Bold" FontSize="8" Grid.Row="9" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.RPM[6].Value}" />
+      <sdk:Label Grid.Column="9" FontWeight="Bold" FontSize="8" Grid.Row="9" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.RPM[7].Value}" />
+      <sdk:Label Grid.Column="10" FontWeight="Bold" FontSize="8" Grid.Row="9" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.RPM[8].Value}" />
+      <sdk:Label Grid.Column="11" FontWeight="Bold" FontSize="8" Grid.Row="9" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.RPM[9].Value}" />
+      <sdk:Label Grid.Column="12" FontWeight="Bold" FontSize="8" Grid.Row="9" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.RPM[10].Value}" />
+      <sdk:Label Grid.Column="13" FontWeight="Bold" FontSize="8" Grid.Row="9" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.RPM[11].Value}" />
+      <sdk:Label Grid.Column="14" FontWeight="Bold" FontSize="8" Grid.Row="9" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.RPM[12].Value}" />
+      <sdk:Label Grid.Column="15" FontWeight="Bold" FontSize="8" Grid.Row="9" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.RPM[13].Value}" />
+    </Grid>
+    <Grid Grid.Row="4">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="22" />
+        <ColumnDefinition Width="110" />
+        <ColumnDefinition />
+        <ColumnDefinition />
+        <ColumnDefinition />
+        <ColumnDefinition />
+        <ColumnDefinition />
+        <ColumnDefinition />
+        <ColumnDefinition />
+        <ColumnDefinition />
+        <ColumnDefinition />
+        <ColumnDefinition />
+        <ColumnDefinition />
+        <ColumnDefinition />
+        <ColumnDefinition />
+        <ColumnDefinition />
+      </Grid.ColumnDefinitions>
+      <Grid.RowDefinitions>
+        <RowDefinition />
+        <RowDefinition />
+        <RowDefinition />
+        <RowDefinition />
+        <RowDefinition />
+        <RowDefinition />
+        <RowDefinition />
+        <RowDefinition />
+        <RowDefinition />
+        <RowDefinition />
+      </Grid.RowDefinitions>
+      <Grid.Background>
+        <SolidColorBrush Color="{StaticResource ColorAMOTBackgroundOverlay}" />
+      </Grid.Background>
+      <sdk:Label d:LayoutOverrides="Width, Height" RenderTransformOrigin="0.5,0.5" Content="Sensors 14-27" Grid.RowSpan="{Binding Path=ResourceStrings.XTSStringLabel10, Source={StaticResource LocalizedResources}}" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="-60,41,-60,0" FontWeight="Bold">
+        <sdk:Label.RenderTransform>
+          <CompositeTransform Rotation="270" />
+        </sdk:Label.RenderTransform>
+      </sdk:Label>
+      <sdk:Label d:LayoutOverrides="Height" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,4,0" Content="Raw µA" Grid.Column="{Binding Path=ResourceStrings.XTSStringLabel1, Source={StaticResource LocalizedResources}}" />
+      <sdk:Label HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Row="1" Margin="0,0,4,0" Content="{Binding Path=ResourceStrings.XTSStringScaledValues, Source={StaticResource LocalizedResources}}" Grid.Column="1" />
+      <sdk:Label HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Row="2" Margin="0,0,4,0" Content="{Binding Path=ResourceStrings.XTSStringPreComp, Source={StaticResource LocalizedResources}}" Grid.Column="1" />
+      <sdk:Label HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Row="3" Margin="0,0,4,0" Content="{Binding Path=ResourceStrings.XTSStringPostComp, Source={StaticResource LocalizedResources}}" Grid.Column="1" />
+      <sdk:Label HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Row="4" Margin="0,0,4,0" Content="{Binding Path=ResourceStrings.XTSStringPostFiltered, Source={StaticResource LocalizedResources}}" Grid.Column="1" />
+      <sdk:Label HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Row="5" Margin="0,0,4,0" Content="{Binding Path=ResourceStrings.XTSStringSensorDeviation, Source={StaticResource LocalizedResources}}" Grid.Column="1" />
+      <sdk:Label HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Row="6" Margin="0,0,4,0" Content="{Binding Path=ResourceStrings.XTSStringSensorStatus1, Source={StaticResource LocalizedResources}}" Grid.Column="1" />
+      <sdk:Label HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Row="7" Margin="0,0,4,0" Content="{Binding Path=ResourceStrings.XTSStringSensorStatus2, Source={StaticResource LocalizedResources}}" Grid.Column="1" />
+      <sdk:Label HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Row="8" Margin="0,0,4,0" Content="{Binding Path=ResourceStrings.XTSStringSensorStatus3, Source={StaticResource LocalizedResources}}" Grid.Column="1" />
+      <sdk:Label HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Row="9" Margin="0,0,4,0" Content="{Binding Path=ResourceStrings.XTSStringRPM, Source={StaticResource LocalizedResources}}" Grid.Column="1" />
+      <sdk:Label Grid.Column="2" FontWeight="Bold" FontSize="8" Grid.Row="0" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[14].Rawua}" />
+      <sdk:Label Grid.Column="3" FontWeight="Bold" FontSize="8" Grid.Row="0" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[15].Rawua}" />
+      <sdk:Label Grid.Column="4" FontWeight="Bold" FontSize="8" Grid.Row="0" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[16].Rawua}" />
+      <sdk:Label Grid.Column="5" FontWeight="Bold" FontSize="8" Grid.Row="0" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[17].Rawua}" />
+      <sdk:Label Grid.Column="6" FontWeight="Bold" FontSize="8" Grid.Row="0" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[18].Rawua}" />
+      <sdk:Label Grid.Column="7" FontWeight="Bold" FontSize="8" Grid.Row="0" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[19].Rawua}" />
+      <sdk:Label Grid.Column="8" FontWeight="Bold" FontSize="8" Grid.Row="0" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[20].Rawua}" />
+      <sdk:Label Grid.Column="9" FontWeight="Bold" FontSize="8" Grid.Row="0" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[21].Rawua}" />
+      <sdk:Label Grid.Column="10" FontWeight="Bold" FontSize="8" Grid.Row="0" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[22].Rawua}" />
+      <sdk:Label Grid.Column="11" FontWeight="Bold" FontSize="8" Grid.Row="0" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[23].Rawua}" />
+      <sdk:Label Grid.Column="12" FontWeight="Bold" FontSize="8" Grid.Row="0" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[24].Rawua}" />
+      <sdk:Label Grid.Column="13" FontWeight="Bold" FontSize="8" Grid.Row="0" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[25].Rawua}" />
+      <sdk:Label Grid.Column="14" FontWeight="Bold" FontSize="8" Grid.Row="0" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[26].Rawua}" />
+      <sdk:Label Grid.Column="15" FontWeight="Bold" FontSize="8" Grid.Row="0" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[27].Rawua}" />
+      <sdk:Label Grid.Column="2" FontWeight="Bold" FontSize="8" Grid.Row="1" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[14].ScaledValue}" />
+      <sdk:Label Grid.Column="3" FontWeight="Bold" FontSize="8" Grid.Row="1" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[15].ScaledValue}" />
+      <sdk:Label Grid.Column="4" FontWeight="Bold" FontSize="8" Grid.Row="1" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[16].ScaledValue}" />
+      <sdk:Label Grid.Column="5" FontWeight="Bold" FontSize="8" Grid.Row="1" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[17].ScaledValue}" />
+      <sdk:Label Grid.Column="6" FontWeight="Bold" FontSize="8" Grid.Row="1" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[18].ScaledValue}" />
+      <sdk:Label Grid.Column="7" FontWeight="Bold" FontSize="8" Grid.Row="1" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[19].ScaledValue}" />
+      <sdk:Label Grid.Column="8" FontWeight="Bold" FontSize="8" Grid.Row="1" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[20].ScaledValue}" />
+      <sdk:Label Grid.Column="9" FontWeight="Bold" FontSize="8" Grid.Row="1" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[21].ScaledValue}" />
+      <sdk:Label Grid.Column="10" FontWeight="Bold" FontSize="8" Grid.Row="1" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[22].ScaledValue}" />
+      <sdk:Label Grid.Column="11" FontWeight="Bold" FontSize="8" Grid.Row="1" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[23].ScaledValue}" />
+      <sdk:Label Grid.Column="12" FontWeight="Bold" FontSize="8" Grid.Row="1" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[24].ScaledValue}" />
+      <sdk:Label Grid.Column="13" FontWeight="Bold" FontSize="8" Grid.Row="1" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[25].ScaledValue}" />
+      <sdk:Label Grid.Column="14" FontWeight="Bold" FontSize="8" Grid.Row="1" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[26].ScaledValue}" />
+      <sdk:Label Grid.Column="15" FontWeight="Bold" FontSize="8" Grid.Row="1" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[27].ScaledValue}" />
+      <sdk:Label Grid.Column="2" FontWeight="Bold" FontSize="8" Grid.Row="2" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[14].PreComp}" />
+      <sdk:Label Grid.Column="3" FontWeight="Bold" FontSize="8" Grid.Row="2" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[15].PreComp}" />
+      <sdk:Label Grid.Column="4" FontWeight="Bold" FontSize="8" Grid.Row="2" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[16].PreComp}" />
+      <sdk:Label Grid.Column="5" FontWeight="Bold" FontSize="8" Grid.Row="2" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[17].PreComp}" />
+      <sdk:Label Grid.Column="6" FontWeight="Bold" FontSize="8" Grid.Row="2" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[18].PreComp}" />
+      <sdk:Label Grid.Column="7" FontWeight="Bold" FontSize="8" Grid.Row="2" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[19].PreComp}" />
+      <sdk:Label Grid.Column="8" FontWeight="Bold" FontSize="8" Grid.Row="2" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[20].PreComp}" />
+      <sdk:Label Grid.Column="9" FontWeight="Bold" FontSize="8" Grid.Row="2" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[21].PreComp}" />
+      <sdk:Label Grid.Column="10" FontWeight="Bold" FontSize="8" Grid.Row="2" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[22].PreComp}" />
+      <sdk:Label Grid.Column="11" FontWeight="Bold" FontSize="8" Grid.Row="2" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[23].PreComp}" />
+      <sdk:Label Grid.Column="12" FontWeight="Bold" FontSize="8" Grid.Row="2" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[24].PreComp}" />
+      <sdk:Label Grid.Column="13" FontWeight="Bold" FontSize="8" Grid.Row="2" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[25].PreComp}" />
+      <sdk:Label Grid.Column="14" FontWeight="Bold" FontSize="8" Grid.Row="2" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[26].PreComp}" />
+      <sdk:Label Grid.Column="15" FontWeight="Bold" FontSize="8" Grid.Row="2" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[27].PreComp}" />
+      <sdk:Label Grid.Column="2" FontWeight="Bold" FontSize="8" Grid.Row="3" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[14].PostComp}" />
+      <sdk:Label Grid.Column="3" FontWeight="Bold" FontSize="8" Grid.Row="3" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[15].PostComp}" />
+      <sdk:Label Grid.Column="4" FontWeight="Bold" FontSize="8" Grid.Row="3" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[16].PostComp}" />
+      <sdk:Label Grid.Column="5" FontWeight="Bold" FontSize="8" Grid.Row="3" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[17].PostComp}" />
+      <sdk:Label Grid.Column="6" FontWeight="Bold" FontSize="8" Grid.Row="3" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[18].PostComp}" />
+      <sdk:Label Grid.Column="7" FontWeight="Bold" FontSize="8" Grid.Row="3" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[19].PostComp}" />
+      <sdk:Label Grid.Column="8" FontWeight="Bold" FontSize="8" Grid.Row="3" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[20].PostComp}" />
+      <sdk:Label Grid.Column="9" FontWeight="Bold" FontSize="8" Grid.Row="3" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[21].PostComp}" />
+      <sdk:Label Grid.Column="10" FontWeight="Bold" FontSize="8" Grid.Row="3" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[22].PostComp}" />
+      <sdk:Label Grid.Column="11" FontWeight="Bold" FontSize="8" Grid.Row="3" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[23].PostComp}" />
+      <sdk:Label Grid.Column="12" FontWeight="Bold" FontSize="8" Grid.Row="3" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[24].PostComp}" />
+      <sdk:Label Grid.Column="13" FontWeight="Bold" FontSize="8" Grid.Row="3" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[25].PostComp}" />
+      <sdk:Label Grid.Column="14" FontWeight="Bold" FontSize="8" Grid.Row="3" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[26].PostComp}" />
+      <sdk:Label Grid.Column="15" FontWeight="Bold" FontSize="8" Grid.Row="3" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[27].PostComp}" />
+      <sdk:Label Grid.Column="2" FontWeight="Bold" FontSize="8" Grid.Row="4" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[14].PostFiltered}" />
+      <sdk:Label Grid.Column="3" FontWeight="Bold" FontSize="8" Grid.Row="4" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[15].PostFiltered}" />
+      <sdk:Label Grid.Column="4" FontWeight="Bold" FontSize="8" Grid.Row="4" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[16].PostFiltered}" />
+      <sdk:Label Grid.Column="5" FontWeight="Bold" FontSize="8" Grid.Row="4" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[17].PostFiltered}" />
+      <sdk:Label Grid.Column="6" FontWeight="Bold" FontSize="8" Grid.Row="4" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[18].PostFiltered}" />
+      <sdk:Label Grid.Column="7" FontWeight="Bold" FontSize="8" Grid.Row="4" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[19].PostFiltered}" />
+      <sdk:Label Grid.Column="8" FontWeight="Bold" FontSize="8" Grid.Row="4" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[20].PostFiltered}" />
+      <sdk:Label Grid.Column="9" FontWeight="Bold" FontSize="8" Grid.Row="4" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[21].PostFiltered}" />
+      <sdk:Label Grid.Column="10" FontWeight="Bold" FontSize="8" Grid.Row="4" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[22].PostFiltered}" />
+      <sdk:Label Grid.Column="11" FontWeight="Bold" FontSize="8" Grid.Row="4" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[23].PostFiltered}" />
+      <sdk:Label Grid.Column="12" FontWeight="Bold" FontSize="8" Grid.Row="4" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[24].PostFiltered}" />
+      <sdk:Label Grid.Column="13" FontWeight="Bold" FontSize="8" Grid.Row="4" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[25].PostFiltered}" />
+      <sdk:Label Grid.Column="14" FontWeight="Bold" FontSize="8" Grid.Row="4" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[26].PostFiltered}" />
+      <sdk:Label Grid.Column="15" FontWeight="Bold" FontSize="8" Grid.Row="4" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[27].PostFiltered}" />
+      <sdk:Label Grid.Column="2" FontWeight="Bold" FontSize="8" Grid.Row="5" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[14].Deviation}" />
+      <sdk:Label Grid.Column="3" FontWeight="Bold" FontSize="8" Grid.Row="5" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[15].Deviation}" />
+      <sdk:Label Grid.Column="4" FontWeight="Bold" FontSize="8" Grid.Row="5" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[16].Deviation}" />
+      <sdk:Label Grid.Column="5" FontWeight="Bold" FontSize="8" Grid.Row="5" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[17].Deviation}" />
+      <sdk:Label Grid.Column="6" FontWeight="Bold" FontSize="8" Grid.Row="5" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[18].Deviation}" />
+      <sdk:Label Grid.Column="7" FontWeight="Bold" FontSize="8" Grid.Row="5" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[19].Deviation}" />
+      <sdk:Label Grid.Column="8" FontWeight="Bold" FontSize="8" Grid.Row="5" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[20].Deviation}" />
+      <sdk:Label Grid.Column="9" FontWeight="Bold" FontSize="8" Grid.Row="5" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[21].Deviation}" />
+      <sdk:Label Grid.Column="10" FontWeight="Bold" FontSize="8" Grid.Row="5" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[22].Deviation}" />
+      <sdk:Label Grid.Column="11" FontWeight="Bold" FontSize="8" Grid.Row="5" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[23].Deviation}" />
+      <sdk:Label Grid.Column="12" FontWeight="Bold" FontSize="8" Grid.Row="5" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[24].Deviation}" />
+      <sdk:Label Grid.Column="13" FontWeight="Bold" FontSize="8" Grid.Row="5" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[25].Deviation}" />
+      <sdk:Label Grid.Column="14" FontWeight="Bold" FontSize="8" Grid.Row="5" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[26].Deviation}" />
+      <sdk:Label Grid.Column="15" FontWeight="Bold" FontSize="8" Grid.Row="5" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[27].Deviation}" />
+      <sdk:Label Grid.Column="2" FontWeight="Bold" FontSize="8" Grid.Row="6" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[14].Status1}" />
+      <sdk:Label Grid.Column="3" FontWeight="Bold" FontSize="8" Grid.Row="6" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[15].Status1}" />
+      <sdk:Label Grid.Column="4" FontWeight="Bold" FontSize="8" Grid.Row="6" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[16].Status1}" />
+      <sdk:Label Grid.Column="5" FontWeight="Bold" FontSize="8" Grid.Row="6" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[17].Status1}" />
+      <sdk:Label Grid.Column="6" FontWeight="Bold" FontSize="8" Grid.Row="6" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[18].Status1}" />
+      <sdk:Label Grid.Column="7" FontWeight="Bold" FontSize="8" Grid.Row="6" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[19].Status1}" />
+      <sdk:Label Grid.Column="8" FontWeight="Bold" FontSize="8" Grid.Row="6" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[20].Status1}" />
+      <sdk:Label Grid.Column="9" FontWeight="Bold" FontSize="8" Grid.Row="6" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[21].Status1}" />
+      <sdk:Label Grid.Column="10" FontWeight="Bold" FontSize="8" Grid.Row="6" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[22].Status1}" />
+      <sdk:Label Grid.Column="11" FontWeight="Bold" FontSize="8" Grid.Row="6" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[23].Status1}" />
+      <sdk:Label Grid.Column="12" FontWeight="Bold" FontSize="8" Grid.Row="6" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[24].Status1}" />
+      <sdk:Label Grid.Column="13" FontWeight="Bold" FontSize="8" Grid.Row="6" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[25].Status1}" />
+      <sdk:Label Grid.Column="14" FontWeight="Bold" FontSize="8" Grid.Row="6" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[26].Status1}" />
+      <sdk:Label Grid.Column="15" FontWeight="Bold" FontSize="8" Grid.Row="6" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[27].Status1}" />
+      <sdk:Label Grid.Column="2" FontWeight="Bold" FontSize="8" Grid.Row="7" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[14].Status2}" />
+      <sdk:Label Grid.Column="3" FontWeight="Bold" FontSize="8" Grid.Row="7" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[15].Status2}" />
+      <sdk:Label Grid.Column="4" FontWeight="Bold" FontSize="8" Grid.Row="7" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[16].Status2}" />
+      <sdk:Label Grid.Column="5" FontWeight="Bold" FontSize="8" Grid.Row="7" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[17].Status2}" />
+      <sdk:Label Grid.Column="6" FontWeight="Bold" FontSize="8" Grid.Row="7" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[18].Status2}" />
+      <sdk:Label Grid.Column="7" FontWeight="Bold" FontSize="8" Grid.Row="7" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[19].Status2}" />
+      <sdk:Label Grid.Column="8" FontWeight="Bold" FontSize="8" Grid.Row="7" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[20].Status2}" />
+      <sdk:Label Grid.Column="9" FontWeight="Bold" FontSize="8" Grid.Row="7" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[21].Status2}" />
+      <sdk:Label Grid.Column="10" FontWeight="Bold" FontSize="8" Grid.Row="7" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[22].Status2}" />
+      <sdk:Label Grid.Column="11" FontWeight="Bold" FontSize="8" Grid.Row="7" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[23].Status2}" />
+      <sdk:Label Grid.Column="12" FontWeight="Bold" FontSize="8" Grid.Row="7" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[24].Status2}" />
+      <sdk:Label Grid.Column="13" FontWeight="Bold" FontSize="8" Grid.Row="7" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[25].Status2}" />
+      <sdk:Label Grid.Column="14" FontWeight="Bold" FontSize="8" Grid.Row="7" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[26].Status2}" />
+      <sdk:Label Grid.Column="15" FontWeight="Bold" FontSize="8" Grid.Row="7" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[27].Status2}" />
+      <sdk:Label Grid.Column="2" FontWeight="Bold" FontSize="8" Grid.Row="8" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[14].Status3}" />
+      <sdk:Label Grid.Column="3" FontWeight="Bold" FontSize="8" Grid.Row="8" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[15].Status3}" />
+      <sdk:Label Grid.Column="4" FontWeight="Bold" FontSize="8" Grid.Row="8" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[16].Status3}" />
+      <sdk:Label Grid.Column="5" FontWeight="Bold" FontSize="8" Grid.Row="8" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[17].Status3}" />
+      <sdk:Label Grid.Column="6" FontWeight="Bold" FontSize="8" Grid.Row="8" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[18].Status3}" />
+      <sdk:Label Grid.Column="7" FontWeight="Bold" FontSize="8" Grid.Row="8" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[19].Status3}" />
+      <sdk:Label Grid.Column="8" FontWeight="Bold" FontSize="8" Grid.Row="8" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[20].Status3}" />
+      <sdk:Label Grid.Column="9" FontWeight="Bold" FontSize="8" Grid.Row="8" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[21].Status3}" />
+      <sdk:Label Grid.Column="10" FontWeight="Bold" FontSize="8" Grid.Row="8" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[22].Status3}" />
+      <sdk:Label Grid.Column="11" FontWeight="Bold" FontSize="8" Grid.Row="8" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[23].Status3}" />
+      <sdk:Label Grid.Column="12" FontWeight="Bold" FontSize="8" Grid.Row="8" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[24].Status3}" />
+      <sdk:Label Grid.Column="13" FontWeight="Bold" FontSize="8" Grid.Row="8" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[25].Status3}" />
+      <sdk:Label Grid.Column="14" FontWeight="Bold" FontSize="8" Grid.Row="8" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[26].Status3}" />
+      <sdk:Label Grid.Column="15" FontWeight="Bold" FontSize="8" Grid.Row="8" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.Sensors[27].Status3}" />
+      <sdk:Label Grid.Column="2" FontWeight="Bold" FontSize="8" Grid.Row="9" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.RPM[14].Value}" />
+      <sdk:Label Grid.Column="3" FontWeight="Bold" FontSize="8" Grid.Row="9" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.RPM[15].Value}" />
+      <sdk:Label Grid.Column="4" FontWeight="Bold" FontSize="8" Grid.Row="9" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.RPM[16].Value}" />
+      <sdk:Label Grid.Column="5" FontWeight="Bold" FontSize="8" Grid.Row="9" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.RPM[17].Value}" />
+      <sdk:Label Grid.Column="6" FontWeight="Bold" FontSize="8" Grid.Row="9" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.RPM[18].Value}" />
+      <sdk:Label Grid.Column="7" FontWeight="Bold" FontSize="8" Grid.Row="9" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.RPM[19].Value}" />
+      <sdk:Label Grid.Column="8" FontWeight="Bold" FontSize="8" Grid.Row="9" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.RPM[20].Value}" />
+      <sdk:Label Grid.Column="9" FontWeight="Bold" FontSize="8" Grid.Row="9" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.RPM[21].Value}" />
+      <sdk:Label Grid.Column="10" FontWeight="Bold" FontSize="8" Grid.Row="9" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.RPM[22].Value}" />
+      <sdk:Label Grid.Column="11" FontWeight="Bold" FontSize="8" Grid.Row="9" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.RPM[23].Value}" />
+      <sdk:Label Grid.Column="12" FontWeight="Bold" FontSize="8" Grid.Row="9" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.RPM[24].Value}" />
+      <sdk:Label Grid.Column="13" FontWeight="Bold" FontSize="8" Grid.Row="9" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.RPM[25].Value}" />
+      <sdk:Label Grid.Column="14" FontWeight="Bold" FontSize="8" Grid.Row="9" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.RPM[26].Value}" />
+      <sdk:Label Grid.Column="15" FontWeight="Bold" FontSize="8" Grid.Row="9" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding XTSDataSource.Diagnostics.LiveData.RPM[27].Value}" />
+    </Grid>
+    <Grid Grid.Row="6">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="132" />
+        <ColumnDefinition />
+        <ColumnDefinition />
+        <ColumnDefinition />
+        <ColumnDefinition />
+        <ColumnDefinition />
+        <ColumnDefinition />
+        <ColumnDefinition />
+        <ColumnDefinition />
+        <ColumnDefinition />
+        <ColumnDefinition />
+        <ColumnDefinition />
+        <ColumnDefinition />
+        <ColumnDefinition />
+        <ColumnDefinition />
+      </Grid.ColumnDefinitions>
+      <Grid.RowDefinitions>
+        <RowDefinition />
+        <RowDefinition />
+        <RowDefinition />
+        <RowDefinition />
+      </Grid.RowDefinitions>
+      <Grid.Background>
+        <SolidColorBrush Color="{StaticResource ColorAMOTBackgroundOverlay}" />
+      </Grid.Background>
+      <sdk:Label HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,4,0" Content="{Binding Path=ResourceStrings.XTSStringCylinderAv, Source={StaticResource LocalizedResources}}" />
+      <sdk:Label HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Row="1" Margin="0,0,4,0" Content="{Binding Path=ResourceStrings.XTSStringCylinderDeviation, Source={StaticResource LocalizedResources}}" />
+      <sdk:Label HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Row="2" Margin="0,0,4,0" Content="{Binding Path=ResourceStrings.XTSStringCylinderStatus1, Source={StaticResource LocalizedResources}}" />
+      <sdk:Label HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Row="3" Margin="0,0,4,0" Content="{Binding Path=ResourceStrings.XTSStringCylinderStatus2, Source={StaticResource LocalizedResources}}" />
+      <sdk:Label VerticalAlignment="Center" Grid.Column="1" HorizontalAlignment="Center" FontWeight="Bold" FontSize="8" Grid.Row="0" Content="{Binding XTSDataSource.Diagnostics.LiveData.Cylinders[0].Av}" />
+      <sdk:Label VerticalAlignment="Center" Grid.Column="2" HorizontalAlignment="Center" FontWeight="Bold" FontSize="8" Grid.Row="0" Content="{Binding XTSDataSource.Diagnostics.LiveData.Cylinders[1].Av}" />
+      <sdk:Label VerticalAlignment="Center" Grid.Column="3" HorizontalAlignment="Center" FontWeight="Bold" FontSize="8" Grid.Row="0" Content="{Binding XTSDataSource.Diagnostics.LiveData.Cylinders[2].Av}" />
+      <sdk:Label VerticalAlignment="Center" Grid.Column="4" HorizontalAlignment="Center" FontWeight="Bold" FontSize="8" Grid.Row="0" Content="{Binding XTSDataSource.Diagnostics.LiveData.Cylinders[3].Av}" />
+      <sdk:Label VerticalAlignment="Center" Grid.Column="5" HorizontalAlignment="Center" FontWeight="Bold" FontSize="8" Grid.Row="0" Content="{Binding XTSDataSource.Diagnostics.LiveData.Cylinders[4].Av}" />
+      <sdk:Label VerticalAlignment="Center" Grid.Column="6" HorizontalAlignment="Center" FontWeight="Bold" FontSize="8" Grid.Row="0" Content="{Binding XTSDataSource.Diagnostics.LiveData.Cylinders[5].Av}" />
+      <sdk:Label VerticalAlignment="Center" Grid.Column="7" HorizontalAlignment="Center" FontWeight="Bold" FontSize="8" Grid.Row="0" Content="{Binding XTSDataSource.Diagnostics.LiveData.Cylinders[6].Av}" />
+      <sdk:Label VerticalAlignment="Center" Grid.Column="8" HorizontalAlignment="Center" FontWeight="Bold" FontSize="8" Grid.Row="0" Content="{Binding XTSDataSource.Diagnostics.LiveData.Cylinders[7].Av}" />
+      <sdk:Label VerticalAlignment="Center" Grid.Column="9" HorizontalAlignment="Center" FontWeight="Bold" FontSize="8" Grid.Row="0" Content="{Binding XTSDataSource.Diagnostics.LiveData.Cylinders[8].Av}" />
+      <sdk:Label VerticalAlignment="Center" Grid.Column="10" HorizontalAlignment="Center" FontWeight="Bold" FontSize="8" Grid.Row="0" Content="{Binding XTSDataSource.Diagnostics.LiveData.Cylinders[9].Av}" />
+      <sdk:Label VerticalAlignment="Center" Grid.Column="11" HorizontalAlignment="Center" FontWeight="Bold" FontSize="8" Grid.Row="0" Content="{Binding XTSDataSource.Diagnostics.LiveData.Cylinders[10].Av}" />
+      <sdk:Label VerticalAlignment="Center" Grid.Column="12" HorizontalAlignment="Center" FontWeight="Bold" FontSize="8" Grid.Row="0" Content="{Binding XTSDataSource.Diagnostics.LiveData.Cylinders[11].Av}" />
+      <sdk:Label VerticalAlignment="Center" Grid.Column="13" HorizontalAlignment="Center" FontWeight="Bold" FontSize="8" Grid.Row="0" Content="{Binding XTSDataSource.Diagnostics.LiveData.Cylinders[12].Av}" />
+      <sdk:Label VerticalAlignment="Center" Grid.Column="14" HorizontalAlignment="Center" FontWeight="Bold" FontSize="8" Grid.Row="0" Content="{Binding XTSDataSource.Diagnostics.LiveData.Cylinders[13].Av}" />
+      <sdk:Label VerticalAlignment="Center" Grid.Column="1" HorizontalAlignment="Center" FontWeight="Bold" FontSize="8" Grid.Row="1" Content="{Binding XTSDataSource.Diagnostics.LiveData.Cylinders[0].Deviation}" />
+      <sdk:Label VerticalAlignment="Center" Grid.Column="2" HorizontalAlignment="Center" FontWeight="Bold" FontSize="8" Grid.Row="1" Content="{Binding XTSDataSource.Diagnostics.LiveData.Cylinders[1].Deviation}" />
+      <sdk:Label VerticalAlignment="Center" Grid.Column="3" HorizontalAlignment="Center" FontWeight="Bold" FontSize="8" Grid.Row="1" Content="{Binding XTSDataSource.Diagnostics.LiveData.Cylinders[2].Deviation}" />
+      <sdk:Label VerticalAlignment="Center" Grid.Column="4" HorizontalAlignment="Center" FontWeight="Bold" FontSize="8" Grid.Row="1" Content="{Binding XTSDataSource.Diagnostics.LiveData.Cylinders[3].Deviation}" />
+      <sdk:Label VerticalAlignment="Center" Grid.Column="5" HorizontalAlignment="Center" FontWeight="Bold" FontSize="8" Grid.Row="1" Content="{Binding XTSDataSource.Diagnostics.LiveData.Cylinders[4].Deviation}" />
+      <sdk:Label VerticalAlignment="Center" Grid.Column="6" HorizontalAlignment="Center" FontWeight="Bold" FontSize="8" Grid.Row="1" Content="{Binding XTSDataSource.Diagnostics.LiveData.Cylinders[5].Deviation}" />
+      <sdk:Label VerticalAlignment="Center" Grid.Column="7" HorizontalAlignment="Center" FontWeight="Bold" FontSize="8" Grid.Row="1" Content="{Binding XTSDataSource.Diagnostics.LiveData.Cylinders[6].Deviation}" />
+      <sdk:Label VerticalAlignment="Center" Grid.Column="8" HorizontalAlignment="Center" FontWeight="Bold" FontSize="8" Grid.Row="1" Content="{Binding XTSDataSource.Diagnostics.LiveData.Cylinders[7].Deviation}" />
+      <sdk:Label VerticalAlignment="Center" Grid.Column="9" HorizontalAlignment="Center" FontWeight="Bold" FontSize="8" Grid.Row="1" Content="{Binding XTSDataSource.Diagnostics.LiveData.Cylinders[8].Deviation}" />
+      <sdk:Label VerticalAlignment="Center" Grid.Column="10" HorizontalAlignment="Center" FontWeight="Bold" FontSize="8" Grid.Row="1" Content="{Binding XTSDataSource.Diagnostics.LiveData.Cylinders[9].Deviation}" />
+      <sdk:Label VerticalAlignment="Center" Grid.Column="11" HorizontalAlignment="Center" FontWeight="Bold" FontSize="8" Grid.Row="1" Content="{Binding XTSDataSource.Diagnostics.LiveData.Cylinders[10].Deviation}" />
+      <sdk:Label VerticalAlignment="Center" Grid.Column="12" HorizontalAlignment="Center" FontWeight="Bold" FontSize="8" Grid.Row="1" Content="{Binding XTSDataSource.Diagnostics.LiveData.Cylinders[11].Deviation}" />
+      <sdk:Label VerticalAlignment="Center" Grid.Column="13" HorizontalAlignment="Center" FontWeight="Bold" FontSize="8" Grid.Row="1" Content="{Binding XTSDataSource.Diagnostics.LiveData.Cylinders[12].Deviation}" />
+      <sdk:Label VerticalAlignment="Center" Grid.Column="14" HorizontalAlignment="Center" FontWeight="Bold" FontSize="8" Grid.Row="1" Content="{Binding XTSDataSource.Diagnostics.LiveData.Cylinders[13].Deviation}" />
+      <sdk:Label VerticalAlignment="Center" Grid.Column="1" HorizontalAlignment="Center" FontWeight="Bold" FontSize="8" Grid.Row="2" Content="{Binding XTSDataSource.Diagnostics.LiveData.Cylinders[0].Status1}" />
+      <sdk:Label VerticalAlignment="Center" Grid.Column="2" HorizontalAlignment="Center" FontWeight="Bold" FontSize="8" Grid.Row="2" Content="{Binding XTSDataSource.Diagnostics.LiveData.Cylinders[1].Status1}" />
+      <sdk:Label VerticalAlignment="Center" Grid.Column="3" HorizontalAlignment="Center" FontWeight="Bold" FontSize="8" Grid.Row="2" Content="{Binding XTSDataSource.Diagnostics.LiveData.Cylinders[2].Status1}" />
+      <sdk:Label VerticalAlignment="Center" Grid.Column="4" HorizontalAlignment="Center" FontWeight="Bold" FontSize="8" Grid.Row="2" Content="{Binding XTSDataSource.Diagnostics.LiveData.Cylinders[3].Status1}" />
+      <sdk:Label VerticalAlignment="Center" Grid.Column="5" HorizontalAlignment="Center" FontWeight="Bold" FontSize="8" Grid.Row="2" Content="{Binding XTSDataSource.Diagnostics.LiveData.Cylinders[4].Status1}" />
+      <sdk:Label VerticalAlignment="Center" Grid.Column="6" HorizontalAlignment="Center" FontWeight="Bold" FontSize="8" Grid.Row="2" Content="{Binding XTSDataSource.Diagnostics.LiveData.Cylinders[5].Status1}" />
+      <sdk:Label VerticalAlignment="Center" Grid.Column="7" HorizontalAlignment="Center" FontWeight="Bold" FontSize="8" Grid.Row="2" Content="{Binding XTSDataSource.Diagnostics.LiveData.Cylinders[6].Status1}" />
+      <sdk:Label VerticalAlignment="Center" Grid.Column="8" HorizontalAlignment="Center" FontWeight="Bold" FontSize="8" Grid.Row="2" Content="{Binding XTSDataSource.Diagnostics.LiveData.Cylinders[7].Status1}" />
+      <sdk:Label VerticalAlignment="Center" Grid.Column="9" HorizontalAlignment="Center" FontWeight="Bold" FontSize="8" Grid.Row="2" Content="{Binding XTSDataSource.Diagnostics.LiveData.Cylinders[8].Status1}" />
+      <sdk:Label VerticalAlignment="Center" Grid.Column="10" HorizontalAlignment="Center" FontWeight="Bold" FontSize="8" Grid.Row="2" Content="{Binding XTSDataSource.Diagnostics.LiveData.Cylinders[9].Status1}" />
+      <sdk:Label VerticalAlignment="Center" Grid.Column="11" HorizontalAlignment="Center" FontWeight="Bold" FontSize="8" Grid.Row="2" Content="{Binding XTSDataSource.Diagnostics.LiveData.Cylinders[10].Status1}" />
+      <sdk:Label VerticalAlignment="Center" Grid.Column="12" HorizontalAlignment="Center" FontWeight="Bold" FontSize="8" Grid.Row="2" Content="{Binding XTSDataSource.Diagnostics.LiveData.Cylinders[11].Status1}" />
+      <sdk:Label VerticalAlignment="Center" Grid.Column="13" HorizontalAlignment="Center" FontWeight="Bold" FontSize="8" Grid.Row="2" Content="{Binding XTSDataSource.Diagnostics.LiveData.Cylinders[12].Status1}" />
+      <sdk:Label VerticalAlignment="Center" Grid.Column="14" HorizontalAlignment="Center" FontWeight="Bold" FontSize="8" Grid.Row="2" Content="{Binding XTSDataSource.Diagnostics.LiveData.Cylinders[13].Status1}" />
+      <sdk:Label VerticalAlignment="Center" Grid.Column="1" HorizontalAlignment="Center" FontWeight="Bold" FontSize="8" Grid.Row="3" Content="{Binding XTSDataSource.Diagnostics.LiveData.Cylinders[0].Status2}" />
+      <sdk:Label VerticalAlignment="Center" Grid.Column="2" HorizontalAlignment="Center" FontWeight="Bold" FontSize="8" Grid.Row="3" Content="{Binding XTSDataSource.Diagnostics.LiveData.Cylinders[1].Status2}" />
+      <sdk:Label VerticalAlignment="Center" Grid.Column="3" HorizontalAlignment="Center" FontWeight="Bold" FontSize="8" Grid.Row="3" Content="{Binding XTSDataSource.Diagnostics.LiveData.Cylinders[2].Status2}" />
+      <sdk:Label VerticalAlignment="Center" Grid.Column="4" HorizontalAlignment="Center" FontWeight="Bold" FontSize="8" Grid.Row="3" Content="{Binding XTSDataSource.Diagnostics.LiveData.Cylinders[3].Status2}" />
+      <sdk:Label VerticalAlignment="Center" Grid.Column="5" HorizontalAlignment="Center" FontWeight="Bold" FontSize="8" Grid.Row="3" Content="{Binding XTSDataSource.Diagnostics.LiveData.Cylinders[4].Status2}" />
+      <sdk:Label VerticalAlignment="Center" Grid.Column="6" HorizontalAlignment="Center" FontWeight="Bold" FontSize="8" Grid.Row="3" Content="{Binding XTSDataSource.Diagnostics.LiveData.Cylinders[5].Status2}" />
+      <sdk:Label VerticalAlignment="Center" Grid.Column="7" HorizontalAlignment="Center" FontWeight="Bold" FontSize="8" Grid.Row="3" Content="{Binding XTSDataSource.Diagnostics.LiveData.Cylinders[6].Status2}" />
+      <sdk:Label VerticalAlignment="Center" Grid.Column="8" HorizontalAlignment="Center" FontWeight="Bold" FontSize="8" Grid.Row="3" Content="{Binding XTSDataSource.Diagnostics.LiveData.Cylinders[7].Status2}" />
+      <sdk:Label VerticalAlignment="Center" Grid.Column="9" HorizontalAlignment="Center" FontWeight="Bold" FontSize="8" Grid.Row="3" Content="{Binding XTSDataSource.Diagnostics.LiveData.Cylinders[8].Status2}" />
+      <sdk:Label VerticalAlignment="Center" Grid.Column="10" HorizontalAlignment="Center" FontWeight="Bold" FontSize="8" Grid.Row="3" Content="{Binding XTSDataSource.Diagnostics.LiveData.Cylinders[9].Status2}" />
+      <sdk:Label VerticalAlignment="Center" Grid.Column="11" HorizontalAlignment="Center" FontWeight="Bold" FontSize="8" Grid.Row="3" Content="{Binding XTSDataSource.Diagnostics.LiveData.Cylinders[10].Status2}" />
+      <sdk:Label VerticalAlignment="Center" Grid.Column="12" HorizontalAlignment="Center" FontWeight="Bold" FontSize="8" Grid.Row="3" Content="{Binding XTSDataSource.Diagnostics.LiveData.Cylinders[11].Status2}" />
+      <sdk:Label VerticalAlignment="Center" Grid.Column="13" HorizontalAlignment="Center" FontWeight="Bold" FontSize="8" Grid.Row="3" Content="{Binding XTSDataSource.Diagnostics.LiveData.Cylinders[12].Status2}" />
+      <sdk:Label VerticalAlignment="Center" Grid.Column="14" HorizontalAlignment="Center" FontWeight="Bold" FontSize="8" Grid.Row="3" Content="{Binding XTSDataSource.Diagnostics.LiveData.Cylinders[13].Status2}" />
+    </Grid>
+    <Grid Grid.Row="8">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition />
+        <ColumnDefinition />
+        <ColumnDefinition />
+        <ColumnDefinition />
+        <ColumnDefinition />
+        <ColumnDefinition />
+      </Grid.ColumnDefinitions>
+      <Grid.RowDefinitions>
+        <RowDefinition />
+        <RowDefinition />
+      </Grid.RowDefinitions>
+      <Grid.Background>
+        <SolidColorBrush Color="{StaticResource ColorAMOTBackgroundOverlay}" />
+      </Grid.Background>
+      <sdk:Label HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding Path=ResourceStrings.XTSStringWIOActivity, Source={StaticResource LocalizedResources}}" />
+      <sdk:Label HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding Path=ResourceStrings.XTSStringWIOPPM, Source={StaticResource LocalizedResources}}" Grid.Column="1" />
+      <sdk:Label HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding Path=ResourceStrings.XTSStringWIOTemp, Source={StaticResource LocalizedResources}}" Grid.Column="2" />
+      <sdk:Label HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding Path=ResourceStrings.XTSStringWIOStatus, Source={StaticResource LocalizedResources}}" Grid.Column="3" />
+      <sdk:Label HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding Path=ResourceStrings.XTSStringSEDMmV, Source={StaticResource LocalizedResources}}" Grid.Column="4" />
+      <sdk:Label HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding Path=ResourceStrings.XTSStringSEDMStatus, Source={StaticResource LocalizedResources}}" Grid.Column="5" />
+
+      <sdk:Label HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0" FontWeight="Bold" Grid.Row="1" Content="{Binding XTSDataSource.Diagnostics.LiveData.WIO.Activity}" />
+      <sdk:Label HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1" FontWeight="Bold" Grid.Row="1" Content="{Binding XTSDataSource.Diagnostics.LiveData.WIO.PPM}" />
+      <sdk:Label HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="2" FontWeight="Bold" Grid.Row="1" Content="{Binding XTSDataSource.Diagnostics.LiveData.WIO.Temp}" />
+      <sdk:Label HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="3" FontWeight="Bold" Grid.Row="1" Content="{Binding XTSDataSource.Diagnostics.LiveData.WIO.Status}" />
+      <sdk:Label HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="4" FontWeight="Bold" Grid.Row="1" Content="{Binding XTSDataSource.Diagnostics.LiveData.SEDM.Value}" />
+      <sdk:Label HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="5" FontWeight="Bold" Grid.Row="1" Content="{Binding XTSDataSource.Diagnostics.LiveData.SEDM.Status}" />
+    </Grid>
+    <Button x:Name="CancelButton" Click="CancelButton_Click" Width="44" Height="44" HorizontalAlignment="Right" Grid.Row="10" Style="{StaticResource ButtonStyleAMOT}" VerticalAlignment="Bottom">
+      <Button.Foreground>
+        <SolidColorBrush Color="{StaticResource ColorAMOTText}" />
+      </Button.Foreground>
+      <Button.Background>
+        <SolidColorBrush Color="{StaticResource ColorAMOTButton}" />
+      </Button.Background>
+      <Grid>
+        <TextBlock Margin="2,0,0,0" TextWrapping="Wrap" Text="{Binding Path=ResourceStrings.XTSStringClose, Source={StaticResource LocalizedResources}}" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontSize="8"></TextBlock>
+        <Path Stretch="Fill" Data="F1 M 400,224C 400,237.255 389.255,248 376,248L 280,248C 266.745,248 256,237.255 256,224L 256,128C 256,114.745 266.745,104 280,104L 376,104C 389.255,104 400,114.745 400,128L 400,224 Z M 272,136L 312,176L 272,216L 288,232L 328,192L 368,232L 384,216L 344,176L 384,136L 368,120L 328,160L 288,120L 272,136 Z " Margin="8,4,8,0" UseLayoutRounding="False" Fill="{Binding Foreground, ElementName=CancelButton}" Height="28" VerticalAlignment="Top" />
+      </Grid>
+    </Button>
+  </Grid>
+</controls:ChildWindow>

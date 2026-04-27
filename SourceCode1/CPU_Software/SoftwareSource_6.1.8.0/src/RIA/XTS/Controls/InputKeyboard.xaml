@@ -1,0 +1,309 @@
+﻿<telerik:RadWindow x:Class="XTS.ChildWindows.InputKeyboard"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+                  
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    
+    WindowStartupLocation="Manual"
+    CanMove="False"
+    CanClose="False"
+    ResizeMode="NoResize"
+    BorderBrush="{x:Null}" BorderBackground="{x:Null}" Background="{x:Null}" Header="" Loaded="InputKeyboard_Loaded">
+
+    <telerik:RadWindow.Resources>
+        <telerik:MetroTheme x:Key="Theme" />
+
+        <DataTemplate x:Key="WindowHeaderTemplate">
+        </DataTemplate>
+
+
+        <Style x:Key="RadWindowStyle1" TargetType="telerik:RadWindow">
+            <Setter Property="IsTopmost" Value="true"/>
+            <Setter Property="telerik:AnimationManager.AnimationSelector">
+                <Setter.Value>
+                    <telerik:AnimationSelector>
+                        <telerik:AnimationGroup AnimationName="Show">
+
+                            <!--
+                            
+                            <telerik:FadeAnimation Direction="In"  TargetElementName="LayoutRoot">
+                                
+                                
+                                <telerik:FadeAnimation.Easing>
+                                    <QuarticEase EasingMode="EaseOut"/>
+                                </telerik:FadeAnimation.Easing>
+                            </telerik:FadeAnimation>
+                            <telerik:ScaleAnimation Direction="In" MinScale="0.9" TargetElementName="LayoutRoot">
+                                <telerik:ScaleAnimation.Easing>
+                                    <QuarticEase EasingMode="EaseOut"/>
+                                </telerik:ScaleAnimation.Easing>
+                            </telerik:ScaleAnimation>
+                            -->
+                        </telerik:AnimationGroup>
+                        <telerik:AnimationGroup AnimationName="Hide">
+                            <!--
+                            <telerik:FadeAnimation Direction="Out" TargetElementName="LayoutRoot">
+                                <telerik:FadeAnimation.Easing>
+                                    <QuarticEase EasingMode="EaseOut"/>
+                                </telerik:FadeAnimation.Easing>
+                            </telerik:FadeAnimation>
+                            <telerik:ScaleAnimation Direction="Out" MinScale="0.9" TargetElementName="LayoutRoot">
+                                <telerik:ScaleAnimation.Easing>
+                                    <QuarticEase EasingMode="EaseIn"/>
+                                </telerik:ScaleAnimation.Easing>
+                            </telerik:ScaleAnimation>
+                            -->
+                        </telerik:AnimationGroup>
+                    </telerik:AnimationSelector>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </telerik:RadWindow.Resources>
+
+    <telerik:RadWindow.Style>
+        <StaticResource ResourceKey="RadWindowStyle1"/>
+    </telerik:RadWindow.Style>
+
+    <Grid x:Name="LayoutRoot">
+        <Grid.Background>
+            <SolidColorBrush Color="{StaticResource ColorAMOTGlassEffect}">
+            </SolidColorBrush>
+        </Grid.Background>
+
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Bottom" Name="AlphaKeyboard" Margin="4">
+            <StackPanel Name="Line1" HorizontalAlignment="Right" Orientation="Horizontal">
+                <StackPanel Name="Line1Keys" HorizontalAlignment="Right" Orientation="Horizontal" >
+                    
+                </StackPanel>
+                <Button  Width="84" Height="44" Name="BackSpace" Click="BackSpace_Click" Style="{StaticResource ButtonStyleAMOT}" Margin="4" IsTabStop="False" >
+                	<Button.Foreground>
+                		<SolidColorBrush Color="{StaticResource ColorAMOTText}"/>
+                	</Button.Foreground>
+                	<Button.Background>
+                		<SolidColorBrush Color="{StaticResource ColorAMOTButton}"/>
+                	</Button.Background>
+                    <Grid>
+                        <Path  Stretch="Fill" VerticalAlignment="Center"
+                               HorizontalAlignment="Center"  Data="F1 M 34,15L 18.2721,15L 10.7868,22.4853C 10.0058,23.2663 10.0058,24.5327 10.7868,25.3137L 18.2231,33L 34,33C 35.1046,33 36,32.1046 36,31L 36,17C 36,15.8954 35.1046,15 34,15 Z M 32.4444,17C 33.3036,17 34,17.6964 34,18.5556L 34,29.4444C 34,30.3036 33.3036,31 32.4444,31L 19.5,31L 13.3898,25.0218C 12.7823,24.4143 12.7823,23.4294 13.3898,22.8219L 19.5,17L 32.4444,17 Z M 22.4644,28.9496L 25.9999,25.4141L 29.5355,28.9496L 30.9497,27.5354L 27.4141,23.9999L 30.9496,20.4644L 29.5354,19.0501L 25.9999,22.5857L 22.4644,19.0502L 21.0502,20.4644L 24.5857,23.9999L 21.0502,27.5354L 22.4644,28.9496 Z " UseLayoutRounding="False" Fill="{Binding Foreground, ElementName=BackSpace}" Width="44" Height="30"   />
+                    </Grid>
+                </Button>
+            </StackPanel>
+            <StackPanel Name="Line2" HorizontalAlignment="Right" Orientation="Horizontal">
+                <StackPanel Name="Line2Keys" HorizontalAlignment="Right" Orientation="Horizontal"></StackPanel>
+
+                <Button  Width="74" Height="44" Name="Return" Click="Return_Click" Style="{StaticResource ButtonStyleAMOT}" Margin="4" Content="Enter" ContentTemplate="{StaticResource ContentTemplateAMOTButton}" IsTabStop="False">
+                	<Button.Background>
+                		<SolidColorBrush Color="{StaticResource ColorAMOTButton}"/>
+                	</Button.Background>
+                    <Button.Foreground>
+                        <SolidColorBrush Color="{StaticResource ColorAMOTText}"/>
+                    </Button.Foreground>
+                </Button>
+            </StackPanel>
+            
+            <StackPanel Name="Line3" HorizontalAlignment="Center" Orientation="Horizontal">
+
+                <ToggleButton  Width="44" Height="44" x:Name="LShift" Click="Shift_Click" Style="{StaticResource ToggleButtonStyleAMOTPlain}" IsTabStop="False">
+                	<ToggleButton.Foreground>
+                		<SolidColorBrush Color="{StaticResource ColorAMOTText}"/>
+                	</ToggleButton.Foreground>
+                	<ToggleButton.Background>
+                		<SolidColorBrush Color="{StaticResource ColorAMOTButton}"/>
+                	</ToggleButton.Background>
+                	<Grid>
+                		<Path  Stretch="Fill" VerticalAlignment="Center"
+                			HorizontalAlignment="Center" Data="F1 M 22,36L 26,36L 26,19.75L 33,27L 33,20.5L 24,11L 15,20.5L 15,27L 22,19.75L 22,36 Z " UseLayoutRounding="False" Fill="{Binding Foreground, ElementName=LShift}" Width="18" Height="19"   />
+                	</Grid>
+                </ToggleButton>
+
+                <StackPanel x:Name="Line3Keys" HorizontalAlignment="Right" Orientation="Horizontal"/>
+                <ToggleButton  Width="44" Height="44" x:Name="RShift" Click="Shift_Click" Style="{StaticResource ToggleButtonStyleAMOTPlain}" Margin="4" IsTabStop="False" >
+                	<ToggleButton.Background>
+                		<SolidColorBrush Color="{StaticResource ColorAMOTButton}"/>
+                	</ToggleButton.Background>
+                	<ToggleButton.Foreground>
+                		<SolidColorBrush Color="{StaticResource ColorAMOTText}"/>
+                	</ToggleButton.Foreground>
+                    <Grid>
+                        <Path  Stretch="Fill" VerticalAlignment="Center"
+                               HorizontalAlignment="Center" Data="F1 M 22,36L 26,36L 26,19.75L 33,27L 33,20.5L 24,11L 15,20.5L 15,27L 22,19.75L 22,36 Z " UseLayoutRounding="False" Fill="{Binding Foreground, ElementName=RShift}" Width="18" Height="19"   />
+                    </Grid>
+                </ToggleButton>
+            </StackPanel>
+            
+            <StackPanel Name="Line4" HorizontalAlignment="Center" Orientation="Horizontal">
+                <ToggleButton Width="44" Height="44" Style="{StaticResource ToggleButtonStyleAMOTPlain}" Content="CTRL" Name="Ctrl" Visibility="Collapsed" ContentTemplate="{StaticResource ContentTemplateAMOTButton}" IsTabStop="False">
+                    <ToggleButton.Foreground>
+                		<SolidColorBrush Color="{StaticResource ColorAMOTText}"/>
+                	</ToggleButton.Foreground>
+                	<ToggleButton.Background>
+                		<SolidColorBrush Color="{StaticResource ColorAMOTButton}"/>
+                	</ToggleButton.Background>
+                </ToggleButton>
+
+                <ToggleButton Width="44" Height="44" Style="{StaticResource ToggleButtonStyleAMOTPlain}" Margin="2" Content="&amp;123" Name="AltText" Click="AltText_Click" ContentTemplate="{StaticResource ContentTemplateAMOTButton}" IsTabStop="False">
+                	<ToggleButton.Foreground>
+                		<SolidColorBrush Color="{StaticResource ColorAMOTText}"/>
+                	</ToggleButton.Foreground>
+                	<ToggleButton.Background>
+                		<SolidColorBrush Color="{StaticResource ColorAMOTButton}"/>
+                	</ToggleButton.Background>
+                </ToggleButton>
+
+                <Button Width="247" Height="44" Style="{StaticResource ButtonStyleAMOT}" Margin="2" Name="Space" Click="Space_Click" IsTabStop="False">
+                	<Button.Foreground>
+                		<SolidColorBrush Color="{StaticResource ColorAMOTText}"/>
+                	</Button.Foreground>
+                	<Button.Background>
+                		<SolidColorBrush Color="{StaticResource ColorAMOTButton}"/>
+                	</Button.Background>
+                </Button>
+
+                <Button Width="44" Height="44" Style="{StaticResource ButtonStyleAMOT}" Margin="2" Name="CaratLeft" Click="CaratLeft_Click" IsTabStop="False">
+                	<Button.Foreground>
+                		<SolidColorBrush Color="{StaticResource ColorAMOTText}"/>
+                	</Button.Foreground>
+                	<Button.Background>
+                		<SolidColorBrush Color="{StaticResource ColorAMOTButton}"/>
+                	</Button.Background>
+                    <Grid>
+                        <Path  Stretch="Fill" VerticalAlignment="Center"
+                               HorizontalAlignment="Center" Data="F1 M 22.6563,23.75L 24.6563,25.75L 31.9063,32.75L 25.4063,32.75L 15.9063,23.75L 25.4063,14.75L 31.9063,14.75L 24.6563,21.75L 22.6563,23.75 Z " UseLayoutRounding="False" Fill="{Binding Foreground, ElementName=CaratLeft}" Width="16" Height="18"   />
+                    </Grid>
+                </Button>
+                <Button Width="44" Height="44" Style="{StaticResource ButtonStyleAMOT}" Margin="2" Name="CaratRight" Click="CaratRight_Click" IsTabStop="False">
+                	<Button.Foreground>
+                		<SolidColorBrush Color="{StaticResource ColorAMOTText}"/>
+                	</Button.Foreground>
+                	<Button.Background>
+                		<SolidColorBrush Color="{StaticResource ColorAMOTButton}"/>
+                	</Button.Background>
+                    <Grid>
+                        <Path  Stretch="Fill" VerticalAlignment="Center"
+                               HorizontalAlignment="Center" Data="F1 M 25.1563,23.75L 23.1563,21.75L 15.9063,14.75L 22.4063,14.75L 31.9063,23.75L 22.4063,32.75L 15.9063,32.75L 23.1563,25.75L 25.1563,23.75 Z " UseLayoutRounding="False" Fill="{Binding Foreground, ElementName=CaratRight}" Width="16" Height="18"   />
+                    </Grid>
+                </Button>
+            </StackPanel>
+        </StackPanel>
+        
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Name="NumericKeyboard">
+            <StackPanel Orientation="Horizontal">
+                <Button Width="44" Height="44" Style="{StaticResource ButtonStyleAMOT}" Margin="4" Content="1" Click="b_Click" Name="NumericOne" ContentTemplate="{StaticResource ContentTemplateAMOTButton}" IsTabStop="False">
+                	<Button.Foreground>
+                		<SolidColorBrush Color="{StaticResource ColorAMOTText}"/>
+                	</Button.Foreground>
+                	<Button.Background>
+                		<SolidColorBrush Color="{StaticResource ColorAMOTButton}"/>
+                	</Button.Background>
+                </Button>
+                <Button Width="44" Height="44" Style="{StaticResource ButtonStyleAMOT}" Margin="4" Content="2" Click="b_Click" Name="NumericTwo" ContentTemplate="{StaticResource ContentTemplateAMOTButton}" IsTabStop="False">
+                	<Button.Foreground>
+                		<SolidColorBrush Color="{StaticResource ColorAMOTText}"/>
+                	</Button.Foreground>
+                	<Button.Background>
+                		<SolidColorBrush Color="{StaticResource ColorAMOTButton}"/>
+                	</Button.Background>
+                </Button>
+                <Button Width="44" Height="44" Style="{StaticResource ButtonStyleAMOT}" Margin="4" Content="3" Click="b_Click" Name="NumericThree" ContentTemplate="{StaticResource ContentTemplateAMOTButton}" IsTabStop="False">
+                	<Button.Foreground>
+                		<SolidColorBrush Color="{StaticResource ColorAMOTText}"/>
+                	</Button.Foreground>
+                	<Button.Background>
+                		<SolidColorBrush Color="{StaticResource ColorAMOTButton}"/>
+                	</Button.Background>
+                </Button>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Button Width="44" Height="44" Style="{StaticResource ButtonStyleAMOT}" Margin="4" Content="4" Click="b_Click"  Name="NumericFour" ContentTemplate="{StaticResource ContentTemplateAMOTButton}" IsTabStop="False">
+                	<Button.Foreground>
+                		<SolidColorBrush Color="{StaticResource ColorAMOTText}"/>
+                	</Button.Foreground>
+                	<Button.Background>
+                		<SolidColorBrush Color="{StaticResource ColorAMOTButton}"/>
+                	</Button.Background>
+                </Button>
+                <Button Width="44" Height="44" Style="{StaticResource ButtonStyleAMOT}" Margin="4" Content="5" Click="b_Click"  Name="NumericFive" ContentTemplate="{StaticResource ContentTemplateAMOTButton}" IsTabStop="False">
+                	<Button.Foreground>
+                		<SolidColorBrush Color="{StaticResource ColorAMOTText}"/>
+                	</Button.Foreground>
+                	<Button.Background>
+                		<SolidColorBrush Color="{StaticResource ColorAMOTButton}"/>
+                	</Button.Background>
+                </Button>
+                <Button Width="44" Height="44" Style="{StaticResource ButtonStyleAMOT}" Margin="4" Content="6" Click="b_Click"  Name="NumericSix" ContentTemplate="{StaticResource ContentTemplateAMOTButton}" IsTabStop="False">
+                	<Button.Foreground>
+                		<SolidColorBrush Color="{StaticResource ColorAMOTText}"/>
+                	</Button.Foreground>
+                	<Button.Background>
+                		<SolidColorBrush Color="{StaticResource ColorAMOTButton}"/>
+                	</Button.Background>
+                </Button>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Button Width="44" Height="44" Style="{StaticResource ButtonStyleAMOT}" Margin="4" Content="7" Click="b_Click" Name="NumericSeven" ContentTemplate="{StaticResource ContentTemplateAMOTButton}" IsTabStop="False">
+                	<Button.Foreground>
+                		<SolidColorBrush Color="{StaticResource ColorAMOTText}"/>
+                	</Button.Foreground>
+                	<Button.Background>
+                		<SolidColorBrush Color="{StaticResource ColorAMOTButton}"/>
+                	</Button.Background>
+                </Button>
+                <Button Width="44" Height="44" Style="{StaticResource ButtonStyleAMOT}" Margin="4" Content="8" Click="b_Click"  Name="NumericEight" ContentTemplate="{StaticResource ContentTemplateAMOTButton}" IsTabStop="False">
+                	<Button.Foreground>
+                		<SolidColorBrush Color="{StaticResource ColorAMOTText}"/>
+                	</Button.Foreground>
+                	<Button.Background>
+                		<SolidColorBrush Color="{StaticResource ColorAMOTButton}"/>
+                	</Button.Background>
+                </Button>
+                <Button Width="44" Height="44" Style="{StaticResource ButtonStyleAMOT}" Margin="4" Content="9" Click="b_Click"  Name="NumericNine" ContentTemplate="{StaticResource ContentTemplateAMOTButton}" IsTabStop="False">
+                	<Button.Foreground>
+                		<SolidColorBrush Color="{StaticResource ColorAMOTText}"/>
+                	</Button.Foreground>
+                	<Button.Background>
+                		<SolidColorBrush Color="{StaticResource ColorAMOTButton}"/>
+                	</Button.Background>
+                </Button>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button Width="44" Height="44" Style="{StaticResource ButtonStyleAMOT}" Margin="4" Content="." Click="b_Click"  Name="Point" ContentTemplate="{StaticResource ContentTemplateAMOTButton}" IsTabStop="False">
+                	<Button.Foreground>
+                		<SolidColorBrush Color="{StaticResource ColorAMOTText}"/>
+                	</Button.Foreground>
+                	<Button.Background>
+                		<SolidColorBrush Color="{StaticResource ColorAMOTButton}"/>
+                	</Button.Background>
+                </Button>
+                
+                <Button Width="44" Height="44" Style="{StaticResource ButtonStyleAMOT}" Margin="4" Content="0" Click="b_Click"  Name="NumericZero" ContentTemplate="{StaticResource ContentTemplateAMOTButton}" IsTabStop="False">
+                	<Button.Foreground>
+                		<SolidColorBrush Color="{StaticResource ColorAMOTText}"/>
+                	</Button.Foreground>
+                	<Button.Background>
+                		<SolidColorBrush Color="{StaticResource ColorAMOTButton}"/>
+                	</Button.Background>
+                </Button>
+
+                <Button  Width="44" Height="44" Name="NumBackSpace" Click="BackSpace_Click" Style="{StaticResource ButtonStyleAMOT}" Margin="4" IsTabStop="False" >
+                	<Button.Foreground>
+                		<SolidColorBrush Color="{StaticResource ColorAMOTText}"/>
+                	</Button.Foreground>
+                	<Button.Background>
+                		<SolidColorBrush Color="{StaticResource ColorAMOTButton}"/>
+                	</Button.Background>
+                    <Grid>
+                        <Path  Stretch="Fill" VerticalAlignment="Center"
+                               HorizontalAlignment="Center"  Data="F1 M 34,15L 18.2721,15L 10.7868,22.4853C 10.0058,23.2663 10.0058,24.5327 10.7868,25.3137L 18.2231,33L 34,33C 35.1046,33 36,32.1046 36,31L 36,17C 36,15.8954 35.1046,15 34,15 Z M 32.4444,17C 33.3036,17 34,17.6964 34,18.5556L 34,29.4444C 34,30.3036 33.3036,31 32.4444,31L 19.5,31L 13.3898,25.0218C 12.7823,24.4143 12.7823,23.4294 13.3898,22.8219L 19.5,17L 32.4444,17 Z M 22.4644,28.9496L 25.9999,25.4141L 29.5355,28.9496L 30.9497,27.5354L 27.4141,23.9999L 30.9496,20.4644L 29.5354,19.0501L 25.9999,22.5857L 22.4644,19.0502L 21.0502,20.4644L 24.5857,23.9999L 21.0502,27.5354L 22.4644,28.9496 Z " UseLayoutRounding="False" Fill="{Binding Foreground, ElementName=NumBackSpace}" Width="34" Height="24"   />
+                    </Grid>
+                </Button>
+
+            </StackPanel>
+            
+        </StackPanel>
+
+
+    </Grid>
+</telerik:RadWindow>
