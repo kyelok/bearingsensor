@@ -65,33 +65,27 @@ namespace WebService
             }
         }
 
+        // Bug 2 fix (host/docs/CPU_DASHBOARD_OVERVIEW.md): the SPU firmware
+        // stores its version register as packed BCD-style hex digits — e.g.
+        // versionreg = 0x0620 means "v6.20", 0x0710 means "v7.10".
+        // The previous implementation read the low byte 0x20 as the integer
+        // value 32 and produced "6.32"; round versions like "v7.00" returned
+        // an empty string because of the `major != 0 && minor != 0` guard.
+        // Decode each byte as BCD (high nibble = tens, low nibble = ones)
+        // and emit zero-padded minor digits so "v7.05" is not displayed as "v7.5".
         private static string SPUVersionToSTring(ushort spuVersion)
         {
-            string versionAsString = string.Empty;
-            UInt16 major = 0;
-            UInt16 minor = 0;
+            if (spuVersion == 0) return string.Empty;
 
             byte[] bytes = BitConverter.GetBytes(spuVersion);
+            if (bytes == null || bytes.Length < 2) return spuVersion.ToString();
 
-            if (bytes != null)
-            {
-                if (bytes.Length != 2)
-                {
-                    major = bytes[0];
-                }
-                else
-                {
-                    minor = bytes[0];
-                    major = bytes[1];
-                }
-            }
+            int major = bytes[1];
+            int minorTens = (bytes[0] >> 4) & 0xF;
+            int minorOnes = bytes[0] & 0xF;
+            int minor = minorTens * 10 + minorOnes;
 
-            if (major != 0 && minor != 0)
-            {
-                versionAsString = string.Format("{0}.{1}", major, minor);
-            }
-
-            return versionAsString;
+            return string.Format("{0}.{1:D2}", major, minor);
         }
 
         private static void ExportSPUFirmwareVersion(StreamWriter writer, ModbusSDK sdk)
@@ -390,14 +384,26 @@ namespace WebService
                     WritePair(writer, string.Format("STATUS{0}", i + 1), values[i]);
                 }
 
+                // Bug 3 fix (host/docs/CPU_DASHBOARD_OVERVIEW.md):
+                //  (a) Modbus registers are 16-bit unsigned. The previous code
+                //      cast the result to `short`, which produced negative
+                //      values for any register whose stored ushort was > 32767.
+                //      KValueDamageMonitoring is stored in the SPU as integer
+                //      ×100000 (per man.c), so values in the 32768–65000 range
+                //      were being printed as negative numbers.
+                //  (b) Several damage-monitoring parameters use ×100000 fixed-
+                //      point scaling on the SPU side. The CSV emits the raw
+                //      stored value here; surveyors are expected to know the
+                //      scale (it's the firmware's documented contract).
+                //      Read as ushort and emit verbatim.
                 foreach (ModbusConstants register in modbusConstants)
                 {
-                    short value = 0;
-                    SPUSDK.AccessModbus(() => 
+                    ushort value = 0;
+                    SPUSDK.AccessModbus(() =>
                     {
                         using (TimedLock.Lock(sdk.syncRoot))
                         {
-                            value = (short)sdk.ReadHoldingRegisters(1, (ushort)register, 1)[0];
+                            value = sdk.ReadHoldingRegisters(1, (ushort)register, 1)[0];
                         }
                     });
                     WritePair(writer, Enum.GetName(typeof(ModbusConstants), register), value);

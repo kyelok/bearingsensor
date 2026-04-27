@@ -1,7 +1,7 @@
 # CPU Dashboard Software — Overview & Bug Analysis
 
 > **Audience**: engineers handling the CPU-side dashboard (the Windows-resident Silverlight web app that talks to the SPU firmware over Modbus).
-> **Status (2026-04-28)**: read-only architectural overview + Bug 2 / Bug 3 root cause analysis. **No code changes** to CPU_Software per project scope decision (SPU work first).
+> **Status (2026-04-28)**: architectural overview + Bug 2 / Bug 3 root cause analysis. **Bug 2 and Bug 3 fixes have been applied to `src/Core/WebService/Exports/VerificationData.cs`** but cannot be built or verified locally (no .NET 4 / Silverlight 5 toolchain on this dev box). The patches are intended to be picked up next time someone with a working VS2010+Silverlight VM rebuilds the dashboard. See the patch commits in git history for the exact change.
 
 ---
 
@@ -252,10 +252,8 @@ Cleaner: a per-register descriptor table that includes the scale factor, instead
 
 ## Recommended fixes — execution plan
 
-These bugs are out of scope for the current SPU work, but for whoever picks up CPU dashboard:
-
-1. **Apply patches to `VerificationData.cs`** (per Bug 2 and Bug 3 sections above).
-2. **Add unit tests** for `SPUVersionToSTring()` (currently no tests in `Tests/`; the function has only manual UI verification).
+1. ✅ **Patches applied to `VerificationData.cs`** (in this repo's source tree). Bug 2 rewrites `SPUVersionToSTring()` to decode the version register as BCD; Bug 3 changes the local `short value` to `ushort value` so the upper-half-of-the-range damage-monitoring values aren't sign-flipped to negative numbers. **Not yet built or run** — needs a VS2010+Silverlight5 VM.
+2. **Add unit tests** for `SPUVersionToSTring()` (currently no tests in `Tests/`; the function has only manual UI verification). Recommended cases: 0x0620 → "6.20"; 0x0700 → "7.00"; 0x0710 → "7.10"; 0x0805 → "8.05"; 0x0000 → "".
 3. **Add a per-register descriptor table** that includes scale factor + display format. Replaces the magic if-trees.
 4. **Add an integration test** that exports `system_info.csv` against a synthetic SPU and asserts the file contents are correct (especially version + K-value rows).
 5. **Plan the Silverlight migration** as a separate phase — this codebase has 759 C# files and a deprecated UI runtime.
