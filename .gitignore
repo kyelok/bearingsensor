@@ -1,3 +1,6 @@
+# Host test build artifacts
+host/build/
+
 # macOS
 .DS_Store
 ._*
