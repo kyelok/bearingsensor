@@ -38,6 +38,18 @@ typedef struct {
 
 void rapid_wear_init_sensor(rapid_wear_sensor_state_t *s);
 
+/* Initialize per-sensor state seeded with an initial speed-compensated
+ * value. Use this at boot to avoid a startup transient that would otherwise
+ * fire a false rapid-wear alarm before the slow EMA has time to catch up
+ * to the live signal. The legacy v6.20 firmware does the equivalent at
+ * man.c:1199-1202 by initializing both EMAs to the 5-rev-average.
+ *
+ * (Per PR review F-05: zero-init causes spurious alarms at cold boot
+ * because rapid_fast jumps to 0.2*V on first sample while rapid_slow
+ * stays near zero, producing rapid_wear ≈ 0.2*V which can well exceed
+ * the 200µm SingleRapid alarm threshold for typical BDC values.) */
+void rapid_wear_init_sensor_with_seed(rapid_wear_sensor_state_t *s, float initial_value);
+
 /* @spec 8.5 §4.1.1 — Rapid Slow update factor */
 #define RAPID_WEAR_X_SLOW   0.0001f
 

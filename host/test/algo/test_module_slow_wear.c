@@ -74,6 +74,34 @@ static void test_acknowledge_pre_warning_raises_limit_by_25(void)
     TEST_ASSERT_EQUAL_INT(50, limit);
 }
 
+/* Coverage gap closure (per coverage analysis): both fore+aft sensors
+ * failed → "reference lost" per spec §5. */
+static void test_cylinder_deviation_returns_zero_when_both_sensors_failed(void)
+{
+    float values[8] = { 0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f };
+    Uint16 valid[8] = { 1, 1, 1, 1, 0, 0, 1, 1 };  /* cyl 2 fully invalid */
+    /* Expected: function returns 0 (caller logs "reference lost"). */
+    TEST_ASSERT_FLOAT_WITHIN(1e-6f, 0.0f, slow_wear_cylinder_deviation(values, valid, 8, 2));
+}
+
+static void test_sensor_deviation_returns_zero_when_all_others_invalid(void)
+{
+    float values[8] = { 0.5f, 0.5f, 0.5f, 0.5f, 0.7f, 0.5f, 0.5f, 0.5f };
+    Uint16 valid[8] = { 0, 0, 0, 0, 1, 0, 0, 0 };  /* only sensor 4 valid */
+    /* No others to compare against — should return 0 not divide-by-zero. */
+    TEST_ASSERT_FLOAT_WITHIN(1e-6f, 0.0f, slow_wear_sensor_deviation(values, valid, 8, 4));
+}
+
+/* NULL-arg defensive guards. */
+static void test_null_args_dont_crash(void)
+{
+    slow_wear_init_sensor(NULL);
+    slow_wear_apply_sample(NULL, 1.0f);
+    (void)slow_wear_sensor_deviation(NULL, NULL, 0, 0);
+    (void)slow_wear_cylinder_deviation(NULL, NULL, 0, 0);
+    TEST_PASS_MESSAGE("NULL-arg guards do not crash");
+}
+
 int main(void)
 {
     UNITY_BEGIN();
@@ -81,10 +109,13 @@ int main(void)
     RUN_TEST(test_filter_first_step_is_x_times_input);
     RUN_TEST(test_sensor_deviation_zero_when_uniform);
     RUN_TEST(test_sensor_deviation_picks_up_outlier);
+    RUN_TEST(test_sensor_deviation_returns_zero_when_all_others_invalid);
     RUN_TEST(test_cylinder_deviation_spec_worked_example);
     RUN_TEST(test_cylinder_deviation_excludes_failed_sensor);
+    RUN_TEST(test_cylinder_deviation_returns_zero_when_both_sensors_failed);
     RUN_TEST(test_classify_normal_alarm_slowdown);
     RUN_TEST(test_pre_warning_check);
     RUN_TEST(test_acknowledge_pre_warning_raises_limit_by_25);
+    RUN_TEST(test_null_args_dont_crash);
     return UNITY_END();
 }

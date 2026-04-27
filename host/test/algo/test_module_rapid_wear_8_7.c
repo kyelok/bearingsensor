@@ -108,12 +108,60 @@ static void test_should_pause_8_7_returns_correctly(void)
     TEST_ASSERT_TRUE (rapid_wear_should_pause_8_7(30.0f));
 }
 
+/* @spec 8.7 §4.2 — Rapid Wear twin-cylinder deviation
+ * Coverage gap closed (was uncovered per coverage analysis 2026-04-28). */
+static void test_deviation_twin_8_7_basic(void)
+{
+    /* 4-cyl engine. Twin pair (cyl 1, cyl 2) covers sensors 2,3,4,5
+     * (zero-indexed). Set those high, others normal. */
+    float rws[8]    = { 100, 100, 200, 200, 200, 200, 100, 100 };
+    Uint16 valid[8] = { 1, 1, 1, 1, 1, 1, 1, 1 };
+    /* dRT_1 = mean(rws[2..5])=200 - mean(rws[0,1,6,7])=100 = 100. */
+    TEST_ASSERT_FLOAT_WITHIN(1e-6f, 100.0f,
+        rapid_wear_deviation_twin_8_7(rws, valid, 8, 1));
+}
+
+static void test_deviation_twin_8_7_with_failed_sensor_excludes_it(void)
+{
+    /* Same as above but sensor 3 failed → excluded from twin avg. */
+    float rws[8]    = { 100, 100, 200, 200, 200, 200, 100, 100 };
+    Uint16 valid[8] = { 1, 1, 1, 0, 1, 1, 1, 1 };  /* sensor 3 invalid */
+    /* twin avg: (200+200+200)/3 = 200; others avg: 100; dRT = 100. */
+    TEST_ASSERT_FLOAT_WITHIN(1e-6f, 100.0f,
+        rapid_wear_deviation_twin_8_7(rws, valid, 8, 1));
+}
+
+static void test_deviation_twin_8_7_returns_zero_when_all_twin_invalid(void)
+{
+    float rws[8]    = { 100, 100, 200, 200, 200, 200, 100, 100 };
+    Uint16 valid[8] = { 1, 1, 0, 0, 0, 0, 1, 1 };  /* all twin sensors fail */
+    TEST_ASSERT_FLOAT_WITHIN(1e-6f, 0.0f,
+        rapid_wear_deviation_twin_8_7(rws, valid, 8, 1));
+}
+
+/* NULL-arg defensive guards — coverage gap. */
+static void test_null_args_dont_crash(void)
+{
+    /* Each of these should return cleanly, NOT segfault. */
+    rapid_wear_init_sensor(NULL);
+    rapid_wear_apply_sample(NULL, 5.0f);
+    rapid_wear_reset_8_5(NULL, 5.0f, 1.0f);
+    rapid_wear_reset_8_7(NULL, 5.0f);
+    (void)rapid_wear_deviation_sensor_8_7(NULL, NULL, 0, 0);
+    (void)rapid_wear_deviation_cyl_8_7(NULL, NULL, 0, 0);
+    (void)rapid_wear_deviation_twin_8_7(NULL, NULL, 0, 0);
+    TEST_PASS_MESSAGE("NULL-arg defensive guards do not crash");
+}
+
 int main(void)
 {
     UNITY_BEGIN();
     RUN_TEST(test_reset_8_7_zeroes_rapid_slow);
     RUN_TEST(test_deviation_sensor_8_7_basic);
     RUN_TEST(test_deviation_cyl_8_7_basic);
+    RUN_TEST(test_deviation_twin_8_7_basic);
+    RUN_TEST(test_deviation_twin_8_7_with_failed_sensor_excludes_it);
+    RUN_TEST(test_deviation_twin_8_7_returns_zero_when_all_twin_invalid);
     RUN_TEST(test_single_8_7_min_of_abs);
     RUN_TEST(test_cyl_ave_8_7_min_of_abs);
     RUN_TEST(test_twin_ave_8_7_min_of_abs);
@@ -122,5 +170,6 @@ int main(void)
     RUN_TEST(test_dynamic_alarm_8_7_clamps_in_floor_range);
     RUN_TEST(test_dynamic_alarm_8_7_pauses_above_25_pct);
     RUN_TEST(test_should_pause_8_7_returns_correctly);
+    RUN_TEST(test_null_args_dont_crash);
     return UNITY_END();
 }

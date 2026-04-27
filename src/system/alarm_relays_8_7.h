@@ -20,6 +20,17 @@
  * v6.20 firmware has alarm output capability via digout.c, but the
  * XS81xx tag numbering and toggle semantics are NEW in 8.6 — Phase 4
  * task to fully comply.
+ *
+ * STATUS (per PR review F-08): this header models the relay STATE but
+ * does NOT yet model the spec-mandated escalation toggle (closed-opened-
+ * closed pulse on level transition). The toggle period is stored but
+ * never consulted. The escalation transition handler is a Phase B-4
+ * deliverable; track in host/docs/POST_AUTONOMOUS_TODO.md and
+ * INTEGRATION_LAYER_DESIGN.md.
+ *
+ * Currently `set_alarm` and `set_prewarning` write the same enum value;
+ * a future API revision will distinguish the two and arm a toggle pulse
+ * on the pre-warning → alarm transition.
  */
 
 #ifndef BWM_ALARM_RELAYS_8_7_H

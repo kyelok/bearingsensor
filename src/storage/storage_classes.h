@@ -9,6 +9,14 @@
  *   - Short term: 24h, ≥1/30 revs, +5 min after alarm
  *   - Rapid Wear floating: 2h
  *   - Long term: 6h max/min/avg, ≥5 years back
+ *
+ * STATUS (per PR review F-13): TYPE DEFINITIONS ONLY. This module currently
+ * defines the record shapes, event-type enum, and timing constants. It
+ * does NOT implement storage I/O — no FRAM persistence, no SD card writes,
+ * no event log emission. The integration layer (Phase B-6 per
+ * host/docs/INTEGRATION_LAYER_DESIGN.md) wires these types to the legacy
+ * sdcard.c for persistence; Phase B-7 adds the spec 8.6+ XML 4-part
+ * format. Until then these types are documentation artifacts.
  */
 
 #ifndef BWM_STORAGE_CLASSES_H

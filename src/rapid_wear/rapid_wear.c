@@ -17,6 +17,14 @@ void rapid_wear_init_sensor(rapid_wear_sensor_state_t *s)
     s->rapid_wear = 0.0f;
 }
 
+void rapid_wear_init_sensor_with_seed(rapid_wear_sensor_state_t *s, float initial_value)
+{
+    if (!s) return;
+    s->rapid_slow = initial_value;
+    s->rapid_fast = initial_value;
+    s->rapid_wear = 0.0f;  /* both EMAs equal → rapid_wear is 0, no startup transient */
+}
+
 void rapid_wear_apply_sample(rapid_wear_sensor_state_t *s, float v)
 {
     if (!s) return;
