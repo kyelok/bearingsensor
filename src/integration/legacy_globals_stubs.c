@@ -17,6 +17,27 @@
  * THIS FILE IS A SCAFFOLD. It is not the long-term home for these
  * symbols. See INTEGRATION_LAYER_DESIGN.md § "Bridge functions needed"
  * for the target architecture.
+ *
+ * ⚠ DANGEROUS-IF-USED-PAST-B1 — per PR review F-01/F-02:
+ *
+ * The dummy structs below intentionally use a generic
+ * legacy_engineering_globals (16-word) for many distinct legacy globals
+ * whose REAL sizes are larger and shapes are different. This file is
+ * SAFE for Phase B-1 (linker symbol resolution only — no code path
+ * actually executes against these stubs). It is UNSAFE the moment any
+ * legacy infrastructure code is linked AND called: legacy code that
+ * does e.g. `sensor[i].endresult = ...` will write past the end of the
+ * dummy and corrupt adjacent globals (similar in spirit to Bug Lv-005).
+ *
+ * Before Phase B-2 lands, this file MUST be replaced with either:
+ *   (a) `#include "globals.h"` from the legacy tree, so the real types
+ *       carry over, OR
+ *   (b) per-symbol stubs typed against the real legacy struct
+ *       definitions, sized correctly.
+ *
+ * The intentionally-small dummy size is now documented as a safety
+ * feature: it makes B-2 integration attempts fail conspicuously rather
+ * than silently corrupt memory.
  */
 
 #include "core/types.h"
