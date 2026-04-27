@@ -10,6 +10,10 @@ docs-pdf/
 # Local coverage matrix output (regenerable)
 host/coverage_matrix.md
 
+# Generated Doxygen output
+docs/html/
+docs/latex/
+
 # macOS
 .DS_Store
 ._*
