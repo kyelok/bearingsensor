@@ -1,17 +1,19 @@
-# Linux VM Setup for TI C2000 Cross-Compilation
+# Linux VM Setup for TI C2000 Cross-Compilation (legacy / optional path)
 
-> **Purpose**: Set up an Ubuntu Linux environment that can compile our refactored `src/` tree into a flashable `.a00` binary for the TI TMS320F2811 (C2000 DSP). This guide is platform-agnostic — works on macOS (Apple Silicon or Intel), Windows, and Linux hosts.
+> **UPDATE (2026-04-27)**: Per `host/docs/TI_TOOLCHAIN_RECOMMENDATION.md`, **a VM is no longer the recommended path**. TI CGT-C2000 ships with native **macOS** installers; the build runs on your Mac directly. This guide is preserved for two cases:
 >
-> **Estimated time**: 30–60 minutes to a working build.
+> 1. **Linux build environment preference** — some teams want all builds on a Linux x86_64 host for CI/reproducibility consistency.
+> 2. **CCS 3.3 regression oracle** — to produce a one-time byte-for-byte comparison binary using the original 2006-era toolchain, which only runs on Windows. Adapt Step 1 to a Windows VM (Win10/11) and follow CCS 3.3 install instructions instead of CGT.
+>
+> **For the recommended modern macOS-native path, skip this entire document and read `TI_TOOLCHAIN_RECOMMENDATION.md` instead.**
 
 ---
 
-## Why a Linux VM and not native?
+## Why a Linux VM (if you choose this path)?
 
-- TI Code Generation Tools (CGT) for C2000 ships for **Linux x86_64 and Windows x86_64**, not for macOS.
-- Running on Linux gives us a stable, reproducible build environment that matches what TI engineers use internally.
-- A VM (rather than dual-boot) lets you keep your macOS workflow.
-- The build is non-interactive, so there's no GUI lag concern.
+- Reproducibility — a clean Ubuntu 22.04 LTS image is easy to recreate.
+- Matches what runs in CI (we recommend Linux x86_64 for the GitHub Actions runner).
+- Some teams prefer Linux as their universal build environment.
 
 If you're already on Linux x86_64, skip to "Step 2: Install TI CGT-C2000".
 

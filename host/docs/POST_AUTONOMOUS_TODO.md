@@ -9,10 +9,10 @@ This document tracks everything that needs human attention after the autonomous 
 These cannot be done without physical hardware access.
 
 ### TI CGT-C2000 build pipeline
-- Install TI CGT-C2000 v22.x on a Linux host (or in a Docker container).
-- Author `build/Makefile` per the architecture in `host/specs/v6.20_compliance.md` Phase 0.3 description.
-- Reproduce a behaviorally-equivalent `.a00` binary from the unmodified `SourceCode1/SPU_Firmware/FirmwareSource_6.20/` source tree.
-- Validate behavioral equivalence against the field firmware `xtsw_v6_20 firm(160920).a00`.
+- **Decision**: Install TI CGT-C2000 v22.6.3 LTS natively on macOS (Apple Silicon supported via Rosetta-free x64 macOS installer; Intel macs use the same installer; Linux x64 also supported). NO VM REQUIRED. See `host/docs/TI_TOOLCHAIN_RECOMMENDATION.md` for the full rationale and risk analysis.
+- Author `build/Makefile.cross` invoking `cl2000 --abi=coffabi --silicon_version=28 --large_memory_model` and `hex2000 -boot -sci8 -a -romwidth 16`.
+- Reproduce a behaviorally-equivalent `.a00` binary from the unmodified `SourceCode1/SPU_Firmware/FirmwareSource_6.20/` source tree using the modern toolchain. Compare structurally against the field firmware `xtsw_v6_20 firm(160920).a00`.
+- Optional: stand up a Windows 10/11 VM with CCS 3.3 SR12 ONCE as a regression oracle (build legacy v6.20, byte-compare to field binary). Then build the same source with modern CGT and compare both structurally. This is the highest-confidence validation path; skip if VM setup is impractical.
 
 ### Cross-compile the refactored `src/` tree
 - Once the TI build pipeline is functional, point it at `src/`.
