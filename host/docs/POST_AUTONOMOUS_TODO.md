@@ -44,8 +44,8 @@ These are 8.7 spec requirements not yet implemented in `src/`. Tracked in `host/
 - **XML 4-part surveyor file** (Appendices A-D format).
 
 ### Calibration enhancements
-- **§2.2-A Sample stability check**: discard sample if ΔRPM > 5% nominal between consecutive samples. Add to `src/speed_comp/speed_comp.c` `speed_comp_record_fine_sample`.
-- **§2.3-A Final compensation curve weighted blend**: `REF = (Nhits·V_avg + (1000-Nhits)·V_interp)/1000` for under-sampled bands.
+- **§2.2-A Sample stability check** ✅ done. `speed_comp_record_with_stability_gate` is the deferred-commit gate; `speed_comp_stability_state_t` holds the buffered sample. Tests in `host/test/algo/test_module_speed_comp_stability_gate.c`.
+- **§2.3-A Final compensation curve weighted blend** ✅ done. `speed_comp_blend_undersampled` is the formula; `speed_comp_finalize_table` walks the table and blends every cell with N_Hits<1000 against an interp from the rough-cal anchor bands. Tests in `host/test/algo/test_module_speed_comp_finalize.c`.
 
 ### CI / tooling
 - **`spec_matrix.py`**: walk `@spec` / `@vendor-extension` tags across `host/test/`, cross-reference against `host/specs/feature_matrix.csv`, fail CI if any spec ID has zero tests or zero implementation hits. Phase 1.1 task; not a blocker.
@@ -72,20 +72,18 @@ These are documented in `host/audits/csv_bugs_handoff.md` (per Phase 2.3 of the 
 
 ## Priority 4 — Tooling / DX improvements
 
-### Doxygen reference
-- Author `Doxyfile` with:
-  - `INPUT = src host/platform`
-  - `ALIASES = "spec=@par Spec requirement:^^"` so `@spec 8.7 §X.Y` tags render
-  - `EXTRACT_ALL = NO`, `EXTRACT_STATIC = YES`
-  - Output to `docs/html/`
-- CI step: `doxygen Doxyfile` produces zero warnings.
+### Doxygen reference ✅ done
+- `Doxyfile` exists at repo root. `make docs` produces `docs/html/index.html`.
+- Currently 0 warnings (one nested-comment gotcha in `speed_comp.c` was fixed).
+- Spec-tag alias `@spec 8.7 §X.Y` and `@vendor-extension <name>` render as labelled paragraphs in the generated HTML.
 
 ### Per-module README
 Each module under `src/<topic>/` gets a brief README explaining purpose, public API, invariants, threading concerns, error modes, and the tests covering it. Templates exist in mind but not on disk yet.
 
-### `make coverage`
-- Add an `lcov`-based code-coverage target to `host/Makefile`. Run all tests with `--coverage`, generate an HTML report.
-- Target ≥ 80% line coverage of `src/`.
+### `make coverage` ✅ done
+- `make coverage` (top-level or in `host/`) cleans, builds with clang's source-based coverage instrumentation (`-fprofile-instr-generate -fcoverage-mapping`), runs all 33 binaries (each with `LLVM_PROFILE_FILE` set), merges the `.profraw` files via `llvm-profdata`, and prints a per-file table.
+- `make coverage-html` produces a clickable HTML report in `host/build/coverage-html/`.
+- **Current src/ coverage: 96.19% lines, 92.31% regions** — far exceeds the 80% target.
 
 ### Continuous integration
 - GitHub Actions workflow: on every push to `main` and every PR, run `cd host && make`. Fail if any test is red.

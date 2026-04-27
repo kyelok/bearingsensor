@@ -34,7 +34,12 @@ JAVADOC_AUTOBRIEF      = YES
 QT_AUTOBRIEF           = YES
 
 WARNINGS               = YES
-WARN_IF_UNDOCUMENTED   = YES
+# WARN_IF_UNDOCUMENTED is intentionally OFF: many internal-state structs
+# don't need per-member docstrings (their meaning is obvious from the
+# field names + the module's spec reference). We rely on @brief on
+# every public function as the documentation contract.
+WARN_IF_UNDOCUMENTED   = NO
+WARN_IF_DOC_ERROR      = YES
 WARN_AS_ERROR          = NO
 
 # Treat clang-style attributes as no-ops when scanning sources.

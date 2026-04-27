@@ -10,6 +10,14 @@ docs-pdf/
 # Local coverage matrix output (regenerable)
 host/coverage_matrix.md
 
+# Coverage instrumentation outputs (regenerable; from `make coverage`)
+*.profraw
+*.profdata
+*.gcda
+*.gcno
+*.gcov
+host/build/coverage-html/
+
 # Generated Doxygen output
 docs/html/
 docs/latex/

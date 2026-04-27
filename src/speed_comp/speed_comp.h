@@ -29,6 +29,10 @@
 #define SPEED_COMP_RECALC_INTERVAL_HOURS  50    /* @spec 8.5 §2.2 */
 #define SPEED_COMP_REFINEMENT_DELTA_LIMIT_HUNDREDTHS  20  /* @spec 8.5 §2.2 — 0.2 mm */
 
+/* @spec 8.5 §2.2-A — sample stability gate.
+ * Δrpm > 5% of nominal between consecutive samples → both discarded. */
+#define SPEED_COMP_STABILITY_DELTA_PCT  5
+
 /* The reference value table — large (8400 bytes), placed in FRAM in
  * production. This is the data accessed at every revolution and is
  * the table physically loaded into the chip's compensation RAM. */
@@ -99,5 +103,79 @@ Int16 speed_comp_apply(const speed_comp_table_t *t,
                        Uint16 rpm,
                        Uint16 nominal_rpm,
                        Int16 raw_sample_mm_hundredths);
+
+/* ------------------------------------------------------------------ */
+/* §2.2-A — sample stability gate                                      */
+/* ------------------------------------------------------------------ */
+
+/* Single-deep deferred-commit buffer. Holds the most recent sample
+ * pending validation by the next sample's RPM. If the next RPM is
+ * within 5% of nominal of the buffered RPM, the buffered sample is
+ * recorded; otherwise both are discarded. */
+typedef struct {
+    Int16  pending_sample;
+    Uint16 pending_rpm;
+    int    has_pending;
+} speed_comp_stability_state_t;
+
+void speed_comp_stability_init(speed_comp_stability_state_t *s);
+
+/**
+ * @spec 8.5 §2.2-A
+ * @brief Submit one fine-learning sample through the §2.2-A stability gate.
+ *
+ * Logic:
+ *  - First call (no buffered prev): the sample is buffered. Returns 0.
+ *  - Subsequent calls: |current_rpm − buffered_rpm| is compared against
+ *    SPEED_COMP_STABILITY_DELTA_PCT % of nominal_rpm. If within tolerance,
+ *    the buffered sample is recorded into the table at the band derived
+ *    from buffered_rpm; the new sample replaces the buffer. Returns 1.
+ *  - If outside tolerance, both buffered and current are discarded; the
+ *    buffer is cleared. Returns 0.
+ *
+ * @return 1 if a buffered sample was committed to the table, 0 otherwise. */
+int speed_comp_record_with_stability_gate(speed_comp_table_t *t,
+                                          speed_comp_learning_state_t *l,
+                                          speed_comp_stability_state_t *gate,
+                                          bwm_sensor_id_t sensor,
+                                          Uint16 current_rpm,
+                                          Uint16 nominal_rpm,
+                                          Int16 current_sample);
+
+/* ------------------------------------------------------------------ */
+/* §2.3-A — final compensation curve weighted blend                    */
+/* ------------------------------------------------------------------ */
+
+/**
+ * @spec 8.5 §2.3-A
+ * @brief Blend a partially-sampled band's running average with an
+ * interpolated value to produce a final reference.
+ *
+ * Per spec: REF = (N_Hits·Value_AvgNHits + (1000−N_Hits)·Value_Interp) / 1000.
+ *
+ * Edge cases:
+ *  - n_hits == 0 → returns value_interp (no samples; rely fully on interp).
+ *  - n_hits ≥ SPEED_COMP_FINE_SAMPLES_REQUIRED → returns value_avg_nhits
+ *    (already saturated; no blending needed). */
+Int16 speed_comp_blend_undersampled(Int16 value_avg_nhits,
+                                    Uint16 n_hits,
+                                    Int16 value_interp);
+
+/**
+ * @spec 8.5 §2.3-A
+ * @brief Finalize the compensation table at the end of refinement.
+ *
+ * Walks every (band, sensor) cell. For each cell where the sample count
+ * is below SPEED_COMP_FINE_SAMPLES_REQUIRED, computes Value_Interp by
+ * linearly interpolating between the table's stored anchor bands (or
+ * extrapolating using slope1/slope2 outside them) and applies the
+ * weighted blend. Cells with no samples and no usable anchor data are
+ * left unchanged.
+ *
+ * @note Caller is responsible for ensuring the rough-cal anchor bands
+ * (anchor_band_low/mid/high) are populated with valid reference values
+ * before calling this. */
+void speed_comp_finalize_table(speed_comp_table_t *t,
+                               const speed_comp_learning_state_t *l);
 
 #endif /* BWM_SPEED_COMP_H */
