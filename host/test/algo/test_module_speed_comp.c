@@ -5,9 +5,14 @@
 #include "unity.h"
 #include "speed_comp/speed_comp.h"
 
-static speed_comp_table_t t;
+static speed_comp_table_t          t;
+static speed_comp_learning_state_t learning;
 
-void setUp(void)    { speed_comp_init(&t); }
+void setUp(void)
+{
+    speed_comp_init(&t);
+    speed_comp_learning_init(&learning);
+}
 void tearDown(void) { }
 
 static void test_init_zeros_table(void)
@@ -46,17 +51,17 @@ static void test_record_and_lookup_round_trip(void)
 {
     /* Record 1000 samples of value 200 at band 50, sensor 3 */
     for (int i = 0; i < 1000; i++) {
-        speed_comp_record_fine_sample(&t, 50, 3, 200);
+        speed_comp_record_fine_sample(&t, &learning, 50, 3, 200);
     }
     TEST_ASSERT_EQUAL_INT16(200, speed_comp_lookup(&t, 50, 3));
-    TEST_ASSERT_EQUAL_INT(1, speed_comp_finalize_band_if_ready(&t, 50, 3));
+    TEST_ASSERT_EQUAL_INT(1, speed_comp_finalize_band_if_ready(&learning, 50, 3));
 }
 
 static void test_running_average_converges(void)
 {
     /* Mix of samples averages correctly. */
-    speed_comp_record_fine_sample(&t, 10, 0, 100);
-    speed_comp_record_fine_sample(&t, 10, 0, 200);
+    speed_comp_record_fine_sample(&t, &learning, 10, 0, 100);
+    speed_comp_record_fine_sample(&t, &learning, 10, 0, 200);
     /* 2 samples: (100*0+100)/1 → 100; (100*1+200)/2 → 150 */
     TEST_ASSERT_EQUAL_INT16(150, speed_comp_lookup(&t, 10, 0));
 }
@@ -76,7 +81,7 @@ static void test_interpolate_endpoints(void)
 static void test_apply_subtracts_reference(void)
 {
     for (int i = 0; i < 1000; i++) {
-        speed_comp_record_fine_sample(&t, 50, 0, 50); /* ref = 50 at band 50 */
+        speed_comp_record_fine_sample(&t, &learning, 50, 0, 50); /* ref = 50 at band 50 */
     }
     /* Now look up at the rpm that maps to band 50 (about 50 % of the
      * way through 20-110%, so ~65 RPM at nominal=100). */

@@ -29,15 +29,27 @@
 #define SPEED_COMP_RECALC_INTERVAL_HOURS  50    /* @spec 8.5 §2.2 */
 #define SPEED_COMP_REFINEMENT_DELTA_LIMIT_HUNDREDTHS  20  /* @spec 8.5 §2.2 — 0.2 mm */
 
+/* The reference value table — large (8400 bytes), placed in FRAM in
+ * production. This is the data accessed at every revolution and is
+ * the table physically loaded into the chip's compensation RAM. */
 typedef struct {
     Int16 reference[BWM_SPEED_BANDS][BWM_MAX_SENSORS];
-    Uint16 sample_count[BWM_SPEED_BANDS][BWM_MAX_SENSORS];
-    Int16 anchor_band_low;   /* lower of the 3 rough-cal bands */
+    Int16 anchor_band_low;
     Int16 anchor_band_mid;
     Int16 anchor_band_high;
 } speed_comp_table_t;
 
+/* Sample counts during learning. Lives in a different memory region
+ * because it is only used during the 500-hour fine-learning phase and
+ * can be placed in scratch FRAM or even on heap during learning, then
+ * discarded. Separating from speed_comp_table_t halves the RAM
+ * requirement for the always-resident table. */
+typedef struct {
+    Uint16 count[BWM_SPEED_BANDS][BWM_MAX_SENSORS];
+} speed_comp_learning_state_t;
+
 void speed_comp_init(speed_comp_table_t *t);
+void speed_comp_learning_init(speed_comp_learning_state_t *l);
 
 /**
  * @spec 8.5 §2.0
@@ -58,6 +70,7 @@ Int16 speed_comp_lookup(const speed_comp_table_t *t,
  * @brief Record one sample for a (band, sensor) pair during fine learning.
  * After SPEED_COMP_FINE_SAMPLES_REQUIRED samples, the average becomes the reference. */
 void speed_comp_record_fine_sample(speed_comp_table_t *t,
+                                   speed_comp_learning_state_t *l,
                                    int band,
                                    bwm_sensor_id_t sensor,
                                    Int16 sample_mm_hundredths);
@@ -66,7 +79,7 @@ void speed_comp_record_fine_sample(speed_comp_table_t *t,
  * @spec 8.5 §2.2
  * @brief Check if a band has accumulated enough samples to be valid.
  * @return 1 if the band is valid; 0 otherwise. */
-int speed_comp_finalize_band_if_ready(speed_comp_table_t *t,
+int speed_comp_finalize_band_if_ready(const speed_comp_learning_state_t *l,
                                       int band,
                                       bwm_sensor_id_t sensor);
 

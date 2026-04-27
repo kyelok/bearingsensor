@@ -9,10 +9,15 @@ void speed_comp_init(speed_comp_table_t *t)
 {
     if (!t) return;
     word_zero((Uint16*)t->reference, BWM_SPEED_BANDS * BWM_MAX_SENSORS);
-    word_zero(t->sample_count[0], BWM_SPEED_BANDS * BWM_MAX_SENSORS);
     t->anchor_band_low  = -1;
     t->anchor_band_mid  = -1;
     t->anchor_band_high = -1;
+}
+
+void speed_comp_learning_init(speed_comp_learning_state_t *l)
+{
+    if (!l) return;
+    word_zero(l->count[0], BWM_SPEED_BANDS * BWM_MAX_SENSORS);
 }
 
 int speed_comp_rpm_to_band(Uint16 rpm, Uint16 nominal_rpm)
@@ -40,30 +45,32 @@ Int16 speed_comp_lookup(const speed_comp_table_t *t, int band, bwm_sensor_id_t s
     return t->reference[band][sensor];
 }
 
-void speed_comp_record_fine_sample(speed_comp_table_t *t, int band,
-                                   bwm_sensor_id_t sensor, Int16 sample)
+void speed_comp_record_fine_sample(speed_comp_table_t *t,
+                                   speed_comp_learning_state_t *l,
+                                   int band, bwm_sensor_id_t sensor,
+                                   Int16 sample)
 {
-    if (!t) return;
+    if (!t || !l) return;
     if (band < 0 || band >= BWM_SPEED_BANDS) return;
     if (sensor >= BWM_MAX_SENSORS) return;
 
     /* Running average update (incremental). */
-    Uint16 n = t->sample_count[band][sensor];
+    Uint16 n = l->count[band][sensor];
     if (n < SPEED_COMP_FINE_SAMPLES_REQUIRED) {
         Int32 cur = t->reference[band][sensor];
         Int32 next = (cur * (Int32)n + sample) / (Int32)(n + 1);
         t->reference[band][sensor] = (Int16)next;
-        t->sample_count[band][sensor] = n + 1;
+        l->count[band][sensor] = n + 1;
     }
 }
 
-int speed_comp_finalize_band_if_ready(speed_comp_table_t *t, int band,
-                                      bwm_sensor_id_t sensor)
+int speed_comp_finalize_band_if_ready(const speed_comp_learning_state_t *l,
+                                      int band, bwm_sensor_id_t sensor)
 {
-    if (!t) return 0;
+    if (!l) return 0;
     if (band < 0 || band >= BWM_SPEED_BANDS) return 0;
     if (sensor >= BWM_MAX_SENSORS) return 0;
-    return t->sample_count[band][sensor] >= SPEED_COMP_FINE_SAMPLES_REQUIRED;
+    return l->count[band][sensor] >= SPEED_COMP_FINE_SAMPLES_REQUIRED;
 }
 
 Int16 speed_comp_interpolate(Int16 ref_low, int band_low,
