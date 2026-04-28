@@ -14,6 +14,7 @@ build/*
 !build/Makefile.legacy.cross.O1bootfix
 !build/Makefile.legacy.cross.O1bootfix_nomt
 !build/Makefile.legacy.cross.O1full
+!build/Makefile.legacy.cgt18
 !build/bearingwear.bootfix.cmd
 !build/Makefile.hybrid
 !build/Makefile.hybrid_pristine
@@ -36,6 +37,18 @@ host/build/coverage-html/
 # Generated Doxygen output
 docs/html/
 docs/latex/
+
+# CCS / Eclipse workspace artifacts (created when CCS opens any dir
+# as a workspace — pollutes the source tree with browser cache, etc.)
+.jxbrowser-data/
+.metadata/
+RemoteSystemsTempFiles/
+.settings/
+.cproject
+.project
+SourceCode1/SPU_Firmware/FirmwareSource_6.20/.gitignore
+SourceCode1/SPU_Firmware/FirmwareSource_6.20/.jxbrowser-data/
+SourceCode1/SPU_Firmware/FirmwareSource_6.20/RemoteSystemsTempFiles/
 
 # macOS
 .DS_Store

@@ -1,0 +1,80 @@
+# build/Makefile.legacy.cgt18
+#
+# Build the legacy v6.20 SPU firmware using the C2000 CGT 18.12.1 LTS
+# that ships with CCS 9.0. This is 7 major versions older than the
+# CGT 25.11 we've been failing with, and chronologically much closer
+# to the CCS 3.3 era CGT 5.x that AMOT used in 2016.
+#
+# Hypothesis: a 2018-era CGT runtime library is more likely to have
+# binary-compatible boot code with the F2811 / CCS 3.3 conventions
+# than a 2025-era runtime.
+#
+# Output:
+#   build/legacy_cgt18/bearingwear-cgt18.out
+#   build/legacy_cgt18/bearingwear-cgt18.a00
+#   build/legacy_cgt18/bearingwear-cgt18.map
+
+C2000_CGT  ?= /Applications/ti/ccs900/ccs/tools/compiler/ti-cgt-c2000_18.12.1.LTS
+CL2000     := $(C2000_CGT)/bin/cl2000
+HEX2000    := $(C2000_CGT)/bin/hex2000
+
+SRCDIR     := SourceCode1/SPU_Firmware/FirmwareSource_6.20
+OUTDIR     := build/legacy_cgt18
+
+# Match legacy CCS 3.3 flags as closely as possible.
+# Note: CGT 18.12 still has -mt (unified mode); kept off here to match
+# the legacy -md option from CCS 3.3 era (which was the data-mode
+# addressing flag, closest equivalent in modern CGT being "no -mt").
+CFLAGS     := -v28 -ml --abi=coffabi -O1 \
+              -I $(SRCDIR) \
+              -I $(C2000_CGT)/include
+
+LDFLAGS    := -v28 -ml --abi=coffabi --run_linker \
+              --rom_model \
+              --heap_size=400 \
+              --stack_size=450 \
+              --map_file=$(OUTDIR)/bearingwear-cgt18.map \
+              --output_file=$(OUTDIR)/bearingwear-cgt18.out \
+              -i $(C2000_CGT)/lib
+
+LIBS       := -lrts2800_ml.lib
+
+# CGT 18.12 already uses boot28.asm.obj (verified empirically); use
+# the patched .cmd that pins it to the BOOT memory range.
+LCF        := build/bearingwear.bootfix.cmd
+
+ALL_C      := $(wildcard $(SRCDIR)/*.c)
+DEAD_C     := $(SRCDIR)/compensate.c
+SRC_C      := $(filter-out $(DEAD_C),$(ALL_C))
+OBJ_C      := $(patsubst $(SRCDIR)/%.c,$(OUTDIR)/%.o,$(SRC_C))
+
+SRC_ASM    := $(SRCDIR)/DSP281x_CodeStartBranch.asm $(SRCDIR)/fir16.asm
+OBJ_ASM    := $(patsubst $(SRCDIR)/%.asm,$(OUTDIR)/%.o,$(SRC_ASM))
+
+OBJS       := $(OBJ_C) $(OBJ_ASM)
+
+all: $(OUTDIR)/bearingwear-cgt18.a00
+
+$(OUTDIR):
+	@mkdir -p $@
+
+$(OUTDIR)/%.o: $(SRCDIR)/%.c | $(OUTDIR)
+	@$(CL2000) $(CFLAGS) -c $< --output_file=$@ 2>/dev/null
+
+$(OUTDIR)/%.o: $(SRCDIR)/%.asm | $(OUTDIR)
+	@$(CL2000) -v28 -ml --abi=coffabi -I $(SRCDIR) -I $(C2000_CGT)/include \
+	    -c $< --output_file=$@ 2>/dev/null
+
+$(OUTDIR)/bearingwear-cgt18.out: $(OBJS) $(LCF)
+	@echo "Linking $@..."
+	@$(CL2000) $(LDFLAGS) $(OBJS) $(LCF) $(LIBS)
+
+$(OUTDIR)/bearingwear-cgt18.a00: $(OUTDIR)/bearingwear-cgt18.out
+	@echo "Generating $@..."
+	@cd $(OUTDIR) && $(HEX2000) bearingwear-cgt18.out -boot -sci8 -a 2>&1 | grep -v 'auto-generated' || true
+	@perl -pi -e 's/\r?\n/\r\n/g' $@
+
+clean:
+	@rm -rf $(OUTDIR)
+
+.PHONY: all clean
