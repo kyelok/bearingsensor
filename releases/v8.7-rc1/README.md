@@ -32,6 +32,22 @@ shasum -a 256 -c SHA256SUMS
 3. Flash `bwm_hybrid.fr2` → confirm bridge architecture works (integration validation).
 4. Flash `bwm_hybrid_pristine.fr2` → confirm spec-pristine modal + latching match v6.20 on real signals (spec-compliance validation).
 
+## Toolchain-flag variants of the legacy build (for bench triage)
+
+The first attempt at flashing `bearingwear.fr2` (built with `-O2`, `-mt`) produced "Failed to check versions after update" — the new firmware flashed successfully but Modbus never came up after reboot. This is symptomatic of timing-sensitive peripheral init code being aggressively optimized away. Two additional `.a00` files are staged here for re-conversion via the AMOT FR2 Generator:
+
+| File | Size | Differs from legacy build by | Hypothesis |
+|---|---|---|---|
+| `bearingwear-O1.a00` | 468,726 | `-O1` instead of `-O2` | Match legacy CCS 3.3's `-o1` optimization; preserve busy-wait timing loops in SCI/SPI/ADC init code |
+| `bearingwear-O1nomt.a00` | 468,788 | `-O1` AND drop `-mt` flag | Same as above plus closer to legacy's `-md` data-mode addressing semantics |
+
+Note: `bearingwear-O1heap.a00` was generated as a separate experiment but turned out **byte-identical** to `bearingwear-O1.a00` because `.esysmem` is uninitialized and not in the boot table — the heap-relocation hypothesis is therefore not testable via this mechanism. SHA-256 confirms identity.
+
+**Bench order for triage**:
+1. Convert `bearingwear-O1.a00` → `.fr2` via FR2 Generator. Flash. If "Failed to check versions after update" stops happening, the optimization-level theory was correct.
+2. If O1 still fails the same way, convert `bearingwear-O1nomt.a00` → `.fr2`. Flash. If that succeeds, the `-mt` addressing-mode theory was the cause.
+3. If both still fail, see "Other ideas" in `implementation_docs/POST_AUTONOMOUS_TODO.md` — runtime library version, fir16.asm calling convention, etc.
+
 Decision tree for outcomes is in `implementation_docs/POST_AUTONOMOUS_TODO.md` Priority 0 § "Phase B integration finishing work" and `official_docs/SPEC_COMPLIANCE.md`.
 
 ## How these were produced

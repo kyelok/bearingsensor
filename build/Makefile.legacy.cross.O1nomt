@@ -1,0 +1,69 @@
+# build/Makefile.legacy.cross.O1nomt
+#
+# VARIANT 3 of the legacy v6.20 build:
+#   `-O1` AND drop `-mt` (unified memory mode). Legacy CCS 3.3 used
+#   `-md` (data-mode) instead of `-mt`. Modern CGT may treat addressing
+#   modes differently in `-mt` mode in ways that don't match legacy
+#   peripheral-driver expectations.
+#
+# Output:
+#   build/legacy_o1nomt/bearingwear-O1nomt.out
+#   build/legacy_o1nomt/bearingwear-O1nomt.a00
+#   build/legacy_o1nomt/bearingwear-O1nomt.map
+
+C2000_CGT  ?= /Applications/ti/ti-cgt-c2000_25.11.0.LTS
+CL2000     := $(C2000_CGT)/bin/cl2000
+HEX2000    := $(C2000_CGT)/bin/hex2000
+
+SRCDIR     := SourceCode1/SPU_Firmware/FirmwareSource_6.20
+OUTDIR     := build/legacy_o1nomt
+
+# *** KEY: no -mt ***
+CFLAGS     := -v28 -ml --abi=coffabi -O1 \
+              -I $(SRCDIR) \
+              -I $(C2000_CGT)/include
+
+LDFLAGS    := -v28 -ml --abi=coffabi --run_linker \
+              --heap_size=128 \
+              --map_file=$(OUTDIR)/bearingwear-O1nomt.map \
+              --output_file=$(OUTDIR)/bearingwear-O1nomt.out \
+              -i $(C2000_CGT)/lib
+
+LIBS       := -lrts2800_ml.lib
+LCF        := build/legacy/bearingwear.modern.cmd
+
+ALL_C      := $(wildcard $(SRCDIR)/*.c)
+DEAD_C     := $(SRCDIR)/compensate.c
+SRC_C      := $(filter-out $(DEAD_C),$(ALL_C))
+OBJ_C      := $(patsubst $(SRCDIR)/%.c,$(OUTDIR)/%.o,$(SRC_C))
+
+SRC_ASM    := $(SRCDIR)/DSP281x_CodeStartBranch.asm $(SRCDIR)/fir16.asm
+OBJ_ASM    := $(patsubst $(SRCDIR)/%.asm,$(OUTDIR)/%.o,$(SRC_ASM))
+
+OBJS       := $(OBJ_C) $(OBJ_ASM)
+
+all: $(OUTDIR)/bearingwear-O1nomt.a00
+
+$(OUTDIR):
+	@mkdir -p $@
+
+$(OUTDIR)/%.o: $(SRCDIR)/%.c | $(OUTDIR)
+	@$(CL2000) $(CFLAGS) -c $< --output_file=$@ 2>/dev/null
+
+$(OUTDIR)/%.o: $(SRCDIR)/%.asm | $(OUTDIR)
+	@$(CL2000) -v28 -ml --abi=coffabi -I $(SRCDIR) -I $(C2000_CGT)/include \
+	    -c $< --output_file=$@ 2>/dev/null
+
+$(OUTDIR)/bearingwear-O1nomt.out: $(OBJS) $(LCF)
+	@echo "Linking $@..."
+	@$(CL2000) $(LDFLAGS) $(OBJS) $(LCF) $(LIBS)
+
+$(OUTDIR)/bearingwear-O1nomt.a00: $(OUTDIR)/bearingwear-O1nomt.out
+	@echo "Generating $@..."
+	@cd $(OUTDIR) && $(HEX2000) bearingwear-O1nomt.out -boot -sci8 -a 2>&1 | grep -v 'auto-generated' || true
+	@perl -pi -e 's/\r?\n/\r\n/g' $@
+
+clean:
+	@rm -rf $(OUTDIR)
+
+.PHONY: all clean

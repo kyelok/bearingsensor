@@ -1,0 +1,78 @@
+# build/Makefile.legacy.cross.O1heap
+#
+# VARIANT 2 of the legacy v6.20 build:
+#   `-O1` (matches legacy CCS 3.3) AND uses the ORIGINAL unmodified
+#   linker .cmd file (`bearingwear.cmd`), keeping `.esysmem` in
+#   L0L1RAM. This restores the full memory layout to legacy semantics.
+#
+# Hypothesis on top of v1: heap relocation to H0RAM (which we did in
+# bearingwear.modern.cmd to avoid an .ebss overflow that only mattered
+# for the hybrid build) might be breaking code that touches malloc/free
+# or DMA buffers that expect the heap in L0L1RAM.
+#
+# This variant tests v1's hypothesis (-O1 fixes timing) AND v2's
+# hypothesis (heap location matters) at the same time.
+#
+# Output:
+#   build/legacy_o1heap/bearingwear-O1heap.out
+#   build/legacy_o1heap/bearingwear-O1heap.a00
+#   build/legacy_o1heap/bearingwear-O1heap.map
+
+C2000_CGT  ?= /Applications/ti/ti-cgt-c2000_25.11.0.LTS
+CL2000     := $(C2000_CGT)/bin/cl2000
+HEX2000    := $(C2000_CGT)/bin/hex2000
+
+SRCDIR     := SourceCode1/SPU_Firmware/FirmwareSource_6.20
+OUTDIR     := build/legacy_o1heap
+
+CFLAGS     := -v28 -ml -mt --abi=coffabi -O1 \
+              -I $(SRCDIR) \
+              -I $(C2000_CGT)/include
+
+LDFLAGS    := -v28 -ml -mt --abi=coffabi --run_linker \
+              --heap_size=128 \
+              --map_file=$(OUTDIR)/bearingwear-O1heap.map \
+              --output_file=$(OUTDIR)/bearingwear-O1heap.out \
+              -i $(C2000_CGT)/lib
+
+LIBS       := -lrts2800_ml.lib
+
+# *** KEY DIFFERENCE FROM Makefile.legacy.cross / .O1: ***
+# Use the ORIGINAL .cmd file (which puts .esysmem back in L0L1RAM).
+LCF        := $(SRCDIR)/bearingwear.cmd
+
+ALL_C      := $(wildcard $(SRCDIR)/*.c)
+DEAD_C     := $(SRCDIR)/compensate.c
+SRC_C      := $(filter-out $(DEAD_C),$(ALL_C))
+OBJ_C      := $(patsubst $(SRCDIR)/%.c,$(OUTDIR)/%.o,$(SRC_C))
+
+SRC_ASM    := $(SRCDIR)/DSP281x_CodeStartBranch.asm $(SRCDIR)/fir16.asm
+OBJ_ASM    := $(patsubst $(SRCDIR)/%.asm,$(OUTDIR)/%.o,$(SRC_ASM))
+
+OBJS       := $(OBJ_C) $(OBJ_ASM)
+
+all: $(OUTDIR)/bearingwear-O1heap.a00
+
+$(OUTDIR):
+	@mkdir -p $@
+
+$(OUTDIR)/%.o: $(SRCDIR)/%.c | $(OUTDIR)
+	@$(CL2000) $(CFLAGS) -c $< --output_file=$@ 2>/dev/null
+
+$(OUTDIR)/%.o: $(SRCDIR)/%.asm | $(OUTDIR)
+	@$(CL2000) -v28 -ml -mt --abi=coffabi -I $(SRCDIR) -I $(C2000_CGT)/include \
+	    -c $< --output_file=$@ 2>/dev/null
+
+$(OUTDIR)/bearingwear-O1heap.out: $(OBJS) $(LCF)
+	@echo "Linking $@..."
+	@$(CL2000) $(LDFLAGS) $(OBJS) $(LCF) $(LIBS)
+
+$(OUTDIR)/bearingwear-O1heap.a00: $(OUTDIR)/bearingwear-O1heap.out
+	@echo "Generating $@..."
+	@cd $(OUTDIR) && $(HEX2000) bearingwear-O1heap.out -boot -sci8 -a 2>&1 | grep -v 'auto-generated' || true
+	@perl -pi -e 's/\r?\n/\r\n/g' $@
+
+clean:
+	@rm -rf $(OUTDIR)
+
+.PHONY: all clean

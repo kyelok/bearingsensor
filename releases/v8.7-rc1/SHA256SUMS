@@ -1,14 +1,13 @@
 # SHA-256 hashes for v8.7-rc1 firmware artifacts
-# Generated 2026-04-28T05:19:10Z on Darwin/arm64
+# Updated 2026-04-28 with .a00 toolchain-flag triage variants
 
-## Deliverable .fr2 files (flashable):
-c864a385f6a7aaf324d40d1426484ac58a1245f17c2c49957f8723f0e7f9bae2  bearingwear.fr2
+## .fr2 deliverables (flashable, FR2 Generator output):
 415e363d553fa3344eaec0eb66704bbd3f1c0cf104242c1b2e5e7b76e4740438  bwm_hybrid.fr2
+c864a385f6a7aaf324d40d1426484ac58a1245f17c2c49957f8723f0e7f9bae2  bearingwear.fr2
 caf6fc4feb961ba7170fb7271455041b7e4db776675ffdcf8dbb213154f6f6a2  bwm_hybrid_pristine.fr2
 cc32477539d90f038bdfbfe4ee492ddc178694341a754aebf63ff87218ed6aa0  regression_oracle_v6_20.fr2
 
-## Source .a00 hashes (these are the inputs that produced the .fr2 above):
-56552fb747eddb0c2728299a2a0cb6bdfc673b98ff2706929fc3fb307a4807e5  build/legacy/bearingwear.a00
-e0614933ed16ceee2807294901c9634ea800f89a364bc6c2e1d31cc6535c2c79  build/hybrid/bwm_hybrid.a00
-51a990db5ba96fb307eadc743784148dbb999a0fdb3bffb9f853acd121dd66bb  build/hybrid_pristine/bwm_hybrid_pristine.a00
-3513283eaea5047022467eaa29c8ba0d043a288769c5d03124248f730af8992c  SourceCode1/SPU_Firmware/FirmwareSource_6.20/xtsw_v6_20 firm(160920).a00
+## .a00 inputs (feed to AMOT FR2 Generator on Windows):
+4c6a829550d57c887f2e799b9f857256d3f6663ad1abb44bbc1bd962c3e3274d  bearingwear-O1.a00
+4c6a829550d57c887f2e799b9f857256d3f6663ad1abb44bbc1bd962c3e3274d  bearingwear-O1heap.a00
+8b4a590c67621755eb453e818feb7067bc3457711a25927320ca23f002609473  bearingwear-O1nomt.a00

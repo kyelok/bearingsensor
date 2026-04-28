@@ -8,6 +8,9 @@ host/build/
 build/*
 !build/Makefile.cross
 !build/Makefile.legacy.cross
+!build/Makefile.legacy.cross.O1
+!build/Makefile.legacy.cross.O1heap
+!build/Makefile.legacy.cross.O1nomt
 !build/Makefile.hybrid
 !build/Makefile.hybrid_pristine
 !build/README.md
