@@ -1,0 +1,89 @@
+# build/Makefile.legacy.cross.O1full
+#
+# VARIANT 5+ of the legacy v6.20 build: combine ALL identified fixes:
+#
+#   - `-O1` (matches legacy CCS 3.3 -o1)
+#   - bootfix .cmd (boot28.asm.obj instead of boot.obj — pins
+#     _c_int00 at flash 0x3F7F00)
+#   - **`--rom_model`** (-c) — match legacy linker flag from
+#     BearingWear.pjt: `-c` = ROM autoinit. Without this, modern
+#     CGT may default to RAM autoinit, in which case _c_int00 reads
+#     .cinit from RAM (which is uninitialized at boot from flash) →
+#     globals get corrupted → garbage execution → no Modbus.
+#   - **`--heap_size=400`** — match legacy `-heap400`. Our default of
+#     128 was a guess; legacy uses 400.
+#   - **`--stack_size=450`** — match legacy `-stack450`. Our default
+#     was the linker's default (1024).
+#   - drop `-mt` (legacy used -md instead) — keep for now in case
+#     it's also load-bearing
+#
+# This is the "throw everything at it" variant. If this still fails,
+# the cause is something even deeper (.cinit binary format, compiler
+# code-gen for a specific peripheral, etc.) and CCS 3.3 is the right
+# escalation.
+#
+# Output:
+#   build/legacy_o1full/bearingwear-O1full.out
+#   build/legacy_o1full/bearingwear-O1full.a00
+#   build/legacy_o1full/bearingwear-O1full.map
+
+C2000_CGT  ?= /Applications/ti/ti-cgt-c2000_25.11.0.LTS
+CL2000     := $(C2000_CGT)/bin/cl2000
+HEX2000    := $(C2000_CGT)/bin/hex2000
+
+SRCDIR     := SourceCode1/SPU_Firmware/FirmwareSource_6.20
+OUTDIR     := build/legacy_o1full
+
+# -O1, no -mt, no --abi=coffabi (let modern default = coffabi for
+# legacy compatibility — same effective ABI either way).
+CFLAGS     := -v28 -ml --abi=coffabi -O1 \
+              -I $(SRCDIR) \
+              -I $(C2000_CGT)/include
+
+# Linker flags: ROM autoinit, match legacy heap/stack sizes
+LDFLAGS    := -v28 -ml --abi=coffabi --run_linker \
+              --rom_model \
+              --heap_size=400 \
+              --stack_size=450 \
+              --map_file=$(OUTDIR)/bearingwear-O1full.map \
+              --output_file=$(OUTDIR)/bearingwear-O1full.out \
+              -i $(C2000_CGT)/lib
+
+LIBS       := -lrts2800_ml.lib
+LCF        := build/bearingwear.bootfix.cmd
+
+ALL_C      := $(wildcard $(SRCDIR)/*.c)
+DEAD_C     := $(SRCDIR)/compensate.c
+SRC_C      := $(filter-out $(DEAD_C),$(ALL_C))
+OBJ_C      := $(patsubst $(SRCDIR)/%.c,$(OUTDIR)/%.o,$(SRC_C))
+
+SRC_ASM    := $(SRCDIR)/DSP281x_CodeStartBranch.asm $(SRCDIR)/fir16.asm
+OBJ_ASM    := $(patsubst $(SRCDIR)/%.asm,$(OUTDIR)/%.o,$(SRC_ASM))
+
+OBJS       := $(OBJ_C) $(OBJ_ASM)
+
+all: $(OUTDIR)/bearingwear-O1full.a00
+
+$(OUTDIR):
+	@mkdir -p $@
+
+$(OUTDIR)/%.o: $(SRCDIR)/%.c | $(OUTDIR)
+	@$(CL2000) $(CFLAGS) -c $< --output_file=$@ 2>/dev/null
+
+$(OUTDIR)/%.o: $(SRCDIR)/%.asm | $(OUTDIR)
+	@$(CL2000) -v28 -ml --abi=coffabi -I $(SRCDIR) -I $(C2000_CGT)/include \
+	    -c $< --output_file=$@ 2>/dev/null
+
+$(OUTDIR)/bearingwear-O1full.out: $(OBJS) $(LCF)
+	@echo "Linking $@..."
+	@$(CL2000) $(LDFLAGS) $(OBJS) $(LCF) $(LIBS)
+
+$(OUTDIR)/bearingwear-O1full.a00: $(OUTDIR)/bearingwear-O1full.out
+	@echo "Generating $@..."
+	@cd $(OUTDIR) && $(HEX2000) bearingwear-O1full.out -boot -sci8 -a 2>&1 | grep -v 'auto-generated' || true
+	@perl -pi -e 's/\r?\n/\r\n/g' $@
+
+clean:
+	@rm -rf $(OUTDIR)
+
+.PHONY: all clean
