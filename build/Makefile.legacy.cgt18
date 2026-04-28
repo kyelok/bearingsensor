@@ -26,6 +26,7 @@ OUTDIR     := build/legacy_cgt18
 # the legacy -md option from CCS 3.3 era (which was the data-mode
 # addressing flag, closest equivalent in modern CGT being "no -mt").
 CFLAGS     := -v28 -ml --abi=coffabi -O1 \
+              -DLARGE_MODEL \
               -I $(SRCDIR) \
               -I $(C2000_CGT)/include
 
