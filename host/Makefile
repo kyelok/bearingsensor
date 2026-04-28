@@ -23,7 +23,10 @@ CFLAGS      += -I../src
 
 UNITY_SRC   := third_party/unity/src/unity.c
 FAKE_SRCS   := $(wildcard fakes/*.c)
-SRC_SRCS    := $(wildcard ../src/*/*.c)
+# Exclude the hybrid-only bridge file; it #includes legacy headers
+# (globals.h, man.h) that aren't on the host include path.
+SRC_EXCL    := ../src/integration/man_legacy_bridge.c
+SRC_SRCS    := $(filter-out $(SRC_EXCL),$(wildcard ../src/*/*.c))
 BUILD_DIR   := build
 
 TEST_SRCS   := $(wildcard test/algo/*.c test/protocol/*.c test/integration/*.c)
