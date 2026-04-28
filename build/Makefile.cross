@@ -1,0 +1,101 @@
+# build/Makefile.cross
+#
+# Cross-compile the REFACTORED src/ tree (v8.7-compliant BWM firmware)
+# using modern TI CGT 25.11. Produces a flashable .a00 binary.
+#
+# STATUS: Bare-bones. Uses src/main.c as the entry point. Does NOT
+# yet include ADC ISR, SPI FRAM init, SCI Modbus, SD card I/O, etc.
+# Those integration layers are tracked in
+# host/docs/POST_AUTONOMOUS_TODO.md § Priority 2.
+#
+# This Makefile proves end-to-end that the refactored src/ tree can
+# be linked into a flashable .a00 binary using modern TI CGT.
+#
+# Usage:
+#   make -f build/Makefile.cross
+#
+# Output:
+#   build/src/bwm.out      -- COFF executable
+#   build/src/bwm.a00      -- ASCII-hex bootloader format
+#   build/src/bwm.map      -- linker map
+
+C2000_CGT  ?= /Applications/ti/ti-cgt-c2000_25.11.0.LTS
+CL2000     := $(C2000_CGT)/bin/cl2000
+HEX2000    := $(C2000_CGT)/bin/hex2000
+
+OUTDIR     := build/src
+LCF        := build/legacy/bearingwear.modern.cmd
+
+# Compile flags — same as legacy build, plus --c99 since src/ uses
+# C99-style for(int i=0; ...) loop variable declarations.
+CFLAGS     := -v28 -ml -mt --abi=coffabi --c99 -O2 \
+              -I src \
+              -I src/core \
+              -I host/platform \
+              -I $(C2000_CGT)/include
+
+LDFLAGS    := -v28 -ml -mt --abi=coffabi --run_linker \
+              --heap_size=128 \
+              --map_file=$(OUTDIR)/bwm.map \
+              --output_file=$(OUTDIR)/bwm.out \
+              -i $(C2000_CGT)/lib
+
+LIBS       := -lrts2800_ml.lib
+
+# All .c files under src/, including main.c. Exclude the hybrid-only
+# bridge files (they #include legacy headers — globals.h, man.h, fat.h —
+# which aren't on the src-only include path).
+EXCL       := src/integration/man_legacy_bridge.c \
+              src/integration/sd_bridge.c
+SRCS       := $(filter-out $(EXCL),$(wildcard src/*.c src/*/*.c))
+OBJS       := $(patsubst src/%.c,$(OUTDIR)/%.o,$(SRCS))
+
+# Plus the boot code from the legacy directory (we don't have a
+# replacement yet). This provides the C28x bootloader entry point
+# and PIE vector table setup.
+BOOT_SRC   := SourceCode1/SPU_Firmware/FirmwareSource_6.20/DSP281x_CodeStartBranch.asm
+BOOT_OBJ   := $(OUTDIR)/DSP281x_CodeStartBranch.o
+
+OBJS       += $(BOOT_OBJ)
+
+all: $(OUTDIR)/bwm.a00
+
+$(OUTDIR):
+	@mkdir -p $@
+
+# Compile rule for src/<topic>/<file>.c → build/src/<topic>/<file>.o
+$(OUTDIR)/%.o: src/%.c | $(OUTDIR)
+	@mkdir -p $(dir $@)
+	@$(CL2000) $(CFLAGS) -c $< --output_file=$@ 2>/dev/null
+
+# Compile rule for the legacy boot asm.
+$(BOOT_OBJ): $(BOOT_SRC) | $(OUTDIR)
+	@$(CL2000) -v28 -ml -mt --abi=coffabi -I $(C2000_CGT)/include -c $< --output_file=$@ 2>/dev/null
+
+# Linker command file is the same one we use for the legacy build.
+# (Generated as a side-effect of the legacy Makefile if not present.)
+$(LCF): build/Makefile.legacy.cross
+	@$(MAKE) -f build/Makefile.legacy.cross $(LCF)
+
+$(OUTDIR)/bwm.out: $(OBJS) $(LCF)
+	@echo "Linking $@..."
+	@$(CL2000) $(LDFLAGS) $(OBJS) $(LCF) $(LIBS)
+
+$(OUTDIR)/bwm.a00: $(OUTDIR)/bwm.out
+	@echo "Generating $@..."
+	@cd $(OUTDIR) && $(HEX2000) bwm.out -boot -sci8 -a 2>&1 | grep -v 'auto-generated'
+
+clean:
+	@rm -rf $(OUTDIR)
+
+stats: $(OUTDIR)/bwm.a00
+	@echo "Refactored src/ build:"
+	@echo "  $$(wc -l < $(OUTDIR)/bwm.a00) lines, $$(wc -c < $(OUTDIR)/bwm.a00) bytes"
+	@echo "Legacy v6.20 build (for comparison):"
+	@if [ -f build/legacy/bearingwear.a00 ]; then \
+		echo "  $$(wc -l < build/legacy/bearingwear.a00) lines, $$(wc -c < build/legacy/bearingwear.a00) bytes"; \
+	else \
+		echo "  (run 'make -f build/Makefile.legacy.cross' to compare)"; \
+	fi
+
+.PHONY: all clean stats

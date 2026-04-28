@@ -1,0 +1,105 @@
+# build/Makefile.legacy.cross
+#
+# Cross-compile the legacy v6.20 SPU firmware using modern TI CGT 25.11.
+# Reproduces an .a00 binary structurally equivalent to the field-shipped
+# xtsw_v6_20 firm(160920).a00 (which was originally built with CCS v3.3 +
+# hex2000 v4.13).
+#
+# Usage:
+#   make -f build/Makefile.legacy.cross
+#
+# Requires:
+#   - TI CGT-C2000 v22.6.x or v25.11.x installed.
+#   - C2000_CGT env var pointing to the install root (default: /Applications/ti/ti-cgt-c2000_25.11.0.LTS).
+#
+# Output:
+#   build/legacy/bearingwear.out       -- COFF executable
+#   build/legacy/bearingwear.a00       -- ASCII-hex bootloader format
+#   build/legacy/bearingwear.map       -- linker map (debugging)
+#
+# Validation:
+#   This build is the regression-oracle baseline. Compare its output
+#   structurally (size, symbol layout) to the field-shipped binary
+#   before trusting any subsequent src/ build.
+
+C2000_CGT  ?= /Applications/ti/ti-cgt-c2000_25.11.0.LTS
+CL2000     := $(C2000_CGT)/bin/cl2000
+HEX2000    := $(C2000_CGT)/bin/hex2000
+
+SRCDIR     := SourceCode1/SPU_Firmware/FirmwareSource_6.20
+OUTDIR     := build/legacy
+
+# Compile flags — chosen to match the legacy CCS v3.3 / v4 build:
+#   -v28                    target the C28x core
+#   -ml                     large memory model (matches v6.20)
+#   -mt                     unified memory mode (RAM + Flash unified address space)
+#   --abi=coffabi           preserve COFF ABI to match field binary semantics
+#   -O2                     match legacy optimization level (per cc_build_Debug.log)
+CFLAGS     := -v28 -ml -mt --abi=coffabi -O2 \
+              -I $(SRCDIR) \
+              -I $(C2000_CGT)/include
+
+LDFLAGS    := -v28 -ml -mt --abi=coffabi --run_linker \
+              --heap_size=128 \
+              --map_file=$(OUTDIR)/bearingwear.map \
+              --output_file=$(OUTDIR)/bearingwear.out \
+              -i $(C2000_CGT)/lib
+
+LIBS       := -lrts2800_ml.lib
+LCF        := $(OUTDIR)/bearingwear.modern.cmd
+
+# Source selection ---------------------------------------------------
+#
+# Compile all .c files EXCEPT compensate.c (dead code per Bug Lv-001 —
+# see host/docs/LEGACY_BUGS.md).
+ALL_C      := $(wildcard $(SRCDIR)/*.c)
+DEAD_C     := $(SRCDIR)/compensate.c
+SRC_C      := $(filter-out $(DEAD_C),$(ALL_C))
+OBJ_C      := $(patsubst $(SRCDIR)/%.c,$(OUTDIR)/%.o,$(SRC_C))
+
+# Compile only HAND-WRITTEN .asm files. Most legacy .asm files are
+# auto-generated CGT-3.07 listings of .c files (e.g., man.asm is the
+# 2008 assembly listing of man.c). Including them would produce
+# duplicate symbol errors at link time.
+SRC_ASM    := $(SRCDIR)/DSP281x_CodeStartBranch.asm $(SRCDIR)/fir16.asm
+OBJ_ASM    := $(patsubst $(SRCDIR)/%.asm,$(OUTDIR)/%.o,$(SRC_ASM))
+
+OBJS       := $(OBJ_C) $(OBJ_ASM)
+
+# Targets ------------------------------------------------------------
+
+all: $(OUTDIR)/bearingwear.a00
+
+$(OUTDIR):
+	@mkdir -p $@
+
+$(OUTDIR)/bearingwear.modern.cmd: $(SRCDIR)/bearingwear.cmd | $(OUTDIR)
+	@# Move .esysmem from L0L1RAM to H0RAM. Modern CGT places .ebss
+	@# slightly differently than CGT 3.07 did, leaving .esysmem 10
+	@# bytes short on L0L1RAM. H0RAM has plenty of room.
+	@sed 's|\.esysmem : > L0L1RAM|.esysmem : > H0RAM|' $< > $@
+
+$(OUTDIR)/%.o: $(SRCDIR)/%.c | $(OUTDIR)
+	@$(CL2000) $(CFLAGS) -c $< --output_file=$@ 2>/dev/null
+
+$(OUTDIR)/%.o: $(SRCDIR)/%.asm | $(OUTDIR)
+	@$(CL2000) -v28 -ml -mt --abi=coffabi -I $(SRCDIR) -I $(C2000_CGT)/include -c $< --output_file=$@ 2>/dev/null
+
+$(OUTDIR)/bearingwear.out: $(OBJS) $(LCF)
+	@echo "Linking $@..."
+	@$(CL2000) $(LDFLAGS) $(OBJS) $(LCF) $(LIBS)
+
+$(OUTDIR)/bearingwear.a00: $(OUTDIR)/bearingwear.out
+	@echo "Generating $@..."
+	@cd $(OUTDIR) && $(HEX2000) bearingwear.out -boot -sci8 -a 2>&1 | grep -v 'auto-generated'
+
+clean:
+	@rm -rf $(OUTDIR)
+
+stats: $(OUTDIR)/bearingwear.a00
+	@echo "Our build (legacy v6.20 + modern CGT 25.11):"
+	@echo "  $$(wc -l < $(OUTDIR)/bearingwear.a00) lines, $$(wc -c < $(OUTDIR)/bearingwear.a00) bytes"
+	@echo "Field shipped (CCS v3.3/v4 era):"
+	@echo "  $$(wc -l < '$(SRCDIR)/xtsw_v6_20 firm(160920).a00') lines, $$(wc -c < '$(SRCDIR)/xtsw_v6_20 firm(160920).a00') bytes"
+
+.PHONY: all clean stats

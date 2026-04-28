@@ -1,0 +1,130 @@
+# build/Makefile.hybrid
+#
+# HYBRID BUILD — links legacy infrastructure (boot, ADC driver, SCI,
+# SPI, FAT FS, sdcard, alarms latching, digout, modbus, etc.) WITH
+# the refactored src/ algorithm modules (rapid_wear, slow_wear,
+# speed_comp, sensor_adjust, mb_sum, etc.).
+#
+# Per host/docs/INTEGRATION_LAYER_DESIGN.md "Architecture B (Hybrid)".
+#
+# What's compiled:
+#   - All legacy *.c EXCEPT man.c (replaced by src/) and compensate.c
+#     (dead code per Bug Lv-001).
+#   - All src/*.c EXCEPT main.c (legacy core.c provides main()) and
+#     legacy_globals_stubs.c (legacy globals.c provides the real ones).
+#   - src/integration/man_legacy_bridge.c — provides the ~50 public
+#     functions from legacy man.h, routed to src/ algorithms.
+#   - DSP281x_CodeStartBranch.asm + fir16.asm — same as legacy build.
+#
+# Output:
+#   build/hybrid/bwm_hybrid.out  -- COFF executable
+#   build/hybrid/bwm_hybrid.a00  -- ASCII-hex bootloader format
+#   build/hybrid/bwm_hybrid.map  -- linker map
+#
+# Status: Phase B integration in progress. As bridges fill in, this
+# binary becomes a real flashable functional firmware.
+
+C2000_CGT  ?= /Applications/ti/ti-cgt-c2000_25.11.0.LTS
+CL2000     := $(C2000_CGT)/bin/cl2000
+HEX2000    := $(C2000_CGT)/bin/hex2000
+
+LEGACY_DIR := SourceCode1/SPU_Firmware/FirmwareSource_6.20
+SRC_DIR    := src
+INT_DIR    := src/integration
+OUTDIR     := build/hybrid
+
+# ----------------------------------------------------------------
+# Compile flags — same as legacy build but with --c99 (src/ uses
+# C99 for-loop variable declarations) and -I src for cross-includes.
+# ----------------------------------------------------------------
+CFLAGS     := -v28 -ml -mt --abi=coffabi --c99 -O2 \
+              -I $(LEGACY_DIR) \
+              -I $(SRC_DIR) \
+              -I $(SRC_DIR)/core \
+              -I host/platform \
+              -I $(C2000_CGT)/include
+
+LDFLAGS    := -v28 -ml -mt --abi=coffabi --run_linker \
+              --heap_size=128 \
+              --map_file=$(OUTDIR)/bwm_hybrid.map \
+              --output_file=$(OUTDIR)/bwm_hybrid.out \
+              -i $(C2000_CGT)/lib
+
+LIBS       := -lrts2800_ml.lib
+LCF        := build/legacy/bearingwear.modern.cmd
+
+# ----------------------------------------------------------------
+# Source selection
+# ----------------------------------------------------------------
+
+# Legacy: everything in legacy/*.c minus the two excluded files.
+ALL_LEG_C  := $(wildcard $(LEGACY_DIR)/*.c)
+LEG_EXCL   := $(LEGACY_DIR)/man.c $(LEGACY_DIR)/compensate.c
+LEG_C      := $(filter-out $(LEG_EXCL),$(ALL_LEG_C))
+LEG_OBJ    := $(patsubst $(LEGACY_DIR)/%.c,$(OUTDIR)/legacy_%.o,$(LEG_C))
+
+# Hand-written legacy ASM (boot + fir16); the auto-generated .asm
+# listings are NOT included (they would duplicate symbols).
+LEG_ASM    := $(LEGACY_DIR)/DSP281x_CodeStartBranch.asm $(LEGACY_DIR)/fir16.asm
+LEG_ASM_O  := $(patsubst $(LEGACY_DIR)/%.asm,$(OUTDIR)/legacy_%.o,$(LEG_ASM))
+
+# src/: every .c under src/ EXCEPT main.c and legacy_globals_stubs.c.
+ALL_SRC_C  := $(wildcard $(SRC_DIR)/*.c $(SRC_DIR)/*/*.c)
+SRC_EXCL   := $(SRC_DIR)/main.c $(INT_DIR)/legacy_globals_stubs.c
+SRC_C      := $(filter-out $(SRC_EXCL),$(ALL_SRC_C))
+SRC_OBJ    := $(patsubst $(SRC_DIR)/%.c,$(OUTDIR)/src_%.o,$(SRC_C))
+
+OBJS       := $(LEG_OBJ) $(LEG_ASM_O) $(SRC_OBJ)
+
+# ----------------------------------------------------------------
+# Build rules
+# ----------------------------------------------------------------
+
+all: $(OUTDIR)/bwm_hybrid.a00
+
+$(OUTDIR):
+	@mkdir -p $@
+
+# Legacy .c → object (mirrors build/Makefile.legacy.cross flags).
+$(OUTDIR)/legacy_%.o: $(LEGACY_DIR)/%.c | $(OUTDIR)
+	@mkdir -p $(dir $@)
+	@$(CL2000) $(CFLAGS) -c $< --output_file=$@ 2>/dev/null
+
+# Legacy .asm → object.
+$(OUTDIR)/legacy_%.o: $(LEGACY_DIR)/%.asm | $(OUTDIR)
+	@$(CL2000) -v28 -ml -mt --abi=coffabi -I $(LEGACY_DIR) -I $(C2000_CGT)/include \
+	    -c $< --output_file=$@ 2>/dev/null
+
+# src/ .c → object.
+$(OUTDIR)/src_%.o: $(SRC_DIR)/%.c | $(OUTDIR)
+	@mkdir -p $(dir $@)
+	@$(CL2000) $(CFLAGS) -c $< --output_file=$@ 2>/dev/null
+
+$(LCF): build/Makefile.legacy.cross
+	@$(MAKE) -f build/Makefile.legacy.cross $(LCF)
+
+$(OUTDIR)/bwm_hybrid.out: $(OBJS) $(LCF)
+	@echo "Linking $@..."
+	@$(CL2000) $(LDFLAGS) $(OBJS) $(LCF) $(LIBS)
+
+$(OUTDIR)/bwm_hybrid.a00: $(OUTDIR)/bwm_hybrid.out
+	@echo "Generating $@..."
+	@cd $(OUTDIR) && $(HEX2000) bwm_hybrid.out -boot -sci8 -a 2>&1 | grep -v 'auto-generated' || true
+
+clean:
+	@rm -rf $(OUTDIR)
+
+# Lint-only build to surface unresolved-symbol errors quickly.
+link-test: $(OBJS) $(LCF)
+	@echo "=== Hybrid link test ==="
+	@$(CL2000) $(LDFLAGS) $(OBJS) $(LCF) $(LIBS) 2>&1 | grep -E 'error|undefined|warning' | sort -u | head -50
+
+stats: $(OUTDIR)/bwm_hybrid.a00
+	@echo "Hybrid build:"
+	@echo "  $$(wc -l < $(OUTDIR)/bwm_hybrid.a00) lines, $$(wc -c < $(OUTDIR)/bwm_hybrid.a00) bytes"
+	@echo "Legacy build (for comparison):"
+	@echo "  $$(wc -l < build/legacy/bearingwear.a00) lines, $$(wc -c < build/legacy/bearingwear.a00) bytes"
+	@echo "src/-only build:"
+	@echo "  $$(wc -l < build/src/bwm.a00) lines, $$(wc -c < build/src/bwm.a00) bytes"
+
+.PHONY: all clean link-test stats

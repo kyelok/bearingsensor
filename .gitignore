@@ -1,8 +1,15 @@
 # Host test build artifacts
 host/build/
 
-# TI CGT cross-compile artifacts
-build/
+# TI CGT cross-compile artifacts (everything under build/, except the
+# Makefiles that drive the build, which are source).
+# Note: must use `build/*` pattern (not `build/`) for the `!` exception
+# to take effect — git skips ignored directories entirely otherwise.
+build/*
+!build/Makefile.cross
+!build/Makefile.legacy.cross
+!build/Makefile.hybrid
+!build/README.md
 
 # Generated PDF documentation
 docs-pdf/
