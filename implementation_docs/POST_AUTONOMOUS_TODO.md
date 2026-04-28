@@ -4,6 +4,66 @@ This document tracks everything that needs human attention after the autonomous 
 
 ---
 
+## Priority 0 — Phase B integration finishing work
+
+Phase B-1 through B-6 of the integration layer are complete: the hybrid binary `build/hybrid/bwm_hybrid.a00` builds cleanly via TI CGT 25.11, links legacy hardware drivers with src/ algorithm modules, and the bridge file `src/integration/man_legacy_bridge.c` provides every public symbol legacy infrastructure expects. Four items remain before the hybrid is field-ready.
+
+### B-α — Live wiring of `sd_bridge_*` calls
+
+**What's missing**: the four storage emitters in `src/integration/sd_bridge.c` (App-E hit-by-hit, App-F comp-curve, App-A/B/C/D surveyor) are functional and tested for format correctness, but no upstream code calls them yet. We need to choose the right hook points and make sure the calls don't blow ISR budgets.
+
+**Hook points to pick**:
+- `sd_bridge_emit_hit_by_hit` → call from the legacy `MANModules()` per-revolution path, gated on the per-cylinder `newval == TRUE` flag. The risk is doing 28 channels of CSV formatting + an `f_write` inside the 33 µs ADC ISR budget. The realistic plan: the ISR sets the flag, the main loop's `MANModules()` (1 kHz cadence) does the format + write. That works as long as the SD card I/O completes within the loop period, which it generally does for HCC FAT FS. Budget the worst-case write latency on bench before committing.
+- `sd_bridge_emit_comp_curve_snapshot` → call from `mancal.c` at three transitions: end of §2.1 rough-cal stage 3, end of §2.2 fine refinement (every 50 hours), end of §2.3 finalize. Each is a one-shot file write; latency is non-critical.
+- `sd_bridge_emit_surveyor_file` → call from a Modbus-triggered "generate surveyor file" command. Manual operator action, no timing constraint.
+
+**Why we can't fix it blind**: the safe-budget question for the per-revolution emit is bench-only. Without a real SPI bus + SD card interaction, there's no way to know whether 28-channel formatting + `f_write` fits inside the inter-revolution gap at the highest engine RPM. Best to land the hook + measure.
+
+**Estimated effort once on bench**: 1 engineer-day to wire and instrument; 1 day to measure and tune buffering / batching.
+
+### B-β — Modal RPM histogram (legacy-equivalent)
+
+**Status (2026-04-28)**: implemented behind `BWM_PRISTINE_INTEGRATION` flag in `src/integration/man_legacy_bridge.c` and built into `build/hybrid_pristine/bwm_hybrid_pristine.a00`. The placeholder build (`build/hybrid/bwm_hybrid.a00`) keeps the simple-average implementation for A/B comparison.
+
+**What it does** (matching legacy v6.20):
+- Build a histogram of enabled-sensor RPM values per cycle.
+- Modal RPM = the most-populous bin.
+- Per-channel rpmoor (out-of-range) latch: if a channel's RPM differs from modal by more than 25 RPM (`BWM_RPM_MODAL_OFFSET`), it accumulates strikes; >3 consecutive strikes set `Status3Flags(i)->rpmoor = 1`. Clears after >10 consecutive in-range samples.
+
+**Bench validation still needed**: A/B comparison vs the placeholder build on real signals to confirm the legacy mechanism's interaction with field RPM transients matches operator expectation. The pristine binary should match v6.20 behaviour for this aspect; the bench measures whether it does.
+
+### B-γ — Alarm latching with hysteresis
+
+**Status (2026-04-28)**: implemented behind `BWM_PRISTINE_INTEGRATION` flag and shipped in `bwm_hybrid_pristine.a00`. Placeholder build keeps stateless classification.
+
+**What it does**:
+- Once `|sensor[i].endresult| ≥ ALARM_SLOW_FILTERED_NORMAL_8_7`, sets `sensor[i].status2.alarm = 1` AND `sensor[i].status2.alarmlatched = 1`.
+- Once `|sensor[i].endresult| ≥ SLOWDOWN_SLOW_FILTERED_NORMAL_8_7`, sets `slowdown` + `slowdownlatched`.
+- Clear path: alarm bit clears only when the value drops below `(threshold − allsensors.sensorhysteresis)`. The latch never auto-clears; operator must reset via dashboard.
+- Rapid-wear (§7.2) contribution sets the alarm bit but never clears one set by slow-wear.
+
+**Bench validation still needed**: confirm operator-visible alarm dwell matches v6.20 for the same signals. Hysteresis value (`allsensors.sensorhysteresis`) is operator-configurable via Modbus, default carried over from v6.20.
+
+### B-δ — Hardware bench validation
+
+Self-explanatory. Cannot proceed without:
+- Physical TMS320F2811 dev board
+- JTAG / serial flash interface
+- Signal generator capable of driving 4–20 mA on the 16 ADC channels
+- Optionally: an engine simulator or recorded stimulus from a real installation
+
+Once available, the bench plan is in §"Bench validation — golden vector capture" and §"Bench validation — refactored firmware" below.
+
+### Why these four are deliberate stopping points
+
+The pattern is the same in B-α / B-β / B-γ: **the next correct step is "flash and measure," not "type more C."** Pushing further blind would either:
+- Pick numbers (ISR budgets, RPM bins, hysteresis bands) that the bench will fix anyway, *or*
+- Risk silently breaking field-tuned behaviour that operators have built procedures around.
+
+These items shouldn't be marked "incomplete" so much as "**ready to start when bench is available**." All the design / formatter / API surface work is done.
+
+---
+
 ## Priority 1 — Hardware-bench dependent
 
 These cannot be done without physical hardware access.

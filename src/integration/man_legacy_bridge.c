@@ -173,9 +173,34 @@ void SetAlarmMask(unsigned int chan, int val)
 /* ================================================================ */
 
 /* B-3 RPM accessors — direct field access on the legacy sensor[] array.
- * Modal-RPM logic is intentionally simple here: we return the most
- * recent per-channel RPM that the ADC ISR wrote. A future iteration
- * may add the spec-correct §4.4 modal histogram. */
+ *
+ * Modal-RPM logic comes in two flavours selected at compile time:
+ *
+ *   default            — simple average of enabled-sensor RPMs.
+ *                        Placeholder; usable for bench bring-up but
+ *                        REGRESSIVE vs legacy v6.20 (legacy used the
+ *                        modal-histogram + 25-RPM trap mechanism).
+ *
+ *   BWM_PRISTINE_INTEGRATION — port of the legacy mechanism: build a
+ *                        per-revolution histogram of channel RPMs,
+ *                        pick the most-popular bin, and flag any
+ *                        channel whose RPM is more than RPM_MODAL_OFFSET
+ *                        away from modal as out-of-range (rpmoor=1).
+ *                        Legacy required >3 consecutive strikes to
+ *                        latch rpmoor and >10 consecutive in-range
+ *                        samples to clear; preserved here.
+ *
+ * Phase B-β closes this gap. Both behaviours are kept in-tree to make
+ * A/B comparison on bench trivial: build hybrid → placeholder build,
+ * build hybrid_pristine → legacy-equivalent build. */
+
+#ifndef BWM_PRISTINE_INTEGRATION
+#define BWM_PRISTINE_INTEGRATION 0
+#endif
+
+#define BWM_RPM_MODAL_OFFSET   25  /* matches legacy define.h */
+#define BWM_RPM_MODAL_STRIKES   3
+#define BWM_RPM_MODAL_RESETS   10
 
 void SetRPMChan(unsigned int chan, unsigned int rpm)
 {
@@ -190,16 +215,106 @@ void SetRPM(unsigned int rpmin)
     allsensors.nominalspeed = rpmin;
 }
 
-/* GetModalRPM(flag): legacy semantics differentiate flag values:
- *   flag=0 → return current modal
- *   flag=1 → seed/calibrate modal (ignored here)
- *   flag=2 → clear modal output
- * For B-3 we return the average of enabled channels' RPM as a modal
- * approximation. The full spec §4.4 modal histogram is a follow-up. */
+#if BWM_PRISTINE_INTEGRATION
+
+/* Pristine modal-RPM histogram with 25-RPM trap.
+ *
+ * Legacy v6.20 keeps two state arrays (modalsetcounters /
+ * modalresetcounters) per channel for the rpmoor latching. Each call
+ * with flag=1 rebuilds the histogram and updates the rpmoor flags;
+ * flag=0 returns the most recent modal value; flag=2 forces clear. */
+
+static int s_rpm_strikes[MAX_NUM_CHANNELS];
+static int s_rpm_resets [MAX_NUM_CHANNELS];
+static unsigned int s_modal_rpm_cache;
+
+unsigned int GetModalRPM(int flag)
+{
+    unsigned int i, k, pos;
+    int rpmval;
+    int modal_rpm[MAX_NUM_CHANNELS][2];   /* [bin_value, count] */
+    int modal_pos = 0;
+    int modal_count = 0;
+    unsigned int n_active = 0;
+
+    if (flag == 2) {
+        s_modal_rpm_cache = 0;
+        return 0;
+    }
+    if (flag == 0) return s_modal_rpm_cache;
+
+    /* flag == 1 → recompute. */
+    for (i = 0; i < MAX_NUM_CHANNELS; i++) {
+        modal_rpm[i][0] = -1;
+        modal_rpm[i][1] = 0;
+    }
+
+    /* Build histogram: each enabled channel's rpm goes in a bin. */
+    pos = 0;
+    n_active = (allsensors.numsensorsspu1 == 0) ? MAX_NUM_CHANNELS
+                                                : allsensors.numsensorsspu1;
+    if (n_active > MAX_NUM_CHANNELS) n_active = MAX_NUM_CHANNELS;
+    for (i = 0; i < n_active; i++) {
+        if (sensor[i].status1.enabled == FALSE) continue;
+        rpmval = (int)sensor[i].rpm;
+        for (k = 0; k < pos; k++) {
+            if (modal_rpm[k][0] == rpmval) {
+                modal_rpm[k][1]++;
+                break;
+            }
+        }
+        if (k == pos) {
+            modal_rpm[pos][0] = rpmval;
+            modal_rpm[pos][1] = 1;
+            pos++;
+        }
+    }
+
+    /* Find most-populous bin. */
+    modal_pos = 0;
+    modal_count = (pos > 0) ? modal_rpm[0][1] : 0;
+    for (i = 1; i < pos; i++) {
+        if (modal_rpm[i][1] >= modal_count) {
+            modal_count = modal_rpm[i][1];
+            modal_pos   = i;
+        }
+    }
+    s_modal_rpm_cache = (pos > 0) ? (unsigned int)modal_rpm[modal_pos][0] : 0;
+
+    /* Update the rpmoor latch on each channel. */
+    if (s_modal_rpm_cache != 0) {
+        int modal_int = (int)s_modal_rpm_cache;
+        for (i = 0; i < n_active; i++) {
+            if (sensor[i].status1.enabled == FALSE) continue;
+            int v = (int)sensor[i].rpm;
+            int delta = v - modal_int;
+            if (delta < 0) delta = -delta;
+            if (delta > BWM_RPM_MODAL_OFFSET) {
+                if (s_rpm_strikes[i] >= BWM_RPM_MODAL_STRIKES) {
+                    Status3Flags(i)->rpmoor = 1;
+                } else {
+                    s_rpm_strikes[i]++;
+                }
+                s_rpm_resets[i] = 0;
+            } else {
+                s_rpm_strikes[i] = 0;
+                if (s_rpm_resets[i] >= BWM_RPM_MODAL_RESETS) {
+                    Status3Flags(i)->rpmoor = 0;
+                } else {
+                    s_rpm_resets[i]++;
+                }
+            }
+        }
+    }
+
+    return s_modal_rpm_cache;
+}
+
+#else  /* BWM_PRISTINE_INTEGRATION == 0 — placeholder build */
+
 unsigned int GetModalRPM(int flag)
 {
     if (flag == 2) return 0;
-
     unsigned int sum = 0;
     unsigned int n   = 0;
     unsigned int i;
@@ -211,6 +326,8 @@ unsigned int GetModalRPM(int flag)
     }
     return (n > 0) ? (sum / n) : 0;
 }
+
+#endif  /* BWM_PRISTINE_INTEGRATION */
 
 unsigned int GetRPM(unsigned int chan)
 {
@@ -390,19 +507,92 @@ void MANModules(void)
     }
 }
 
-/* B-4: per-sensor alarm classification using v8.7 thresholds.
+/* B-4: per-sensor alarm classification.
  *
- * For each enabled sensor: compare absolute filtered value (slow-wear)
- * and rapid_wear magnitude against the §7.1/§7.2 alarm/slowdown
- * thresholds. Set the legacy `sensor[i].status2.*` bits so the legacy
- * `ProcessDigitalOP()` rolls them up to the output relays.
+ * Two flavours selectable at compile time, same shape as the modal-RPM
+ * code above:
  *
- * NOTE: this initial bridge uses the "normal mode" thresholds (8.7).
- * Learning-mode thresholds and the per-sensor latching state machine
- * (alarm_latch_state_t) are wired in a follow-up; for B-4 we just want
- * the legacy relays to react to the spec-correct numbers. */
+ *   default            — stateless instantaneous classification.
+ *                        Sets `sensor[i].status2.alarm/slowdown` bits
+ *                        whenever the latest filtered value is over
+ *                        threshold; clears them as soon as it isn't.
+ *                        Placeholder; OK for bench bring-up but does
+ *                        not match v8.7 alarm-dwell expectations.
+ *
+ *   BWM_PRISTINE_INTEGRATION — latched classification with hysteresis.
+ *                        Once an alarm trips (filtered_abs ≥ threshold)
+ *                        it stays latched in `sensor[i].status2.*latched`
+ *                        until the value drops below
+ *                        (threshold - allsensors.sensorhysteresis).
+ *                        Mirrors legacy v6.20 SensorAlarm() / SensorSlowDown()
+ *                        latching idiom.
+ *
+ * Phase B-γ closes this gap. */
 
 static int abs_int(int v) { return v < 0 ? -v : v; }
+
+#if BWM_PRISTINE_INTEGRATION
+
+/* Latched classification: alarm bit and *latched bit follow the legacy
+ * idiom. Hysteresis is in `allsensors.sensorhysteresis`, configurable
+ * over Modbus by the operator. */
+static void classify_one_pristine(unsigned int i)
+{
+    if (sensor[i].status1.enabled == FALSE) {
+        sensor[i].status2.alarm           = 0;
+        sensor[i].status2.alarmlatched    = 0;
+        sensor[i].status2.slowdown        = 0;
+        sensor[i].status2.slowdownlatched = 0;
+        return;
+    }
+
+    int filtered_abs = abs_int(sensor[i].endresult);
+    int hysteresis   = allsensors.sensorhysteresis;
+    if (hysteresis < 0) hysteresis = 0;
+
+    /* Slowdown threshold (worst). */
+    if (filtered_abs >= SLOWDOWN_SLOW_FILTERED_NORMAL_8_7) {
+        sensor[i].status2.slowdown        = 1;
+        sensor[i].status2.slowdownlatched = 1;
+        sensor[i].status2.alarm           = 1;
+        sensor[i].status2.alarmlatched    = 1;
+        return;
+    } else if (filtered_abs <= SLOWDOWN_SLOW_FILTERED_NORMAL_8_7 - hysteresis) {
+        if (sensor[i].status2.slowdownlatched) {
+            sensor[i].status2.slowdown        = 0;
+            sensor[i].status2.slowdownlatched = 0;
+        }
+    }
+
+    /* Alarm threshold. */
+    if (filtered_abs >= ALARM_SLOW_FILTERED_NORMAL_8_7) {
+        sensor[i].status2.alarm        = 1;
+        sensor[i].status2.alarmlatched = 1;
+    } else if (filtered_abs <= ALARM_SLOW_FILTERED_NORMAL_8_7 - hysteresis) {
+        if (sensor[i].status2.alarmlatched && !sensor[i].status2.slowdownlatched) {
+            sensor[i].status2.alarm        = 0;
+            sensor[i].status2.alarmlatched = 0;
+        }
+    }
+
+    /* Rapid-wear contribution — sets alarmlatched if exceeded; never
+     * un-sets a slow-wear-induced latch. */
+    float rapid_wear = s_rapid[i].rapid_fast - s_rapid[i].rapid_slow;
+    if (rapid_wear < 0) rapid_wear = -rapid_wear;
+    if ((int)rapid_wear >= ALARM_RAPID_BASIC_SINGLE_NORMAL_8_7) {
+        sensor[i].status2.alarm        = 1;
+        sensor[i].status2.alarmlatched = 1;
+    }
+}
+
+void MANAlarmChecks(unsigned int rpm)
+{
+    (void)rpm;
+    unsigned int i;
+    for (i = 0; i < MAX_NUM_CHANNELS; i++) classify_one_pristine(i);
+}
+
+#else  /* BWM_PRISTINE_INTEGRATION == 0 — placeholder, stateless build */
 
 void MANAlarmChecks(unsigned int rpm)
 {
@@ -418,7 +608,6 @@ void MANAlarmChecks(unsigned int rpm)
 
         int filtered_abs = abs_int(sensor[i].endresult);
 
-        /* Slow-wear filtered-value classification (§7.1, normal mode). */
         if (filtered_abs >= SLOWDOWN_SLOW_FILTERED_NORMAL_8_7) {
             sensor[i].status2.alarm    = 1;
             sensor[i].status2.slowdown = 1;
@@ -430,8 +619,6 @@ void MANAlarmChecks(unsigned int rpm)
             sensor[i].status2.slowdown = 0;
         }
 
-        /* Rapid-wear classification (§7.2 single-sensor basic alarm).
-         * Rapid wear is measured as |rapid_fast - rapid_slow| in µm. */
         float rapid_wear = s_rapid[i].rapid_fast - s_rapid[i].rapid_slow;
         if (rapid_wear < 0) rapid_wear = -rapid_wear;
         if ((int)rapid_wear >= ALARM_RAPID_BASIC_SINGLE_NORMAL_8_7) {
@@ -439,6 +626,8 @@ void MANAlarmChecks(unsigned int rpm)
         }
     }
 }
+
+#endif  /* BWM_PRISTINE_INTEGRATION */
 
 /* ================================================================ */
 /* Additional functions referenced by legacy infrastructure         */

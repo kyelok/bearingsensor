@@ -9,6 +9,7 @@ build/*
 !build/Makefile.cross
 !build/Makefile.legacy.cross
 !build/Makefile.hybrid
+!build/Makefile.hybrid_pristine
 !build/README.md
 
 # Generated PDF documentation

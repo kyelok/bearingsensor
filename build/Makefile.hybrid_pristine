@@ -1,0 +1,105 @@
+# build/Makefile.hybrid_pristine
+#
+# PRISTINE HYBRID BUILD — same scope as Makefile.hybrid, but with
+# `-DBWM_PRISTINE_INTEGRATION=1` so src/integration/man_legacy_bridge.c
+# selects the spec-pristine paths for:
+#   - GetModalRPM():     legacy-equivalent histogram + 25-RPM trap
+#                        with rpmoor latch counters.
+#   - MANAlarmChecks():  latched alarm/slowdown bits with hysteresis
+#                        on clear (uses allsensors.sensorhysteresis).
+#
+# This is the v8.7-spec target binary. Pair with the placeholder
+# build (build/hybrid/bwm_hybrid.a00) for A/B comparison on bench.
+#
+# Output:
+#   build/hybrid_pristine/bwm_hybrid_pristine.out
+#   build/hybrid_pristine/bwm_hybrid_pristine.a00
+#   build/hybrid_pristine/bwm_hybrid_pristine.map
+
+C2000_CGT  ?= /Applications/ti/ti-cgt-c2000_25.11.0.LTS
+CL2000     := $(C2000_CGT)/bin/cl2000
+HEX2000    := $(C2000_CGT)/bin/hex2000
+
+LEGACY_DIR := SourceCode1/SPU_Firmware/FirmwareSource_6.20
+SRC_DIR    := src
+INT_DIR    := src/integration
+OUTDIR     := build/hybrid_pristine
+
+CFLAGS     := -v28 -ml -mt --abi=coffabi --c99 -O2 \
+              -DBWM_PRISTINE_INTEGRATION=1 \
+              -I $(LEGACY_DIR) \
+              -I $(SRC_DIR) \
+              -I $(SRC_DIR)/core \
+              -I host/platform \
+              -I $(C2000_CGT)/include
+
+LDFLAGS    := -v28 -ml -mt --abi=coffabi --run_linker \
+              --heap_size=128 \
+              --map_file=$(OUTDIR)/bwm_hybrid_pristine.map \
+              --output_file=$(OUTDIR)/bwm_hybrid_pristine.out \
+              -i $(C2000_CGT)/lib
+
+LIBS       := -lrts2800_ml.lib
+LCF        := build/legacy/bearingwear.modern.cmd
+
+# Source selection (mirrors Makefile.hybrid). Same exclusions:
+#   - legacy man.c (replaced by src/) and compensate.c (dead per Lv-001)
+#   - src/main.c (legacy core.c provides main)
+#   - src/integration/legacy_globals_stubs.c (replaced by real types)
+
+ALL_LEG_C  := $(wildcard $(LEGACY_DIR)/*.c)
+LEG_EXCL   := $(LEGACY_DIR)/man.c $(LEGACY_DIR)/compensate.c
+LEG_C      := $(filter-out $(LEG_EXCL),$(ALL_LEG_C))
+LEG_OBJ    := $(patsubst $(LEGACY_DIR)/%.c,$(OUTDIR)/legacy_%.o,$(LEG_C))
+
+LEG_ASM    := $(LEGACY_DIR)/DSP281x_CodeStartBranch.asm $(LEGACY_DIR)/fir16.asm
+LEG_ASM_O  := $(patsubst $(LEGACY_DIR)/%.asm,$(OUTDIR)/legacy_%.o,$(LEG_ASM))
+
+ALL_SRC_C  := $(wildcard $(SRC_DIR)/*.c $(SRC_DIR)/*/*.c)
+SRC_EXCL   := $(SRC_DIR)/main.c $(INT_DIR)/legacy_globals_stubs.c
+SRC_C      := $(filter-out $(SRC_EXCL),$(ALL_SRC_C))
+SRC_OBJ    := $(patsubst $(SRC_DIR)/%.c,$(OUTDIR)/src_%.o,$(SRC_C))
+
+OBJS       := $(LEG_OBJ) $(LEG_ASM_O) $(SRC_OBJ)
+
+all: $(OUTDIR)/bwm_hybrid_pristine.a00
+
+$(OUTDIR):
+	@mkdir -p $@
+
+$(OUTDIR)/legacy_%.o: $(LEGACY_DIR)/%.c | $(OUTDIR)
+	@mkdir -p $(dir $@)
+	@$(CL2000) $(CFLAGS) -c $< --output_file=$@ 2>/dev/null
+
+$(OUTDIR)/legacy_%.o: $(LEGACY_DIR)/%.asm | $(OUTDIR)
+	@$(CL2000) -v28 -ml -mt --abi=coffabi -I $(LEGACY_DIR) -I $(C2000_CGT)/include \
+	    -c $< --output_file=$@ 2>/dev/null
+
+$(OUTDIR)/src_%.o: $(SRC_DIR)/%.c | $(OUTDIR)
+	@mkdir -p $(dir $@)
+	@$(CL2000) $(CFLAGS) -c $< --output_file=$@ 2>/dev/null
+
+$(LCF): build/Makefile.legacy.cross
+	@$(MAKE) -f build/Makefile.legacy.cross $(LCF)
+
+$(OUTDIR)/bwm_hybrid_pristine.out: $(OBJS) $(LCF)
+	@echo "Linking $@..."
+	@$(CL2000) $(LDFLAGS) $(OBJS) $(LCF) $(LIBS)
+
+$(OUTDIR)/bwm_hybrid_pristine.a00: $(OUTDIR)/bwm_hybrid_pristine.out
+	@echo "Generating $@..."
+	@cd $(OUTDIR) && $(HEX2000) bwm_hybrid_pristine.out -boot -sci8 -a 2>&1 \
+	    | grep -v 'auto-generated' || true
+
+clean:
+	@rm -rf $(OUTDIR)
+
+stats: $(OUTDIR)/bwm_hybrid_pristine.a00
+	@echo "Pristine hybrid build:"
+	@echo "  $$(wc -l < $(OUTDIR)/bwm_hybrid_pristine.a00) lines, $$(wc -c < $(OUTDIR)/bwm_hybrid_pristine.a00) bytes"
+	@echo "Placeholder hybrid build (for comparison):"
+	@echo "  $$(wc -l < build/hybrid/bwm_hybrid.a00) lines, $$(wc -c < build/hybrid/bwm_hybrid.a00) bytes"
+	@echo "Legacy build (for comparison):"
+	@echo "  $$(wc -l < build/legacy/bearingwear.a00) lines, $$(wc -c < build/legacy/bearingwear.a00) bytes"
+
+.PHONY: all clean stats
