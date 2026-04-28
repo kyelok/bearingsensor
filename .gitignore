@@ -12,6 +12,7 @@ build/*
 !build/Makefile.legacy.cross.O1heap
 !build/Makefile.legacy.cross.O1nomt
 !build/Makefile.legacy.cross.O1bootfix
+!build/Makefile.legacy.cross.O1bootfix_nomt
 !build/bearingwear.bootfix.cmd
 !build/Makefile.hybrid
 !build/Makefile.hybrid_pristine
