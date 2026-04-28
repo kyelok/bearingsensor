@@ -1,0 +1,84 @@
+# build/Makefile.legacy.cross.O1bootfix
+#
+# VARIANT 4 of the legacy v6.20 build:
+#   `-O1` AND uses a patched linker .cmd that names `boot28.asm.obj`
+#   (modern CGT 25.11) instead of `boot.obj` (CCS 3.3 era).
+#
+# Hypothesis (strong): in CCS 3.3, _c_int00 was in `boot.obj` and the
+# linker .cmd directive `.boot > BOOT { -lrts2800_ml.lib <boot.obj> }`
+# pinned _c_int00 to flash 0x3F7F00. Modern CGT renamed the runtime
+# entry to `boot28.asm.obj`, so the directive matches nothing — emits
+# "warning: no matching section" on line 98 — and _c_int00 lands at
+# a random flash address (0x3E6963 in our O1 build vs 0x3F7F00 in
+# legacy CCS 3.3 build).
+#
+# Whether this _c_int00 placement difference is the actual cause of
+# "Failed to check versions after update" is empirical: but it is the
+# single most concrete observable difference between our build and the
+# known-working 2016 reference build, AND fixing it eliminates the
+# linker-emitted warning that was the only structural complaint about
+# our build.
+#
+# Output:
+#   build/legacy_o1bootfix/bearingwear-O1bootfix.out
+#   build/legacy_o1bootfix/bearingwear-O1bootfix.a00
+#   build/legacy_o1bootfix/bearingwear-O1bootfix.map
+
+C2000_CGT  ?= /Applications/ti/ti-cgt-c2000_25.11.0.LTS
+CL2000     := $(C2000_CGT)/bin/cl2000
+HEX2000    := $(C2000_CGT)/bin/hex2000
+
+SRCDIR     := SourceCode1/SPU_Firmware/FirmwareSource_6.20
+OUTDIR     := build/legacy_o1bootfix
+
+CFLAGS     := -v28 -ml -mt --abi=coffabi -O1 \
+              -I $(SRCDIR) \
+              -I $(C2000_CGT)/include
+
+LDFLAGS    := -v28 -ml -mt --abi=coffabi --run_linker \
+              --heap_size=128 \
+              --map_file=$(OUTDIR)/bearingwear-O1bootfix.map \
+              --output_file=$(OUTDIR)/bearingwear-O1bootfix.out \
+              -i $(C2000_CGT)/lib
+
+LIBS       := -lrts2800_ml.lib
+
+# *** KEY DIFFERENCE: use the patched .cmd that references the modern
+# object name (boot28.asm.obj) instead of legacy boot.obj. ***
+LCF        := build/bearingwear.bootfix.cmd
+
+ALL_C      := $(wildcard $(SRCDIR)/*.c)
+DEAD_C     := $(SRCDIR)/compensate.c
+SRC_C      := $(filter-out $(DEAD_C),$(ALL_C))
+OBJ_C      := $(patsubst $(SRCDIR)/%.c,$(OUTDIR)/%.o,$(SRC_C))
+
+SRC_ASM    := $(SRCDIR)/DSP281x_CodeStartBranch.asm $(SRCDIR)/fir16.asm
+OBJ_ASM    := $(patsubst $(SRCDIR)/%.asm,$(OUTDIR)/%.o,$(SRC_ASM))
+
+OBJS       := $(OBJ_C) $(OBJ_ASM)
+
+all: $(OUTDIR)/bearingwear-O1bootfix.a00
+
+$(OUTDIR):
+	@mkdir -p $@
+
+$(OUTDIR)/%.o: $(SRCDIR)/%.c | $(OUTDIR)
+	@$(CL2000) $(CFLAGS) -c $< --output_file=$@ 2>/dev/null
+
+$(OUTDIR)/%.o: $(SRCDIR)/%.asm | $(OUTDIR)
+	@$(CL2000) -v28 -ml -mt --abi=coffabi -I $(SRCDIR) -I $(C2000_CGT)/include \
+	    -c $< --output_file=$@ 2>/dev/null
+
+$(OUTDIR)/bearingwear-O1bootfix.out: $(OBJS) $(LCF)
+	@echo "Linking $@..."
+	@$(CL2000) $(LDFLAGS) $(OBJS) $(LCF) $(LIBS)
+
+$(OUTDIR)/bearingwear-O1bootfix.a00: $(OUTDIR)/bearingwear-O1bootfix.out
+	@echo "Generating $@..."
+	@cd $(OUTDIR) && $(HEX2000) bearingwear-O1bootfix.out -boot -sci8 -a 2>&1 | grep -v 'auto-generated' || true
+	@perl -pi -e 's/\r?\n/\r\n/g' $@
+
+clean:
+	@rm -rf $(OUTDIR)
+
+.PHONY: all clean
