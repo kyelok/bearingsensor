@@ -1,6 +1,10 @@
 # AMOT XTSW+ Bearing Wear Monitoring (BWM) — SPU Firmware
 
-> **Status (2026-04-27)**: Refactored to comply with MAN BWM specification rev 07 ("8.7"). Comprehensive host-side test coverage. TI hardware build deferred to a follow-up phase — see `host/docs/POST_AUTONOMOUS_TODO.md`.
+> **Status (2026-04-28)**: Refactored to comply with MAN BWM specification rev 07 ("8.7"). Comprehensive host-side test coverage. TI hardware build deferred to a follow-up phase — see `implementation_docs/POST_AUTONOMOUS_TODO.md`.
+
+The deliverable documentation is split into two trees:
+- **`official_docs/`** — for vessel operators, marine engineers, classification surveyors, and AMOT field service. Two files: spec-compliance proof and customer release notes.
+- **`implementation_docs/`** — for firmware engineers maintaining and extending the codebase. Field manuals, integration design, audit notes, deprecation analysis, build/deploy pipelines.
 
 This repository contains the SPU (Signal Processing Unit) firmware for the AMOT XTSW+ Bearing Wear Monitoring product. The firmware runs on a TI TMS320F2811 C2000 DSP and complies with MAN Diesel & Turbo BWM specification document **3091686-8**, currently at revision 07 (also known internally as "8.7").
 
@@ -41,12 +45,16 @@ Output: `=== 26 binaries, 0 failed ===` with ~150 passing tests across all spec 
 
 | Document | Audience |
 |---|---|
-| `host/docs/FIELD_MANUAL.md` | Engineers maintaining/extending the firmware. Indexed by spec chapter with test + code references. |
-| `host/docs/CUSTOMER_NOTES.md` | Vessel operators, surveyors, AMOT field service. Covers v8.7 alarm re-tuning, vendor extensions, etc. |
-| `host/docs/SPEC_TO_TEST_MAPPING.md` | Spec-requirement → test-case → code-location traceability matrix. |
-| `host/docs/vendor_extensions/mb_sum.md` | Design rationale for the MB-Sum vendor extension. |
-| `host/docs/POST_AUTONOMOUS_TODO.md` | Outstanding work (hardware bench, bug fixes, CI tooling). |
-| `host/audits/charbit_audit.md` | TI 16-bit-char vs. host 8-bit-char divergence catalogue + mitigation. |
+| `official_docs/SPEC_COMPLIANCE.md` | Surveyors and AMOT field service. Per-section MAN-spec compliance proof: spec text + impl pointers + test pointers, mirroring the spec TOC. |
+| `official_docs/CUSTOMER_RELEASE_NOTES.md` | Vessel operators, marine engineers, surveyors, AMOT field service. v8.5→v8.7 upgrade headline, bugs fixed, behavioural changes, action required, open questions. |
+| `implementation_docs/FIELD_MANUAL.md` | Engineers maintaining/extending the firmware. Indexed by spec chapter with test + code references. |
+| `implementation_docs/SPEC_TO_TEST_MAPPING.md` | Spec-requirement → test-case → code-location traceability matrix. |
+| `implementation_docs/INTEGRATION_LAYER_DESIGN.md` | Phase-B plan: how `src/` modules wire to live hardware. |
+| `implementation_docs/vendor_extensions/mb_sum.md` | Design rationale for the MB-Sum vendor extension. |
+| `implementation_docs/DEPRECATION_CANDIDATES.md` | v6.20 features under review for retention vs. drop. |
+| `implementation_docs/LEGACY_BUGS.md`, `BUG_1_FIX_NOTES.md` | Catalogue of v6.20 defects and their patch decisions. |
+| `implementation_docs/POST_AUTONOMOUS_TODO.md` | Outstanding work (hardware bench, bug fixes, CI tooling). |
+| `implementation_docs/audits/charbit_audit.md` | TI 16-bit-char vs. host 8-bit-char divergence catalogue + mitigation. |
 | `host/specs/README.md` | OCR'd spec corpus + spec-to-spec delta map. |
 | `host/specs/v6.20_compliance.md` | Empirical analysis: legacy v6.20 implements rev 05; documents the 25-item upgrade path. |
 
@@ -121,10 +129,10 @@ host/
 │   ├── test_vendor_mb_sum.c            @vendor-extension MB-Sum
 │   ├── test_module_*.c                 per-module API tests for src/ refactor
 │   └── test_module_*_8_7.c             v8.7 algorithm variants
-├── audits/                             CHAR_BIT audit, divergence notes
-├── specs/                              OCR'd spec text + delta map + v6.20 compliance
-└── docs/                               FIELD_MANUAL, CUSTOMER_NOTES, etc.
+└── specs/                              OCR'd spec text + delta map + v6.20 compliance
 ```
+
+(Engineer-facing docs, audits, vendor extensions, and CI templates live one level up at `implementation_docs/`. Customer- and surveyor-facing docs live at `official_docs/`.)
 
 ---
 
@@ -137,7 +145,7 @@ These were locked at the start of the refactor and shaped every implementation d
 3. **Spec-driven.** Every test is tagged with `@spec 8.X §N.M.K` (or `@vendor-extension Y` for non-spec features). The traceability matrix is auto-readable.
 4. **Realistic fakes, not stubs.** The proof that fakes are accurate = v6.20-equivalent behavior in tests. Same fakes carry forward to v8.6/8.7 testing.
 5. **CHAR_BIT-portable.** Word-explicit memory API (`word_mem.h`) eliminates the TI-vs-host divergence that would otherwise mask bugs. Struct-layout assertions are the regression net.
-6. **Vendor extensions documented separately.** MB-Sum and similar non-spec features have their own design memos under `host/docs/vendor_extensions/`.
+6. **Vendor extensions documented separately.** MB-Sum and similar non-spec features have their own design memos under `implementation_docs/vendor_extensions/`.
 7. **Bugs deferred until after compliance.** Per project decision, focus on getting v8.7 fully working before fixing the known sensor-replacement bug.
 
 ---
