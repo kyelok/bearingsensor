@@ -189,13 +189,28 @@ The v8.7 firmware reads the same FRAM layout as v6.20. Customer per-installation
 
 ### Procedure for installing v8.7 firmware
 
+**Prerequisite — produce the `.fr2` from the source `.a00`**
+
+The flashable firmware artifact is a `.fr2` file produced from the build's `.a00` by the **AMOT XTSW+ FR2 Generator** (LabVIEW VI, ships in this repo at `AMOT XTSW+ FR2 Generator/AMOT XTSW+ FR2 Generator.exe`). Conversion environment requirements:
+
+| Requirement | Specifically |
+|---|---|
+| OS | Microsoft Windows (32-bit or 64-bit; the FR2 Generator itself is a 32-bit i386 PE) |
+| **LabVIEW Run-Time Engine** | **2011 SP1, 32-bit, for Windows.** Confirmed bit-exact: converting the original 2016 `xtsw_v6_20 firm(160920).a00` with this runtime reproduces SHA-256 `cc3247…6aa0`, identical to the AMOT-shipped `6.20bearingwear.fr2`. Older runtimes (e.g., LabVIEW 7.1.1 from 2004) **will not work** — the .exe is built from LabVIEW's "Mercury" branch (=2011) and requires an 11.x runtime. The 32-bit installer is the relevant one even on 64-bit Windows hosts. |
+| `.a00` line endings | **CRLF (Windows-style).** The 2012 LabVIEW VI parses the `.a00` line-by-line and silently fails on Unix LF, producing a 14-byte stub instead of a ~150 KB `.fr2`. All four Makefiles in this repo (`build/Makefile.legacy.cross`, `Makefile.cross`, `Makefile.hybrid`, `Makefile.hybrid_pristine`) post-process to CRLF automatically; the `.a00` files in `build/` as shipped from `make binaries` are already correctly formatted. |
+
+**Sanity check before flashing**: the produced `.fr2` should be roughly 150 KB. A 14 KB or smaller `.fr2` indicates the conversion failed silently — re-check the LabVIEW Runtime version and the `.a00` line endings.
+
+**Install steps**:
+
 1. Capture the 30-day baseline (see section 4).
 2. Schedule downtime for the SPU during a non-operational period (port stop, dry dock).
-3. Power the SPU.
-4. Use the reprog procedure documented in `BearingWear.SerialFlash` and `reprog.c` (legacy v6.20 process — unchanged).
-5. After reprog, verify the firmware version reports as the agreed v8.7 register value (open question — see section 7).
-6. Acknowledge any prior alarms.
-7. Resume operation. Monitor for at least 72 hours before treating any new alarm as actionable.
+3. On the Windows-side dashboard host, run `AMOT XTSW+ FR2 Generator.exe` against the chosen build's `.a00` to produce the `.fr2`.
+4. Power the SPU.
+5. Use the reprog procedure documented in `BearingWear.SerialFlash` and `reprog.c` (legacy v6.20 process — unchanged) to flash the `.fr2`.
+6. After reprog, verify the firmware version reports as the agreed v8.7 register value (open question — see section 7).
+7. Acknowledge any prior alarms.
+8. Resume operation. Monitor for at least 72 hours before treating any new alarm as actionable.
 
 ---
 
