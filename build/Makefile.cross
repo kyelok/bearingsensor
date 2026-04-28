@@ -82,8 +82,11 @@ $(OUTDIR)/bwm.out: $(OBJS) $(LCF)
 	@$(CL2000) $(LDFLAGS) $(OBJS) $(LCF) $(LIBS)
 
 $(OUTDIR)/bwm.a00: $(OUTDIR)/bwm.out
+	@# Generate .a00 via hex2000, then convert LF→CRLF for AMOT FR2 Generator
+	@# compatibility (2012 LabVIEW VI requires Windows-native line endings).
 	@echo "Generating $@..."
-	@cd $(OUTDIR) && $(HEX2000) bwm.out -boot -sci8 -a 2>&1 | grep -v 'auto-generated'
+	@cd $(OUTDIR) && $(HEX2000) bwm.out -boot -sci8 -a 2>&1 | grep -v 'auto-generated' || true
+	@perl -pi -e 's/\r?\n/\r\n/g' $@
 
 clean:
 	@rm -rf $(OUTDIR)

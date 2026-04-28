@@ -91,7 +91,12 @@ $(OUTDIR)/bearingwear.out: $(OBJS) $(LCF)
 
 $(OUTDIR)/bearingwear.a00: $(OUTDIR)/bearingwear.out
 	@echo "Generating $@..."
-	@cd $(OUTDIR) && $(HEX2000) bearingwear.out -boot -sci8 -a 2>&1 | grep -v 'auto-generated'
+	@cd $(OUTDIR) && $(HEX2000) bearingwear.out -boot -sci8 -a 2>&1 | grep -v 'auto-generated' || true
+	@# The 2012 AMOT FR2 Generator.exe (LabVIEW 2011 SP1, Windows) parses
+	@# .a00 line-by-line and requires CRLF terminators. Modern hex2000
+	@# emits LF only; convert in place. Without this, the FR2 Generator
+	@# writes a 14-byte stub instead of a ~150 KB .fr2.
+	@perl -pi -e 's/\r?\n/\r\n/g' $@
 
 clean:
 	@rm -rf $(OUTDIR)

@@ -118,15 +118,33 @@ bwm.out        (input)
 
 **Location**: Already in our repo at `AMOT XTSW+ FR2 Generator/AMOT XTSW+ FR2 Generator.exe` (Windows binary, ~430 KB).
 
-**Requires**: Microsoft Windows + **National Instruments LabVIEW Runtime Engine** installed. Download free from https://www.ni.com/en/support/downloads/software-products/download.labview-runtime.html.
+**Requires**: Microsoft Windows + **National Instruments LabVIEW Runtime Engine 2011 SP1, 32-bit**. Determined empirically from the FR2 Generator's PE strings (`D:\lvmerc\src\source\...` → "Mercury" branch = LabVIEW 2011; .exe build date 2012-04-03 = ~1 month after LabVIEW 2011 SP1's March 2012 release). Download free from <https://www.ni.com/en/support/downloads/software-products/download.labview-runtime.html>. Make sure to grab the **32-bit** runtime even on 64-bit Windows — they install side-by-side and the FR2 Generator is a 32-bit (i386) PE.
+
+**Critical compatibility gotcha — `.a00` line endings**:
+
+The 2012 LabVIEW VI inside the FR2 Generator parses the `.a00` line-by-line and **requires CRLF (Windows)** line endings between hex records. Modern TI CGT 25.11's `hex2000` produces LF-only output by default. With LF-only `.a00`, the FR2 Generator runs to completion, reports "1 block written", but writes a **14-byte stub** consisting of just `[AMOT]` + 8 NUL bytes — no firmware payload.
+
+**Symptom**: output `.fr2` is ~14 bytes (or "1 KB" if rounded by Explorer); UI says "Number of blocks written = 1" but the file has zero block content.
+
+**Fix already wired into all four Makefiles** (`build/Makefile.legacy.cross`, `Makefile.cross`, `Makefile.hybrid`, `Makefile.hybrid_pristine`): a `perl -pi -e 's/\r?\n/\r\n/g'` post-processing step runs after `hex2000` so the resulting `.a00` is CRLF-terminated. Reference 2016-vintage `.a00` files in the repo are already CRLF, which is why they work directly with the FR2 Generator.
+
+**To verify a fresh `.a00` is correctly formatted before sending to Windows**:
+
+```bash
+head -c 8 build/hybrid_pristine/bwm_hybrid_pristine.a00 | xxd
+# Expected first 8 bytes: 02 0d 0a 41 41 20 30 38   (STX + CRLF + "AA 08")
+# If you see:             02 0a 41 41 20 30 38 ...   (STX + LF only)
+# the conversion didn't run; force a clean build.
+```
 
 **Workflow**:
 1. Launch `AMOT XTSW+ FR2 Generator.exe`.
-2. Select input `.a00` file.
+2. Select input `.a00` file (CRLF-formatted — see above).
 3. Configure SPU parameters per the AMOT manual (built-in, accessed via the "?" icon in the GUI).
 4. Click "Generate" to produce `.fr2` output.
+5. **Sanity check**: output `.fr2` should be ~150 KB. Anything under ~100 KB means parsing failed; revisit line endings or LabVIEW Runtime version.
 
-**Output**: `.fr2` file consumed by the SPU's bootloader.
+**Output**: `.fr2` file consumed by the SPU's bootloader. Reference good outputs in the repo for size/structure comparison: `SourceCode1/SPU_Firmware/FirmwareRelease_6.20/6.20bearingwear.fr2` (157 KB).
 
 ### Step 5 — Flash to SPU
 

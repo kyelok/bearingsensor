@@ -110,6 +110,9 @@ $(OUTDIR)/bwm_hybrid.out: $(OBJS) $(LCF)
 $(OUTDIR)/bwm_hybrid.a00: $(OUTDIR)/bwm_hybrid.out
 	@echo "Generating $@..."
 	@cd $(OUTDIR) && $(HEX2000) bwm_hybrid.out -boot -sci8 -a 2>&1 | grep -v 'auto-generated' || true
+	@# Convert LF→CRLF: AMOT FR2 Generator (LabVIEW 2012) requires Windows
+	@# line endings; without this it writes a 14-byte stub.
+	@perl -pi -e 's/\r?\n/\r\n/g' $@
 
 clean:
 	@rm -rf $(OUTDIR)
